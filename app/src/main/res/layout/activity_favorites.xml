@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/favorites_layout"
+    android:layout_marginTop="30dp"
+    tools:context=".features.favorites.FavoritesActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/favorites"
+            android:textColor="@color/dark_text"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/bold"
+            android:textSize="20sp" />
+
+        <com.tsuryo.swipeablerv.SwipeableRecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:rightBgColor="@color/primary"
+            app:rightImage="@drawable/ic_delete"
+            app:textColor="@color/dark_text"
+            app:textSize="20sp" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

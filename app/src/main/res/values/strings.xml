@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Foodies</string>
+    <string name="splash_image">Splash image</string>
+    <string name="splash_text">Foodies</string>
+    <string name="intro_header">Before we get cookin\'</string>
+    <string name="intro_sub">Please tell us any intolerance you may have.</string>
+    <string name="submit">Submit</string>
+    <string name="home_title">Foodies</string>
+    <string name="todays_picks">Today\'s Picks</string>
+    <string name="todays_joke">Today\'s Joke</string>
+    <string name="auth_header">Login</string>
+    <string name="auth_info">Enter your details below to login. If you don\'t have an account, we will create one for you.</string>
+    <string name="login_forgot">Forgot your password?</string>
+    <string name="login">login</string>
+    <string name="signup">signup</string>
+    <string name="or">or</string>
+    <string name="name_label">Your email address</string>
+    <string name="password_label">Your password</string>
+    <string name="reset_header">Reset password</string>
+    <string name="reset_info">Enter your email address below and well send you a link to reset your password via email.</string>
+    <string name="send_email">send email</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="equipment">Equipment</string>
+    <string name="videos">Videos</string>
+    <string name="procedure">Procedure</string>
+    <string name="favorites">Favorites</string>
+</resources>
