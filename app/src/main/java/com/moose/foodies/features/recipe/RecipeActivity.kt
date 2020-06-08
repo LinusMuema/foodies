@@ -35,8 +35,9 @@ class RecipeActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         
         val recipe = Gson().fromJson(intent.getStringExtra("recipe"), Recipe::class.java)
+        val url = recipe.info.image.replace("312x231", "636x393")
         recipeViewModel.checkFavorite(recipe.id)
-        img_food.loadImage(recipe.info.image)
+        img_food.loadImage(url)
         ingredients_recycler.apply {
             setHasFixedSize(true)
             adapter = ItemListAdapter(recipe.instructions.ingredients, "ingredients")

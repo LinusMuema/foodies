@@ -1,20 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:id="@+id/favorite_card">
+        android:elevation="5dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/dark_text"
+        app:cardElevation="0dp"
+        android:layout_margin="10dp">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:id="@+id/recipe_name"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="222dp"
+                android:id="@+id/recipe_image"
+                android:scaleType="centerCrop" />
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/recipe_name"
+                    android:layout_below="@+id/recipe_image"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="@font/regular"
+                    android:textSize="15sp"
+                    android:padding="16dp"
+                    android:textAppearance="?attr/textAppearanceHeadline6" />
+        </RelativeLayout>
 
     </com.google.android.material.card.MaterialCardView>
 

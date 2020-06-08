@@ -54,7 +54,8 @@ class HomeActivity : AppCompatActivity() {
                 size = it.size
                 setCarouselViewListener { view, position ->
                     val recipe = it[position]
-                    view.pick_image.loadCarouselImage(recipe.info.image)
+                    val url = recipe.info.image.replace("312x231", "636x393")
+                    view.pick_image.loadCarouselImage(url)
                     view.pick_name.text = recipe.info.title
                     view.setOnClickListener {
                         startActivity(Intent(this@HomeActivity, RecipeActivity::class.java).putExtra("recipe", Gson().toJson(recipe)))

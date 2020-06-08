@@ -2,16 +2,17 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="231dp">
+    android:layout_margin="5dp"
+    android:layout_height="222dp">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="312dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:id="@+id/pick_image"/>
 
     <RelativeLayout
-        android:layout_width="312dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/opacity_gradient"
         android:layout_alignParentBottom="true"
@@ -24,6 +25,7 @@
             android:fontFamily="@font/regular"
             android:textColor="@color/light_text"
             android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             android:gravity="center"
             android:id="@+id/pick_name"/>
 

@@ -1,5 +1,6 @@
 package com.moose.foodies.features.favorites
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textview.MaterialTextView
 import com.moose.foodies.R
 import com.moose.foodies.models.Recipe
+import com.moose.foodies.util.loadImage
 import kotlinx.android.synthetic.main.favorite_item.view.*
 
 class FavoritesAdapter(private val recipes: List<Recipe>) :
@@ -22,10 +24,12 @@ class FavoritesAdapter(private val recipes: List<Recipe>) :
 
 
     inner class FavoritesViewHolder(view: View): RecyclerView.ViewHolder(view) {
-        val name: MaterialTextView = view.recipe_name
 
         fun bind(recipe: Recipe) {
-            name.text = recipe.info.title
+            val url = recipe.info.image.replace("312x231", "636x393")
+            Log.d("image", "bind: $url")
+            itemView.recipe_name.text = recipe.info.title
+            itemView.recipe_image.loadImage(url)
         }
 
     }
