@@ -1,6 +1,7 @@
 package com.moose.foodies.features.recipe
 
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.Menu
 import androidx.activity.viewModels
@@ -10,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.moose.foodies.R
 import com.moose.foodies.models.Recipe
+import com.moose.foodies.util.HeightCalculator
 import com.moose.foodies.util.hideBottomBar
 import com.moose.foodies.util.loadImage
 import com.moose.foodies.util.showSnackbar
@@ -21,6 +23,9 @@ class RecipeActivity : AppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    @Inject
+    lateinit var heightCalculator: HeightCalculator
 
     private val recipeViewModel by viewModels<RecipeViewModel> { viewModelFactory }
     private var isFavorite = false
@@ -36,7 +41,11 @@ class RecipeActivity : AppCompatActivity() {
         
         val recipe = Gson().fromJson(intent.getStringExtra("recipe"), Recipe::class.java)
         val url = recipe.info.image.replace("312x231", "636x393")
+        val imageHeight = heightCalculator.getImageHeight()
         recipeViewModel.checkFavorite(recipe.id)
+
+        img_food.requestLayout()
+        img_food.layoutParams.height = imageHeight.toInt()
         img_food.loadImage(url)
         ingredients_recycler.apply {
             setHasFixedSize(true)

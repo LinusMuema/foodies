@@ -26,6 +26,8 @@ class SplashActivity @Inject constructor() : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         this.hideAllBars()
+        val widthDp = resources.displayMetrics.run { widthPixels / density }
+        sharedPreferences.edit().putFloat("deviceWidth", widthDp).apply()
 
         if (sharedPreferences.getBoolean("logged", false)){
             Handler().postDelayed({
