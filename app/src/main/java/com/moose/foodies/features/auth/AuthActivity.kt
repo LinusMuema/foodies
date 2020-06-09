@@ -15,10 +15,7 @@ import com.moose.foodies.R
 import com.moose.foodies.features.home.HomeActivity
 import com.moose.foodies.features.intolerances.IntolerancesActivity
 import com.moose.foodies.features.reset.ResetPasswordActivity
-import com.moose.foodies.util.hide
-import com.moose.foodies.util.hideBottomBar
-import com.moose.foodies.util.show
-import com.moose.foodies.util.showSnackbar
+import com.moose.foodies.util.*
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_auth.*
 import javax.inject.Inject
@@ -31,11 +28,11 @@ class AuthActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
+        ActivityHelper.initialize(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
 
         rotateloading.start()
-        this.hideBottomBar()
 
         authViewModel.response.observe(this, Observer {
             rotateloading.hide()

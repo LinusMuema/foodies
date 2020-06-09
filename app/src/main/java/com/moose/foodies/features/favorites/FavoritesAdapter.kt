@@ -5,13 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.textview.MaterialTextView
 import com.moose.foodies.R
 import com.moose.foodies.models.Recipe
 import com.moose.foodies.util.loadImage
 import kotlinx.android.synthetic.main.favorite_item.view.*
 
-class FavoritesAdapter(private val recipes: List<Recipe>) :
+class FavoritesAdapter(private val recipes: List<Recipe>, private val imageHeight: Int) :
     RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesViewHolder = FavoritesViewHolder(
@@ -29,7 +28,7 @@ class FavoritesAdapter(private val recipes: List<Recipe>) :
             val url = recipe.info.image.replace("312x231", "636x393")
             Log.d("image", "bind: $url")
             itemView.recipe_name.text = recipe.info.title
-            itemView.recipe_image.loadImage(url)
+            itemView.recipe_image.loadImage(url, imageHeight)
         }
 
     }

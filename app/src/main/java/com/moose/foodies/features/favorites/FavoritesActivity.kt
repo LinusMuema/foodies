@@ -1,46 +1,46 @@
 package com.moose.foodies.features.favorites
 
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.moose.foodies.R
 import com.moose.foodies.models.Recipe
+import com.moose.foodies.util.ActivityHelper
+import com.moose.foodies.util.HeightCalculator
 import com.moose.foodies.util.hideBottomBar
 import com.moose.foodies.util.showSnackbar
 import com.tsuryo.swipeablerv.SwipeLeftRightCallback
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_favorites.*
-import org.jetbrains.anko.design.snackbar
 import javax.inject.Inject
 
 class FavoritesActivity : AppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    @Inject
+    lateinit var heightCalculator: HeightCalculator
+
     private lateinit var favorites: MutableList<Recipe>
 
     private val favoritesViewModel by viewModels<FavoritesViewModel> { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
+        ActivityHelper.initialize(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorites)
-        this.hideBottomBar()
-
 
         favoritesViewModel.favorites.observe(this, Observer {
             favorites = it as MutableList<Recipe>
             rv.layoutManager = LinearLayoutManager(this)
-            rv.adapter = FavoritesAdapter(favorites)
+            rv.adapter = FavoritesAdapter(favorites, heightCalculator.getImageHeight().toInt())
         })
 
         favoritesViewModel.state.observe(this, Observer {

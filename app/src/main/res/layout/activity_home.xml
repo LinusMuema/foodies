@@ -52,7 +52,7 @@
                         app:setAutoPlay="true"
                         app:indicatorSelectedColor="@color/accent"
                         app:spacing="10"
-                        app:resource="@layout/picks_list_item"/>
+                        app:resource="@layout/carousel_item"/>
                 </LinearLayout>
 
                 <LinearLayout

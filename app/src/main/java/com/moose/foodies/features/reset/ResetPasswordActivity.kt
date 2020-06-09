@@ -11,6 +11,7 @@ import com.github.dhaval2404.form_validation.rule.NonEmptyRule
 import com.github.dhaval2404.form_validation.validation.FormValidator
 import com.moose.foodies.R
 import com.moose.foodies.features.auth.AuthActivity
+import com.moose.foodies.util.ActivityHelper
 import com.moose.foodies.util.hide
 import com.moose.foodies.util.hideBottomBar
 import com.moose.foodies.util.show
@@ -31,10 +32,10 @@ class ResetPasswordActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
+        ActivityHelper.initialize(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reset_password)
         resetloading.start()
-        this.hideBottomBar()
 
         resetPasswordViewModel.response.observe(this, Observer {
             resetloading.hide()

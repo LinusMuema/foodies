@@ -65,7 +65,9 @@ fun showSnackbar(view: View, message: String) {
     Snackbar.make(view, message, Snackbar.LENGTH_LONG).show()
 }
 
-fun ImageView.loadCarouselImage(uri: String){
+fun ImageView.loadCarouselImage(uri: String, height: Int){
+    this.requestLayout()
+    this.layoutParams.height = height
     val options = RequestOptions()
         .placeholder(getProgressDrawable(this.context))
         .transform(RoundedCorners(25))
@@ -83,7 +85,9 @@ fun ImageView.loadSelected(){
         .into(this)
 }
 
-fun ImageView.loadImage(uri: String){
+fun ImageView.loadImage(uri: String, height: Int){
+    this.requestLayout()
+    this.layoutParams.height = height
     val options = RequestOptions()
         .placeholder(getProgressDrawable(this.context))
         .error(R.drawable.image_error)

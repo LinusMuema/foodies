@@ -11,12 +11,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.moose.foodies.R
 import com.moose.foodies.models.Recipe
-import com.moose.foodies.util.HeightCalculator
-import com.moose.foodies.util.hideBottomBar
-import com.moose.foodies.util.loadImage
-import com.moose.foodies.util.showSnackbar
+import com.moose.foodies.util.*
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_recipe.*
+import kotlinx.android.synthetic.main.intolerance_list_item.view.*
 import javax.inject.Inject
 
 class RecipeActivity : AppCompatActivity() {
@@ -32,28 +30,25 @@ class RecipeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
+        ActivityHelper.initialize(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recipe)
-
-        this.hideBottomBar()
         setSupportActionBar(topAppBar)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         
         val recipe = Gson().fromJson(intent.getStringExtra("recipe"), Recipe::class.java)
         val url = recipe.info.image.replace("312x231", "636x393")
-        val imageHeight = heightCalculator.getImageHeight()
+        val imageHeight = heightCalculator.getImageHeight().toInt()
         recipeViewModel.checkFavorite(recipe.id)
 
-        img_food.requestLayout()
-        img_food.layoutParams.height = imageHeight.toInt()
-        img_food.loadImage(url)
+        img_food.loadImage(url, imageHeight)
         ingredients_recycler.apply {
             setHasFixedSize(true)
-            adapter = ItemListAdapter(recipe.instructions.ingredients, "ingredients")
+            adapter = ItemListAdapter(recipe.instructions.ingredients, "ingredients", imageHeight)
         }
         equipment_recycler.apply {
             setHasFixedSize(true)
-            adapter = ItemListAdapter(recipe.instructions.equipment, "equipment")
+            adapter = ItemListAdapter(recipe.instructions.equipment, "equipment", imageHeight)
         }
 
         procedure_recycler.apply {

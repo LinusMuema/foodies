@@ -2,6 +2,7 @@ package com.moose.foodies.features.splash
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.ActivityInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -26,6 +27,7 @@ class SplashActivity @Inject constructor() : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         this.hideAllBars()
+        this.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         val widthDp = resources.displayMetrics.run { widthPixels / density }
         sharedPreferences.edit().putFloat("deviceWidth", widthDp).apply()
 

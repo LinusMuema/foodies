@@ -16,16 +16,13 @@ import com.moose.foodies.R
 import com.moose.foodies.features.auth.AuthActivity
 import com.moose.foodies.features.favorites.FavoritesActivity
 import com.moose.foodies.features.recipe.RecipeActivity
-import com.moose.foodies.util.hideBottomBar
-import com.moose.foodies.util.loadCarouselImage
-import com.moose.foodies.util.showSnackbar
-import com.moose.foodies.util.stopRefreshing
+import com.moose.foodies.util.*
 import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum
 import com.nightonke.boommenu.BoomButtons.SimpleCircleButton
 import com.nightonke.boommenu.Piece.PiecePlaceEnum
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.picks_list_item.view.*
+import kotlinx.android.synthetic.main.carousel_item.view.*
 import javax.inject.Inject
 
 class HomeActivity : AppCompatActivity() {
@@ -33,14 +30,16 @@ class HomeActivity : AppCompatActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
+    @Inject
+    lateinit var heightCalculator: HeightCalculator
+
     private val homeViewModel by viewModels<HomeViewModel> { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
+        ActivityHelper.initialize(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-
-        this.hideBottomBar()
         setUpBoomMenu()
 
         homeViewModel.state.observe(this, Observer {
@@ -55,8 +54,7 @@ class HomeActivity : AppCompatActivity() {
                 setCarouselViewListener { view, position ->
                     val recipe = it[position]
                     val url = recipe.info.image.replace("312x231", "636x393")
-                    view.pick_image.loadCarouselImage(url)
-                    view.pick_name.text = recipe.info.title
+                    view.pick_image.loadCarouselImage(url, heightCalculator.getImageHeight().toInt())
                     view.setOnClickListener {
                         startActivity(Intent(this@HomeActivity, RecipeActivity::class.java).putExtra("recipe", Gson().toJson(recipe)))
                     }

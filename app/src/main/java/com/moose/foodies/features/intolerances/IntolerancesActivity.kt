@@ -10,10 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.moose.foodies.R
 import com.moose.foodies.features.home.HomeActivity
-import com.moose.foodies.util.hide
-import com.moose.foodies.util.hideBottomBar
-import com.moose.foodies.util.show
-import com.moose.foodies.util.showSnackbar
+import com.moose.foodies.util.*
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_intolerances.*
 import javax.inject.Inject
@@ -28,11 +25,11 @@ class IntolerancesActivity @Inject constructor(): AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
+        ActivityHelper.initialize(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intolerances)
         intolerancesloading.start()
 
-        this.hideBottomBar()
         if (intent.getBooleanExtra("signup", false)) showSnackbar(intolerances_layout, "We have sent you a confirmation email :)")
 
         intolerancesViewModel.results.observe(this, Observer {
