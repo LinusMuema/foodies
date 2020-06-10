@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.media.Image
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
@@ -22,6 +23,16 @@ fun View.slideUp() = this.startAnimation(AnimationUtils.loadAnimation(this.conte
 fun View.show() { this.visibility = View.VISIBLE }
 
 fun View.hide() { this.visibility = View.GONE }
+
+fun View.setHeight(height: Int){
+    this.requestLayout()
+    this.layoutParams.height = height
+}
+
+fun ViewGroup.setHeight(height: Int){
+    this.requestLayout()
+    this.layoutParams.height = height
+}
 
 fun SwipeRefreshLayout.stopRefreshing() {this.isRefreshing = false}
 
@@ -65,9 +76,7 @@ fun showSnackbar(view: View, message: String) {
     Snackbar.make(view, message, Snackbar.LENGTH_LONG).show()
 }
 
-fun ImageView.loadCarouselImage(uri: String, height: Int){
-    this.requestLayout()
-    this.layoutParams.height = height
+fun ImageView.loadCarouselImage(uri: String){
     val options = RequestOptions()
         .placeholder(getProgressDrawable(this.context))
         .transform(RoundedCorners(25))
@@ -85,9 +94,7 @@ fun ImageView.loadSelected(){
         .into(this)
 }
 
-fun ImageView.loadImage(uri: String, height: Int){
-    this.requestLayout()
-    this.layoutParams.height = height
+fun ImageView.loadImage(uri: String){
     val options = RequestOptions()
         .placeholder(getProgressDrawable(this.context))
         .error(R.drawable.image_error)

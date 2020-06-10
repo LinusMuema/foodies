@@ -10,7 +10,10 @@ import com.moose.foodies.models.Recipe
 import com.moose.foodies.util.loadImage
 import kotlinx.android.synthetic.main.favorite_item.view.*
 
-class FavoritesAdapter(private val recipes: List<Recipe>, private val imageHeight: Int) :
+class FavoritesAdapter(
+    private val recipes: List<Recipe>,
+    private val pixels: Int
+) :
     RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesViewHolder = FavoritesViewHolder(
@@ -27,8 +30,10 @@ class FavoritesAdapter(private val recipes: List<Recipe>, private val imageHeigh
         fun bind(recipe: Recipe) {
             val url = recipe.info.image.replace("312x231", "636x393")
             Log.d("image", "bind: $url")
+            itemView.recipe_image.requestLayout()
+            itemView.recipe_image.layoutParams.height = pixels
             itemView.recipe_name.text = recipe.info.title
-            itemView.recipe_image.loadImage(url, imageHeight)
+            itemView.recipe_image.loadImage(url)
         }
 
     }

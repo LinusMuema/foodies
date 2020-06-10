@@ -20,7 +20,7 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="match_parent"
-                android:layout_height="222dp"
+                android:layout_height="0dp"
                 android:id="@+id/recipe_image"
                 android:scaleType="centerCrop" />
 

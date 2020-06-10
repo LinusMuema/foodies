@@ -12,7 +12,6 @@ import com.moose.foodies.R
 import com.moose.foodies.models.Recipe
 import com.moose.foodies.util.ActivityHelper
 import com.moose.foodies.util.HeightCalculator
-import com.moose.foodies.util.hideBottomBar
 import com.moose.foodies.util.showSnackbar
 import com.tsuryo.swipeablerv.SwipeLeftRightCallback
 import dagger.android.AndroidInjection
@@ -37,10 +36,13 @@ class FavoritesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorites)
 
+        val scale: Float = this.resources.displayMetrics.density
+        val pixels = (heightCalculator.getImageHeight() * scale + 0.5f).toInt()
+
         favoritesViewModel.favorites.observe(this, Observer {
             favorites = it as MutableList<Recipe>
             rv.layoutManager = LinearLayoutManager(this)
-            rv.adapter = FavoritesAdapter(favorites, heightCalculator.getImageHeight().toInt())
+            rv.adapter = FavoritesAdapter(favorites, pixels)
         })
 
         favoritesViewModel.state.observe(this, Observer {

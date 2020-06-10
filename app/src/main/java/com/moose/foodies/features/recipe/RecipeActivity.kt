@@ -1,9 +1,11 @@
 package com.moose.foodies.features.recipe
 
+import android.graphics.Rect
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.Menu
+import android.view.ViewGroup
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -33,22 +35,26 @@ class RecipeActivity : AppCompatActivity() {
         ActivityHelper.initialize(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recipe)
-        setSupportActionBar(topAppBar)
-        supportActionBar!!.setDisplayShowTitleEnabled(false)
-        
+
         val recipe = Gson().fromJson(intent.getStringExtra("recipe"), Recipe::class.java)
-        val url = recipe.info.image.replace("312x231", "636x393")
-        val imageHeight = heightCalculator.getImageHeight().toInt()
+
+        val scale: Float = this.resources.displayMetrics.density
+        val pixels = (heightCalculator.getImageHeight() * scale + 0.5f).toInt()
+
         recipeViewModel.checkFavorite(recipe.id)
 
-        img_food.loadImage(url, imageHeight)
+
+        val url = recipe.info.image.replace("312x231", "636x393")
+        img_food.setHeight(pixels)
+        img_food.loadImage(url)
+
         ingredients_recycler.apply {
             setHasFixedSize(true)
-            adapter = ItemListAdapter(recipe.instructions.ingredients, "ingredients", imageHeight)
+            adapter = ItemListAdapter(recipe.instructions.ingredients, "ingredients")
         }
         equipment_recycler.apply {
             setHasFixedSize(true)
-            adapter = ItemListAdapter(recipe.instructions.equipment, "equipment", imageHeight)
+            adapter = ItemListAdapter(recipe.instructions.equipment, "equipment")
         }
 
         procedure_recycler.apply {
@@ -67,6 +73,12 @@ class RecipeActivity : AppCompatActivity() {
             Log.d("Fav", "onCreate: isFavorite value is $isFavorite")
         })
 
+        setSupportActionBar(topAppBar)
+        supportActionBar!!.setDisplayShowTitleEnabled(false)
+        topAppBar.requestLayout()
+        val layoutParams = (topAppBar.layoutParams as? ViewGroup.MarginLayoutParams)
+        layoutParams?.setMargins(0, getStatusBarHeight(), 0, 0)
+        topAppBar.layoutParams = layoutParams
         topAppBar.setOnMenuItemClickListener {
             when(it.itemId){
                 R.id.favorite -> {
@@ -82,6 +94,12 @@ class RecipeActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun getStatusBarHeight(): Int {
+        val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
+        return if (resourceId > 0) resources.getDimensionPixelSize(resourceId)
+        else Rect().apply { window.decorView.getWindowVisibleDisplayFrame(this) }.top
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

@@ -44,12 +44,10 @@
                         android:id="@+id/carousel"
                         app:enableSnapping="true"
                         app:scaleOnScroll="true"
-                        app:setAutoPlayDelay="4000"
                         app:carouselOffset="center"
                         app:indicatorAnimationType="slide"
                         app:indicatorRadius="5"
                         app:indicatorPadding="5"
-                        app:setAutoPlay="true"
                         app:indicatorSelectedColor="@color/accent"
                         app:spacing="10"
                         app:resource="@layout/carousel_item"/>
