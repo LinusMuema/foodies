@@ -21,7 +21,7 @@ class HomeViewModel @Inject constructor(private val apiRepository: ApiRepository
 
     private val composite = CompositeDisposable()
     private val token = sharedPreferences.getString("token", "default")
-    val recipes: MutableLiveData<List<Recipe>> = MutableLiveData()
+    val recipes: MutableLiveData<Recipes> = MutableLiveData()
     val state: MutableLiveData<UiState> = MutableLiveData()
 
     fun getRecipes(){
@@ -33,7 +33,7 @@ class HomeViewModel @Inject constructor(private val apiRepository: ApiRepository
                 .subscribe
                     {
                         if(it.isEmpty()) updateRecipes()
-                        else recipes.value = it[0].recipes
+                        else recipes.value = it[0]
                     }
         )
     }
@@ -72,7 +72,7 @@ class HomeViewModel @Inject constructor(private val apiRepository: ApiRepository
                             .subscribeOn(Schedulers.computation())
                             .subscribe(
                                 {
-                                    recipes.value = data.recipes
+                                    recipes.value = data
                                 },
                                 {
                                     state.value = UiState(it.cause.toString(), it.message)

@@ -24,4 +24,5 @@
     <string name="videos">Videos</string>
     <string name="procedure">Procedure</string>
     <string name="favorites">Favorites</string>
+    <string name="todays_trivia">Today\'s Trivia</string>
 </resources>

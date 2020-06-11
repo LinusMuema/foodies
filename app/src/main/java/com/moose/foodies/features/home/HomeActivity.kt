@@ -53,10 +53,12 @@ class HomeActivity : AppCompatActivity() {
 
         homeViewModel.recipes.observe(this, Observer {
             home_swipe.stopRefreshing()
+            joke.text = it.joke
+            trivia.text = it.trivia
             carousel.apply {
-                size = it.size
+                size = it.recipes.size
                 setCarouselViewListener { view, position ->
-                    val recipe = it[position]
+                    val recipe = it.recipes[position]
                     val url = recipe.info.image.replace("312x231", "636x393")
                     view.carousel_item.setHeight(pixels)
                     view.pick_image.loadCarouselImage(url)

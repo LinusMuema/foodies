@@ -17,7 +17,7 @@ data class Intolerances(val intolerances: List<Intolerance>, val message: String
 data class Intolerance(val _id: String, val image_url: String, val name: String)
 
 @Entity
-data class Recipes(@PrimaryKey(autoGenerate = true) val id: Int, val message: String, val recipes: List<Recipe>)
+data class Recipes(@PrimaryKey(autoGenerate = true) val id: Int, val message: String, val recipes: List<Recipe>, val joke: String, val trivia: String)
 
 @Entity(tableName = "Favorites")
 data class Recipe(@PrimaryKey val id: Int, val info: Info, val instructions: Instructions)
