@@ -82,10 +82,6 @@ class HomeViewModel @Inject constructor(private val apiRepository: ApiRepository
         )
     }
 
-    fun logout(){
-        sharedPreferences.edit().putBoolean("logged", false).apply()
-    }
-
     override fun onCleared() {
         super.onCleared()
         composite.dispose()

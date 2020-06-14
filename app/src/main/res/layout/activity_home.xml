@@ -91,15 +91,6 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <com.nightonke.boommenu.BoomMenuButton
-        android:id="@+id/bmb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:bmb_normalColor="@color/light_text"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="10dp"
-        app:bmb_buttonEnum="simpleCircle"
-        app:layout_anchorGravity="bottom|right|end"
-        app:elevation="10dp"/>
+    <include layout="@layout/activity_base"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

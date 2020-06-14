@@ -34,4 +34,6 @@
 
     </LinearLayout>
 
+    <include layout="@layout/activity_base"/>
+
 </androidx.core.widget.NestedScrollView>

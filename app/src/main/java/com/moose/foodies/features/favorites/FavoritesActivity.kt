@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.moose.foodies.R
+import com.moose.foodies.features.BaseActivity
 import com.moose.foodies.models.Recipe
 import com.moose.foodies.util.ActivityHelper
 import com.moose.foodies.util.HeightCalculator
@@ -18,7 +19,7 @@ import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_favorites.*
 import javax.inject.Inject
 
-class FavoritesActivity : AppCompatActivity() {
+class FavoritesActivity : BaseActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -35,6 +36,7 @@ class FavoritesActivity : AppCompatActivity() {
         ActivityHelper.initialize(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorites)
+        this.setUpBoomMenu()
 
         val scale: Float = this.resources.displayMetrics.density
         val pixels = (heightCalculator.getImageHeight() * scale + 0.5f).toInt()

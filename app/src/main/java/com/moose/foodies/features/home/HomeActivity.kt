@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.moose.foodies.R
+import com.moose.foodies.features.BaseActivity
 import com.moose.foodies.features.auth.AuthActivity
 import com.moose.foodies.features.favorites.FavoritesActivity
 import com.moose.foodies.features.recipe.RecipeActivity
@@ -26,7 +27,7 @@ import kotlinx.android.synthetic.main.activity_recipe.*
 import kotlinx.android.synthetic.main.carousel_item.view.*
 import javax.inject.Inject
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : BaseActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -41,7 +42,7 @@ class HomeActivity : AppCompatActivity() {
         ActivityHelper.initialize(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        setUpBoomMenu()
+        this.setUpBoomMenu()
 
         val scale: Float = this.resources.displayMetrics.density
         val pixels = (heightCalculator.getImageHeight() * scale + 0.5f).toInt()
@@ -79,44 +80,6 @@ class HomeActivity : AppCompatActivity() {
             else {
                 showSnackbar(home_layout, "Check your connection and try again")
                 home_swipe.stopRefreshing()
-            }
-        }
-    }
-
-    private fun setUpBoomMenu() {
-        val icons = arrayOf(R.drawable.ic_logout, R.drawable.ic_favorites, R.drawable.ic_account, R.drawable.ic_baseline_info_24, R.drawable.ic_search)
-        for (icon in icons){
-            val builder = SimpleCircleButton.Builder()
-                .normalColorRes(R.color.primary)
-                .normalImageRes(icon)
-                .imagePadding(Rect(10, 10, 10, 10))
-                .listener {
-                    handleBoomClick(it)
-                }
-
-            bmb.addBuilder(builder)
-        }
-        bmb.buttonPlaceEnum = ButtonPlaceEnum.SC_5_4
-        bmb.piecePlaceEnum = PiecePlaceEnum.DOT_5_4
-    }
-
-    private fun handleBoomClick(index: Int) {
-        when(index){
-            0 -> {
-                homeViewModel.logout()
-                startActivity(Intent(this, AuthActivity::class.java))
-            }
-            1 -> {
-                startActivity(Intent(this, FavoritesActivity::class.java))
-            }
-            2 -> {
-                Log.d("Boom", "handleBoomClick: accounts clicked")
-            }
-            3 -> {
-                Log.d("Boom", "handleBoomClick: info clicked")
-            }
-            4 -> {
-                Log.d("Boom", "handleBoomClick: search clicked")
             }
         }
     }
