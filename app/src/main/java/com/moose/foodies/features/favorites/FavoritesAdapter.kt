@@ -12,7 +12,8 @@ import kotlinx.android.synthetic.main.favorite_item.view.*
 
 class FavoritesAdapter(
     private val recipes: List<Recipe>,
-    private val pixels: Int
+    private val pixels: Int,
+    val showRecipe: (recipe: Recipe) -> Unit
 ) :
     RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHolder>() {
 
@@ -29,11 +30,14 @@ class FavoritesAdapter(
 
         fun bind(recipe: Recipe) {
             val url = recipe.info.image.replace("312x231", "636x393")
-            Log.d("image", "bind: $url")
             itemView.recipe_image.requestLayout()
             itemView.recipe_image.layoutParams.height = pixels
             itemView.recipe_name.text = recipe.info.title
             itemView.recipe_image.loadImage(url)
+
+            itemView.setOnClickListener {
+                showRecipe(recipe)
+            }
         }
 
     }

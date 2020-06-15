@@ -1,5 +1,6 @@
 package com.moose.foodies.features.favorites
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
@@ -9,8 +10,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.crashlytics.internal.common.CrashlyticsCore
+import com.google.gson.Gson
 import com.moose.foodies.R
 import com.moose.foodies.features.BaseActivity
+import com.moose.foodies.features.recipe.RecipeActivity
 import com.moose.foodies.models.Recipe
 import com.moose.foodies.util.ActivityHelper
 import com.moose.foodies.util.HeightCalculator
@@ -45,7 +48,9 @@ class FavoritesActivity : BaseActivity() {
         favoritesViewModel.favorites.observe(this, Observer {
             favorites = it as MutableList<Recipe>
             rv.layoutManager = LinearLayoutManager(this)
-            rv.adapter = FavoritesAdapter(favorites, pixels)
+            rv.adapter = FavoritesAdapter(favorites, pixels) {recipe ->
+                startActivity(Intent(this, RecipeActivity::class.java).putExtra("recipe", Gson().toJson(recipe)))
+            }
         })
 
         favoritesViewModel.state.observe(this, Observer {
