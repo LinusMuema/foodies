@@ -22,6 +22,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="100dp"
                 android:orientation="vertical">
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -54,7 +55,8 @@
                         android:fontFamily="@font/regular"
                         android:textColor="@color/dark_text"
                         android:textSize="20sp"
-                        android:layout_margin="5dp"/>
+                        android:layout_marginTop="50dp"
+                        android:padding="5dp"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -64,7 +66,7 @@
                         android:textColor="@color/dark_text"
                         android:gravity="center"
                         android:textSize="15sp"
-                        android:layout_margin="10dp"/>
+                        android:layout_margin="5dp"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -73,7 +75,8 @@
                         android:fontFamily="@font/regular"
                         android:textColor="@color/dark_text"
                         android:textSize="20sp"
-                        android:layout_margin="5dp"/>
+                        android:layout_marginTop="50dp"
+                        android:padding="5dp"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -83,8 +86,50 @@
                         android:textColor="@color/dark_text"
                         android:gravity="center"
                         android:textSize="15sp"
-                        android:layout_margin="10dp"/>
-                
+                        android:layout_margin="5dp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fridge"
+                    android:fontFamily="@font/regular"
+                    android:textColor="@color/dark_text"
+                    android:textSize="20sp"
+                    android:layout_marginTop="50dp"
+                    android:padding="5dp"/>
+
+                <com.google.android.material.chip.ChipGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:id="@+id/chipGroup">
+
+                </com.google.android.material.chip.ChipGroup>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add"
+                        android:textAllCaps="false"
+                        android:layout_margin="5dp"
+                        android:id="@+id/btn_add"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/search"
+                        android:textAllCaps="false"
+                        android:layout_margin="5dp"
+                        android:id="@+id/btn_search"/>
+
+                </LinearLayout>
+
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>

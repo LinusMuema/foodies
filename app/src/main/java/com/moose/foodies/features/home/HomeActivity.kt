@@ -6,11 +6,15 @@ import android.graphics.Rect
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.ViewGroup
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.input.input
+import com.google.android.material.chip.Chip
 import com.google.gson.Gson
 import com.moose.foodies.R
 import com.moose.foodies.features.BaseActivity
@@ -36,6 +40,7 @@ class HomeActivity : BaseActivity() {
     lateinit var heightCalculator: HeightCalculator
 
     private val homeViewModel by viewModels<HomeViewModel> { viewModelFactory }
+    private var ingredients: ArrayList<String> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -81,6 +86,25 @@ class HomeActivity : BaseActivity() {
                 showSnackbar(home_layout, "Check your connection and try again")
                 home_swipe.stopRefreshing()
             }
+        }
+
+        btn_add.setOnClickListener {
+            val chip = Chip(this@HomeActivity)
+            chip.hide()
+            chip.setOnCloseIconClickListener {
+                chipGroup.removeView(chip)
+            }
+            MaterialDialog(this).show {
+                input(hint = "Enter the ingredient"){_, text ->
+                    if (text.isEmpty()) return@input
+                    ingredients.add(text.toString())
+                    chip.text = text.toString()
+                    chip.isCloseIconVisible = true
+                    chip.show()
+                    this@HomeActivity.hideBottomBar()
+                }
+            }
+            chipGroup.addView(chip)
         }
     }
 

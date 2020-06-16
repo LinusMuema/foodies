@@ -25,4 +25,8 @@
     <string name="procedure">Procedure</string>
     <string name="favorites">Favorites</string>
     <string name="todays_trivia">Today\'s Trivia</string>
+    <string name="fridge">What\'s in your fridge?</string>
+    <string name="fridge_instructions">Click the add button to add items in your fridge and we will provide you with recipes you can make.</string>
+    <string name="add">add</string>
+    <string name="search">Search</string>
 </resources>

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.view.ViewGroup
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -75,6 +76,7 @@ class RecipeActivity : AppCompatActivity() {
 
         setSupportActionBar(topAppBar)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         topAppBar.requestLayout()
         val layoutParams = (topAppBar.layoutParams as? ViewGroup.MarginLayoutParams)
         layoutParams?.setMargins(0, getStatusBarHeight(), 0, 0)
@@ -113,6 +115,15 @@ class RecipeActivity : AppCompatActivity() {
         else
             menu!!.findItem(R.id.favorite).icon = resources.getDrawable(R.drawable.ic_favorite_border)
         return super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }
