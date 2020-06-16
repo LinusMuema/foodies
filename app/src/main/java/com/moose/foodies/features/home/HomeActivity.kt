@@ -2,32 +2,27 @@ package com.moose.foodies.features.home
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Rect
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.input
+import com.arlib.floatingsearchview.FloatingSearchView
+import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion
 import com.google.android.material.chip.Chip
 import com.google.gson.Gson
 import com.moose.foodies.R
 import com.moose.foodies.features.BaseActivity
-import com.moose.foodies.features.auth.AuthActivity
-import com.moose.foodies.features.favorites.FavoritesActivity
 import com.moose.foodies.features.recipe.RecipeActivity
 import com.moose.foodies.util.*
-import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum
-import com.nightonke.boommenu.BoomButtons.SimpleCircleButton
-import com.nightonke.boommenu.Piece.PiecePlaceEnum
 import dagger.android.AndroidInjection
+import kotlinx.android.synthetic.main.activity_base.*
 import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.activity_recipe.*
 import kotlinx.android.synthetic.main.carousel_item.view.*
 import javax.inject.Inject
 
@@ -106,6 +101,19 @@ class HomeActivity : BaseActivity() {
             }
             chipGroup.addView(chip)
         }
+
+        search_view.setOnSearchListener(object : FloatingSearchView.OnSearchListener  {
+            override fun onSearchAction(currentQuery: String?) {
+                this@HomeActivity.hideBottomBar()
+                Log.d("Search", "onSearchAction: $currentQuery")
+            }
+
+            override fun onSuggestionClicked(searchSuggestion: SearchSuggestion?) {
+                this@HomeActivity.hideBottomBar()
+                Log.d("Search", "onSuggestionClicked: $searchSuggestion")
+            }
+
+        })
     }
 
     private fun connectionAvailable(): Boolean {
