@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
-        <activity android:name=".features.BaseActivity"></activity>
+        <activity android:name=".features.BaseActivity" />
         <activity android:name=".features.favorites.FavoritesActivity" />
         <activity android:name=".features.recipe.RecipeActivity" />
         <activity android:name=".features.reset.ResetPasswordActivity" />

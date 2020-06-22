@@ -2,40 +2,48 @@ package com.moose.foodies.features.home
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
+import android.graphics.Rect
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.activity.viewModels
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.input
-import com.arlib.floatingsearchview.FloatingSearchView
-import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion
 import com.google.android.material.chip.Chip
 import com.google.gson.Gson
+import com.mancj.materialsearchbar.MaterialSearchBar
 import com.moose.foodies.R
-import com.moose.foodies.features.BaseActivity
+import com.moose.foodies.features.auth.AuthActivity
+import com.moose.foodies.features.favorites.FavoritesActivity
 import com.moose.foodies.features.recipe.RecipeActivity
 import com.moose.foodies.util.*
+import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum
+import com.nightonke.boommenu.BoomButtons.SimpleCircleButton
+import com.nightonke.boommenu.Piece.PiecePlaceEnum
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_base.*
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.carousel_item.view.*
 import javax.inject.Inject
 
-class HomeActivity : BaseActivity() {
+class HomeActivity : AppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
 
     @Inject
     lateinit var heightCalculator: HeightCalculator
 
     private val homeViewModel by viewModels<HomeViewModel> { viewModelFactory }
     private var ingredients: ArrayList<String> = ArrayList()
+    private lateinit var recentSearches: MutableSet<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -83,6 +91,29 @@ class HomeActivity : BaseActivity() {
             }
         }
 
+        //Search bar section
+        recentSearches = sharedPreferences.getStringSet("recentSearches", null) as MutableSet<String>
+        searchBar.lastSuggestions = recentSearches.toMutableList()
+        searchBar.setOnSearchActionListener(object : MaterialSearchBar.OnSearchActionListener{
+            override fun onButtonClicked(buttonCode: Int) {
+                Log.d("Search", "onButtonClicked: $buttonCode")
+            }
+
+            override fun onSearchStateChanged(enabled: Boolean) {
+                this@HomeActivity.hideBottomBar()
+                Log.d("Search", "onSearchStateChanged: $enabled")
+            }
+
+            override fun onSearchConfirmed(text: CharSequence?) {
+                recentSearches.add(text.toString())
+                this@HomeActivity.hideBottomBar()
+                Log.d("Search", "onSearchConfirmed: $text")
+            }
+
+        })
+
+
+        // Ingredients search section
         btn_add.setOnClickListener {
             val chip = Chip(this@HomeActivity)
             chip.hide()
@@ -101,24 +132,59 @@ class HomeActivity : BaseActivity() {
             }
             chipGroup.addView(chip)
         }
+    }
 
-        search_view.setOnSearchListener(object : FloatingSearchView.OnSearchListener  {
-            override fun onSearchAction(currentQuery: String?) {
-                this@HomeActivity.hideBottomBar()
-                Log.d("Search", "onSearchAction: $currentQuery")
+    private fun setUpBoomMenu() {
+        val icons = arrayOf(R.drawable.ic_home, R.drawable.ic_favorites, R.drawable.ic_account, R.drawable.ic_logout)
+        for (icon in icons){
+            val builder = SimpleCircleButton.Builder()
+                .normalColorRes(R.color.primary)
+                .normalImageRes(icon)
+                .imagePadding(Rect(10, 10, 10, 10))
+                .listener {
+                    handleBoomClick(it)
+                }
+
+            bmb.addBuilder(builder)
+        }
+        bmb.buttonPlaceEnum = ButtonPlaceEnum.SC_4_2
+        bmb.piecePlaceEnum = PiecePlaceEnum.DOT_4_2
+    }
+
+    private fun handleBoomClick(index: Int) {
+        val activity = this.localClassName
+        when(index){
+            0 -> {
+                if (!activity.contains("HomeActivity"))
+                    startActivity(Intent(this, HomeActivity::class.java))
             }
-
-            override fun onSuggestionClicked(searchSuggestion: SearchSuggestion?) {
-                this@HomeActivity.hideBottomBar()
-                Log.d("Search", "onSuggestionClicked: $searchSuggestion")
+            1 -> {
+                if (!activity.contains("FavoritesActivity"))
+                    startActivity(Intent(this, FavoritesActivity::class.java))
             }
-
-        })
+            2 -> {
+                Log.d("Boom", "handleBoomClick: account clicked")
+            }
+            3 -> {
+                sharedPreferences.edit().putBoolean("logged", false).apply()
+                startActivity(Intent(this, AuthActivity::class.java))
+            }
+        }
     }
 
     private fun connectionAvailable(): Boolean {
         val manager = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork = manager.activeNetworkInfo
         return activeNetwork != null
+    }
+
+    override fun onPause() {
+        super.onPause()
+        sharedPreferences.edit().putStringSet("recentSearches", recentSearches).apply()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        sharedPreferences.edit().putStringSet("recentSearches", recentSearches).apply()
     }
 }

@@ -23,7 +23,7 @@ import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_favorites.*
 import javax.inject.Inject
 
-class FavoritesActivity : BaseActivity() {
+class FavoritesActivity : AppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -40,7 +40,6 @@ class FavoritesActivity : BaseActivity() {
         ActivityHelper.initialize(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorites)
-        this.setUpBoomMenu()
 
         val scale: Float = this.resources.displayMetrics.density
         val pixels = (heightCalculator.getImageHeight() * scale + 0.5f).toInt()
