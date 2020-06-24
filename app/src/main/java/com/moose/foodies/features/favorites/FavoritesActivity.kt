@@ -9,10 +9,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.crashlytics.internal.common.CrashlyticsCore
 import com.google.gson.Gson
 import com.moose.foodies.R
-import com.moose.foodies.features.BaseActivity
 import com.moose.foodies.features.recipe.RecipeActivity
 import com.moose.foodies.models.Recipe
 import com.moose.foodies.util.ActivityHelper
@@ -81,7 +79,7 @@ class FavoritesActivity : AppCompatActivity() {
 
         })
 
-
+        favorites_back.setOnClickListener { onBackPressed() }
         favoritesViewModel.getFavorites()
     }
 }

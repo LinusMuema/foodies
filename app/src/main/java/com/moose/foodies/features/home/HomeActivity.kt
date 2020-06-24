@@ -25,7 +25,6 @@ import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum
 import com.nightonke.boommenu.BoomButtons.SimpleCircleButton
 import com.nightonke.boommenu.Piece.PiecePlaceEnum
 import dagger.android.AndroidInjection
-import kotlinx.android.synthetic.main.activity_base.*
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.carousel_item.view.*
 import javax.inject.Inject
@@ -43,7 +42,7 @@ class HomeActivity : AppCompatActivity() {
 
     private val homeViewModel by viewModels<HomeViewModel> { viewModelFactory }
     private var ingredients: ArrayList<String> = ArrayList()
-    private lateinit var recentSearches: MutableSet<String>
+    private lateinit var recentSearches: HashSet<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -92,7 +91,8 @@ class HomeActivity : AppCompatActivity() {
         }
 
         //Search bar section
-        recentSearches = sharedPreferences.getStringSet("recentSearches", null) as MutableSet<String>
+
+        recentSearches = sharedPreferences.getStringSet("recentSearches", HashSet<String>()) as HashSet<String>
         searchBar.lastSuggestions = recentSearches.toMutableList()
         searchBar.setOnSearchActionListener(object : MaterialSearchBar.OnSearchActionListener{
             override fun onButtonClicked(buttonCode: Int) {
@@ -105,7 +105,7 @@ class HomeActivity : AppCompatActivity() {
             }
 
             override fun onSearchConfirmed(text: CharSequence?) {
-                recentSearches.add(text.toString())
+                recentSearches?.add(text.toString())
                 this@HomeActivity.hideBottomBar()
                 Log.d("Search", "onSearchConfirmed: $text")
             }

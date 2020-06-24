@@ -29,7 +29,7 @@
                     style="@style/MaterialSearchBarLight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="5dp"
                     android:elevation="5dp"
                     android:id="@+id/searchBar"
                     app:mt_hint="Search for a recipe"
@@ -68,15 +68,33 @@
                         android:layout_marginTop="50dp"
                         android:padding="5dp"/>
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/joke"
-                        android:fontFamily="@font/regular"
-                        android:textColor="@color/dark_text"
-                        android:gravity="center"
-                        android:textSize="15sp"
-                        android:layout_margin="5dp"/>
+                        android:padding="5dp"
+                        android:background="@drawable/round_relative"
+                        android:layout_margin="5dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_copy"
+                            android:layout_alignParentEnd="true"
+                            android:layout_margin="5dp"
+                            android:id="@+id/joke_copy"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/joke_copy"
+                            android:id="@+id/joke"
+                            android:gravity="center"
+                            android:fontFamily="@font/regular"
+                            android:textColor="@color/dark_text"
+                            android:textSize="15sp"
+                            android:layout_margin="5dp"/>
+
+                    </RelativeLayout>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -88,15 +106,33 @@
                         android:layout_marginTop="50dp"
                         android:padding="5dp"/>
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:background="@drawable/round_relative"
+                    android:layout_margin="5dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_copy"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="5dp"
+                    android:id="@+id/trivia_copy"/>
+
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/trivia"
                         android:fontFamily="@font/regular"
                         android:textColor="@color/dark_text"
+                        android:layout_below="@+id/trivia_copy"
                         android:gravity="center"
                         android:textSize="15sp"
                         android:layout_margin="5dp"/>
+
+                </RelativeLayout>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
@@ -146,6 +182,15 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <include layout="@layout/activity_base"/>
+    <com.nightonke.boommenu.BoomMenuButton
+        android:id="@+id/bmb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        app:bmb_normalColor="@color/light_text"
+        app:bmb_buttonEnum="simpleCircle"
+        app:elevation="10dp"/>
 
 </RelativeLayout>

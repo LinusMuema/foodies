@@ -18,14 +18,28 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.google.android.material.textview.MaterialTextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/favorites"
-                android:textColor="@color/dark_text"
-                android:layout_margin="10dp"
-                android:fontFamily="@font/bold"
-                android:textSize="20sp" />
+                android:gravity="center">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/favorites_back"
+                    android:background="@drawable/ic_arrow_back"
+                    android:layout_margin="10dp"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/favorites"
+                    android:textColor="@color/dark_text"
+                    android:layout_margin="10dp"
+                    android:fontFamily="@font/bold"
+                    android:textSize="20sp"/>
+
+            </LinearLayout>
 
             <com.tsuryo.swipeablerv.SwipeableRecyclerView
                 android:id="@+id/rv"
@@ -39,7 +53,5 @@
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-
-    <include layout="@layout/activity_base"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

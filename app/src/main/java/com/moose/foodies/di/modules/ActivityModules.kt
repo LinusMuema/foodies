@@ -1,7 +1,6 @@
 package com.moose.foodies.di.modules
 
 import com.moose.foodies.di.ActivityScope
-import com.moose.foodies.features.BaseActivity
 import com.moose.foodies.features.home.HomeActivity
 import com.moose.foodies.features.intolerances.IntolerancesActivity
 import com.moose.foodies.features.auth.AuthActivity
@@ -14,10 +13,6 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class ActivityModules {
-
-    @ActivityScope
-    @ContributesAndroidInjector
-    abstract fun provideBase(): BaseActivity
 
     @ActivityScope
     @ContributesAndroidInjector
