@@ -13,11 +13,7 @@ class Authenticator: Interceptor {
         val newRequest = originalRequest.newBuilder().apply {
             headers(Headers.Builder().apply {
                 addAll(originalRequest.headers)
-                val token = PreferenceHelper.getAccessToken(FoodiesApplication.getInstance())
-                if (token != null) {
-                    add("Authorization", token)
-                    Log.e("AuthorizationToken :: ", token)
-                }
+                add("Authorization", PreferenceHelper.getAccessToken(FoodiesApplication.getInstance())!!)
                 add("Content-Type", "application/json")
             }.build())
         }.build()
