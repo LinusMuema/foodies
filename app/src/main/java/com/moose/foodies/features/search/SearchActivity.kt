@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
+import com.moose.foodies.FoodiesApplication
 import com.moose.foodies.R
+import com.moose.foodies.util.PreferenceHelper
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
@@ -30,6 +32,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun wordSearchActivity() {
+        Log.d("Token", "wordSearchActivity: ${PreferenceHelper.getAccessToken(FoodiesApplication.getInstance())}")
         searchViewModel.searchRecipe(intent.getStringExtra("recipeName")!!)
     }
 

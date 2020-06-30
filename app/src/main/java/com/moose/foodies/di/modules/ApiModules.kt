@@ -1,13 +1,17 @@
 package com.moose.foodies.di.modules
 
+import android.util.Log
 import com.moose.foodies.BuildConfig
 import com.moose.foodies.FoodiesApplication
 import com.moose.foodies.network.ApiEndpoints
+import com.moose.foodies.network.Authenticator
 import com.moose.foodies.util.PreferenceHelper
 import dagger.Module
 import dagger.Provides
 import io.reactivex.schedulers.Schedulers
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -31,13 +35,8 @@ class ApiModules {
         .connectTimeout(20, TimeUnit.SECONDS)
         .readTimeout(20, TimeUnit.SECONDS)
         .writeTimeout(20, TimeUnit.SECONDS)
+        .addInterceptor(Authenticator())
         .addInterceptor(provideLoggingInterceptor())
-        .addInterceptor {
-            val request = it.request().newBuilder()
-                .addHeader("Authorization", PreferenceHelper.getAccessToken(FoodiesApplication.getInstance())!!)
-                .build()
-            it.proceed(request)
-        }
         .build()
 
     @Singleton
@@ -47,12 +46,12 @@ class ApiModules {
     @Singleton
     @Provides
     fun provideRetrofit(): Retrofit = Retrofit.Builder()
-        .baseUrl(baseUrl)
-        .client(provideOkHttpClient())
-        .addCallAdapterFactory(provideRxAdapter())
-        .addConverterFactory(ScalarsConverterFactory.create())
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
+            .baseUrl(baseUrl)
+            .client(provideOkHttpClient())
+            .addCallAdapterFactory(provideRxAdapter())
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 
     @Singleton
     @Provides
