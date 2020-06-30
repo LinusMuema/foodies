@@ -30,7 +30,7 @@ class SplashActivity @Inject constructor() : AppCompatActivity() {
         this.hideAllBars()
         this.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         val widthDp = resources.displayMetrics.run { widthPixels / density }
-        sharedPreferences.edit().putFloat("deviceWidth", widthDp).apply()
+        PreferenceHelper.setDeviceWidth(this, widthDp)
 
         if (PreferenceHelper.getLoggedStatus(this)){
             Handler().postDelayed({

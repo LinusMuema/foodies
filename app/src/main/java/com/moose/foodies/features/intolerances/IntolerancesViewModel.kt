@@ -21,7 +21,6 @@ class IntolerancesViewModel @Inject constructor(private val apiRepository: ApiRe
     val results: MutableLiveData<List<Intolerance>> = MutableLiveData()
     val saveResult: MutableLiveData<Boolean> = MutableLiveData()
     val state: MutableLiveData<UiState> = MutableLiveData()
-    val token = sharedPreferences.getString("token", "default_token")
     private val composite = CompositeDisposable()
 
     fun getIntolerances() {
@@ -45,7 +44,7 @@ class IntolerancesViewModel @Inject constructor(private val apiRepository: ApiRe
 
     fun update(){
         composite.add(
-            apiRepository.updateIntolerances("Bearer $token", Intolerances(intolerances, "posting"))
+            apiRepository.updateIntolerances(Intolerances(intolerances, "posting"))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { saveResult.value = it.updated },

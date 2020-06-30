@@ -20,7 +20,6 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(private val apiRepository: ApiRepository, private val dbRepository: DbRepository, private val sharedPreferences: SharedPreferences): ViewModel() {
 
     private val composite = CompositeDisposable()
-    private val token = sharedPreferences.getString("token", "default")
     val recipes: MutableLiveData<Recipes> = MutableLiveData()
     val state: MutableLiveData<UiState> = MutableLiveData()
 
@@ -40,7 +39,7 @@ class HomeViewModel @Inject constructor(private val apiRepository: ApiRepository
 
     fun updateRecipes() {
         composite.add(
-            apiRepository.getRecipes("Bearer $token")
+            apiRepository.getRecipes()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {

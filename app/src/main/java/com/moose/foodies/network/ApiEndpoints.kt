@@ -17,10 +17,10 @@ interface ApiEndpoints {
     fun getAllIntolerances(): Observable<Intolerances>
 
     @POST("/api/intolerances")
-    fun updateIntolerances(@Header("Authorization") token: String, @Body intolerances: Intolerances): Observable<IntolerancesUpdate>
+    fun updateIntolerances(@Body intolerances: Intolerances): Observable<IntolerancesUpdate>
 
     @GET("/api/recipes/random")
-    fun getRecipes(@Header("Authorization") token: String): Observable<Recipes>
+    fun getRecipes(): Observable<Recipes>
 
     @GET("/api/recipes/search/{name}")
     fun searchRecipe(@Path("name") name: String): Observable<RecipeSearch>

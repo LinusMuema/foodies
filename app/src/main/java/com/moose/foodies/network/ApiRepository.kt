@@ -15,9 +15,9 @@ open class ApiRepository @Inject constructor(private val apiEndpoints: ApiEndpoi
 
     open fun getIntolerances() = apiEndpoints.getAllIntolerances()
 
-    open fun updateIntolerances(token: String, intolerance: Intolerances) = apiEndpoints.updateIntolerances(token, intolerance)
+    open fun updateIntolerances( intolerance: Intolerances) = apiEndpoints.updateIntolerances(intolerance)
 
-    open fun getRecipes(token: String) = apiEndpoints.getRecipes(token)
+    open fun getRecipes() = apiEndpoints.getRecipes()
 
     open fun searchRecipes(name: String) = apiEndpoints.searchRecipe(name)
 
