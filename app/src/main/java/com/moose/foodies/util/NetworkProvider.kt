@@ -8,7 +8,6 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.util.concurrent.TimeUnit
 
 object NetworkProvider {
     private const val baseUrl = "https://foodies-db.herokuapp.com/"
@@ -17,8 +16,10 @@ object NetworkProvider {
 
     private fun provideLoggingInterceptor() = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
+    private fun provideAuthenticator() = Authenticator()
+
     fun provideClient() = OkHttpClient.Builder()
-        .addInterceptor(Authenticator())
+        .addInterceptor(provideAuthenticator())
         .addInterceptor(provideLoggingInterceptor())
         .build()
 
