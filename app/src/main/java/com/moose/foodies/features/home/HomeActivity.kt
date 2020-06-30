@@ -1,12 +1,11 @@
 package com.moose.foodies.features.home
 
-import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
+import android.content.*
 import android.graphics.Rect
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -20,6 +19,7 @@ import com.moose.foodies.R
 import com.moose.foodies.features.auth.AuthActivity
 import com.moose.foodies.features.favorites.FavoritesActivity
 import com.moose.foodies.features.recipe.RecipeActivity
+import com.moose.foodies.features.search.SearchActivity
 import com.moose.foodies.util.*
 import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum
 import com.nightonke.boommenu.BoomButtons.SimpleCircleButton
@@ -91,7 +91,6 @@ class HomeActivity : AppCompatActivity() {
         }
 
         //Search bar section
-
         recentSearches = sharedPreferences.getStringSet("recentSearches", HashSet<String>()) as HashSet<String>
         searchBar.lastSuggestions = recentSearches.toMutableList()
         searchBar.setOnSearchActionListener(object : MaterialSearchBar.OnSearchActionListener{
@@ -105,13 +104,34 @@ class HomeActivity : AppCompatActivity() {
             }
 
             override fun onSearchConfirmed(text: CharSequence?) {
-                recentSearches?.add(text.toString())
+                recentSearches.add(text.toString())
                 this@HomeActivity.hideBottomBar()
-                Log.d("Search", "onSearchConfirmed: $text")
+                startActivity(
+                    Intent(this@HomeActivity, SearchActivity::class.java)
+                        .putExtra("searchType", 0)
+                        .putExtra("recipeName", text.toString()))
             }
 
         })
 
+
+        //Copying the joke
+        joke_copy.setOnClickListener {
+            val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clipData = ClipData.newPlainText("joke", joke.text)
+            clipboardManager.setPrimaryClip(clipData)
+
+            Toast.makeText(this, "Joke copied to clipboard", Toast.LENGTH_LONG).show()
+        }
+
+        //Copying the trivia
+        trivia_copy.setOnClickListener {
+            val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clipData = ClipData.newPlainText("trivia", trivia.text)
+            clipboardManager.setPrimaryClip(clipData)
+
+            Toast.makeText(this, "Trivia copied to clipboard", Toast.LENGTH_LONG).show()
+        }
 
         // Ingredients search section
         btn_add.setOnClickListener {
@@ -131,6 +151,13 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
             chipGroup.addView(chip)
+        }
+
+        //Submit fridge items
+        btn_search.setOnClickListener {
+            startActivity(Intent(this, SearchActivity::class.java)
+                .putExtra("searchType", 1)
+                .putExtra("ingredients", ingredients.joinToString(separator = ",")))
         }
     }
 

@@ -7,6 +7,7 @@ import com.moose.foodies.features.auth.AuthActivity
 import com.moose.foodies.features.favorites.FavoritesActivity
 import com.moose.foodies.features.recipe.RecipeActivity
 import com.moose.foodies.features.reset.ResetPasswordActivity
+import com.moose.foodies.features.search.SearchActivity
 import com.moose.foodies.features.splash.SplashActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -41,4 +42,8 @@ abstract class ActivityModules {
     @ActivityScope
     @ContributesAndroidInjector
     abstract fun provideFavorites(): FavoritesActivity
+
+    @ActivityScope
+    @ContributesAndroidInjector
+    abstract fun provideSearch(): SearchActivity
 }

@@ -6,9 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.moose.foodies.FoodiesApplication
 import com.moose.foodies.models.AuthResponse
 import com.moose.foodies.models.Credentials
 import com.moose.foodies.network.ApiRepository
+import com.moose.foodies.util.PreferenceHelper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import retrofit2.HttpException
@@ -26,7 +28,8 @@ class AuthViewModel @Inject constructor(private val apiRepository: ApiRepository
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                        sharedPreferences.edit().putString("token", it.token).putBoolean("logged", true).apply()
+                        PreferenceHelper.setAccessToken(FoodiesApplication.getInstance(), it.token)
+                        PreferenceHelper.setLogged(FoodiesApplication.getInstance(), true)
                         response.value = it.type
                     },
                     {

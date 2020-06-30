@@ -22,4 +22,10 @@ interface ApiEndpoints {
     @GET("/api/recipes/random")
     fun getRecipes(@Header("Authorization") token: String): Observable<Recipes>
 
+    @GET("/api/recipes/search/{name}")
+    fun searchRecipe(@Path("name") name: String): Observable<RecipeSearch>
+
+    @GET("/api/recipes/search/ingredients/{ingredients}")
+    fun searchRecipeByIngredients(@Path("ingredients") ingredients: String): Observable<FridgeSearch>
+
 }

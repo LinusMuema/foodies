@@ -1,7 +1,9 @@
 package com.moose.foodies.di.modules
 
 import com.moose.foodies.BuildConfig
+import com.moose.foodies.FoodiesApplication
 import com.moose.foodies.network.ApiEndpoints
+import com.moose.foodies.util.PreferenceHelper
 import dagger.Module
 import dagger.Provides
 import io.reactivex.schedulers.Schedulers
@@ -30,6 +32,12 @@ class ApiModules {
         .readTimeout(20, TimeUnit.SECONDS)
         .writeTimeout(20, TimeUnit.SECONDS)
         .addInterceptor(provideLoggingInterceptor())
+        .addInterceptor {
+            val request = it.request().newBuilder()
+                .addHeader("Authorization", PreferenceHelper.getAccessToken(FoodiesApplication.getInstance())!!)
+                .build()
+            it.proceed(request)
+        }
         .build()
 
     @Singleton

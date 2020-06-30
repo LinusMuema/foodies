@@ -10,6 +10,7 @@ import android.view.View
 import com.moose.foodies.R
 import com.moose.foodies.features.home.HomeActivity
 import com.moose.foodies.features.auth.AuthActivity
+import com.moose.foodies.util.PreferenceHelper
 import com.moose.foodies.util.fadeIn
 import com.moose.foodies.util.hideAllBars
 import com.moose.foodies.util.slideUp
@@ -31,7 +32,7 @@ class SplashActivity @Inject constructor() : AppCompatActivity() {
         val widthDp = resources.displayMetrics.run { widthPixels / density }
         sharedPreferences.edit().putFloat("deviceWidth", widthDp).apply()
 
-        if (sharedPreferences.getBoolean("logged", false)){
+        if (PreferenceHelper.getLoggedStatus(this)){
             Handler().postDelayed({
                 startActivity(Intent(this, HomeActivity::class.java))
                 finish()

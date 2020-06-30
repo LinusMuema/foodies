@@ -10,6 +10,7 @@ import com.moose.foodies.features.auth.AuthViewModel
 import com.moose.foodies.features.favorites.FavoritesViewModel
 import com.moose.foodies.features.recipe.RecipeViewModel
 import com.moose.foodies.features.reset.ResetPasswordViewModel
+import com.moose.foodies.features.search.SearchViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -46,6 +47,11 @@ abstract class ViewModelModules {
     @Binds
     @VMKey(FavoritesViewModel::class)
     abstract fun bindFavoritesViewModel(favoritesViewModel: FavoritesViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @VMKey(SearchViewModel::class)
+    abstract fun bindSearchViewModel(searchViewModel: SearchViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory

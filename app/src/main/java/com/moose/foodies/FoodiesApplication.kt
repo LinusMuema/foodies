@@ -15,11 +15,20 @@ open class FoodiesApplication: Application(), HasAndroidInjector{
 
     private lateinit var appComponent: AppComponent
 
+
     override fun onCreate() {
         super.onCreate()
+        instance = this
         appComponent = DaggerAppComponent.factory().create(applicationContext)
         appComponent.inject(this)
     }
 
     override fun androidInjector(): AndroidInjector<Any> = androidInjector
+
+    companion object{
+        private lateinit var instance: FoodiesApplication
+
+        @JvmStatic
+        fun getInstance() = instance
+    }
 }
