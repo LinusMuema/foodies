@@ -18,9 +18,6 @@ object NetworkProvider {
     private fun provideLoggingInterceptor() = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
     fun provideClient() = OkHttpClient.Builder()
-        .connectTimeout(20, TimeUnit.SECONDS)
-        .readTimeout(20, TimeUnit.SECONDS)
-        .writeTimeout(20, TimeUnit.SECONDS)
         .addInterceptor(Authenticator())
         .addInterceptor(provideLoggingInterceptor())
         .build()

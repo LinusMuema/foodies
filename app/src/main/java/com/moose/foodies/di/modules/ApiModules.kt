@@ -25,11 +25,11 @@ class ApiModules {
 
     @Singleton
     @Provides
-    fun provideRetrofit(): Retrofit = NetworkProvider.provideRetrofit(provideClient())
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = NetworkProvider.provideRetrofit(okHttpClient)
 
     @Singleton
     @Provides
-    fun provideApi(): ApiEndpoints {
-        return provideRetrofit().create(ApiEndpoints::class.java)
+    fun provideApi(retrofit: Retrofit): ApiEndpoints {
+        return retrofit.create(ApiEndpoints::class.java)
     }
 }
