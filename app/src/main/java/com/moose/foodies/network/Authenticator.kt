@@ -1,11 +1,12 @@
 package com.moose.foodies.network
 
-import android.util.Log
 import com.moose.foodies.FoodiesApplication
 import com.moose.foodies.util.PreferenceHelper
 import okhttp3.Headers
 import okhttp3.Interceptor
 import okhttp3.Response
+import javax.inject.Inject
+import javax.inject.Singleton
 
 class Authenticator: Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
