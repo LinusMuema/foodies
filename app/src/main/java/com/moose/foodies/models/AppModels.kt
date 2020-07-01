@@ -32,12 +32,14 @@ data class Section(val _id: String, val name: String, val steps: List<Step>)
 
 data class Step(val _id: String, val instruction: String, val number: Int)
 
-data class RecipeSearch(val message: String, val recipes: List<RecipeResults>)
+data class RecipeSearch(val message: String, val recipes: List<RecipeResults>, val videos: List<Video>)
 
 data class RecipeResults(val id: Int, val image: String, val openLicense: Int, val readyInMinutes: Int, val servings: Int, val sourceUrl: String, val title: String)
 
-data class FridgeSearch(val message: String, val recipes: List<FridgeResults>)
+data class Video(val length: Int, val rating: Double, val shortTitle: String, val thumbnail: String, val title: String, val views: Int, val youTubeId: String)
 
-data class FridgeResults(val id: Int, val image: String, val missedIngredients: List<MissedIngredient>, val title: String)
+data class IngredientsSearch(val message: String, val recipes: List<IngredientsSearchResults>)
+
+data class IngredientsSearchResults(val id: Int, val image: String, val missedIngredients: List<MissedIngredient>, val title: String)
 
 data class MissedIngredient(val aisle: String, val amount: Int, val id: Int, val image: String, val meta: List<String>, val metaInformation: List<String>, val name: String, val original: String, val originalName: String, val originalString: String, val unit: String, val unitLong: String, val unitShort: String)

@@ -2,7 +2,6 @@ package com.moose.foodies.features.search
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.moose.foodies.models.FridgeSearch
 import com.moose.foodies.models.RecipeSearch
 import com.moose.foodies.models.UiState
 import com.moose.foodies.network.ApiRepository
@@ -13,7 +12,6 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(private val apiRepository: ApiRepository): ViewModel() {
     private val composite = CompositeDisposable()
     var searchResults: MutableLiveData<RecipeSearch> = MutableLiveData()
-    var ingredientsResult: MutableLiveData<FridgeSearch> = MutableLiveData()
     var state: MutableLiveData<UiState> = MutableLiveData()
 
     fun searchRecipe(name: String) {
@@ -21,15 +19,6 @@ class SearchViewModel @Inject constructor(private val apiRepository: ApiReposito
             apiRepository.searchRecipes(name)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({searchResults.value = it},
-                    {state.value = UiState(it.cause.toString(), it.message) })
-        )
-    }
-
-    fun searchRecipeByIngredients(ingredients: String) {
-        composite.add(
-            apiRepository.searchRecipeByIngredients(ingredients)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ingredientsResult.value = it},
                     {state.value = UiState(it.cause.toString(), it.message) })
         )
     }

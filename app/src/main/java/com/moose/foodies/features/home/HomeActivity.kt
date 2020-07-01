@@ -133,32 +133,6 @@ class HomeActivity : AppCompatActivity() {
             Toast.makeText(this, "Trivia copied to clipboard", Toast.LENGTH_LONG).show()
         }
 
-        // Ingredients search section
-        btn_add.setOnClickListener {
-            val chip = Chip(this@HomeActivity)
-            chip.hide()
-            chip.setOnCloseIconClickListener {
-                chipGroup.removeView(chip)
-            }
-            MaterialDialog(this).show {
-                input(hint = "Enter the ingredient"){_, text ->
-                    if (text.isEmpty()) return@input
-                    ingredients.add(text.toString())
-                    chip.text = text.toString()
-                    chip.isCloseIconVisible = true
-                    chip.show()
-                    this@HomeActivity.hideBottomBar()
-                }
-            }
-            chipGroup.addView(chip)
-        }
-
-        //Submit fridge items
-        btn_search.setOnClickListener {
-            startActivity(Intent(this, SearchActivity::class.java)
-                .putExtra("searchType", 1)
-                .putExtra("ingredients", ingredients.joinToString(separator = ",")))
-        }
     }
 
     private fun setUpBoomMenu() {

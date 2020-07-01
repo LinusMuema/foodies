@@ -12,14 +12,15 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 object NetworkProvider {
     private const val baseUrl = "https://foodies-db.herokuapp.com/"
 
-    private fun provideRxAdapter(): RxJava2CallAdapterFactory = RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io())
+    private fun provideRxAdapter(): RxJava2CallAdapterFactory =
+        RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io())
 
-    private fun provideLoggingInterceptor() = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+    private fun provideLoggingInterceptor() =
+        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
-    private fun provideAuthenticator() = Authenticator()
 
     fun provideClient() = OkHttpClient.Builder()
-        .addInterceptor(provideAuthenticator())
+        .addInterceptor(Authenticator)
         .addInterceptor(provideLoggingInterceptor())
         .build()
 

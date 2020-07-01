@@ -9,6 +9,7 @@ import com.moose.foodies.FoodiesApplication
 import com.moose.foodies.R
 import com.moose.foodies.util.PreferenceHelper
 import dagger.android.AndroidInjection
+import kotlinx.android.synthetic.main.activity_search.*
 import javax.inject.Inject
 
 class SearchActivity : AppCompatActivity() {
@@ -20,23 +21,10 @@ class SearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        val searchType = intent.getIntExtra("searchType", 0)
-        if (searchType == 0) {
-            setContentView(R.layout.activity_search)
-            wordSearchActivity()
-        }
-        else{
-            setContentView(R.layout.activity_fridge)
-            fridgeSearchActivity()
-        }
-    }
+        setContentView(R.layout.activity_search)
+        val query = intent.getStringExtra("recipeName")!!
+        search_query.text = "'$query'"
 
-    private fun wordSearchActivity() {
-        Log.d("Token", "wordSearchActivity: ${PreferenceHelper.getAccessToken(FoodiesApplication.getInstance())}")
-        searchViewModel.searchRecipe(intent.getStringExtra("recipeName")!!)
-    }
-
-    private fun fridgeSearchActivity() {
-        searchViewModel.searchRecipeByIngredients(intent.getStringExtra("ingredients")!!)
+        searchViewModel.searchRecipe(query)
     }
 }

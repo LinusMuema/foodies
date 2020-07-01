@@ -26,6 +26,6 @@ interface ApiEndpoints {
     fun searchRecipe(@Path("name") name: String): Observable<RecipeSearch>
 
     @GET("/api/recipes/search/ingredients/{ingredients}")
-    fun searchRecipeByIngredients(@Path("ingredients") ingredients: String): Observable<FridgeSearch>
+    fun searchRecipeByIngredients(@Path("ingredients") ingredients: String): Observable<IngredientsSearch>
 
 }
