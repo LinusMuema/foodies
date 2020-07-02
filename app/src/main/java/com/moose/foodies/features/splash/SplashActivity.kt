@@ -7,7 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import com.moose.foodies.FoodiesApplication
 import com.moose.foodies.R
+import com.moose.foodies.di.DaggerAppComponent
 import com.moose.foodies.features.home.HomeActivity
 import com.moose.foodies.features.auth.AuthActivity
 import com.moose.foodies.util.PreferenceHelper
@@ -15,6 +17,7 @@ import com.moose.foodies.util.fadeIn
 import com.moose.foodies.util.hideAllBars
 import com.moose.foodies.util.slideUp
 import dagger.android.AndroidInjection
+import dagger.android.DaggerApplication
 import kotlinx.android.synthetic.main.activity_splash.*
 import javax.inject.Inject
 
@@ -23,7 +26,7 @@ class SplashActivity @Inject constructor() : AppCompatActivity() {
     lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
+        DaggerAppComponent.factory().create(application as FoodiesApplication).inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 

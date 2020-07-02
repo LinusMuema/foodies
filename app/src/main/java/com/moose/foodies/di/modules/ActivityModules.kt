@@ -8,6 +8,8 @@ import com.moose.foodies.features.favorites.FavoritesActivity
 import com.moose.foodies.features.recipe.RecipeActivity
 import com.moose.foodies.features.reset.ResetPasswordActivity
 import com.moose.foodies.features.search.SearchActivity
+import com.moose.foodies.features.search.VideosFragment
+import com.moose.foodies.features.search.RecipesFragment
 import com.moose.foodies.features.splash.SplashActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector

@@ -2,12 +2,10 @@ package com.moose.foodies.features.search
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
-import com.moose.foodies.FoodiesApplication
+import com.google.android.material.tabs.TabLayoutMediator
 import com.moose.foodies.R
-import com.moose.foodies.util.PreferenceHelper
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_search.*
 import javax.inject.Inject
@@ -23,7 +21,13 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
         val query = intent.getStringExtra("recipeName")!!
-        search_query.text = "'$query'"
+
+        val titles = arrayOf("Recipes", "Videos")
+        pager.adapter = SearchViewpagerAdapter(this)
+        TabLayoutMediator(tab_layout, pager){tab, position ->
+            tab.text = titles[position]
+
+        }.attach()
 
         searchViewModel.searchRecipe(query)
     }
