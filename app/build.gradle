@@ -57,10 +57,7 @@ dependencies {
 
     //Dagger2
     implementation 'com.google.dagger:dagger:2.27'
-    implementation 'com.google.dagger:dagger-android:2.27'
-    implementation "com.google.dagger:dagger-android-support:2.27"
     kapt 'com.google.dagger:dagger-compiler:2.27'
-    kapt 'com.google.dagger:dagger-android-processor:2.27'
 
     //RxJava
     implementation 'io.reactivex.rxjava2:rxjava:2.2.19'

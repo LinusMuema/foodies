@@ -2,16 +2,17 @@ package com.moose.foodies.features.intolerances
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.moose.foodies.R
+import com.moose.foodies.di.DaggerAppComponent
 import com.moose.foodies.features.home.HomeActivity
-import com.moose.foodies.util.*
-import dagger.android.AndroidInjection
+import com.moose.foodies.util.ActivityHelper
+import com.moose.foodies.util.hide
+import com.moose.foodies.util.show
+import com.moose.foodies.util.showSnackbar
 import kotlinx.android.synthetic.main.activity_intolerances.*
 import javax.inject.Inject
 
@@ -24,7 +25,7 @@ class IntolerancesActivity @Inject constructor(): AppCompatActivity() {
     private val intolerancesViewModel: IntolerancesViewModel by viewModels { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
+        DaggerAppComponent.factory().create(this).inject(this)
         ActivityHelper.initialize(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intolerances)

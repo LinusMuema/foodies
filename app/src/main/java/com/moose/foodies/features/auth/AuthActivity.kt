@@ -12,11 +12,11 @@ import com.github.dhaval2404.form_validation.rule.MinLengthRule
 import com.github.dhaval2404.form_validation.rule.NonEmptyRule
 import com.github.dhaval2404.form_validation.validation.FormValidator
 import com.moose.foodies.R
+import com.moose.foodies.di.DaggerAppComponent
 import com.moose.foodies.features.home.HomeActivity
 import com.moose.foodies.features.intolerances.IntolerancesActivity
 import com.moose.foodies.features.reset.ResetPasswordActivity
 import com.moose.foodies.util.*
-import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_auth.*
 import javax.inject.Inject
 
@@ -27,7 +27,7 @@ class AuthActivity : AppCompatActivity() {
     private val authViewModel by viewModels<AuthViewModel> {viewModelFactory}
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
+        DaggerAppComponent.factory().create(this).inject(this)
         ActivityHelper.initialize(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)

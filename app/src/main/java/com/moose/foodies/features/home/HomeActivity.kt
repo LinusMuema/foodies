@@ -10,12 +10,10 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.input.input
-import com.google.android.material.chip.Chip
 import com.google.gson.Gson
 import com.mancj.materialsearchbar.MaterialSearchBar
 import com.moose.foodies.R
+import com.moose.foodies.di.DaggerAppComponent
 import com.moose.foodies.features.auth.AuthActivity
 import com.moose.foodies.features.favorites.FavoritesActivity
 import com.moose.foodies.features.recipe.RecipeActivity
@@ -24,7 +22,6 @@ import com.moose.foodies.util.*
 import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum
 import com.nightonke.boommenu.BoomButtons.SimpleCircleButton
 import com.nightonke.boommenu.Piece.PiecePlaceEnum
-import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.carousel_item.view.*
 import javax.inject.Inject
@@ -45,7 +42,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var recentSearches: HashSet<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
+        DaggerAppComponent.factory().create(this).inject(this)
         ActivityHelper.initialize(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)

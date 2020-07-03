@@ -1,5 +1,6 @@
 package com.moose.foodies.features.search
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.moose.foodies.models.RecipeResults
@@ -33,5 +34,9 @@ class SearchViewModel @Inject constructor(private val apiRepository: ApiReposito
     override fun onCleared() {
         super.onCleared()
         composite.dispose()
+    }
+
+    fun logIt() {
+        Log.d("logit", "logIt: I have been called")
     }
 }

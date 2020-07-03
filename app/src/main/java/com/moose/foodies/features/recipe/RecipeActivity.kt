@@ -2,7 +2,6 @@ package com.moose.foodies.features.recipe
 
 import android.graphics.Rect
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -13,11 +12,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.moose.foodies.R
+import com.moose.foodies.di.DaggerAppComponent
 import com.moose.foodies.models.Recipe
 import com.moose.foodies.util.*
-import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_recipe.*
-import kotlinx.android.synthetic.main.intolerance_list_item.view.*
 import javax.inject.Inject
 
 class RecipeActivity : AppCompatActivity() {
@@ -32,7 +30,7 @@ class RecipeActivity : AppCompatActivity() {
     private var isFavorite = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
+        DaggerAppComponent.factory().create(this).inject(this)
         ActivityHelper.initialize(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recipe)
