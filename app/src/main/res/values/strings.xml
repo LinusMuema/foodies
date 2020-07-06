@@ -30,4 +30,7 @@
     <string name="add">add</string>
     <string name="search">Search</string>
     <string name="search_query">Search :  %1$s</string>
+    <string name="read_more">Read More</string>
+    <string name="cook_time">Ready in %1$d minutes.</string>
+    <string name="servings">Serves %1$d people.</string>
 </resources>
