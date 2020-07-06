@@ -34,14 +34,11 @@ data class Section(val _id: String, val name: String, val steps: List<Step>)
 
 data class Step(val _id: String, val instruction: String, val number: Int)
 
-@Parcelize
-data class RecipeSearch(val message: String, val recipes: List<RecipeResults>, val videos: List<Video>): Parcelable
+data class RecipeSearch(val message: String, val recipes: List<RecipeResults>, val videos: List<Video>)
 
-@Parcelize
-data class RecipeResults(val id: Int, val image: String, val openLicense: Int, val readyInMinutes: Int, val servings: Int, val sourceUrl: String, val title: String): Parcelable
+data class RecipeResults(val id: Int, val image: String, val openLicense: Int, val readyInMinutes: Int, val servings: Int, val sourceUrl: String, val title: String)
 
-@Parcelize
-data class Video(val length: Int, val rating: Double, val shortTitle: String, val thumbnail: String, val title: String, val views: Int, val youTubeId: String): Parcelable
+data class Video(val length: Int, val rating: Double, val shortTitle: String, val thumbnail: String, val title: String, val views: Int, val youTubeId: String)
 
 data class IngredientsSearch(val message: String, val recipes: List<IngredientsSearchResults>)
 

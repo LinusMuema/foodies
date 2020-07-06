@@ -29,6 +29,5 @@
     <string name="fridge_instructions">Click the add button to add items in your fridge and we will provide you with recipes you can make.</string>
     <string name="add">add</string>
     <string name="search">Search</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search_query">Search :  %1$s</string>
 </resources>

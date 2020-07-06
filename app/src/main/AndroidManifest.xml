@@ -14,9 +14,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="AllowBackup">
-        <activity android:name=".features.search.SearchActivity"></activity>
-        <activity android:name=".features.BaseActivity" />
+        tools:ignore="AllowBackup"
+        android:hardwareAccelerated="true">
+
+        <activity android:name=".features.search.SearchActivity" />
         <activity android:name=".features.favorites.FavoritesActivity" />
         <activity android:name=".features.recipe.RecipeActivity" />
         <activity android:name=".features.reset.ResetPasswordActivity" />
@@ -24,6 +25,7 @@
         <activity android:name=".features.home.HomeActivity" />
         <activity android:name=".features.intolerances.IntolerancesActivity" />
         <activity android:name=".features.splash.SplashActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

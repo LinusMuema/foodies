@@ -30,11 +30,15 @@ class SearchActivity : AppCompatActivity(), HasSupportFragmentInjector {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
         val query = intent.getStringExtra("recipeName")!!
+        val title = resources.getString(R.string.search_query, query)
+        search_title.text = title
 
         view_pager.adapter = SearchViewpagerAdapter(supportFragmentManager)
         tabs.setupWithViewPager(view_pager)
 
         searchViewModel.searchRecipe(query)
+
+        search_back.setOnClickListener { onBackPressed() }
     }
 
     override fun supportFragmentInjector(): AndroidInjector<Fragment> = dispatchingAndroidInjector

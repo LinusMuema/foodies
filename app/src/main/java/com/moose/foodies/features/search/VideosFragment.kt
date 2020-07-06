@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.moose.foodies.R
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.android.synthetic.main.fragment_videos.*
 import javax.inject.Inject
 
 
@@ -36,7 +37,10 @@ class VideosFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         searchViewModel.logIt()
         searchViewModel.videos.observe(viewLifecycleOwner, Observer {
-            Log.d("videos", "onViewCreated: $it")
+            videos_recycler.apply {
+                setHasFixedSize(true)
+                adapter = VideoResultsAdapter(it)
+            }
         })
     }
 }

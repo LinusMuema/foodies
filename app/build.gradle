@@ -115,4 +115,7 @@ dependencies {
 
     //Boom menu
     implementation 'com.nightonke:boommenu:2.1.1'
+
+    //Youtube Player
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
 }

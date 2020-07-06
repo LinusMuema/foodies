@@ -1,6 +1,9 @@
 package com.moose.foodies.features.home
 
-import android.content.*
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.Intent
 import android.graphics.Rect
 import android.net.ConnectivityManager
 import android.os.Bundle
@@ -24,7 +27,10 @@ import com.nightonke.boommenu.Piece.PiecePlaceEnum
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.carousel_item.view.*
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
+import kotlin.collections.HashSet
 
 class HomeActivity : AppCompatActivity() {
 
@@ -33,7 +39,7 @@ class HomeActivity : AppCompatActivity() {
 
     private val homeViewModel by viewModels<HomeViewModel> { viewModelFactory }
     private var ingredients: ArrayList<String> = ArrayList()
-//    private lateinit var recentSearches: HashSet<String>
+    private lateinit var recentSearches: HashSet<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -82,24 +88,22 @@ class HomeActivity : AppCompatActivity() {
         }
 
         //Search bar section
-//        recentSearches = sharedPreferences.getStringSet("recentSearches", HashSet<String>()) as HashSet<String>
-//        searchBar.lastSuggestions = recentSearches.toMutableList()
+        recentSearches = PreferenceHelper.getRecentSearches(this)!!.split(",").toHashSet()
+        searchBar.lastSuggestions = recentSearches.toMutableList()
         searchBar.setOnSearchActionListener(object : MaterialSearchBar.OnSearchActionListener{
+
             override fun onButtonClicked(buttonCode: Int) {
                 Log.d("Search", "onButtonClicked: $buttonCode")
             }
 
             override fun onSearchStateChanged(enabled: Boolean) {
-                this@HomeActivity.hideBottomBar()
                 Log.d("Search", "onSearchStateChanged: $enabled")
             }
 
             override fun onSearchConfirmed(text: CharSequence?) {
-//                recentSearches.add(text.toString())
-                this@HomeActivity.hideBottomBar()
+                recentSearches.add(text.toString())
                 startActivity(
                     Intent(this@HomeActivity, SearchActivity::class.java)
-                        .putExtra("searchType", 0)
                         .putExtra("recipeName", text.toString()))
             }
 
@@ -168,5 +172,15 @@ class HomeActivity : AppCompatActivity() {
         val manager = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork = manager.activeNetworkInfo
         return activeNetwork != null
+    }
+
+    override fun onPause() {
+        super.onPause()
+        PreferenceHelper.setRecentSearches(this, recentSearches.joinToString(separator = ","))
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        PreferenceHelper.setRecentSearches(this, recentSearches.joinToString(separator = ","))
     }
 }
