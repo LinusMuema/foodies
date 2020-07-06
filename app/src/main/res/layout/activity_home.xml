@@ -75,35 +75,19 @@
                         android:layout_marginTop="50dp"
                         android:padding="5dp"/>
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:background="@drawable/round_relative"
-                        android:layout_margin="5dp">
 
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_copy"
-                            android:layout_alignParentEnd="true"
-                            android:layout_margin="5dp"
-                            android:id="@+id/joke_copy"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/joke"
+                    android:gravity="center"
+                    android:fontFamily="@font/regular"
+                    android:textColor="@color/dark_text"
+                    android:textSize="15sp"
+                    android:layout_margin="5dp"/>
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/joke_copy"
-                            android:id="@+id/joke"
-                            android:gravity="center"
-                            android:fontFamily="@font/regular"
-                            android:textColor="@color/dark_text"
-                            android:textSize="15sp"
-                            android:layout_margin="5dp"/>
 
-                    </RelativeLayout>
-
-                    <androidx.appcompat.widget.AppCompatTextView
+                <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/todays_trivia"
@@ -113,33 +97,16 @@
                         android:layout_marginTop="50dp"
                         android:padding="5dp"/>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:background="@drawable/round_relative"
-                    android:layout_margin="5dp">
-
-                <androidx.appcompat.widget.AppCompatImageView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_copy"
-                    android:layout_alignParentEnd="true"
-                    android:layout_margin="5dp"
-                    android:id="@+id/trivia_copy"/>
+                    android:id="@+id/trivia"
+                    android:fontFamily="@font/regular"
+                    android:textColor="@color/dark_text"
+                    android:gravity="center"
+                    android:textSize="15sp"
+                    android:layout_margin="5dp"/>
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/trivia"
-                        android:fontFamily="@font/regular"
-                        android:textColor="@color/dark_text"
-                        android:layout_below="@+id/trivia_copy"
-                        android:gravity="center"
-                        android:textSize="15sp"
-                        android:layout_margin="5dp"/>
-
-                </RelativeLayout>
 
             </LinearLayout>
 

@@ -35,7 +35,6 @@ class VideosFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        searchViewModel.logIt()
         searchViewModel.videos.observe(viewLifecycleOwner, Observer {
             videos_recycler.apply {
                 setHasFixedSize(true)

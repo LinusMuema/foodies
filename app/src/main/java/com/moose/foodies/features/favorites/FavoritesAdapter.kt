@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.moose.foodies.R
 import com.moose.foodies.models.Recipe
 import com.moose.foodies.util.loadImage
+import com.moose.foodies.util.setHeight
 import kotlinx.android.synthetic.main.favorite_item.view.*
 
 class FavoritesAdapter(
@@ -30,8 +31,7 @@ class FavoritesAdapter(
 
         fun bind(recipe: Recipe) {
             val url = recipe.info.image.replace("312x231", "636x393")
-            itemView.recipe_image.requestLayout()
-            itemView.recipe_image.layoutParams.height = pixels
+            itemView.recipe_image.setHeight(pixels)
             itemView.recipe_name.text = recipe.info.title
             itemView.recipe_image.loadImage(url)
 

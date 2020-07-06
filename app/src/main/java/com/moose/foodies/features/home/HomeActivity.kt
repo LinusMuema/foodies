@@ -110,23 +110,23 @@ class HomeActivity : AppCompatActivity() {
         })
 
 
-        //Copying the joke
-        joke_copy.setOnClickListener {
-            val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clipData = ClipData.newPlainText("joke", joke.text)
-            clipboardManager.setPrimaryClip(clipData)
-
-            Toast.makeText(this, "Joke copied to clipboard", Toast.LENGTH_LONG).show()
-        }
-
-        //Copying the trivia
-        trivia_copy.setOnClickListener {
-            val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clipData = ClipData.newPlainText("trivia", trivia.text)
-            clipboardManager.setPrimaryClip(clipData)
-
-            Toast.makeText(this, "Trivia copied to clipboard", Toast.LENGTH_LONG).show()
-        }
+//        //Copying the joke
+//        joke_copy.setOnClickListener {
+//            val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+//            val clipData = ClipData.newPlainText("joke", joke.text)
+//            clipboardManager.setPrimaryClip(clipData)
+//
+//            Toast.makeText(this, "Joke copied to clipboard", Toast.LENGTH_LONG).show()
+//        }
+//
+//        //Copying the trivia
+//        trivia_copy.setOnClickListener {
+//            val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+//            val clipData = ClipData.newPlainText("trivia", trivia.text)
+//            clipboardManager.setPrimaryClip(clipData)
+//
+//            Toast.makeText(this, "Trivia copied to clipboard", Toast.LENGTH_LONG).show()
+//        }
 
     }
 

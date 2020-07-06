@@ -2,11 +2,13 @@ package com.moose.foodies.util
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.media.Image
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
@@ -17,6 +19,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.moose.foodies.R
 
 fun View.fadeIn() = this.startAnimation(AnimationUtils.loadAnimation(this.context, R.anim.fade_in))
+
+fun View.fadeOut() = this.startAnimation(AnimationUtils.loadAnimation(this.context, R.anim.fade_out))
 
 fun View.slideUp() = this.startAnimation(AnimationUtils.loadAnimation(this.context, R.anim.slide_up))
 
@@ -82,6 +86,6 @@ fun ImageView.loadCarouselImage(uri: String){
     Glide.with(this.context).setDefaultRequestOptions(options).load(uri).into(this)
 }
 
-fun ImageView.loadSelected() = Glide.with(this.context).load(R.drawable.selected).into(this)
+fun ImageView.loadDrawable(drawable: Int) = Glide.with(this.context).load(ContextCompat.getDrawable(this.context, drawable)).into(this)
 
 fun ImageView.loadImage(uri: String) = Glide.with(this.context).load(uri).into(this)

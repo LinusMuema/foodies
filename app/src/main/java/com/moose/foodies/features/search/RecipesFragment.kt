@@ -12,7 +12,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.moose.foodies.R
+import com.moose.foodies.util.HeightCalculator
+import com.moose.foodies.util.PreferenceHelper
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.android.synthetic.main.fragment_recipes.*
 import javax.inject.Inject
 
 
@@ -36,8 +39,13 @@ class RecipesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val scale: Float = this.resources.displayMetrics.density
+        val pixels = (HeightCalculator.getImageHeight(this.requireContext()) * scale + 0.5f).toInt()
         searchViewModel.recipes.observe(viewLifecycleOwner, Observer {
-            Log.d("recipes", "onViewCreated: $it")
+            recipes_recycler.apply {
+                setHasFixedSize(true)
+                adapter = RecipeResultsAdapter(it, pixels)
+            }
         })
     }
 

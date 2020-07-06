@@ -35,8 +35,4 @@ class SearchViewModel @Inject constructor(private val apiRepository: ApiReposito
         super.onCleared()
         composite.dispose()
     }
-
-    fun logIt() {
-        Log.d("logit", "logIt: I have been called")
-    }
 }

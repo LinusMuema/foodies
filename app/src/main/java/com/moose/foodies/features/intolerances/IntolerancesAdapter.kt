@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.moose.foodies.R
 import com.moose.foodies.models.Intolerance
+import com.moose.foodies.util.loadDrawable
 import com.moose.foodies.util.loadRoundImage
-import com.moose.foodies.util.loadSelected
 import kotlinx.android.synthetic.main.intolerance_list_item.view.*
 
 class IntolerancesAdapter(val intolerances: List<Intolerance>, val handleItem: (Intolerance, selected:Boolean) -> Unit): RecyclerView.Adapter<IntolerancesAdapter.IntolerancesViewHolder>() {
@@ -34,7 +34,7 @@ class IntolerancesAdapter(val intolerances: List<Intolerance>, val handleItem: (
             image.setOnClickListener {
                 selected = !selected
                 handleItem(intolerance, selected)
-                if (selected) image.loadSelected()
+                if (selected) image.loadDrawable(R.drawable.selected)
                 else image.loadRoundImage(intolerance.image_url)
             }
         }
