@@ -17,7 +17,7 @@ import io.reactivex.schedulers.Schedulers
 import retrofit2.HttpException
 import javax.inject.Inject
 
-class HomeViewModel @Inject constructor(private val apiRepository: ApiRepository, private val dbRepository: DbRepository, private val sharedPreferences: SharedPreferences): ViewModel() {
+class HomeViewModel @Inject constructor(private val apiRepository: ApiRepository, private val dbRepository: DbRepository): ViewModel() {
 
     private val composite = CompositeDisposable()
     val recipes: MutableLiveData<Recipes> = MutableLiveData()

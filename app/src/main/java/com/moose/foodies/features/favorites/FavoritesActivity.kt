@@ -11,13 +11,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.moose.foodies.R
-import com.moose.foodies.di.DaggerAppComponent
 import com.moose.foodies.features.recipe.RecipeActivity
 import com.moose.foodies.models.Recipe
 import com.moose.foodies.util.ActivityHelper
 import com.moose.foodies.util.HeightCalculator
 import com.moose.foodies.util.showSnackbar
 import com.tsuryo.swipeablerv.SwipeLeftRightCallback
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_favorites.*
 import javax.inject.Inject
 
@@ -26,21 +26,18 @@ class FavoritesActivity : AppCompatActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    @Inject
-    lateinit var heightCalculator: HeightCalculator
-
     private lateinit var favorites: MutableList<Recipe>
 
     private val favoritesViewModel by viewModels<FavoritesViewModel> { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        DaggerAppComponent.factory().create(this).inject(this)
+        AndroidInjection.inject(this)
         ActivityHelper.initialize(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorites)
 
         val scale: Float = this.resources.displayMetrics.density
-        val pixels = (heightCalculator.getImageHeight() * scale + 0.5f).toInt()
+        val pixels = (HeightCalculator.getImageHeight(this) * scale + 0.5f).toInt()
 
         favoritesViewModel.favorites.observe(this, Observer {
             favorites = it as MutableList<Recipe>

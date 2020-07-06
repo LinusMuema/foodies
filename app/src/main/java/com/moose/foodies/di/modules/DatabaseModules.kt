@@ -2,6 +2,7 @@ package com.moose.foodies.di.modules
 
 import android.content.Context
 import androidx.room.Room
+import com.moose.foodies.FoodiesApplication
 import com.moose.foodies.db.AppDatabase
 import dagger.Module
 import dagger.Provides
@@ -12,7 +13,7 @@ class DatabaseModules {
 
     @Singleton
     @Provides
-    fun provideDB(context: Context) = Room.databaseBuilder(context, AppDatabase::class.java, AppDatabase.DB_NAME)
+    fun provideDB(context: FoodiesApplication) = Room.databaseBuilder(context, AppDatabase::class.java, AppDatabase.DB_NAME)
         .fallbackToDestructiveMigration()
         .allowMainThreadQueries()
         .build()

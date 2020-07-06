@@ -16,7 +16,7 @@ import io.reactivex.disposables.CompositeDisposable
 import retrofit2.HttpException
 import javax.inject.Inject
 
-class IntolerancesViewModel @Inject constructor(private val apiRepository: ApiRepository, private val sharedPreferences: SharedPreferences): ViewModel() {
+class IntolerancesViewModel @Inject constructor(private val apiRepository: ApiRepository): ViewModel() {
     private val intolerances: ArrayList<Intolerance> = ArrayList()
     val results: MutableLiveData<List<Intolerance>> = MutableLiveData()
     val saveResult: MutableLiveData<Boolean> = MutableLiveData()

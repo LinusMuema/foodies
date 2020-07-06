@@ -12,9 +12,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.moose.foodies.R
-import com.moose.foodies.di.DaggerAppComponent
 import com.moose.foodies.models.Recipe
 import com.moose.foodies.util.*
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_recipe.*
 import javax.inject.Inject
 
@@ -23,14 +23,12 @@ class RecipeActivity : AppCompatActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    @Inject
-    lateinit var heightCalculator: HeightCalculator
 
     private val recipeViewModel by viewModels<RecipeViewModel> { viewModelFactory }
     private var isFavorite = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        DaggerAppComponent.factory().create(this).inject(this)
+        AndroidInjection.inject(this)
         ActivityHelper.initialize(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recipe)
@@ -38,7 +36,7 @@ class RecipeActivity : AppCompatActivity() {
         val recipe = Gson().fromJson(intent.getStringExtra("recipe"), Recipe::class.java)
 
         val scale: Float = this.resources.displayMetrics.density
-        val pixels = (heightCalculator.getImageHeight() * scale + 0.5f).toInt()
+        val pixels = (HeightCalculator.getImageHeight(this) * scale + 0.5f).toInt()
 
         recipeViewModel.checkFavorite(recipe.id)
 

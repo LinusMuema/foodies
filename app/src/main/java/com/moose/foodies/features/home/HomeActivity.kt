@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.mancj.materialsearchbar.MaterialSearchBar
 import com.moose.foodies.R
-import com.moose.foodies.di.DaggerAppComponent
 import com.moose.foodies.features.auth.AuthActivity
 import com.moose.foodies.features.favorites.FavoritesActivity
 import com.moose.foodies.features.recipe.RecipeActivity
@@ -22,6 +21,7 @@ import com.moose.foodies.util.*
 import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum
 import com.nightonke.boommenu.BoomButtons.SimpleCircleButton
 import com.nightonke.boommenu.Piece.PiecePlaceEnum
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.carousel_item.view.*
 import javax.inject.Inject
@@ -31,25 +31,19 @@ class HomeActivity : AppCompatActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    @Inject
-    lateinit var sharedPreferences: SharedPreferences
-
-    @Inject
-    lateinit var heightCalculator: HeightCalculator
-
     private val homeViewModel by viewModels<HomeViewModel> { viewModelFactory }
     private var ingredients: ArrayList<String> = ArrayList()
-    private lateinit var recentSearches: HashSet<String>
+//    private lateinit var recentSearches: HashSet<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        DaggerAppComponent.factory().create(this).inject(this)
+        AndroidInjection.inject(this)
         ActivityHelper.initialize(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         this.setUpBoomMenu()
 
         val scale: Float = this.resources.displayMetrics.density
-        val pixels = (heightCalculator.getImageHeight() * scale + 0.5f).toInt()
+        val pixels = (HeightCalculator.getImageHeight(this) * scale + 0.5f).toInt()
 
         homeViewModel.state.observe(this, Observer {
             home_swipe.stopRefreshing()
@@ -88,8 +82,8 @@ class HomeActivity : AppCompatActivity() {
         }
 
         //Search bar section
-        recentSearches = sharedPreferences.getStringSet("recentSearches", HashSet<String>()) as HashSet<String>
-        searchBar.lastSuggestions = recentSearches.toMutableList()
+//        recentSearches = sharedPreferences.getStringSet("recentSearches", HashSet<String>()) as HashSet<String>
+//        searchBar.lastSuggestions = recentSearches.toMutableList()
         searchBar.setOnSearchActionListener(object : MaterialSearchBar.OnSearchActionListener{
             override fun onButtonClicked(buttonCode: Int) {
                 Log.d("Search", "onButtonClicked: $buttonCode")
@@ -101,7 +95,7 @@ class HomeActivity : AppCompatActivity() {
             }
 
             override fun onSearchConfirmed(text: CharSequence?) {
-                recentSearches.add(text.toString())
+//                recentSearches.add(text.toString())
                 this@HomeActivity.hideBottomBar()
                 startActivity(
                     Intent(this@HomeActivity, SearchActivity::class.java)
@@ -164,7 +158,7 @@ class HomeActivity : AppCompatActivity() {
                 Log.d("Boom", "handleBoomClick: account clicked")
             }
             3 -> {
-                sharedPreferences.edit().putBoolean("logged", false).apply()
+                PreferenceHelper.setLogged(this, false)
                 startActivity(Intent(this, AuthActivity::class.java))
             }
         }
@@ -174,15 +168,5 @@ class HomeActivity : AppCompatActivity() {
         val manager = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork = manager.activeNetworkInfo
         return activeNetwork != null
-    }
-
-    override fun onPause() {
-        super.onPause()
-        sharedPreferences.edit().putStringSet("recentSearches", recentSearches).apply()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        sharedPreferences.edit().putStringSet("recentSearches", recentSearches).apply()
     }
 }

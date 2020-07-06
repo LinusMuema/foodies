@@ -1,8 +1,9 @@
 package com.moose.foodies.util
 
+import android.content.Context
 import android.content.SharedPreferences
 import javax.inject.Inject
 
-open class HeightCalculator @Inject constructor(private val sharedPreferences: SharedPreferences) {
-    open fun getImageHeight() = sharedPreferences.getFloat("deviceWidth", 360f) / 1.62
+object HeightCalculator  {
+    fun getImageHeight(context: Context) = PreferenceHelper.getDeviceWidth(context) / 1.62
 }

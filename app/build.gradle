@@ -56,8 +56,9 @@ dependencies {
     implementation "androidx.viewpager2:viewpager2:1.0.0"
 
     //Dagger2
-    implementation 'com.google.dagger:dagger:2.27'
-    kapt 'com.google.dagger:dagger-compiler:2.27'
+    implementation 'com.google.dagger:dagger-android-support:2.16'
+    kapt 'com.google.dagger:dagger-android-processor:2.16'
+    kapt 'com.google.dagger:dagger-compiler:2.16'
 
     //RxJava
     implementation 'io.reactivex.rxjava2:rxjava:2.2.19'

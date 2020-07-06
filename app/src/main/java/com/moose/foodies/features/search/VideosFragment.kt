@@ -7,12 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.moose.foodies.R
-import com.moose.foodies.di.DaggerAppComponent
+import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
 
@@ -21,14 +20,15 @@ class VideosFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    lateinit var searchViewModel: SearchViewModel
+    private lateinit var searchViewModel: SearchViewModel
 
     override fun onAttach(context: Context) {
-        DaggerAppComponent.factory().create(requireActivity().applicationContext).inject(this)
-        searchViewModel = ViewModelProviders.of(this, viewModelFactory)[SearchViewModel::class.java]
+        AndroidSupportInjection.inject(this)
         super.onAttach(context)
     }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        searchViewModel = ViewModelProviders.of(requireActivity(), viewModelFactory).get(SearchViewModel::class.java)
         return inflater.inflate(R.layout.fragment_videos, container, false)
     }
 

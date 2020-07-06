@@ -34,7 +34,9 @@ fun ViewGroup.setHeight(height: Int){
     this.layoutParams.height = height
 }
 
-fun SwipeRefreshLayout.stopRefreshing() {this.isRefreshing = false}
+fun SwipeRefreshLayout.stopRefreshing() {
+    this.isRefreshing = false
+}
 
 fun Activity.hideBottomBar(){
     window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -66,15 +68,10 @@ fun ImageView.loadRoundImage(uri: String){
         .circleCrop()
         .error(R.drawable.image_error)
 
-    Glide.with(this.context)
-        .setDefaultRequestOptions(options)
-        .load(uri)
-        .into(this)
+    Glide.with(this.context).setDefaultRequestOptions(options).load(uri).into(this)
 }
 
-fun showSnackbar(view: View, message: String) {
-    Snackbar.make(view, message, Snackbar.LENGTH_LONG).show()
-}
+fun showSnackbar(view: View, message: String) = Snackbar.make(view, message, Snackbar.LENGTH_LONG).show()
 
 fun ImageView.loadCarouselImage(uri: String){
     val options = RequestOptions()
@@ -82,24 +79,9 @@ fun ImageView.loadCarouselImage(uri: String){
         .transform(RoundedCorners(25))
         .error(R.drawable.image_error)
 
-    Glide.with(this.context)
-        .setDefaultRequestOptions(options)
-        .load(uri)
-        .into(this)
+    Glide.with(this.context).setDefaultRequestOptions(options).load(uri).into(this)
 }
 
-fun ImageView.loadSelected(){
-    Glide.with(this.context)
-        .load(R.drawable.selected)
-        .into(this)
-}
+fun ImageView.loadSelected() = Glide.with(this.context).load(R.drawable.selected).into(this)
 
-fun ImageView.loadImage(uri: String){
-    val options = RequestOptions()
-        .placeholder(getProgressDrawable(this.context))
-        .error(R.drawable.image_error)
-
-    Glide.with(this.context)
-        .load(uri)
-        .into(this)
-}
+fun ImageView.loadImage(uri: String) = Glide.with(this.context).load(uri).into(this)

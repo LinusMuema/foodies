@@ -17,7 +17,7 @@ import retrofit2.HttpException
 import javax.inject.Inject
 
 
-class AuthViewModel @Inject constructor(private val apiRepository: ApiRepository, private val sharedPreferences: SharedPreferences): ViewModel() {
+class AuthViewModel @Inject constructor(private val apiRepository: ApiRepository): ViewModel() {
     private val composite = CompositeDisposable()
     val response: MutableLiveData<String> = MutableLiveData()
 

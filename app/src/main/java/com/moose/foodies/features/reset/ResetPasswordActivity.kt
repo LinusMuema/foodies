@@ -15,6 +15,7 @@ import com.moose.foodies.features.auth.AuthActivity
 import com.moose.foodies.util.ActivityHelper
 import com.moose.foodies.util.hide
 import com.moose.foodies.util.show
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_reset_password.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.yesButton
@@ -28,7 +29,7 @@ class ResetPasswordActivity : AppCompatActivity() {
     private val resetPasswordViewModel by viewModels<ResetPasswordViewModel> {viewModelFactory}
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        DaggerAppComponent.factory().create(this).inject(this)
+        AndroidInjection.inject(this)
         ActivityHelper.initialize(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reset_password)
