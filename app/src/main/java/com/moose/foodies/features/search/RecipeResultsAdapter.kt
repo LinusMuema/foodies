@@ -34,6 +34,7 @@ class RecipeResultsAdapter(private val results: List<RecipeResults>, private val
 
             itemView.recipe_image.setHeight(pixels)
             itemView.recipe_image.loadImage(image)
+            itemView.recipe_name.text = recipeResults.title
             itemView.time.text = context.resources.getString(R.string.cook_time, recipeResults.readyInMinutes)
             itemView.servings.text = context.resources.getString(R.string.servings, recipeResults.servings)
 
