@@ -1,30 +1,28 @@
 package com.moose.foodies.di
 
+import android.content.Context
 import com.moose.foodies.FoodiesApplication
 import com.moose.foodies.di.modules.*
 import dagger.BindsInstance
 import dagger.Component
+import dagger.android.AndroidInjectionModule
 import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [
+    AndroidInjectionModule::class,
     ActivitiesModule::class,
     FragmentsModule::class,
     DatabaseModules::class,
     ViewModelModules::class,
     ApiModules::class])
 
-interface AppComponent {
+interface AppComponent{
 
     fun inject(app: FoodiesApplication)
 
-    @Component.Builder
-    interface Builder{
-
-        fun create(): AppComponent
-
-        @BindsInstance
-        fun applicationBind(app: FoodiesApplication): Builder
+    @Component.Factory
+    interface Factory{
+        fun create(@BindsInstance context: Context): AppComponent
     }
-
 }

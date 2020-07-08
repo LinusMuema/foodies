@@ -5,20 +5,19 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.tabs.TabLayoutMediator
 import com.moose.foodies.R
-import com.moose.foodies.di.DaggerAppComponent
+import com.moose.foodies.util.ActivityHelper
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
+import dagger.android.HasAndroidInjector
 import kotlinx.android.synthetic.main.activity_search.*
 import javax.inject.Inject
 
-class SearchActivity : AppCompatActivity(), HasSupportFragmentInjector {
+class SearchActivity : AppCompatActivity(), HasAndroidInjector {
 
     @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -27,6 +26,7 @@ class SearchActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
+        ActivityHelper.initialize(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
         val query = intent.getStringExtra("recipeName")!!
@@ -41,5 +41,5 @@ class SearchActivity : AppCompatActivity(), HasSupportFragmentInjector {
         search_back.setOnClickListener { onBackPressed() }
     }
 
-    override fun supportFragmentInjector(): AndroidInjector<Fragment> = dispatchingAndroidInjector
+    override fun androidInjector(): AndroidInjector<Any> = dispatchingAndroidInjector
 }

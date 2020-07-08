@@ -1,10 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".features.search.RecipesFragment">
+    tools:context=".features.search.RecipesFragment"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/recipes_loading"
+        android:indeterminate="true"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/empty_recipes"
+        android:fontFamily="@font/bold"
+        android:textSize="20sp"/>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
@@ -13,4 +32,5 @@
         android:id="@+id/recipes_recycler"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
-</FrameLayout>
+
+</LinearLayout>

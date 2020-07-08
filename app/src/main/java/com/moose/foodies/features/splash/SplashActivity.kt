@@ -1,5 +1,6 @@
 package com.moose.foodies.features.splash
 
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
@@ -8,10 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.moose.foodies.R
 import com.moose.foodies.features.auth.AuthActivity
 import com.moose.foodies.features.home.HomeActivity
-import com.moose.foodies.util.PreferenceHelper
-import com.moose.foodies.util.fadeIn
-import com.moose.foodies.util.hideAllBars
-import com.moose.foodies.util.slideUp
+import com.moose.foodies.util.*
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_splash.*
 

@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.moose.foodies.R
+import com.moose.foodies.util.hide
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_videos.*
 import javax.inject.Inject
@@ -27,7 +28,7 @@ class VideosFragment : Fragment() {
         AndroidSupportInjection.inject(this)
         super.onAttach(context)
     }
-
+    
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         searchViewModel = ViewModelProviders.of(requireActivity(), viewModelFactory).get(SearchViewModel::class.java)
         return inflater.inflate(R.layout.fragment_videos, container, false)
@@ -36,6 +37,8 @@ class VideosFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         searchViewModel.videos.observe(viewLifecycleOwner, Observer {
+            videos_loading.hide()
+            if (it.isEmpty()) empty_videos.text = resources.getString(R.string.empty_search, "videos")
             videos_recycler.apply {
                 setHasFixedSize(true)
                 adapter = VideoResultsAdapter(it)

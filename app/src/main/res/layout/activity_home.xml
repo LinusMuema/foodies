@@ -80,11 +80,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/joke"
-                    android:gravity="center"
                     android:fontFamily="@font/regular"
                     android:textColor="@color/dark_text"
                     android:textSize="15sp"
-                    android:layout_margin="5dp"/>
+                    android:layout_margin="10dp"/>
 
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -103,9 +102,8 @@
                     android:id="@+id/trivia"
                     android:fontFamily="@font/regular"
                     android:textColor="@color/dark_text"
-                    android:gravity="center"
                     android:textSize="15sp"
-                    android:layout_margin="5dp"/>
+                    android:layout_margin="10dp"/>
 
 
             </LinearLayout>
