@@ -13,7 +13,7 @@ class DatabaseModules {
 
     @Singleton
     @Provides
-    fun provideDB(context: FoodiesApplication) = Room.databaseBuilder(context, AppDatabase::class.java, AppDatabase.DB_NAME)
+    fun provideDB(context: Context) = Room.databaseBuilder(context, AppDatabase::class.java, AppDatabase.DB_NAME)
         .fallbackToDestructiveMigration()
         .allowMainThreadQueries()
         .build()
