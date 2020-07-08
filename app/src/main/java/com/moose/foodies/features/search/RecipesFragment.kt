@@ -1,5 +1,6 @@
 package com.moose.foodies.features.search
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +15,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.moose.foodies.R
 import com.moose.foodies.util.HeightCalculator
 import com.moose.foodies.util.PreferenceHelper
+import com.moose.foodies.util.hide
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_recipes.*
 import javax.inject.Inject
@@ -42,6 +44,8 @@ class RecipesFragment : Fragment() {
         val scale: Float = this.resources.displayMetrics.density
         val pixels = (HeightCalculator.getImageHeight(this.requireContext()) * scale + 0.5f).toInt()
         searchViewModel.recipes.observe(viewLifecycleOwner, Observer {
+            recipes_loading.hide()
+            if (it.isEmpty()) empty_recipes.text = resources.getString(R.string.empty_search, "recipes")
             recipes_recycler.apply {
                 setHasFixedSize(true)
                 adapter = RecipeResultsAdapter(it, pixels)
