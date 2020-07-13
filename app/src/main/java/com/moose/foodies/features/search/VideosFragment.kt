@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.moose.foodies.R
 import com.moose.foodies.util.hide
+import com.moose.foodies.util.hideBottomBar
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_videos.*
 import javax.inject.Inject
@@ -25,6 +26,7 @@ class VideosFragment : Fragment() {
     private lateinit var searchViewModel: SearchViewModel
 
     override fun onAttach(context: Context) {
+        this.requireActivity().hideBottomBar()
         AndroidSupportInjection.inject(this)
         super.onAttach(context)
     }

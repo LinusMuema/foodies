@@ -28,14 +28,12 @@ class SplashActivity : AppCompatActivity() {
 
         if (PreferenceHelper.getLoggedStatus(this)){
             Handler().postDelayed({
-                startActivity(Intent(this, HomeActivity::class.java))
-                finish()
+                this.pushWithoutHistory<HomeActivity>()
             }, 3000)
         }
         else{
             Handler().postDelayed({
-                startActivity(Intent(this, AuthActivity::class.java))
-                finish()
+                pushWithoutHistory<AuthActivity>()
             }, 3000)
         }
     }

@@ -9,4 +9,5 @@ object ActivityHelper {
         activity.hideBottomBar()
         activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
     }
+
 }

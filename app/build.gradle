@@ -11,7 +11,7 @@ repositories {
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    buildToolsVersion "29.0.3"
 
     defaultConfig {
         applicationId "com.moose.foodies"
@@ -118,4 +118,7 @@ dependencies {
 
     //Youtube Player
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
+
+    //Expanding cards
+    implementation 'com.alespero:expandable-cardview:0.6'
 }

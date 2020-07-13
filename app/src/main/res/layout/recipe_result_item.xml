@@ -19,106 +19,13 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/recipe_image"/>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <com.alespero.expandablecardview.ExpandableCardView
+                android:id="@+id/card_expand"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/regular"
-                    android:layout_margin="10dp"
-                    android:layout_gravity="start"
-                    android:textSize="15sp"
-                    android:id="@+id/recipe_name"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/collapse"
-                    android:layout_margin="10dp"
-                    android:src="@drawable/ic_collapse"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:gravity="end"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/card_expand">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/card_info"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center"
-                        android:layout_margin="10dp">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:src="@drawable/ic_time"/>
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/cook_time"
-                            android:fontFamily="@font/regular"
-                            android:textColor="@color/dark_text"
-                            android:id="@+id/time"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center"
-                        android:layout_margin="10dp">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:src="@drawable/ic_person"/>
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/servings"
-                            android:fontFamily="@font/regular"
-                            android:textColor="@color/dark_text"
-                            android:id="@+id/servings"/>
-
-                    </LinearLayout>
-
-                    <com.google.android.material.button.MaterialButton
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:id="@+id/read_more"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:textAllCaps="false"
-                        android:fontFamily="@font/regular"
-                        android:text="@string/read_more"/>
-
-                </LinearLayout>
-
-            </RelativeLayout>
+                android:layout_height="wrap_content"
+                app:title="  "
+                app:inner_view="@layout/recipe_result_details"
+                app:expandOnClick="true" />
 
         </LinearLayout>
 

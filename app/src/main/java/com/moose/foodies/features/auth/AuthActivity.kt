@@ -35,17 +35,17 @@ class AuthActivity : AppCompatActivity() {
 
         rotateloading.start()
 
-        authViewModel.response.observe(this, Observer {
+        authViewModel.response.observe(this, Observer { it ->
             rotateloading.hide()
             login_btn.show()
             when {
                 it == "login" -> {
-                    startActivity(Intent(this@AuthActivity, HomeActivity::class.java))
-                    finish()
+                    pushWithoutHistory<HomeActivity>()
                 }
                 it == "signup" -> {
-                    startActivity(Intent(this@AuthActivity, IntolerancesActivity::class.java).putExtra("signup", true))
-                    finish()
+                    pushWithoutHistory<IntolerancesActivity> {
+                        it.putExtra("signup", true)
+                    }
                 }
                 "403" in it -> showSnackbar(auth_layout, "Check your password and try again")
                 else -> showSnackbar(auth_layout, it)
@@ -59,7 +59,7 @@ class AuthActivity : AppCompatActivity() {
         }
 
         reset.setOnClickListener {
-            startActivity(Intent(this, ResetPasswordActivity::class.java))
+            push<ResetPasswordActivity>()
         }
     }
 

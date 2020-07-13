@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.moose.foodies.R
 import com.moose.foodies.util.ActivityHelper
+import com.moose.foodies.util.hideBottomBar
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector

@@ -9,10 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.moose.foodies.R
 import com.moose.foodies.di.DaggerAppComponent
 import com.moose.foodies.features.home.HomeActivity
-import com.moose.foodies.util.ActivityHelper
-import com.moose.foodies.util.hide
-import com.moose.foodies.util.show
-import com.moose.foodies.util.showSnackbar
+import com.moose.foodies.util.*
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_intolerances.*
 import javax.inject.Inject
@@ -48,8 +45,7 @@ class IntolerancesActivity @Inject constructor(): AppCompatActivity() {
             intolerancesloading.hide()
             intolerances_submit.show()
             if (it) {
-                startActivity(Intent(this, HomeActivity::class.java))
-                finish()
+                pushWithoutHistory<HomeActivity>()
             }
             else showSnackbar(intolerances_layout, "something went wrong! Try again later")
         })

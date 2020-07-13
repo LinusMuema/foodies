@@ -47,9 +47,22 @@
                         android:layout_height="wrap_content"
                         android:text="@string/todays_picks"
                         android:fontFamily="@font/regular"
-                        android:textColor="@color/dark_text"
+                        android:textColor="@color/primary"
                         android:textSize="20sp"
                         android:layout_margin="5dp"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/recipes_loading">
+
+                    <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:indeterminate="true"/>
+
+                </RelativeLayout>
 
                     <com.jama.carouselview.CarouselView
                         android:layout_width="match_parent"
@@ -65,15 +78,65 @@
                         app:spacing="10"
                         app:resource="@layout/carousel_item"/>
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/round_relative"
+                        android:padding="5dp"
+                        android:layout_marginTop="50dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="75dp"
+                            android:layout_height="75dp"
+                            android:layout_margin="5dp"
+                            android:src="@drawable/fridge"/>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:orientation="vertical">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="20sp"
+                                android:textColor="@color/primary"
+                                android:fontFamily="@font/bold"
+                                android:text="@string/fridge"/>
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/fridge_instructions"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/todays_joke"
                         android:fontFamily="@font/regular"
-                        android:textColor="@color/dark_text"
+                        android:textColor="@color/primary"
                         android:textSize="20sp"
                         android:layout_marginTop="50dp"
                         android:padding="5dp"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/jokes_loading">
+
+                    <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:indeterminate="true"/>
+
+                </RelativeLayout>
 
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -85,16 +148,66 @@
                     android:textSize="15sp"
                     android:layout_margin="10dp"/>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_relative"
+                    android:padding="5dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:layout_margin="5dp"
+                        android:src="@drawable/favorites"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="20sp"
+                            android:textColor="@color/primary"
+                            android:fontFamily="@font/bold"
+                            android:text="@string/favorites_home"/>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/favorites_instructions"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
 
                 <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/todays_trivia"
                         android:fontFamily="@font/regular"
-                        android:textColor="@color/dark_text"
+                        android:textColor="@color/primary"
                         android:textSize="20sp"
                         android:layout_marginTop="50dp"
                         android:padding="5dp"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/trivia_loading">
+
+                    <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:indeterminate="true"/>
+
+                </RelativeLayout>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
@@ -111,16 +224,5 @@
         </androidx.core.widget.NestedScrollView>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-    <com.nightonke.boommenu.BoomMenuButton
-        android:id="@+id/bmb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        app:bmb_normalColor="@color/light_text"
-        app:bmb_buttonEnum="simpleCircle"
-        app:elevation="10dp"/>
 
 </RelativeLayout>

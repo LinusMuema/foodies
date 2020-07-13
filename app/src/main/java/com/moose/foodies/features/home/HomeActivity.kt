@@ -46,20 +46,29 @@ class HomeActivity : AppCompatActivity() {
         ActivityHelper.initialize(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        this.setUpBoomMenu()
+
+
 
         val scale: Float = this.resources.displayMetrics.density
         val pixels = (HeightCalculator.getImageHeight(this) * scale + 0.5f).toInt()
+
+        recipes_loading.setHeight(pixels)
+        jokes_loading.setHeight(pixels)
+        trivia_loading.setHeight(pixels)
 
         homeViewModel.state.observe(this, Observer {
             home_swipe.stopRefreshing()
             showSnackbar(home_layout, it.reason!!)
         })
 
-        homeViewModel.recipes.observe(this, Observer {
+        homeViewModel.recipes.observe(this, Observer { it ->
+
             home_swipe.stopRefreshing()
+            jokes_loading.hide()
             joke.text = it.joke
+            trivia_loading.hide()
             trivia.text = it.trivia
+            recipes_loading.hide()
             carousel.apply {
                 size = it.recipes.size
                 setCarouselViewListener { view, position ->
@@ -69,7 +78,9 @@ class HomeActivity : AppCompatActivity() {
                     view.pick_image.loadCarouselImage(url)
                     view.pick_name.text = recipe.info.title
                     view.setOnClickListener {
-                        startActivity(Intent(this@HomeActivity, RecipeActivity::class.java).putExtra("recipe", Gson().toJson(recipe)))
+                        push<RecipeActivity>{
+                            it.putExtra("recipe", Gson().toJson(recipe))
+                        }
                     }
                 }
                 show()
@@ -102,9 +113,9 @@ class HomeActivity : AppCompatActivity() {
 
             override fun onSearchConfirmed(text: CharSequence?) {
                 recentSearches.add(text.toString())
-                startActivity(
-                    Intent(this@HomeActivity, SearchActivity::class.java)
-                        .putExtra("recipeName", text.toString()))
+                push<SearchActivity> {
+                    it.putExtra("recipeName", text.toString())
+                }
             }
 
         })
@@ -130,43 +141,6 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
-    private fun setUpBoomMenu() {
-        val icons = arrayOf(R.drawable.ic_home, R.drawable.ic_favorites, R.drawable.ic_account, R.drawable.ic_logout)
-        for (icon in icons){
-            val builder = SimpleCircleButton.Builder()
-                .normalColorRes(R.color.primary)
-                .normalImageRes(icon)
-                .imagePadding(Rect(10, 10, 10, 10))
-                .listener {
-                    handleBoomClick(it)
-                }
-
-            bmb.addBuilder(builder)
-        }
-        bmb.buttonPlaceEnum = ButtonPlaceEnum.SC_4_2
-        bmb.piecePlaceEnum = PiecePlaceEnum.DOT_4_2
-    }
-
-    private fun handleBoomClick(index: Int) {
-        val activity = this.localClassName
-        when(index){
-            0 -> {
-                if (!activity.contains("HomeActivity"))
-                    startActivity(Intent(this, HomeActivity::class.java))
-            }
-            1 -> {
-                if (!activity.contains("FavoritesActivity"))
-                    startActivity(Intent(this, FavoritesActivity::class.java))
-            }
-            2 -> {
-                Log.d("Boom", "handleBoomClick: account clicked")
-            }
-            3 -> {
-                PreferenceHelper.setLogged(this, false)
-                startActivity(Intent(this, AuthActivity::class.java))
-            }
-        }
-    }
 
     private fun connectionAvailable(): Boolean {
         val manager = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

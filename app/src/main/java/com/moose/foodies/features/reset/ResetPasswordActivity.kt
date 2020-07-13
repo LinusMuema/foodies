@@ -14,6 +14,7 @@ import com.moose.foodies.di.DaggerAppComponent
 import com.moose.foodies.features.auth.AuthActivity
 import com.moose.foodies.util.ActivityHelper
 import com.moose.foodies.util.hide
+import com.moose.foodies.util.push
 import com.moose.foodies.util.show
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_reset_password.*
@@ -40,7 +41,9 @@ class ResetPasswordActivity : AppCompatActivity() {
             reset_btn.show()
 
             alert(it, "Password reset") {
-                yesButton { startActivity(Intent(this@ResetPasswordActivity, AuthActivity::class.java)) }
+                yesButton {
+                    push<AuthActivity>()
+                }
             }.show()
         })
 
