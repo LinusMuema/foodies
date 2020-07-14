@@ -3,11 +3,8 @@ package com.moose.foodies.features.home
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import android.content.Intent
-import android.graphics.Rect
 import android.net.ConnectivityManager
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -16,18 +13,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.mancj.materialsearchbar.MaterialSearchBar
 import com.moose.foodies.R
-import com.moose.foodies.features.auth.AuthActivity
+import com.moose.foodies.features.fridge.FridgeActivity
 import com.moose.foodies.features.favorites.FavoritesActivity
 import com.moose.foodies.features.recipe.RecipeActivity
 import com.moose.foodies.features.search.SearchActivity
 import com.moose.foodies.util.*
-import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum
-import com.nightonke.boommenu.BoomButtons.SimpleCircleButton
-import com.nightonke.boommenu.Piece.PiecePlaceEnum
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.carousel_item.view.*
-import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 import kotlin.collections.HashSet
@@ -96,17 +89,30 @@ class HomeActivity : AppCompatActivity() {
             }
         }
 
+        joke.setOnLongClickListener {
+            addToClipboard(joke.text.toString(), "Joke")
+            true
+        }
+
+        trivia.setOnLongClickListener{
+            addToClipboard(trivia.text.toString(), "Trivia")
+            true
+        }
+
+        favorites_btn.setOnClickListener { push<FavoritesActivity>() }
+        fridge_btn.setOnClickListener {push<FridgeActivity>()}
+
         //Search bar section
         recentSearches = PreferenceHelper.getRecentSearches(this)!!.split(",").toHashSet()
         searchBar.lastSuggestions = recentSearches.toMutableList()
         searchBar.setOnSearchActionListener(object : MaterialSearchBar.OnSearchActionListener{
 
             override fun onButtonClicked(buttonCode: Int) {
-                Log.d("Search", "onButtonClicked: $buttonCode")
+                this@HomeActivity.hideBottomBar()
             }
 
             override fun onSearchStateChanged(enabled: Boolean) {
-                Log.d("Search", "onSearchStateChanged: $enabled")
+                this@HomeActivity.hideBottomBar()
             }
 
             override fun onSearchConfirmed(text: CharSequence?) {
@@ -117,26 +123,6 @@ class HomeActivity : AppCompatActivity() {
             }
 
         })
-
-
-//        //Copying the joke
-//        joke_copy.setOnClickListener {
-//            val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-//            val clipData = ClipData.newPlainText("joke", joke.text)
-//            clipboardManager.setPrimaryClip(clipData)
-//
-//            Toast.makeText(this, "Joke copied to clipboard", Toast.LENGTH_LONG).show()
-//        }
-//
-//        //Copying the trivia
-//        trivia_copy.setOnClickListener {
-//            val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-//            val clipData = ClipData.newPlainText("trivia", trivia.text)
-//            clipboardManager.setPrimaryClip(clipData)
-//
-//            Toast.makeText(this, "Trivia copied to clipboard", Toast.LENGTH_LONG).show()
-//        }
-
     }
 
 
@@ -146,13 +132,21 @@ class HomeActivity : AppCompatActivity() {
         return activeNetwork != null
     }
 
+    private fun addToClipboard(text: String, type: String){
+        val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clipData = ClipData.newPlainText(type, text)
+        clipboardManager.setPrimaryClip(clipData)
+
+        Toast.makeText(this, "$type copied to clipboard", Toast.LENGTH_LONG).show()
+    }
+
     override fun onPause() {
         super.onPause()
-        PreferenceHelper.setRecentSearches(this, recentSearches.joinToString(separator = ","))
+        PreferenceHelper.setRecentSearches(this, searchBar.lastSuggestions.joinToString(separator = ","))
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        PreferenceHelper.setRecentSearches(this, recentSearches.joinToString(separator = ","))
+        PreferenceHelper.setRecentSearches(this, searchBar.lastSuggestions.joinToString(separator = ","))
     }
 }

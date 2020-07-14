@@ -3,6 +3,7 @@ package com.moose.foodies.di.modules
 import com.moose.foodies.di.ActivityScope
 import com.moose.foodies.features.auth.AuthActivity
 import com.moose.foodies.features.favorites.FavoritesActivity
+import com.moose.foodies.features.fridge.FridgeActivity
 import com.moose.foodies.features.home.HomeActivity
 import com.moose.foodies.features.intolerances.IntolerancesActivity
 import com.moose.foodies.features.recipe.RecipeActivity
@@ -46,4 +47,8 @@ abstract class ActivitiesModule {
     @ActivityScope
     @ContributesAndroidInjector
     abstract fun provideSearch(): SearchActivity
+
+    @ActivityScope
+    @ContributesAndroidInjector
+    abstract fun provideFridge(): FridgeActivity
 }

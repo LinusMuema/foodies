@@ -2,12 +2,13 @@ package com.moose.foodies.di.modules
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.moose.foodies.di.VMKey
+import com.moose.foodies.di.ViewModelKey
 import com.moose.foodies.di.factory.ViewModelFactory
 import com.moose.foodies.features.home.HomeViewModel
 import com.moose.foodies.features.intolerances.IntolerancesViewModel
 import com.moose.foodies.features.auth.AuthViewModel
 import com.moose.foodies.features.favorites.FavoritesViewModel
+import com.moose.foodies.features.fridge.FridgeViewModel
 import com.moose.foodies.features.recipe.RecipeViewModel
 import com.moose.foodies.features.reset.ResetPasswordViewModel
 import com.moose.foodies.features.search.SearchViewModel
@@ -20,38 +21,43 @@ abstract class ViewModelModules {
 
     @IntoMap
     @Binds
-    @VMKey(IntolerancesViewModel::class)
+    @ViewModelKey(IntolerancesViewModel::class)
     abstract fun bindIntroViewModel(introlerancesViewModel: IntolerancesViewModel): ViewModel
 
     @IntoMap
     @Binds
-    @VMKey(AuthViewModel::class)
+    @ViewModelKey(AuthViewModel::class)
     abstract fun bindAuthViewModel(authViewModel: AuthViewModel): ViewModel
 
     @IntoMap
     @Binds
-    @VMKey(ResetPasswordViewModel::class)
+    @ViewModelKey(ResetPasswordViewModel::class)
     abstract fun bindResetPasswordViewModel(resetPasswordViewModel: ResetPasswordViewModel): ViewModel
 
     @IntoMap
     @Binds
-    @VMKey(HomeViewModel::class)
+    @ViewModelKey(HomeViewModel::class)
     abstract fun bindHomeViewModel(homeViewModel: HomeViewModel): ViewModel
 
     @IntoMap
     @Binds
-    @VMKey(RecipeViewModel::class)
+    @ViewModelKey(RecipeViewModel::class)
     abstract fun bindRecipeViewModel(recipeViewModel: RecipeViewModel): ViewModel
 
     @IntoMap
     @Binds
-    @VMKey(FavoritesViewModel::class)
+    @ViewModelKey(FavoritesViewModel::class)
     abstract fun bindFavoritesViewModel(favoritesViewModel: FavoritesViewModel): ViewModel
 
     @IntoMap
     @Binds
-    @VMKey(SearchViewModel::class)
+    @ViewModelKey(SearchViewModel::class)
     abstract fun bindSearchViewModel(searchViewModel: SearchViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewModelKey(FridgeViewModel::class)
+    abstract fun bindFridgeViewModel(fridgeViewModel: FridgeViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
