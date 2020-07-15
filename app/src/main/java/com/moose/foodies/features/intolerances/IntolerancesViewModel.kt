@@ -65,7 +65,4 @@ class IntolerancesViewModel @Inject constructor(private val apiRepository: ApiRe
         else intolerances.remove(intolerance)
     }
 
-    override fun onCleared() {
-        super.onCleared()
-    }
 }

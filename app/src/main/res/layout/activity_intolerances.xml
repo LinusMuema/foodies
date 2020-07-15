@@ -17,7 +17,6 @@
             android:text="@string/intro_header"
             android:fontFamily="@font/regular"
             android:textColor="@color/dark_text"
-            android:id="@+id/intro_header"
             android:textSize="20sp"
             android:padding="5dp"
             android:textFontWeight="20"/>
@@ -29,7 +28,6 @@
             android:fontFamily="@font/light"
             android:textColor="@color/dark_text"
             android:padding="5dp"
-            android:id="@+id/intro_sub"
             android:textSize="15sp"/>
 
         <androidx.recyclerview.widget.RecyclerView

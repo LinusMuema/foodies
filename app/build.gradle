@@ -70,8 +70,8 @@ dependencies {
     implementation 'com.github.jama5262:CarouselView:1.1.0'
 
     //Firebase
-    implementation 'com.google.firebase:firebase-analytics-ktx:17.4.3'
-    implementation 'com.google.firebase:firebase-crashlytics:17.1.0'
+    implementation 'com.google.firebase:firebase-analytics-ktx:17.4.4'
+    implementation 'com.google.firebase:firebase-crashlytics:17.1.1'
 
     //SwipeRefresh layout
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
@@ -120,5 +120,5 @@ dependencies {
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
 
     //Expanding cards
-    implementation 'com.alespero:expandable-cardview:0.6'
+    implementation 'com.alespero:expandable-cardview:0.8'
 }

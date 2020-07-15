@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.moose.foodies.R
 import com.moose.foodies.util.hide
+import com.moose.foodies.util.hideAllBars
 import com.moose.foodies.util.hideBottomBar
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_videos.*
@@ -33,6 +34,7 @@ class VideosFragment : Fragment() {
     
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         searchViewModel = ViewModelProviders.of(requireActivity(), viewModelFactory).get(SearchViewModel::class.java)
+        requireActivity().hideAllBars()
         return inflater.inflate(R.layout.fragment_videos, container, false)
     }
 

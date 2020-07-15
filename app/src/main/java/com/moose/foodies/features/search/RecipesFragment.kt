@@ -13,10 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.moose.foodies.R
-import com.moose.foodies.util.HeightCalculator
-import com.moose.foodies.util.PreferenceHelper
-import com.moose.foodies.util.hide
-import com.moose.foodies.util.hideBottomBar
+import com.moose.foodies.util.*
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_recipes.*
 import javax.inject.Inject
@@ -30,13 +27,13 @@ class RecipesFragment : Fragment() {
     private lateinit var searchViewModel: SearchViewModel
 
     override fun onAttach(context: Context) {
-        this.requireActivity().hideBottomBar()
         AndroidSupportInjection.inject(this)
         super.onAttach(context)
     }
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        requireActivity().hideAllBars()
         searchViewModel = ViewModelProviders.of(requireActivity(), viewModelFactory).get(SearchViewModel::class.java)
         return inflater.inflate(R.layout.fragment_recipes, container, false)
     }
