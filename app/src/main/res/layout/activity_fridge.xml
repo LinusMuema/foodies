@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:focusableInTouchMode="true"
     android:focusable="true"
+    android:id="@+id/fridge_layout"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
@@ -39,11 +40,13 @@
         <com.google.android.material.chip.ChipGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:id="@+id/ingredients_group"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/input_area"
             android:orientation="horizontal">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -74,6 +77,20 @@
                 android:id="@+id/search_btn"/>
 
         </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/fridge_recycler"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/fridge_loading"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:indeterminate="true"/>
 
     </LinearLayout>
 

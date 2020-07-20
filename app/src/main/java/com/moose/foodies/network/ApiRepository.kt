@@ -21,6 +21,6 @@ open class ApiRepository @Inject constructor(private val apiEndpoints: ApiEndpoi
 
     open fun searchRecipes(name: String) = apiEndpoints.searchRecipe(name)
 
-    open fun searchRecipeByIngredients(ingredients: String) = apiEndpoints.searchRecipeByIngredients(ingredients)
+    open fun searchFridgeRecipes(ingredients: String) = apiEndpoints.searchFridgeRecipes(ingredients)
 
 }

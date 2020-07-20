@@ -1,10 +1,13 @@
 package com.moose.foodies.network
 
-import com.moose.foodies.BuildConfig
 import com.moose.foodies.models.*
+import io.reactivex.Flowable
 import io.reactivex.Observable
-import okhttp3.RequestBody
-import retrofit2.http.*
+import io.reactivex.Single
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface ApiEndpoints {
     @POST("/api/auth/login")
@@ -26,6 +29,5 @@ interface ApiEndpoints {
     fun searchRecipe(@Path("name") name: String): Observable<RecipeSearch>
 
     @GET("/api/recipes/search/ingredients/{ingredients}")
-    fun searchRecipeByIngredients(@Path("ingredients") ingredients: String): Observable<IngredientsSearch>
-
+    fun searchFridgeRecipes(@Path("ingredients") ingredients: String): Observable<FridgeSearch>
 }

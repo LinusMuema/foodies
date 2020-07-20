@@ -40,8 +40,10 @@ data class RecipeResults(val id: Int, val image: String, val openLicense: Int, v
 
 data class Video(val length: Int, val rating: Double, val shortTitle: String, val thumbnail: String, val title: String, val views: Int, val youTubeId: String)
 
-data class IngredientsSearch(val message: String, val recipes: List<IngredientsSearchResults>)
+data class FridgeSearch(val message: String, val recipes: List<RecipeSuggestion>)
 
-data class IngredientsSearchResults(val id: Int, val image: String, val missedIngredients: List<MissedIngredient>, val title: String)
+data class RecipeSuggestion(val id: Int, val image: String, val missedIngredients: List<MissedIngredient>, val title: String, val usedIngredients: List<UsedIngredient>)
 
-data class MissedIngredient(val aisle: String, val amount: Int, val id: Int, val image: String, val meta: List<String>, val metaInformation: List<String>, val name: String, val original: String, val originalName: String, val originalString: String, val unit: String, val unitLong: String, val unitShort: String)
+data class MissedIngredient(val amount: Double, val extendedName: String, val id: Int, val image: String, val name: String, val original: String, val unit: String, val unitLong: String)
+
+data class UsedIngredient(val amount: Double, val extendedName: String, val id: Int, val image: String, val name: String, val original: String, val unit: String, val unitLong: String)

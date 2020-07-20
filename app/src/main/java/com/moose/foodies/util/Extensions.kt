@@ -7,6 +7,7 @@ import android.media.Image
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -58,6 +59,16 @@ fun Activity.hideAllBars(){
             or View.SYSTEM_UI_FLAG_FULLSCREEN
             or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
             or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+}
+
+fun Activity.hideKeyboard(): Boolean {
+    return (getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager)
+        .hideSoftInputFromWindow((currentFocus ?: View(this)).windowToken, 0)
+}
+
+fun Fragment.hideKeyboard(): Boolean {
+    return (context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager)
+        .hideSoftInputFromWindow((activity?.currentFocus ?: View(context)).windowToken, 0)
 }
 
 fun getProgressDrawable(context: Context): CircularProgressDrawable {

@@ -1,10 +1,8 @@
 package com.moose.foodies.features.search
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.moose.foodies.models.RecipeResults
-import com.moose.foodies.models.RecipeSearch
 import com.moose.foodies.models.UiState
 import com.moose.foodies.models.Video
 import com.moose.foodies.network.ApiRepository
