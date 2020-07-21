@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.tabs.TabLayoutMediator
 import com.moose.foodies.R
 import com.moose.foodies.util.ActivityHelper
 import com.moose.foodies.util.hideBottomBar
@@ -23,6 +24,8 @@ class SearchActivity : AppCompatActivity(), HasAndroidInjector {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
+    private val titles = arrayOf("Recipes", "Videos")
+
     private val searchViewModel by viewModels<SearchViewModel> { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,8 +37,10 @@ class SearchActivity : AppCompatActivity(), HasAndroidInjector {
         val title = resources.getString(R.string.search_query, query)
         search_title.text = title
 
-        view_pager.adapter = SearchViewpagerAdapter(supportFragmentManager)
-        tabs.setupWithViewPager(view_pager)
+        view_pager.adapter = SearchViewpagerAdapter(this)
+        TabLayoutMediator(tabs, view_pager){tab, position ->
+            tab.text = titles[position]
+        }.attach()
 
         searchViewModel.searchRecipe(query)
 
