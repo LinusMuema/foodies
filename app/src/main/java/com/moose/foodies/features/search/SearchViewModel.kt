@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.moose.foodies.models.RecipeResults
 import com.moose.foodies.models.UiState
 import com.moose.foodies.models.Video
-import com.moose.foodies.network.ApiRepository
+import com.moose.foodies.di.network.ApiRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject

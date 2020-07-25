@@ -1,16 +1,13 @@
 package com.moose.foodies.features.intolerances
 
-import android.content.SharedPreferences
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.moose.foodies.models.AuthResponse
 import com.moose.foodies.models.Intolerance
 import com.moose.foodies.models.Intolerances
 import com.moose.foodies.models.UiState
-import com.moose.foodies.network.ApiRepository
+import com.moose.foodies.di.network.ApiRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import retrofit2.HttpException

@@ -140,6 +140,11 @@ class HomeActivity : AppCompatActivity() {
         Toast.makeText(this, "$type copied to clipboard", Toast.LENGTH_LONG).show()
     }
 
+    override fun onResume() {
+        super.onResume()
+        ActivityHelper.initialize(this)
+    }
+
     override fun onPause() {
         super.onPause()
         PreferenceHelper.setRecentSearches(this, searchBar.lastSuggestions.joinToString(separator = ","))

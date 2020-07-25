@@ -1,16 +1,14 @@
 package com.moose.foodies.features.home
 
-import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.GsonBuilder
 import com.moose.foodies.db.DbRepository
 import com.moose.foodies.models.AuthResponse
-import com.moose.foodies.models.Recipe
 import com.moose.foodies.models.Recipes
 import com.moose.foodies.models.UiState
-import com.moose.foodies.network.ApiRepository
+import com.moose.foodies.di.network.ApiRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers

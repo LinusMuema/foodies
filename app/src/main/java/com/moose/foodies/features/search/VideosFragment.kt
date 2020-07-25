@@ -34,7 +34,6 @@ class VideosFragment : Fragment() {
     
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         searchViewModel = ViewModelProviders.of(requireActivity(), viewModelFactory).get(SearchViewModel::class.java)
-        requireActivity().hideAllBars()
         return inflater.inflate(R.layout.fragment_videos, container, false)
     }
 

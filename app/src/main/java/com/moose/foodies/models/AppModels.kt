@@ -1,9 +1,7 @@
 package com.moose.foodies.models
 
-import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kotlinx.android.parcel.Parcelize
 
 
 data class AuthResponse(val message: String, val token: String, val type: String, val reason: String)
@@ -42,8 +40,8 @@ data class Video(val length: Int, val rating: Double, val shortTitle: String, va
 
 data class FridgeSearch(val message: String, val recipes: List<RecipeSuggestion>)
 
-data class RecipeSuggestion(val id: Int, val image: String, val missedIngredients: List<MissedIngredient>, val title: String, val usedIngredients: List<UsedIngredient>)
+data class RecipeSuggestion(val id: Int, val image: String, val missedIngredients: List<FridgeIngredient>, val title: String, val usedIngredients: List<FridgeIngredient>)
 
-data class MissedIngredient(val amount: Double, val extendedName: String, val id: Int, val image: String, val name: String, val original: String, val unit: String, val unitLong: String)
+data class FridgeIngredient(val amount: Double, val extendedName: String, val id: Int, val image: String, val name: String, val original: String, val unit: String, val unitLong: String)
 
-data class UsedIngredient(val amount: Double, val extendedName: String, val id: Int, val image: String, val name: String, val original: String, val unit: String, val unitLong: String)
+data class FridgeRecipe(val message: String, val instructions: Instructions)

@@ -67,7 +67,6 @@ class RecipeActivity : AppCompatActivity() {
         recipeViewModel.isFavorite.observe(this, Observer {
             isFavorite = it
             invalidateOptionsMenu()
-            Log.d("Fav", "onCreate: isFavorite value is $isFavorite")
         })
 
         setSupportActionBar(topAppBar)

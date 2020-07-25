@@ -33,4 +33,7 @@
     <string name="favorites_instructions">Save your favorite recipes so that you can view them any day</string>
     <string name="fridge_activity">Search by ingredients</string>
     <string name="ingredients_instructions">Enter the ingredients you have…</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="prepare">Prepare</string>
 </resources>

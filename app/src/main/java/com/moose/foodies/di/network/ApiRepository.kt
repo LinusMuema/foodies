@@ -1,9 +1,7 @@
-package com.moose.foodies.network
+package com.moose.foodies.di.network
 
 import com.moose.foodies.models.Credentials
-import com.moose.foodies.models.Intolerance
 import com.moose.foodies.models.Intolerances
-import okhttp3.RequestBody
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -22,5 +20,7 @@ open class ApiRepository @Inject constructor(private val apiEndpoints: ApiEndpoi
     open fun searchRecipes(name: String) = apiEndpoints.searchRecipe(name)
 
     open fun searchFridgeRecipes(ingredients: String) = apiEndpoints.searchFridgeRecipes(ingredients)
+
+    open fun getRecipeById(id: String) = apiEndpoints.getRecipeById(id)
 
 }

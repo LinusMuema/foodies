@@ -1,19 +1,21 @@
 package com.moose.foodies.features.fridge
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.tabs.TabLayoutMediator
 import com.moose.foodies.R
 import com.moose.foodies.models.RecipeSuggestion
-import com.moose.foodies.util.HeightCalculator
-import com.moose.foodies.util.loadImage
-import com.moose.foodies.util.setHeight
+import com.moose.foodies.util.*
 import kotlinx.android.synthetic.main.ingredients_search_item.view.*
 
-class FridgeRecipeAdapter(private val recipes: List<RecipeSuggestion>):
+class FridgeRecipeAdapter(
+    private val recipes: List<RecipeSuggestion>,
+    private val activity: FridgeActivity,
+    private val getRecipe: (recipe: RecipeSuggestion, position: Int) -> Unit
+):
     RecyclerView.Adapter<FridgeRecipeAdapter.RecipeViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder =
@@ -21,19 +23,36 @@ class FridgeRecipeAdapter(private val recipes: List<RecipeSuggestion>):
 
     override fun getItemCount(): Int = recipes.size
 
-    override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) = holder.bind(recipes[position])
+    override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) = holder.bind(recipes[position], position)
+
+    fun stopLoading(){
+
+    }
 
 
     inner class RecipeViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         private val context: Context = itemView.context
-        fun bind(recipe: RecipeSuggestion) {
+        private val titles = arrayOf("Missed Ingredients", "Used Ingredients")
+        fun bind(recipe: RecipeSuggestion, position: Int) {
+
             val scale: Float = context.resources.displayMetrics.density
             val pixels = (HeightCalculator.getImageHeight(context) * scale + 0.5f).toInt()
-            val url = recipe.image.replace("312x312", "636x393")
-            Log.d("fridge", "bind: $url")
+            val url = recipe.image.replace("312x231", "636x393")
+            itemView.prepare_loading.start()
             itemView.recipe_suggestion_name.text = recipe.title
             itemView.recipe_suggestion_image.loadImage(url)
             itemView.recipe_suggestion_image.setHeight(pixels)
+
+            itemView.view_pager.adapter = FridgeIngredientsPagerAdapter(activity, recipe)
+            TabLayoutMediator(itemView.tabs, itemView.view_pager){tab, position ->
+                tab.text = titles[position]
+            }.attach()
+
+            itemView.btn_prepare.setOnClickListener {
+                itemView.btn_prepare.hide()
+                itemView.prepare_loading.show()
+                getRecipe(recipe, position)
+            }
         }
 
     }

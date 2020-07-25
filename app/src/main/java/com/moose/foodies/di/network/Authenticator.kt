@@ -1,4 +1,4 @@
-package com.moose.foodies.network
+package com.moose.foodies.di.network
 
 import com.moose.foodies.FoodiesApplication
 import com.moose.foodies.util.PreferenceHelper

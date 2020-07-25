@@ -32,66 +32,73 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <com.google.android.material.chip.ChipGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:id="@+id/ingredients_group"/>
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/input_area"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="0dp"
+            <com.google.android.material.chip.ChipGroup
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:layout_weight="2"
-                android:hint="@string/ingredients_instructions"
-                android:id="@+id/ingredients_layout">
+                android:visibility="gone"
+                android:id="@+id/ingredients_group"/>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/input_area"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:background="@color/light_text"
-                    android:inputType="text"
-                    android:id="@+id/ingredients_input"/>
+                    android:layout_margin="10dp"
+                    android:layout_weight="2"
+                    android:hint="@string/ingredients_instructions"
+                    android:id="@+id/ingredients_layout">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/light_text"
+                        android:inputType="text"
+                        android:id="@+id/ingredients_input"/>
 
-            <com.google.android.material.button.MaterialButton
-                android:layout_width="wrap_content"
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_margin="10dp"
+                    android:layout_gravity="center"
+                    android:textAllCaps="false"
+                    android:text="@string/search"
+                    android:id="@+id/search_btn"/>
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_margin="10dp"
+                android:id="@+id/fridge_recycler"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+            <ProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/fridge_loading"
+                android:visibility="gone"
                 android:layout_gravity="center"
-                android:textAllCaps="false"
-                android:text="@string/search"
-                android:id="@+id/search_btn"/>
+                android:indeterminate="true"/>
 
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/fridge_recycler"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-
-        <ProgressBar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/fridge_loading"
-            android:visibility="gone"
-            android:layout_gravity="center"
-            android:indeterminate="true"/>
-
-    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

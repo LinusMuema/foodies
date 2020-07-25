@@ -1,6 +1,6 @@
 package com.moose.foodies.util
 
-import com.moose.foodies.network.Authenticator
+import com.moose.foodies.di.network.Authenticator
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
