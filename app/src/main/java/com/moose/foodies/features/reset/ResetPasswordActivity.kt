@@ -1,6 +1,5 @@
 package com.moose.foodies.features.reset
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -10,12 +9,8 @@ import com.github.dhaval2404.form_validation.rule.EmailRule
 import com.github.dhaval2404.form_validation.rule.NonEmptyRule
 import com.github.dhaval2404.form_validation.validation.FormValidator
 import com.moose.foodies.R
-import com.moose.foodies.di.DaggerAppComponent
 import com.moose.foodies.features.auth.AuthActivity
-import com.moose.foodies.util.ActivityHelper
-import com.moose.foodies.util.hide
-import com.moose.foodies.util.push
-import com.moose.foodies.util.show
+import com.moose.foodies.util.*
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_reset_password.*
 import org.jetbrains.anko.alert
@@ -39,12 +34,16 @@ class ResetPasswordActivity : AppCompatActivity() {
         resetPasswordViewModel.response.observe(this, Observer {
             resetloading.hide()
             reset_btn.show()
-
+            it as String
             alert(it, "Password reset") {
                 yesButton {
                     push<AuthActivity>()
                 }
             }.show()
+        })
+
+        resetPasswordViewModel.exception.observe(this, Observer {
+            showSnackbar(password_reset,it)
         })
 
         reset_btn.setOnClickListener {

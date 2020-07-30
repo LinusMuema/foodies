@@ -1,14 +1,13 @@
 package com.moose.foodies.features.intolerances
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.moose.foodies.R
-import com.moose.foodies.di.DaggerAppComponent
 import com.moose.foodies.features.home.HomeActivity
+import com.moose.foodies.models.Intolerance
 import com.moose.foodies.util.*
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_intolerances.*
@@ -31,7 +30,8 @@ class IntolerancesActivity @Inject constructor(): AppCompatActivity() {
 
         if (intent.getBooleanExtra("signup", false)) showSnackbar(intolerances_layout, "We have sent you a confirmation email :)")
 
-        intolerancesViewModel.results.observe(this, Observer {
+        intolerancesViewModel.response.observe(this, Observer {
+            it as ArrayList<Intolerance>
             val introAdapter = IntolerancesAdapter(it) { intolerance, selected ->
                 intolerancesViewModel.handleItem(intolerance, selected)
             }
@@ -50,8 +50,8 @@ class IntolerancesActivity @Inject constructor(): AppCompatActivity() {
             else showSnackbar(intolerances_layout, "something went wrong! Try again later")
         })
 
-        intolerancesViewModel.state.observe(this, Observer {
-            showSnackbar(intolerances_layout, it.state)
+        intolerancesViewModel.exception.observe(this, Observer {
+            showSnackbar(intolerances_layout, it)
         })
 
         intolerancesViewModel

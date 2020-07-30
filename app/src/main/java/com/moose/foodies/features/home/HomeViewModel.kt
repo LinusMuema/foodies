@@ -1,37 +1,24 @@
 package com.moose.foodies.features.home
 
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.google.gson.GsonBuilder
 import com.moose.foodies.db.DbRepository
-import com.moose.foodies.models.AuthResponse
-import com.moose.foodies.models.Recipes
-import com.moose.foodies.models.UiState
 import com.moose.foodies.di.network.ApiRepository
+import com.moose.foodies.features.BaseViewModel
+import com.moose.foodies.models.Recipes
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import retrofit2.HttpException
 import javax.inject.Inject
 
-class HomeViewModel @Inject constructor(private val apiRepository: ApiRepository, private val dbRepository: DbRepository): ViewModel() {
-
-    private val composite = CompositeDisposable()
-    val recipes: MutableLiveData<Recipes> = MutableLiveData()
-    val state: MutableLiveData<UiState> = MutableLiveData()
+class HomeViewModel @Inject constructor(private val apiRepository: ApiRepository, private val dbRepository: DbRepository): BaseViewModel() {
 
     fun getRecipes(){
         composite.add(
             dbRepository.getTodaysRecipes()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.computation())
-                .doOnError { state.value = UiState(it.cause.toString(), it.message) }
-                .subscribe
-                    {
+                .subscribe ({
                         if(it.isEmpty()) updateRecipes()
-                        else recipes.value = it[0]
-                    }
+                        else response.value = it[0]
+                    }, {exception.value = it.message})
         )
     }
 
@@ -40,19 +27,8 @@ class HomeViewModel @Inject constructor(private val apiRepository: ApiRepository
             apiRepository.getRecipes()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                    {
-                        updateDbRecipes(it)
-                    },
-                    {
-                        when(it){
-                            is HttpException -> {
-                                val body = it.response()!!.errorBody()!!.string()
-                                val error = GsonBuilder().create().fromJson(body, AuthResponse::class.java)
-                                state.value = UiState(error.message, error.reason)
-                            }
-                            else -> state.value = UiState(it.cause.toString(), it.message!!)
-                        }
-                }))
+                    { updateDbRecipes(it) },
+                    { exception.value = it.message }))
     }
 
     private fun updateDbRecipes(data: Recipes){
@@ -62,25 +38,15 @@ class HomeViewModel @Inject constructor(private val apiRepository: ApiRepository
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.computation())
                 .doOnComplete {
-                    Log.d("recipe", "deleted recipes from db")
                     composite.add(
                         dbRepository.insertTodaysRecipes(data)
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribeOn(Schedulers.computation())
                             .subscribe(
-                                {
-                                    recipes.value = data
-                                },
-                                {
-                                    state.value = UiState(it.cause.toString(), it.message)
-                                }))
+                                { response.value = data },
+                                { exception.value = it.message }))
                 }
                 .subscribe()
         )
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        composite.dispose()
     }
 }

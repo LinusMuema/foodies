@@ -14,6 +14,7 @@ import com.moose.foodies.R
 import com.moose.foodies.util.hide
 import com.moose.foodies.util.hideAllBars
 import com.moose.foodies.util.hideBottomBar
+import com.moose.foodies.util.showSnackbar
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_videos.*
 import javax.inject.Inject
@@ -39,6 +40,9 @@ class VideosFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        searchViewModel.exception.observe(viewLifecycleOwner, Observer {
+            showSnackbar(fragment_videos, it)
+        })
         searchViewModel.videos.observe(viewLifecycleOwner, Observer {
             videos_loading.hide()
             if (it.isEmpty()) empty_videos.text = resources.getString(R.string.empty_search, "videos")

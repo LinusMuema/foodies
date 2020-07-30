@@ -1,19 +1,13 @@
 package com.moose.foodies.features.favorites
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.moose.foodies.db.DbRepository
+import com.moose.foodies.features.BaseViewModel
 import com.moose.foodies.models.Recipe
-import com.moose.foodies.models.UiState
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class FavoritesViewModel @Inject constructor(private val dbRepository: DbRepository): ViewModel() {
-    private val composite = CompositeDisposable()
-    val favorites: MutableLiveData<List<Recipe>> = MutableLiveData()
-    val state: MutableLiveData<UiState> = MutableLiveData()
+class FavoritesViewModel @Inject constructor(private val dbRepository: DbRepository): BaseViewModel() {
 
     fun getFavorites(){
         composite.add(
@@ -22,10 +16,10 @@ class FavoritesViewModel @Inject constructor(private val dbRepository: DbReposit
                 .subscribeOn(Schedulers.computation())
                 .subscribe(
                     {
-                        if (it.isEmpty()) state.value = UiState("exception", "no favorites available")
-                        else favorites.value = it
+                        if (it.isEmpty()) exception.value = "No favorites available"
+                        else response.value = it
                     },
-                    {state.value = UiState(it.cause.toString(), it.message!!) })
+                    {exception.value = it.message})
         )
     }
 
@@ -34,14 +28,7 @@ class FavoritesViewModel @Inject constructor(private val dbRepository: DbReposit
             dbRepository.deleteFavorite(recipe)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.computation())
-                .subscribe(
-                    { return@subscribe },
-                    {state.value = UiState(it.cause.toString(), it.message!!) })
+                .subscribe()
         )
-    }
-
-    override fun onCleared() {
-        composite.dispose()
-        super.onCleared()
     }
 }

@@ -2,7 +2,6 @@ package com.moose.foodies.features.recipe
 
 import android.graphics.Rect
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
@@ -60,8 +59,8 @@ class RecipeActivity : AppCompatActivity() {
         }
 
 
-        recipeViewModel.state.observe(this, Observer {
-            showSnackbar(recipe_layout, it.reason!!)
+        recipeViewModel.exception.observe(this, Observer {
+            showSnackbar(recipe_layout, it)
         })
 
         recipeViewModel.isFavorite.observe(this, Observer {

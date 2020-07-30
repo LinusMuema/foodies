@@ -13,17 +13,16 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.mancj.materialsearchbar.MaterialSearchBar
 import com.moose.foodies.R
-import com.moose.foodies.features.fridge.FridgeActivity
 import com.moose.foodies.features.favorites.FavoritesActivity
+import com.moose.foodies.features.fridge.FridgeActivity
 import com.moose.foodies.features.recipe.RecipeActivity
 import com.moose.foodies.features.search.SearchActivity
+import com.moose.foodies.models.Recipes
 import com.moose.foodies.util.*
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.carousel_item.view.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
-import kotlin.collections.HashSet
 
 class HomeActivity : AppCompatActivity() {
 
@@ -47,13 +46,13 @@ class HomeActivity : AppCompatActivity() {
         jokes_loading.setHeight(pixels)
         trivia_loading.setHeight(pixels)
 
-        homeViewModel.state.observe(this, Observer {
+        homeViewModel.exception.observe(this, Observer {
             home_swipe.stopRefreshing()
-            showSnackbar(home_layout, it.reason!!)
+            showSnackbar(home_layout, it)
         })
 
-        homeViewModel.recipes.observe(this, Observer { it ->
-
+        homeViewModel.response.observe(this, Observer { it ->
+            it as Recipes
             home_swipe.stopRefreshing()
             jokes_loading.hide()
             joke.text = it.joke

@@ -1,6 +1,5 @@
 package com.moose.foodies.features.favorites
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
@@ -27,7 +26,7 @@ class FavoritesActivity : AppCompatActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private lateinit var favorites: MutableList<Recipe>
+    private lateinit var favorites: ArrayList<Recipe>
 
     private val favoritesViewModel by viewModels<FavoritesViewModel> { viewModelFactory }
 
@@ -40,8 +39,8 @@ class FavoritesActivity : AppCompatActivity() {
         val scale: Float = this.resources.displayMetrics.density
         val pixels = (HeightCalculator.getImageHeight(this) * scale + 0.5f).toInt()
 
-        favoritesViewModel.favorites.observe(this, Observer { it ->
-            favorites = it as MutableList<Recipe>
+        favoritesViewModel.response.observe(this, Observer { it ->
+            favorites = it as ArrayList<Recipe>
             rv.layoutManager = LinearLayoutManager(this)
             rv.adapter = FavoritesAdapter(favorites, pixels) {recipe ->
                 push<RecipeActivity>{
@@ -50,8 +49,8 @@ class FavoritesActivity : AppCompatActivity() {
             }
         })
 
-        favoritesViewModel.state.observe(this, Observer {
-            showSnackbar(favorites_layout, it.reason!!)
+        favoritesViewModel.exception.observe(this, Observer {
+            showSnackbar(favorites_layout, it)
         })
 
         rv.setListener( object : SwipeLeftRightCallback.Listener {

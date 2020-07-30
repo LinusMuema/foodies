@@ -10,6 +10,7 @@ import com.google.android.material.chip.Chip
 import com.google.gson.Gson
 import com.moose.foodies.R
 import com.moose.foodies.features.recipe.RecipeActivity
+import com.moose.foodies.models.FridgeSearch
 import com.moose.foodies.models.Info
 import com.moose.foodies.models.Recipe
 import com.moose.foodies.models.RecipeSuggestion
@@ -37,7 +38,8 @@ class FridgeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fridge)
 
-        fridgeViewModel.recipes.observe(this, Observer {
+        fridgeViewModel.response.observe(this, Observer {
+            it as FridgeSearch
             fridge_loading.hide()
             fridge_recycler.show()
             fridge_recycler.apply {

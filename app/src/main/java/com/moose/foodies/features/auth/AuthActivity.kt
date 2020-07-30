@@ -38,19 +38,22 @@ class AuthActivity : AppCompatActivity() {
         authViewModel.response.observe(this, Observer { it ->
             rotateloading.hide()
             login_btn.show()
-            when {
-                it == "login" -> {
+            when (it as String) {
+                "login" -> {
                     pushWithoutHistory<HomeActivity>()
                 }
-                it == "signup" -> {
+                "signup" -> {
                     pushWithoutHistory<IntolerancesActivity> {
                         it.putExtra("signup", true)
                     }
                 }
-                "403" in it -> showSnackbar(auth_layout, "Check your password and try again")
-                else -> showSnackbar(auth_layout, it)
             }
         })
+
+        authViewModel.exception.observe(this, Observer {
+            showSnackbar(auth_layout, it)
+        })
+
         login_btn.setOnClickListener {
             if (!isValidForm()) return@setOnClickListener
             login_btn.hide()

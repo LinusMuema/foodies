@@ -25,11 +25,6 @@ class FridgeRecipeAdapter(
 
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) = holder.bind(recipes[position], position)
 
-    fun stopLoading(){
-
-    }
-
-
     inner class RecipeViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         private val context: Context = itemView.context
         private val titles = arrayOf("Missed Ingredients", "Used Ingredients")

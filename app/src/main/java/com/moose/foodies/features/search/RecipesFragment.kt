@@ -13,8 +13,10 @@ import com.moose.foodies.R
 import com.moose.foodies.util.HeightCalculator
 import com.moose.foodies.util.hide
 import com.moose.foodies.util.hideBottomBar
+import com.moose.foodies.util.showSnackbar
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_recipes.*
+import kotlinx.android.synthetic.main.fragment_videos.*
 import javax.inject.Inject
 
 
@@ -41,6 +43,11 @@ class RecipesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val scale: Float = this.resources.displayMetrics.density
         val pixels = (HeightCalculator.getImageHeight(this.requireContext()) * scale + 0.5f).toInt()
+
+        searchViewModel.exception.observe(viewLifecycleOwner, Observer {
+            showSnackbar(fragment_recipes, it)
+        })
+
         searchViewModel.recipes.observe(viewLifecycleOwner, Observer {
             recipes_loading.hide()
             if (it.isEmpty()) empty_recipes.text = resources.getString(R.string.empty_search, "recipes")

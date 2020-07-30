@@ -7,6 +7,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".features.search.VideosFragment"
     android:gravity="center"
+    android:id="@+id/fragment_videos"
     android:orientation="vertical">
 
     <ProgressBar
