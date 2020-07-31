@@ -1,7 +1,6 @@
 package com.moose.foodies.features.favorites
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -13,7 +12,6 @@ import com.moose.foodies.R
 import com.moose.foodies.features.recipe.RecipeActivity
 import com.moose.foodies.models.Recipe
 import com.moose.foodies.util.ActivityHelper
-import com.moose.foodies.util.HeightCalculator
 import com.moose.foodies.util.push
 import com.moose.foodies.util.showSnackbar
 import com.tsuryo.swipeablerv.SwipeLeftRightCallback
@@ -36,13 +34,10 @@ class FavoritesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorites)
 
-        val scale: Float = this.resources.displayMetrics.density
-        val pixels = (HeightCalculator.getImageHeight(this) * scale + 0.5f).toInt()
-
         favoritesViewModel.response.observe(this, Observer { it ->
             favorites = it as ArrayList<Recipe>
             rv.layoutManager = LinearLayoutManager(this)
-            rv.adapter = FavoritesAdapter(favorites, pixels) {recipe ->
+            rv.adapter = FavoritesAdapter(favorites) {recipe ->
                 push<RecipeActivity>{
                     it.putExtra("recipe", Gson().toJson(recipe))
                 }
@@ -55,7 +50,7 @@ class FavoritesActivity : AppCompatActivity() {
 
         rv.setListener( object : SwipeLeftRightCallback.Listener {
             override fun onSwipedRight(position: Int) {
-                Log.d("Swipe", "onSwipedRight: swipe right done")
+                return
             }
 
             override fun onSwipedLeft(position: Int) {

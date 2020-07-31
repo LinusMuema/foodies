@@ -3,12 +3,11 @@ package com.moose.foodies.features.search
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayoutMediator
 import com.moose.foodies.R
 import com.moose.foodies.util.ActivityHelper
-import com.moose.foodies.util.hideBottomBar
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -36,6 +35,14 @@ class SearchActivity : AppCompatActivity(), HasAndroidInjector {
         val query = intent.getStringExtra("recipeName")!!
         val title = resources.getString(R.string.search_query, query)
         search_title.text = title
+
+        search_layout.setOnRefreshListener {
+            searchViewModel.searchRecipe(query)
+        }
+
+        searchViewModel.loadState.observe(this, Observer {
+            search_layout.isRefreshing = it
+        })
 
         view_pager.adapter = SearchViewpagerAdapter(this)
         TabLayoutMediator(tabs, view_pager){tab, position ->

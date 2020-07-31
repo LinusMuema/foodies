@@ -10,13 +10,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.moose.foodies.R
-import com.moose.foodies.util.HeightCalculator
-import com.moose.foodies.util.hide
-import com.moose.foodies.util.hideBottomBar
-import com.moose.foodies.util.showSnackbar
+import com.moose.foodies.util.*
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.android.synthetic.main.error_404.*
 import kotlinx.android.synthetic.main.fragment_recipes.*
-import kotlinx.android.synthetic.main.fragment_videos.*
 import javax.inject.Inject
 
 
@@ -41,19 +38,22 @@ class RecipesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val scale: Float = this.resources.displayMetrics.density
-        val pixels = (HeightCalculator.getImageHeight(this.requireContext()) * scale + 0.5f).toInt()
 
         searchViewModel.exception.observe(viewLifecycleOwner, Observer {
+            searchViewModel.loadState.value = false
             showSnackbar(fragment_recipes, it)
         })
 
         searchViewModel.recipes.observe(viewLifecycleOwner, Observer {
+            searchViewModel.loadState.value = false
             recipes_loading.hide()
-            if (it.isEmpty()) empty_recipes.text = resources.getString(R.string.empty_search, "recipes")
+            if (it.isEmpty()) {
+                not_found.text = this.resources.getString(R.string.not_found, "recipes")
+                error_layout.show()
+            }
             recipes_recycler.apply {
                 setHasFixedSize(true)
-                adapter = RecipeResultsAdapter(it, pixels)
+                adapter = RecipeResultsAdapter(it)
             }
         })
     }

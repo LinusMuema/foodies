@@ -2,6 +2,7 @@ package com.moose.foodies.features.reset
 
 import com.moose.foodies.di.network.ApiRepository
 import com.moose.foodies.features.BaseViewModel
+import com.moose.foodies.util.ExceptionParser
 import io.reactivex.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 
@@ -13,7 +14,7 @@ class ResetPasswordViewModel @Inject constructor(private val apiRepository: ApiR
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { response.value = it.reason },
-                    { exception.value = it.message })
+                    { exception.value = ExceptionParser.parse(it) })
         )
     }
 }

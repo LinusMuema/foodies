@@ -1,10 +1,8 @@
 package com.moose.foodies.features.auth
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.github.dhaval2404.form_validation.rule.EmailRule
@@ -12,7 +10,6 @@ import com.github.dhaval2404.form_validation.rule.MinLengthRule
 import com.github.dhaval2404.form_validation.rule.NonEmptyRule
 import com.github.dhaval2404.form_validation.validation.FormValidator
 import com.moose.foodies.R
-import com.moose.foodies.di.DaggerAppComponent
 import com.moose.foodies.features.home.HomeActivity
 import com.moose.foodies.features.intolerances.IntolerancesActivity
 import com.moose.foodies.features.reset.ResetPasswordActivity
@@ -51,6 +48,8 @@ class AuthActivity : AppCompatActivity() {
         })
 
         authViewModel.exception.observe(this, Observer {
+            rotateloading.hide()
+            login_btn.show()
             showSnackbar(auth_layout, it)
         })
 

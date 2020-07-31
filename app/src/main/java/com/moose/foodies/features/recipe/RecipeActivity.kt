@@ -15,6 +15,7 @@ import com.moose.foodies.models.Recipe
 import com.moose.foodies.util.*
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_recipe.*
+import kotlinx.android.synthetic.main.error_404.*
 import javax.inject.Inject
 
 class RecipeActivity : AppCompatActivity() {
@@ -34,28 +35,33 @@ class RecipeActivity : AppCompatActivity() {
 
         val recipe = Gson().fromJson(intent.getStringExtra("recipe"), Recipe::class.java)
 
-        val scale: Float = this.resources.displayMetrics.density
-        val pixels = (HeightCalculator.getImageHeight(this) * scale + 0.5f).toInt()
 
         recipeViewModel.checkFavorite(recipe.id)
 
 
         val url = recipe.info.image.replace("312x231", "636x393")
-        img_food.setHeight(pixels)
+        img_food.setHeight(HeightCalculator.getImageHeight(this))
         img_food.loadImage(url)
 
-        ingredients_recycler.apply {
-            setHasFixedSize(true)
-            adapter = ItemListAdapter(recipe.instructions.ingredients, "ingredients")
+        if(recipe.instructions.sections.isEmpty()){
+            error_layout.show()
+            recipe_details.hide()
+            not_found.text = this.resources.getString(R.string.not_found, "Recipe Instructions")
         }
-        equipment_recycler.apply {
-            setHasFixedSize(true)
-            adapter = ItemListAdapter(recipe.instructions.equipment, "equipment")
-        }
+        else {
+            ingredients_recycler.apply {
+                setHasFixedSize(true)
+                adapter = ItemListAdapter(recipe.instructions.ingredients, "ingredients")
+            }
+            equipment_recycler.apply {
+                setHasFixedSize(true)
+                adapter = ItemListAdapter(recipe.instructions.equipment, "equipment")
+            }
 
-        procedure_recycler.apply {
-            setHasFixedSize(true)
-            adapter = ProcedureListAdapter(recipe.instructions.sections)
+            procedure_recycler.apply {
+                setHasFixedSize(true)
+                adapter = ProcedureListAdapter(recipe.instructions.sections)
+            }
         }
 
 

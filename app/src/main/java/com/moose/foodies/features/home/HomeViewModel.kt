@@ -4,6 +4,7 @@ import com.moose.foodies.db.DbRepository
 import com.moose.foodies.di.network.ApiRepository
 import com.moose.foodies.features.BaseViewModel
 import com.moose.foodies.models.Recipes
+import com.moose.foodies.util.ExceptionParser
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -28,7 +29,7 @@ class HomeViewModel @Inject constructor(private val apiRepository: ApiRepository
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { updateDbRecipes(it) },
-                    { exception.value = it.message }))
+                    { exception.value = ExceptionParser.parse(it) }))
     }
 
     private fun updateDbRecipes(data: Recipes){

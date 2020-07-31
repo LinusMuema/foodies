@@ -30,7 +30,6 @@ class HomeActivity : AppCompatActivity() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val homeViewModel by viewModels<HomeViewModel> { viewModelFactory }
-    private var ingredients: ArrayList<String> = ArrayList()
     private lateinit var recentSearches: HashSet<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,12 +38,11 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        val scale: Float = this.resources.displayMetrics.density
-        val pixels = (HeightCalculator.getImageHeight(this) * scale + 0.5f).toInt()
+        val height = HeightCalculator.getImageHeight(this)
 
-        recipes_loading.setHeight(pixels)
-        jokes_loading.setHeight(pixels)
-        trivia_loading.setHeight(pixels)
+        recipes_loading.setHeight(height)
+        jokes_loading.setHeight(height)
+        trivia_loading.setHeight(height)
 
         homeViewModel.exception.observe(this, Observer {
             home_swipe.stopRefreshing()
@@ -55,16 +53,16 @@ class HomeActivity : AppCompatActivity() {
             it as Recipes
             home_swipe.stopRefreshing()
             jokes_loading.hide()
-            joke.text = it.joke
             trivia_loading.hide()
-            trivia.text = it.trivia
             recipes_loading.hide()
+            joke.text = it.joke
+            trivia.text = it.trivia
             carousel.apply {
                 size = it.recipes.size
                 setCarouselViewListener { view, position ->
                     val recipe = it.recipes[position]
                     val url = recipe.info.image.replace("312x231", "636x393")
-                    view.carousel_item.setHeight(pixels)
+                    view.carousel_item.setHeight(height)
                     view.pick_image.loadCarouselImage(url)
                     view.pick_name.text = recipe.info.title
                     view.setOnClickListener {

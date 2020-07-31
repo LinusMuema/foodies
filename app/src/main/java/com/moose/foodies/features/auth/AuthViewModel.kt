@@ -1,14 +1,12 @@
 package com.moose.foodies.features.auth
 
-import com.google.gson.GsonBuilder
 import com.moose.foodies.FoodiesApplication
 import com.moose.foodies.di.network.ApiRepository
 import com.moose.foodies.features.BaseViewModel
-import com.moose.foodies.models.AuthResponse
 import com.moose.foodies.models.Credentials
+import com.moose.foodies.util.ExceptionParser
 import com.moose.foodies.util.PreferenceHelper
 import io.reactivex.android.schedulers.AndroidSchedulers
-import retrofit2.HttpException
 import javax.inject.Inject
 
 
@@ -26,7 +24,7 @@ class AuthViewModel @Inject constructor(private val apiRepository: ApiRepository
                         response.value = it.type
                     },
                     {
-                        exception.value = it.message
+                        exception.value = ExceptionParser.parse(it)
                     })
         )
     }

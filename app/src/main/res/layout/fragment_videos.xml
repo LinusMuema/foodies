@@ -17,13 +17,10 @@
         android:id="@+id/videos_loading"
         android:indeterminate="true"/>
 
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:id="@+id/empty_videos"
-        android:fontFamily="@font/bold"
-        android:textSize="20sp"/>
+    <include
+        android:id="@+id/error_layout"
+        android:visibility="gone"
+        layout="@layout/error_404"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

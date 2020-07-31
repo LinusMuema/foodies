@@ -5,6 +5,7 @@ import com.moose.foodies.di.network.ApiRepository
 import com.moose.foodies.features.BaseViewModel
 import com.moose.foodies.models.Intolerance
 import com.moose.foodies.models.Intolerances
+import com.moose.foodies.util.ExceptionParser
 import io.reactivex.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 
@@ -18,7 +19,7 @@ class IntolerancesViewModel @Inject constructor(private val apiRepository: ApiRe
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { response.value = it.intolerances },
-                    {exception.value = it.message})
+                    {exception.value = ExceptionParser.parse(it)})
         )
     }
 
@@ -28,7 +29,7 @@ class IntolerancesViewModel @Inject constructor(private val apiRepository: ApiRe
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { saveResult.value = it.updated },
-                    {exception.value = it.message})
+                    {exception.value = ExceptionParser.parse(it)})
         )
     }
     fun handleItem(intolerance: Intolerance, selected: Boolean) {

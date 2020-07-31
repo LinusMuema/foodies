@@ -2,7 +2,6 @@ package com.moose.foodies.features.search
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,10 +11,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.moose.foodies.R
 import com.moose.foodies.util.hide
-import com.moose.foodies.util.hideAllBars
 import com.moose.foodies.util.hideBottomBar
+import com.moose.foodies.util.show
 import com.moose.foodies.util.showSnackbar
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.android.synthetic.main.error_404.*
 import kotlinx.android.synthetic.main.fragment_videos.*
 import javax.inject.Inject
 
@@ -45,7 +45,10 @@ class VideosFragment : Fragment() {
         })
         searchViewModel.videos.observe(viewLifecycleOwner, Observer {
             videos_loading.hide()
-            if (it.isEmpty()) empty_videos.text = resources.getString(R.string.empty_search, "videos")
+            if (it.isEmpty()) {
+                not_found.text = this.resources.getString(R.string.not_found, "recipes")
+                error_layout.show()
+            }
             videos_recycler.apply {
                 setHasFixedSize(true)
                 adapter = VideoResultsAdapter(it)

@@ -8,8 +8,6 @@ data class AuthResponse(val message: String, val token: String, val type: String
 
 data class Credentials(val email: String, val password: String)
 
-data class UiState(val state: String, val reason: String?)
-
 data class IntolerancesUpdate(val message: String, val updated: Boolean)
 
 data class Intolerances(val intolerances: List<Intolerance>, val message: String)
