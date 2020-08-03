@@ -220,6 +220,19 @@
                     android:textSize="15sp"
                     android:layout_margin="10dp"/>
 
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_margin="5dp"
+                    android:id="@+id/premium_card"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/premium"/>
+
+                </androidx.cardview.widget.CardView>
+
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>

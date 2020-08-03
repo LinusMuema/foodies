@@ -2,8 +2,6 @@ package com.moose.foodies.util
 
 import android.app.Activity
 import android.content.Context
-import android.graphics.drawable.Drawable
-import android.media.Image
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
@@ -14,7 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.snackbar.Snackbar
