@@ -30,13 +30,11 @@ class FridgeRecipeAdapter(
         private val titles = arrayOf("Missed Ingredients", "Used Ingredients")
         fun bind(recipe: RecipeSuggestion, position: Int) {
 
-            val scale: Float = context.resources.displayMetrics.density
-            val pixels = (HeightCalculator.getImageHeight(context) * scale + 0.5f).toInt()
             val url = recipe.image.replace("312x231", "636x393")
             itemView.prepare_loading.start()
             itemView.recipe_suggestion_name.text = recipe.title
             itemView.recipe_suggestion_image.loadImage(url)
-            itemView.recipe_suggestion_image.setHeight(pixels)
+            itemView.recipe_suggestion_image.setHeight(HeightCalculator.getImageHeight(context))
 
             itemView.view_pager.adapter = FridgeIngredientsPagerAdapter(activity, recipe)
             TabLayoutMediator(itemView.tabs, itemView.view_pager){tab, position ->
