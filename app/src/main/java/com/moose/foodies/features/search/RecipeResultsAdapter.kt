@@ -32,12 +32,17 @@ class RecipeResultsAdapter(private val results: List<RecipeResults>): RecyclerVi
 
             itemView.recipe_image.setHeight(HeightCalculator.getImageHeight(context))
             itemView.recipe_image.loadImage(image)
-            itemView.card_expand.setOnExpandedListener { v, _ ->
-                v.recipe.text = recipeResults.title
-                v.time.text = context.resources.getString(R.string.cook_time, recipeResults.readyInMinutes)
-                v.servings.text = context.resources.getString(R.string.servings, recipeResults.servings)
-                v.read_more.setOnClickListener {
-                    context.startActivity(Intent(Intent.ACTION_VIEW, recipeResults.sourceUrl.toUri()))
+            itemView.card_expand.setTitle(recipeResults.title)
+            itemView.card_expand.setOnExpandedListener { v, expanded ->
+                if (!expanded) itemView.card_expand.setTitle(recipeResults.title)
+                else{
+                    itemView.card_expand.setTitle(" ")
+                    v.recipe.text = recipeResults.title
+                    v.time.text = context.resources.getString(R.string.cook_time, recipeResults.readyInMinutes)
+                    v.servings.text = context.resources.getString(R.string.servings, recipeResults.servings)
+                    v.read_more.setOnClickListener {
+                        context.startActivity(Intent(Intent.ACTION_VIEW, recipeResults.sourceUrl.toUri()))
+                    }
                 }
             }
 
