@@ -222,16 +222,22 @@
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_margin="5dp"
+                    android:layout_height="wrap_content"
                     android:id="@+id/premium_card"
-                    android:layout_height="wrap_content">
+                    android:layout_margin="5dp"
+                    app:cardElevation="0dp"
+                    app:cardCornerRadius="10dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/premium"/>
+                        android:layout_height="match_parent"
+                        android:id="@+id/rounded_user_image"
+                        android:src="@drawable/premium"
+                        android:scaleType="fitXY"/>
 
                 </androidx.cardview.widget.CardView>
+
+
 
             </LinearLayout>
 

@@ -47,6 +47,7 @@ class HomeActivity : AppCompatActivity() {
         recipes_loading.setHeight(height)
         jokes_loading.setHeight(height)
         trivia_loading.setHeight(height)
+        premium_card.setHeight(height)
 
         homeViewModel.exception.observe(this, Observer {
             home_swipe.stopRefreshing()
