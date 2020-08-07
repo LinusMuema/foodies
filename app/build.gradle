@@ -17,8 +17,8 @@ android {
         applicationId "com.moose.foodies"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 8
-        versionName "1.08"
+        versionCode 9
+        versionName "1.09"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -64,6 +64,10 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.2.19'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
+    //Work Manager
+    implementation "androidx.work:work-runtime-ktx:2.4.0"
+    implementation "android.arch.work:work-rxjava2:2.1.0"
+
     //RecyclerView
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.github.tsuryo:Swipeable-RecyclerView:1.1'
@@ -95,7 +99,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-scalars:2.6.2'
 
     //Material design
-    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'com.google.android.material:material:1.2.0'
 
     //Form Validator
     implementation 'com.github.dhaval2404:android-form-validation:1.0'

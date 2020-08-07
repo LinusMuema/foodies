@@ -125,6 +125,10 @@ class HomeActivity : AppCompatActivity() {
             }
 
         })
+
+        premium_card.setOnClickListener {
+            Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun startAnimation() {

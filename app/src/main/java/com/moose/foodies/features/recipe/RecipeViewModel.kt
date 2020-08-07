@@ -1,14 +1,13 @@
 package com.moose.foodies.features.recipe
 
 import androidx.lifecycle.MutableLiveData
-import com.moose.foodies.db.DbRepository
 import com.moose.foodies.features.BaseViewModel
 import com.moose.foodies.models.Recipe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class RecipeViewModel @Inject constructor(private val dbRepository: DbRepository): BaseViewModel() {
+class RecipeViewModel @Inject constructor(): BaseViewModel() {
 
     val isFavorite: MutableLiveData<Boolean> = MutableLiveData()
 

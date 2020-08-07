@@ -1,13 +1,12 @@
 package com.moose.foodies.features.favorites
 
-import com.moose.foodies.db.DbRepository
 import com.moose.foodies.features.BaseViewModel
 import com.moose.foodies.models.Recipe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class FavoritesViewModel @Inject constructor(private val dbRepository: DbRepository): BaseViewModel() {
+class FavoritesViewModel @Inject constructor(): BaseViewModel() {
 
     fun getFavorites(){
         composite.add(

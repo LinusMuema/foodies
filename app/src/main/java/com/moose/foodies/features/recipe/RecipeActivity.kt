@@ -88,6 +88,7 @@ class RecipeActivity : AppCompatActivity() {
                         recipeViewModel.removeFavorite(recipe)
                     else
                         recipeViewModel.addFavorite(recipe)
+                    PreferenceHelper.setBackupStatus(this, true)
                     true
                 }
                 else -> {

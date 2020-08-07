@@ -1,7 +1,6 @@
 package com.moose.foodies.features.auth
 
 import com.moose.foodies.FoodiesApplication
-import com.moose.foodies.di.network.ApiRepository
 import com.moose.foodies.features.BaseViewModel
 import com.moose.foodies.models.Credentials
 import com.moose.foodies.util.ExceptionParser
@@ -10,7 +9,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 
 
-class AuthViewModel @Inject constructor(private val apiRepository: ApiRepository): BaseViewModel() {
+class AuthViewModel @Inject constructor(): BaseViewModel() {
 
     fun startAuth(password: String, email: String) {
         val credentials = Credentials(email, password)

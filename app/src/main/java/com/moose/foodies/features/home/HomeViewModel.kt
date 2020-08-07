@@ -1,7 +1,5 @@
 package com.moose.foodies.features.home
 
-import com.moose.foodies.db.DbRepository
-import com.moose.foodies.di.network.ApiRepository
 import com.moose.foodies.features.BaseViewModel
 import com.moose.foodies.models.Recipes
 import com.moose.foodies.util.ExceptionParser
@@ -9,7 +7,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class HomeViewModel @Inject constructor(private val apiRepository: ApiRepository, private val dbRepository: DbRepository): BaseViewModel() {
+class HomeViewModel @Inject constructor(): BaseViewModel() {
 
     fun getRecipes(){
         composite.add(

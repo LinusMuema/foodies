@@ -12,6 +12,7 @@ import com.moose.foodies.R
 import com.moose.foodies.features.recipe.RecipeActivity
 import com.moose.foodies.models.Recipe
 import com.moose.foodies.util.ActivityHelper
+import com.moose.foodies.util.PreferenceHelper
 import com.moose.foodies.util.push
 import com.moose.foodies.util.showSnackbar
 import com.tsuryo.swipeablerv.SwipeLeftRightCallback
@@ -64,8 +65,10 @@ class FavoritesActivity : AppCompatActivity() {
                 }
                 snackbar.addCallback(object : Snackbar.Callback(){
                     override fun onDismissed(transientBottomBar: Snackbar, event: Int) {
-                        if (event == DISMISS_EVENT_TIMEOUT || event == DISMISS_EVENT_CONSECUTIVE)
+                        if (event == DISMISS_EVENT_TIMEOUT || event == DISMISS_EVENT_CONSECUTIVE){
                             favoritesViewModel.removeFavorite(recipe)
+                            PreferenceHelper.setBackupStatus(this@FavoritesActivity, true)
+                        }
                     }
                 })
                 snackbar.show()

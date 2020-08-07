@@ -9,9 +9,10 @@ object PreferenceHelper {
 
     private const val tokenKey = "ACCESS_TOKEN"
     private const val loggedKey = "LOGGED_IN"
+    private const val authTypeKey = "AUTH_TYPE"
     private const val widthKey = "DEVICE_WIDTH"
     private const val searchesKey = "RECENT_SEARCHES"
-    private const val tapTargetKey = "TAP_TARGET"
+    private const val favoritesBackupKey = "FAVORITES_BACKUP"
 
     @JvmStatic
     fun defaultPrefs(context: Context): SharedPreferences {
@@ -27,7 +28,9 @@ object PreferenceHelper {
 
     fun getRecentSearches(context: Context) = defaultPrefs(context).getString(searchesKey, "")
 
-    fun getTapTargetStatus(context: Context) = defaultPrefs(context).getBoolean(tapTargetKey, true)
+    fun getBackupStatus(context: Context) = defaultPrefs(context).getBoolean(favoritesBackupKey, false)
+
+    fun getAuthType(context: Context) = defaultPrefs(context).getString(authTypeKey,"login")
 
     fun setAccessToken(context: Context, token: String) = defaultPrefs(context).set(tokenKey, token)
 
@@ -37,7 +40,9 @@ object PreferenceHelper {
 
     fun setRecentSearches(context: Context, searches: String) = defaultPrefs(context).set(searchesKey, searches)
 
-    fun setTapTargetStatus(context: Context, status: Boolean) = defaultPrefs(context).set(tapTargetKey, status)
+    fun setBackupStatus(context: Context, status: Boolean) = defaultPrefs(context).set(favoritesBackupKey, status)
+
+    fun setAuthType(context: Context, type: String) = defaultPrefs(context).set(authTypeKey, type)
 
     operator fun SharedPreferences.set(key: String, value: Any?) {
         when (value) {
