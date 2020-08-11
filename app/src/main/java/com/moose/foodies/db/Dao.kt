@@ -9,7 +9,7 @@ import com.moose.foodies.models.Recipe
 import com.moose.foodies.models.Recipes
 import io.reactivex.Completable
 import io.reactivex.Flowable
-import io.reactivex.Maybe
+import io.reactivex.Observable
 import io.reactivex.Single
 
 @Dao
@@ -18,7 +18,7 @@ interface Dao{
     fun getAllRecipes(): Flowable<List<Recipes>>
 
     @Query("SELECT * FROM favorites")
-    fun getFavorites(): Flowable<List<Recipe>>
+    fun getFavorites(): Observable<List<Recipe>>
 
     @Query("SELECT COUNT(*) FROM favorites")
     fun getFavoritesCount(): Single<Int>

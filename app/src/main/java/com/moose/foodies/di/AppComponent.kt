@@ -15,6 +15,7 @@ import javax.inject.Singleton
     FragmentsModule::class,
     DatabaseModules::class,
     ViewModelModules::class,
+    WorkerModules::class,
     ApiModules::class])
 
 interface AppComponent{

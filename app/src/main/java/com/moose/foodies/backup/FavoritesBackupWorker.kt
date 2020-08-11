@@ -3,21 +3,27 @@ package com.moose.foodies.backup
 import android.content.Context
 import androidx.work.RxWorker
 import androidx.work.WorkerParameters
-import com.google.gson.Gson
+import com.moose.foodies.db.DbRepository
 import com.moose.foodies.di.network.ApiRepository
 import com.moose.foodies.models.Recipes
 import io.reactivex.Single
 import javax.inject.Inject
 
-class FavoritesBackupWorker(context: Context, params: WorkerParameters): RxWorker(context, params) {
-    @Inject lateinit var apiRepository: ApiRepository
 
+class FavoritesBackupWorker @Inject constructor(
+    context: Context,
+    params: WorkerParameters,
+    private val apiRepository: ApiRepository,
+    private val dbRepository: DbRepository
+): RxWorker(context, params) {
     override fun createWork(): Single<Result> {
-        val recipes = Gson().fromJson(inputData.getString("FAVORITES_BACKUP"), Recipes::class.java)
-        return apiRepository.backupFavorites(recipes)
+        return dbRepository.getFavorites()
+            .flatMap {
+                apiRepository.backupFavorites(Recipes(0,"", it, null, null))
+                    .map { Result.success()}
+            }
+            .toList()
             .map { Result.success() }
-            .onErrorReturn { Result.failure() }
-
     }
 
 }

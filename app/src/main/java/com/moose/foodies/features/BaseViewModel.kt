@@ -34,21 +34,25 @@ open class BaseViewModel @Inject constructor(): ViewModel() {
     }
 
     fun startBackup(context: Context) {
+        Log.d("Backup", "startBackup: Starting backup")
         if (PreferenceHelper.getBackupStatus(context)){
             composite.add(
                 dbRepository.getFavorites()
                     .observeOn(Schedulers.computation())
-                    .doOnError { Log.d("Backup", "startBackup: Backup failed") }
-                    .subscribe{
+                    .subscribe(
+                    {
                         val json = Gson().toJson(Recipes(0, "", it, null, null))
                         val data = workDataOf("FAVORITES_BACKUP" to json)
                         val work = OneTimeWorkRequest.Builder(FavoritesBackupWorker::class.java)
                             .setConstraints(constraints)
                             .setInputData(data)
                             .build()
-
-                        WorkManager.getInstance(context).enqueue(work)
+                        WorkManager.getInstance(context).enqueue(work).result
+                    },
+                    {
+                        Log.e("Backup", "startBackup: $it")
                     }
+                    )
             )
         }
     }

@@ -3,16 +3,15 @@ package com.moose.foodies.features.splash
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.os.Handler
+import androidx.appcompat.app.AppCompatActivity
 import com.moose.foodies.R
-import com.moose.foodies.features.BaseActivity
 import com.moose.foodies.features.auth.AuthActivity
 import com.moose.foodies.features.home.HomeActivity
 import com.moose.foodies.util.*
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_splash.*
 
-class SplashActivity : BaseActivity() {
-
+class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)

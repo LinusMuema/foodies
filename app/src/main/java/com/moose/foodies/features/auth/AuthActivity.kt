@@ -37,6 +37,7 @@ class AuthActivity : AppCompatActivity() {
             login_btn.show()
             when (it as String) {
                 "login" -> {
+                    authViewModel.getBackup()
                     pushWithoutHistory<HomeActivity>()
                 }
                 "signup" -> {

@@ -1,7 +1,6 @@
 package com.moose.foodies.di.modules
 
 import com.moose.foodies.di.ActivityScope
-import com.moose.foodies.features.BaseActivity
 import com.moose.foodies.features.auth.AuthActivity
 import com.moose.foodies.features.favorites.FavoritesActivity
 import com.moose.foodies.features.fridge.FridgeActivity
@@ -16,10 +15,6 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class ActivitiesModule {
-
-    @ActivityScope
-    @ContributesAndroidInjector
-    abstract fun provideBase(): BaseActivity
 
     @ActivityScope
     @ContributesAndroidInjector

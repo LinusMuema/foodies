@@ -79,5 +79,10 @@ class FavoritesActivity : AppCompatActivity() {
         favorites_back.setOnClickListener { onBackPressed() }
         favoritesViewModel.getFavorites()
     }
+
+    override fun onPause() {
+        super.onPause()
+        if (PreferenceHelper.getBackupStatus(this))  favoritesViewModel.startBackup(this)
+    }
 }
 
