@@ -1,5 +1,6 @@
 package com.moose.foodies.di.network
 
+import android.util.Log
 import com.moose.foodies.FoodiesApplication
 import com.moose.foodies.util.PreferenceHelper
 import okhttp3.Headers
@@ -19,6 +20,7 @@ object Authenticator : Interceptor {
                 add("Content-Type", "application/json")
             }.build())
         }.build()
+        Log.e("Token ::", "${PreferenceHelper.getAccessToken(FoodiesApplication.getInstance())}")
         return chain.proceed(newRequest)
     }
 }

@@ -32,6 +32,9 @@ interface Dao{
     @Insert(onConflict = REPLACE)
     fun insertFavorite(recipe: Recipe): Completable
 
+    @Insert(onConflict = REPLACE)
+    fun insertFavorites(recipes: List<Recipe>): Completable
+
     @Query("DELETE FROM recipes")
     fun deleteRecipes(): Completable
 

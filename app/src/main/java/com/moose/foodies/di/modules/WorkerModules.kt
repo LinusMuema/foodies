@@ -6,7 +6,6 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 interface WorkerModules {
-
     @ContributesAndroidInjector
     fun provideFavoritesBackupWorker(): FavoritesBackupWorker
 }

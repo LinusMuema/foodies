@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.chip.Chip
 import com.google.gson.Gson
@@ -38,7 +37,7 @@ class FridgeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fridge)
 
-        fridgeViewModel.response.observe(this, Observer {
+        fridgeViewModel.response.observe(this, {
             it as FridgeSearch
             fridge_loading.hide()
             fridge_recycler.show()
@@ -52,11 +51,11 @@ class FridgeActivity : AppCompatActivity() {
             }
         })
 
-        fridgeViewModel.exception.observe(this, Observer {
+        fridgeViewModel.exception.observe(this, {
             showSnackbar(fridge_layout, it)
         })
 
-        fridgeViewModel.instructions.observe(this, Observer {instructions ->
+        fridgeViewModel.instructions.observe(this, { instructions ->
             val holder = fridge_recycler.findViewHolderForAdapterPosition(currentPosition)!!
             holder.itemView.btn_prepare.show()
             holder.itemView.prepare_loading.hide()

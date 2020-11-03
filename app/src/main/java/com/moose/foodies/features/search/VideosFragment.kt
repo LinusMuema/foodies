@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.moose.foodies.R
@@ -40,10 +39,10 @@ class VideosFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        searchViewModel.exception.observe(viewLifecycleOwner, Observer {
+        searchViewModel.exception.observe(viewLifecycleOwner, {
             showSnackbar(fragment_videos, it)
         })
-        searchViewModel.videos.observe(viewLifecycleOwner, Observer {
+        searchViewModel.videos.observe(viewLifecycleOwner, {
             videos_loading.hide()
             if (it.isEmpty()) {
                 not_found.text = this.resources.getString(R.string.not_found, "recipes")

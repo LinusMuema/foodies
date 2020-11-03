@@ -6,11 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.moose.foodies.R
-import com.moose.foodies.util.*
+import com.moose.foodies.util.hide
+import com.moose.foodies.util.hideBottomBar
+import com.moose.foodies.util.show
+import com.moose.foodies.util.showSnackbar
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.error_404.*
 import kotlinx.android.synthetic.main.fragment_recipes.*
@@ -39,12 +41,12 @@ class RecipesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        searchViewModel.exception.observe(viewLifecycleOwner, Observer {
+        searchViewModel.exception.observe(viewLifecycleOwner, {
             searchViewModel.loadState.value = false
             showSnackbar(fragment_recipes, it)
         })
 
-        searchViewModel.recipes.observe(viewLifecycleOwner, Observer {
+        searchViewModel.recipes.observe(viewLifecycleOwner, {
             searchViewModel.loadState.value = false
             recipes_loading.hide()
             if (it.isEmpty()) {

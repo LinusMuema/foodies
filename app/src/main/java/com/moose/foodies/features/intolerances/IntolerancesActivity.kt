@@ -3,7 +3,6 @@ package com.moose.foodies.features.intolerances
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.moose.foodies.R
 import com.moose.foodies.features.home.HomeActivity
@@ -28,9 +27,9 @@ class IntolerancesActivity @Inject constructor(): AppCompatActivity() {
         setContentView(R.layout.activity_intolerances)
         intolerancesloading.start()
 
-        if (intent.getBooleanExtra("signup", false)) showSnackbar(intolerances_layout, "We have sent you a confirmation email :)")
+        if (intent.getStringExtra("type") == "signup") showSnackbar(intolerances_layout, "We have sent you a confirmation email :)")
 
-        intolerancesViewModel.response.observe(this, Observer {
+        intolerancesViewModel.response.observe(this, {
             it as ArrayList<Intolerance>
             val introAdapter = IntolerancesAdapter(it) { intolerance, selected ->
                 intolerancesViewModel.handleItem(intolerance, selected)
@@ -41,7 +40,7 @@ class IntolerancesActivity @Inject constructor(): AppCompatActivity() {
             }
         })
 
-        intolerancesViewModel.saveResult.observe(this, Observer {
+        intolerancesViewModel.saveResult.observe(this, {
             intolerancesloading.hide()
             intolerances_submit.show()
             if (it) {
@@ -50,7 +49,7 @@ class IntolerancesActivity @Inject constructor(): AppCompatActivity() {
             else showSnackbar(intolerances_layout, "something went wrong! Try again later")
         })
 
-        intolerancesViewModel.exception.observe(this, Observer {
+        intolerancesViewModel.exception.observe(this, {
             showSnackbar(intolerances_layout, it)
         })
 

@@ -1,14 +1,16 @@
 package com.moose.foodies.features.favorites
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
-import com.moose.foodies.FoodiesApplication
 import com.moose.foodies.R
 import com.moose.foodies.features.recipe.RecipeActivity
 import com.moose.foodies.models.Recipe
@@ -44,14 +46,23 @@ class FavoritesActivity : AppCompatActivity() {
             }
         })
 
-        favoritesViewModel.exception.observe(this, Observer {
+        favoritesViewModel.exception.observe(this, {
             showSnackbar(favorites_layout, it)
         })
 
+        WorkManager.getInstance(this).getWorkInfoByIdLiveData(favoritesViewModel.work.id).observe(
+            this,
+            {
+                when (it.state) {
+                    WorkInfo.State.SUCCEEDED -> {
+                        PreferenceHelper.setBackupStatus(this, false)
+                    }
+                    else -> Log.e("Backup", "onCreate: Backup status => ${it.state}")
+                }
+            })
+
         rv.setListener( object : SwipeLeftRightCallback.Listener {
-            override fun onSwipedRight(position: Int) {
-                return
-            }
+            override fun onSwipedRight(position: Int) { return }
 
             override fun onSwipedLeft(position: Int) {
                 val recipe = favorites[position]
@@ -81,7 +92,7 @@ class FavoritesActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        if (PreferenceHelper.getBackupStatus(this))  favoritesViewModel.startBackup(FoodiesApplication.getInstance())
+        if (PreferenceHelper.getBackupStatus(this))  favoritesViewModel.startBackup()
     }
 }
 

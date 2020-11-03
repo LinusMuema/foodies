@@ -32,17 +32,19 @@ class AuthActivity : AppCompatActivity() {
 
         rotateloading.start()
 
-        authViewModel.response.observe(this, Observer { it ->
+        authViewModel.response.observe(this, { it ->
             rotateloading.hide()
             login_btn.show()
             when (it as String) {
                 "login" -> {
                     authViewModel.getBackup()
-                    pushWithoutHistory<HomeActivity>()
+                    pushWithoutHistory<HomeActivity>() {
+                        it.putExtra("type", "login")
+                    }
                 }
                 "signup" -> {
                     pushWithoutHistory<IntolerancesActivity> {
-                        it.putExtra("signup", true)
+                        it.putExtra("type", "signup")
                     }
                 }
             }

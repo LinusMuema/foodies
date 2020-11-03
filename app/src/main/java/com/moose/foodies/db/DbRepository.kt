@@ -19,6 +19,8 @@ open class DbRepository @Inject constructor(private val dao: Dao)  {
 
     open fun insertFavorite(recipe: Recipe) = dao.insertFavorite(recipe)
 
+    open fun insertFavorites(recipes: List<Recipe>) = dao.insertFavorites(recipes)
+
     open fun deleteRecipes() = dao.deleteRecipes()
 
     open fun deleteFavorite(recipe: Recipe) = dao.deleteFavorite(recipe)

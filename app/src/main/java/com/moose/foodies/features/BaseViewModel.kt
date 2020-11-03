@@ -1,17 +1,15 @@
 package com.moose.foodies.features
 
-import android.content.Context
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.work.Constraints
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
+import com.moose.foodies.FoodiesApplication
 import com.moose.foodies.backup.FavoritesBackupWorker
 import com.moose.foodies.db.DbRepository
 import com.moose.foodies.di.network.ApiRepository
-import com.moose.foodies.util.PreferenceHelper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -25,34 +23,32 @@ open class BaseViewModel @Inject constructor(): ViewModel() {
     val exception: MutableLiveData<String> = MutableLiveData()
     val response = MutableLiveData<Any>()
 
-    private val constraints = Constraints.Builder()
-        .setRequiredNetworkType(NetworkType.CONNECTED)
-        .setRequiresBatteryNotLow(true)
-        .build()
+    private val workManager = WorkManager.getInstance(FoodiesApplication.getInstance())
+    private val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).setRequiresBatteryNotLow(true).build()
+    val work = OneTimeWorkRequest.Builder(FavoritesBackupWorker::class.java).setConstraints(constraints).build()
 
     override fun onCleared() {
         super.onCleared()
         composite.dispose()
     }
 
-    fun startBackup(context: Context) {
-        Log.d("Backup", "startBackup: Starting backup")
-        dbRepository.getFavorites()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.computation())
-            .subscribe(
-                { Log.d("Bytes", "startBackup: ${it.toString().toByteArray().size}") },
-                { Log.d("Bytes", "startBackup: ${it.localizedMessage}") })
-        
-        if (PreferenceHelper.getBackupStatus(context)){
-            val work = OneTimeWorkRequest.Builder(FavoritesBackupWorker::class.java)
-                .setConstraints(constraints)
-                .build()
-            WorkManager.getInstance(context).enqueue(work).result
-        }
+    fun startBackup() {
+        workManager.enqueue(work)
     }
 
     fun getBackup() {
-        
+        composite.add(
+            apiRepository.getBackedUpRecipes()
+                .subscribe(
+                    { it ->
+                        dbRepository.insertFavorites(it)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribeOn(Schedulers.computation())
+                            .subscribe(
+                                {exception.value = "Retrieved backed up favorites"},
+                                {exception.value = it.message})
+                    },
+                    {exception.value = it.message})
+        )
     }
 }

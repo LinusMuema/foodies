@@ -7,7 +7,6 @@ import android.view.MenuItem
 import android.view.ViewGroup
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.moose.foodies.R
@@ -65,11 +64,11 @@ class RecipeActivity : AppCompatActivity() {
         }
 
 
-        recipeViewModel.exception.observe(this, Observer {
+        recipeViewModel.exception.observe(this, {
             showSnackbar(recipe_layout, it)
         })
 
-        recipeViewModel.isFavorite.observe(this, Observer {
+        recipeViewModel.isFavorite.observe(this, {
             isFavorite = it
             invalidateOptionsMenu()
         })

@@ -3,7 +3,6 @@ package com.moose.foodies.features.search
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayoutMediator
 import com.moose.foodies.R
@@ -40,7 +39,7 @@ class SearchActivity : AppCompatActivity(), HasAndroidInjector {
             searchViewModel.searchRecipe(query)
         }
 
-        searchViewModel.loadState.observe(this, Observer {
+        searchViewModel.loadState.observe(this, {
             search_layout.isRefreshing = it
         })
 

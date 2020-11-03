@@ -11,7 +11,6 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.mancj.materialsearchbar.MaterialSearchBar
@@ -42,6 +41,7 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
         startAnimation()
 
+        if (intent.getStringExtra("type") == "login") homeViewModel.getBackup()
         val height = HeightCalculator.getImageHeight(this)
 
         recipes_loading.setHeight(height)
@@ -49,12 +49,12 @@ class HomeActivity : AppCompatActivity() {
         trivia_loading.setHeight(height)
         premium_card.setHeight(height)
 
-        homeViewModel.exception.observe(this, Observer {
+        homeViewModel.exception.observe(this, {
             home_swipe.stopRefreshing()
             showSnackbar(home_layout, it)
         })
 
-        homeViewModel.response.observe(this, Observer { it ->
+        homeViewModel.response.observe(this, { it ->
             it as Recipes
             home_swipe.stopRefreshing()
             jokes_loading.hide()
