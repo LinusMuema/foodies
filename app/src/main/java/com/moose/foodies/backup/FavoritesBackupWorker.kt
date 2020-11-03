@@ -1,38 +1,37 @@
 package com.moose.foodies.backup
 
 import android.content.Context
-import android.util.Log
-import androidx.work.RxWorker
+import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.moose.foodies.db.DbRepository
-import com.moose.foodies.di.WorkerFactory
 import com.moose.foodies.di.network.ApiRepository
 import com.moose.foodies.models.Recipes
-import com.squareup.inject.assisted.Assisted
-import com.squareup.inject.assisted.AssistedInject
-import io.reactivex.Single
+import dagger.android.HasAndroidInjector
+import javax.inject.Inject
 
 
-class FavoritesBackupWorker @AssistedInject constructor(
-    @Assisted private val context: Context,
-    @Assisted private val params: WorkerParameters,
-    private val apiRepository: ApiRepository,
-    private val dbRepository: DbRepository
-): RxWorker(context, params) {
+class FavoritesBackupWorker( context: Context, params: WorkerParameters): Worker(context, params) {
 
-    override fun createWork(): Single<Result> {
-        Log.d("Backup", "createWork: Started work")g
-        return dbRepository.getFavorites().flatMap {
-            Log.d("Backup", "createWork: From db : $it")
-            return@flatMap apiRepository.backupFavorites(Recipes(0, "", it, "", ""))
-        }.map {
-            Log.d("Backup", "createWork: From api $it")
-            if (it.message == "success") return@map Result.success()
-            else return@map Result.failure()
-        }.firstOrError()
+    object ContextInjection {
+        @JvmStatic
+        fun inject(to: Any, with: Context) {
+            (with.applicationContext as HasAndroidInjector).androidInjector().inject(to)
+        }
     }
 
-    @AssistedInject.Factory
-    interface Factory : WorkerFactory
+    init {
+        ContextInjection.inject(to = this, with = context)
+    }
 
+    @Inject lateinit var apiRepository: ApiRepository
+    @Inject lateinit var dbRepository: DbRepository
+
+    override fun doWork(): Result {
+        return dbRepository.getFavorites()
+            .flatMap { apiRepository.backupFavorites(Recipes(0, "", it, "", "")) }
+            .map {
+            if (it.message == "success") Result.success()
+            else Result.failure()
+        }.blockingFirst()
+    }
 }

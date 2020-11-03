@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
+import com.moose.foodies.FoodiesApplication
 import com.moose.foodies.R
 import com.moose.foodies.features.recipe.RecipeActivity
 import com.moose.foodies.models.Recipe
@@ -24,9 +25,7 @@ class FavoritesActivity : AppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-
     private lateinit var favorites: ArrayList<Recipe>
-
     private val favoritesViewModel by viewModels<FavoritesViewModel> { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,7 +81,7 @@ class FavoritesActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        if (PreferenceHelper.getBackupStatus(this))  favoritesViewModel.startBackup(this)
+        if (PreferenceHelper.getBackupStatus(this))  favoritesViewModel.startBackup(FoodiesApplication.getInstance())
     }
 }
 
