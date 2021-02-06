@@ -10,7 +10,5 @@ interface AuthRepository {
 
 class AuthRepositoryImpl @Inject constructor(private val apiEndpoints: ApiEndpoints): AuthRepository {
 
-    override fun register(email: Credential): Single<TokenResponse> {
-        return apiEndpoints.register(email)
-    }
+    override fun register(email: Credential): Single<TokenResponse> = apiEndpoints.register(email)
 }

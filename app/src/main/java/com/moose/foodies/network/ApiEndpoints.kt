@@ -2,6 +2,7 @@ package com.moose.foodies.network
 
 import com.moose.foodies.features.auth.Credential
 import com.moose.foodies.features.auth.TokenResponse
+import com.moose.foodies.features.home.HomeData
 import com.moose.foodies.models.*
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -20,8 +21,8 @@ interface ApiEndpoints {
     @POST("/api/intolerances")
     fun updateIntolerances(@Body intolerances: Intolerances): Single<IntolerancesUpdate>
 
-    @GET("/api/recipes/random")
-    fun getRecipes(): Single<Recipes>
+    @GET("/api/recipes")
+    fun getRecipes(): Single<HomeData>
 
     @GET("/api/recipes/search/{name}")
     fun searchRecipe(@Path("name") name: String): Single<RecipeSearch>

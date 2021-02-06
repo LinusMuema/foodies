@@ -6,7 +6,6 @@ import com.moose.foodies.di.ViewModelKey
 import com.moose.foodies.di.factory.ViewModelFactory
 import com.moose.foodies.features.favorites.FavoritesViewModel
 import com.moose.foodies.features.fridge.FridgeViewModel
-import com.moose.foodies.features.home.HomeViewModel
 import com.moose.foodies.features.recipe.RecipeViewModel
 import com.moose.foodies.features.search.SearchViewModel
 import dagger.Binds
@@ -15,11 +14,6 @@ import dagger.multibindings.IntoMap
 
 @Module
 abstract class ViewModelModules {
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(HomeViewModel::class)
-    abstract fun bindHomeViewModel(homeViewModel: HomeViewModel): ViewModel
 
     @Binds
     @IntoMap

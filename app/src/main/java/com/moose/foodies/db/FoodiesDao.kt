@@ -5,8 +5,8 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
+import com.moose.foodies.features.home.HomeData
 import com.moose.foodies.models.Recipe
-import com.moose.foodies.models.Recipes
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Observable
@@ -15,7 +15,7 @@ import io.reactivex.Single
 @Dao
 interface FoodiesDao{
     @Query("SELECT * FROM recipes")
-    fun getAllRecipes(): Flowable<List<Recipes>>
+    fun getAllRecipes(): Flowable<List<HomeData>>
 
     @Query("SELECT * FROM favorites")
     fun getFavorites(): Observable<List<Recipe>>
@@ -27,7 +27,7 @@ interface FoodiesDao{
     fun getOneFavorite(id: Int): Single<Recipe>
 
     @Insert(onConflict = REPLACE)
-    fun insertRecipes(recipes: Recipes): Completable
+    fun insertRecipes(data: HomeData): Completable
 
     @Insert(onConflict = REPLACE)
     fun insertFavorite(recipe: Recipe): Completable

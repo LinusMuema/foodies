@@ -11,8 +11,8 @@ class DatabaseModules {
 
     @Singleton
     @Provides
-    fun provideDB(context: Context): AppDatabase {
-        return Room.databaseBuilder(context, AppDatabase::class.java, AppDatabase.DB_NAME)
+    fun provideDB(context: Context): FoodiesDatabase {
+        return Room.databaseBuilder(context, FoodiesDatabase::class.java, FoodiesDatabase.DB_NAME)
             .fallbackToDestructiveMigration()
             .allowMainThreadQueries()
             .build()
@@ -20,5 +20,5 @@ class DatabaseModules {
 
     @Singleton
     @Provides
-    fun provideDao(appDatabase: AppDatabase) = appDatabase.getDao()
+    fun provideDao(appDatabase: FoodiesDatabase) = appDatabase.getDao()
 }

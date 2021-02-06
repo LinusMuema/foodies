@@ -3,7 +3,6 @@ package com.moose.foodies.di.modules
 import com.moose.foodies.di.ActivityScope
 import com.moose.foodies.features.favorites.FavoritesActivity
 import com.moose.foodies.features.fridge.FridgeActivity
-import com.moose.foodies.features.home.HomeActivity
 import com.moose.foodies.features.recipe.RecipeActivity
 import com.moose.foodies.features.search.SearchActivity
 import dagger.Module
@@ -11,10 +10,6 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class ActivitiesModule {
-
-    @ActivityScope
-    @ContributesAndroidInjector
-    abstract fun provideHome(): HomeActivity
 
     @ActivityScope
     @ContributesAndroidInjector
