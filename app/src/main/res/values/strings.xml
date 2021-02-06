@@ -7,7 +7,7 @@
     <string name="todays_picks">Today\'s Picks</string>
     <string name="todays_joke">Today\'s Joke</string>
     <string name="auth_header">Login</string>
-    <string name="auth_info">Please provide us with ou email address.</string>
+    <string name="auth_info">Please provide us with your email address.</string>
     <string name="login_forgot">Forgot your password?</string>
     <string name="login">Login</string>
     <string name="loading">Loading…</string>

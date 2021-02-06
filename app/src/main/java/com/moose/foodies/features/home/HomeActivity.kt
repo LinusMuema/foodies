@@ -5,9 +5,6 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Bundle
-import android.util.Log
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -39,9 +36,7 @@ class HomeActivity : AppCompatActivity() {
         ActivityHelper.initialize(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        startAnimation()
 
-        if (intent.getStringExtra("type") == "login") homeViewModel.getBackup()
         val height = HeightCalculator.getImageHeight(this)
 
         recipes_loading.setHeight(height)
@@ -125,47 +120,6 @@ class HomeActivity : AppCompatActivity() {
             }
 
         })
-
-        premium_card.setOnClickListener {
-            Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun startAnimation() {
-        val zoomIn = AnimationUtils.loadAnimation(this, R.anim.zoomin)
-        val zoomOut = AnimationUtils.loadAnimation(this, R.anim.zoomout)
-        premium_card.animation = zoomIn
-        premium_card.animation = zoomOut
-        zoomIn.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationRepeat(animation: Animation?) {
-                Log.d("ZoomIn", "onAnimationRepeat: Animation repeated")
-            }
-
-            override fun onAnimationEnd(animation: Animation?) {
-                premium_card.startAnimation(zoomOut)
-            }
-
-            override fun onAnimationStart(animation: Animation?) {
-                Log.d("ZoomIn", "onAnimationStart: Animation started")
-            }
-
-        })
-
-        zoomOut.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationRepeat(animation: Animation?) {
-                Log.d("ZoomOut", "onAnimationRepeat: Animation repeated")
-            }
-
-            override fun onAnimationEnd(animation: Animation?) {
-                premium_card.startAnimation(zoomIn)
-            }
-
-            override fun onAnimationStart(animation: Animation?) {
-                Log.d("ZoomOut", "onAnimationStart: Animation started")
-            }
-
-        })
-        premium_card.startAnimation(zoomIn)
     }
 
 
