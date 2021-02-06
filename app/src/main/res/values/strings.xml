@@ -3,14 +3,14 @@
     <string name="splash_image">Splash image</string>
     <string name="splash_text">Foodies</string>
     <string name="intro_header">Before we get cookin\'</string>
-    <string name="intro_sub">Please tell us any intolerance you may have.</string>
     <string name="submit">Submit</string>
     <string name="todays_picks">Today\'s Picks</string>
     <string name="todays_joke">Today\'s Joke</string>
     <string name="auth_header">Login</string>
-    <string name="auth_info">Enter your email below to continue.</string>
+    <string name="auth_info">Please provide us with ou email address.</string>
     <string name="login_forgot">Forgot your password?</string>
-    <string name="login">login</string>
+    <string name="login">Login</string>
+    <string name="loading">Loading…</string>
     <string name="name_label">Your email address</string>
     <string name="password_label">Your password</string>
     <string name="reset_header">Reset password</string>

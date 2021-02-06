@@ -1,58 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/auth_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center"
     android:orientation="vertical"
-    android:id="@+id/auth_layout"
     tools:context=".features.auth.AuthActivity">
 
 
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:src="@drawable/chef"/>
-
+        android:src="@drawable/chef" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/bold"
+        android:gravity="center"
+        android:text="@string/intro_header"
+        android:textColor="@color/dark_text"
+        android:textSize="20sp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:fontFamily="@font/regular"
         android:gravity="center"
         android:text="@string/auth_info"
-        android:fontFamily="@font/regular"
         android:textColor="@color/dark_text"
-        android:layout_margin="10dp"
-        android:textSize="15sp"/>
+        android:textSize="15sp" />
+
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/email_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/name_label"
         android:layout_margin="15dp"
+        android:hint="@string/name_label"
         app:boxStrokeColor="@color/dark_text"
-        app:hintTextColor="@color/dark_text"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        app:hintTextColor="@color/dark_text">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/regular"
             android:cursorVisible="false"
-            android:id="@+id/email"
-            android:inputType="textEmailAddress"/>
+            android:fontFamily="@font/regular"
+            android:inputType="textEmailAddress" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="200dp"
         android:id="@+id/login_btn"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:textAllCaps="false"
-        android:textColor="@color/light_text"
         android:background="@drawable/round_button"
-        android:text="@string/login"/>
+        android:text="@string/login"
+        android:textAllCaps="false"
+        android:textColor="@color/light_text" />
 
 </LinearLayout>

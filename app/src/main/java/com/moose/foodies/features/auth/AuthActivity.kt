@@ -4,14 +4,15 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.github.dhaval2404.form_validation.rule.EmailRule
-import com.github.dhaval2404.form_validation.rule.NonEmptyRule
-import com.github.dhaval2404.form_validation.validation.FormValidator
+import com.moose.foodies.R
 import com.moose.foodies.databinding.ActivityAuthBinding
-import com.moose.foodies.features.onError
-import com.moose.foodies.features.onSuccess
+import com.moose.foodies.features.home.HomeActivity
+import com.moose.foodies.models.State
+import com.moose.foodies.models.onError
+import com.moose.foodies.models.onSuccess
 import com.moose.foodies.util.ActivityHelper
 import com.moose.foodies.util.PreferenceHelper
+import com.moose.foodies.util.pop
 import com.moose.foodies.util.showToast
 import dagger.android.AndroidInjection
 import javax.inject.Inject
@@ -20,7 +21,7 @@ class AuthActivity : AppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private val viewModel by viewModels<AuthViewModel> {viewModelFactory}
+    private val viewModel by viewModels<AuthViewModel>{ viewModelFactory }
     private lateinit var binding: ActivityAuthBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,26 +35,35 @@ class AuthActivity : AppCompatActivity() {
 
         binding.loginBtn.setOnClickListener {
             val email = binding.email.text.toString()
-            if (isValidForm()) viewModel.register(email)
+
+            if (email.isEmpty())
+                binding.emailLayout.error = "Please provide an email address"
+            else
+                viewModel.register(email)
         }
 
         viewModel.token.observe(this, { result ->
             result.onSuccess {
                 PreferenceHelper.setAccessToken(this, it.token)
+                PreferenceHelper.setLogged(this, true)
+                pop<HomeActivity>()
             }
             result.onError {
                 this.showToast(it)
             }
         })
-    }
 
-    private fun isValidForm(): Boolean {
-        return FormValidator.getInstance()
-            .addField(
-                binding.email,
-                NonEmptyRule("Please provide an email address"),
-                EmailRule("Email address is not valid")
-            )
-            .validate()
+        viewModel.state.observe(this, {
+            when(it){
+                State.LOADING -> {
+                    binding.loginBtn.text = getString(R.string.loading)
+                    binding.loginBtn.isEnabled = false
+                }
+                else -> {
+                    binding.loginBtn.text = getString(R.string.login)
+                    binding.loginBtn.isEnabled = true
+                }
+             }
+        })
     }
 }

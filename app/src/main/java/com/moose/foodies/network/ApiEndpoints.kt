@@ -14,9 +14,6 @@ interface ApiEndpoints {
     @POST("/api/auth/register")
     fun register(@Body credential: Credential): Single<TokenResponse>
 
-    @GET("/api/auth/{email}/reset")
-    fun reset(@Path("email") email: String): Single<AuthResponse>
-
     @GET("/api/intolerances")
     fun getAllIntolerances(): Single<Intolerances>
 

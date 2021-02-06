@@ -8,8 +8,6 @@ import javax.inject.Singleton
 @Singleton
 open class ApiRepository @Inject constructor(private val apiEndpoints: ApiEndpoints) {
 
-    open fun reset(email : String) = apiEndpoints.reset(email)
-
     open fun getIntolerances() = apiEndpoints.getAllIntolerances()
 
     open fun updateIntolerances( intolerance: Intolerances) = apiEndpoints.updateIntolerances(intolerance)
