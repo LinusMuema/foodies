@@ -1,5 +1,7 @@
 package com.moose.foodies.network
 
+import com.moose.foodies.features.auth.Credential
+import com.moose.foodies.features.auth.TokenResponse
 import com.moose.foodies.models.*
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -9,8 +11,8 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface ApiEndpoints {
-    @POST("/api/auth/login")
-    fun login(@Body credentials: Credentials): Single<AuthResponse>
+    @POST("/api/auth/register")
+    fun register(@Body credential: Credential): Single<TokenResponse>
 
     @GET("/api/auth/{email}/reset")
     fun reset(@Path("email") email: String): Single<AuthResponse>

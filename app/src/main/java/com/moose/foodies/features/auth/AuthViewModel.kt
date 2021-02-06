@@ -1,30 +1,42 @@
 package com.moose.foodies.features.auth
 
-import com.moose.foodies.FoodiesApplication
-import com.moose.foodies.features.BaseViewModel
-import com.moose.foodies.models.Credentials
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.moose.foodies.features.Result
 import com.moose.foodies.util.ExceptionParser
-import com.moose.foodies.util.PreferenceHelper
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 
-class AuthViewModel @Inject constructor(): BaseViewModel() {
+class AuthViewModel @Inject constructor(private val repository: AuthRepository, ): ViewModel() {
 
-    fun startAuth(password: String, email: String) {
-        val credentials = Credentials(email, password)
+    private val composite = CompositeDisposable()
+
+    private val _token = MutableLiveData<Result<TokenResponse>>()
+    val token: LiveData<Result<TokenResponse>> = _token
+
+    fun register(email: String) {
+        val credential = Credential(email)
+
         composite.add(
-            apiRepository.login(credentials)
+            repository.register(credential)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                        PreferenceHelper.setAccessToken(FoodiesApplication.getInstance(), it.token)
-                        PreferenceHelper.setLogged(FoodiesApplication.getInstance(), true)
-                        response.value = it.type
+                        _token.postValue(Result.Success(it))
                     },
                     {
-                        exception.value = ExceptionParser.parse(it)
-                    })
+                        val message = ExceptionParser.parse(it)
+                        _token.postValue(Result.Error(message))
+                    }
+                )
         )
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        composite.dispose()
     }
 }

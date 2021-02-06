@@ -1,6 +1,5 @@
 package com.moose.foodies.network
 
-import com.moose.foodies.util.NetworkProvider
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient

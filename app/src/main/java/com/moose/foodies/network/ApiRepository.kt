@@ -1,6 +1,5 @@
 package com.moose.foodies.network
 
-import com.moose.foodies.models.Credentials
 import com.moose.foodies.models.Intolerances
 import com.moose.foodies.models.Recipes
 import javax.inject.Inject
@@ -8,7 +7,6 @@ import javax.inject.Singleton
 
 @Singleton
 open class ApiRepository @Inject constructor(private val apiEndpoints: ApiEndpoints) {
-    open fun login(credentials: Credentials) = apiEndpoints.login(credentials)
 
     open fun reset(email : String) = apiEndpoints.reset(email)
 

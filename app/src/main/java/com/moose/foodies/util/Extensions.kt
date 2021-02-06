@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
@@ -18,8 +19,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.moose.foodies.R
 
 fun View.fadeIn() = this.startAnimation(AnimationUtils.loadAnimation(this.context, R.anim.fade_in))
-
-fun View.fadeOut() = this.startAnimation(AnimationUtils.loadAnimation(this.context, R.anim.fade_out))
 
 fun View.slideUp() = this.startAnimation(AnimationUtils.loadAnimation(this.context, R.anim.slide_up))
 
@@ -96,9 +95,14 @@ fun ImageView.loadCarouselImage(uri: String){
     Glide.with(this.context).setDefaultRequestOptions(options).load(uri).into(this)
 }
 
+fun Context.showToast(message: String?){
+    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+}
+
 fun ImageView.loadDrawable(drawable: Int) = Glide.with(this.context).load(ContextCompat.getDrawable(this.context, drawable)).into(this)
 
 fun ImageView.loadImage(uri: String) {
     val options = RequestOptions().placeholder(getProgressDrawable(this.context)).error(R.drawable.image_error)
     Glide.with(this.context).setDefaultRequestOptions(options).load(uri).into(this)
 }
+

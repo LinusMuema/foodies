@@ -19,4 +19,7 @@ abstract class AuthModule {
     @Binds
     @ViewModelKey(AuthViewModel::class)
     abstract fun bindAuthViewModel(authViewModel: AuthViewModel): ViewModel
+
+    @Binds
+    abstract fun provideAuthRepository(impl: AuthRepositoryImpl): AuthRepository
 }

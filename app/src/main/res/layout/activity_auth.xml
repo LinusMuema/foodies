@@ -4,20 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginTop="30dp"
     android:gravity="center"
     android:orientation="vertical"
     android:id="@+id/auth_layout"
     tools:context=".features.auth.AuthActivity">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/auth_header"
-        android:fontFamily="@font/bold"
-        android:textColor="@color/dark_text"
-        android:layout_margin="10dp"
-        android:textSize="25sp"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/chef"/>
+
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
@@ -48,25 +45,6 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/password_label"
-        android:layout_margin="15dp"
-        app:boxStrokeColor="@color/dark_text"
-        app:hintTextColor="@color/dark_text"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/regular"
-            android:id="@+id/password"
-            android:cursorVisible="false"
-            android:inputType="textPassword"/>
-
-    </com.google.android.material.textfield.TextInputLayout>
-
     <androidx.appcompat.widget.AppCompatButton
         android:layout_width="200dp"
         android:id="@+id/login_btn"
@@ -76,22 +54,5 @@
         android:textColor="@color/light_text"
         android:background="@drawable/round_button"
         android:text="@string/login"/>
-
-    <com.victor.loading.rotate.RotateLoading
-        android:id="@+id/rotateloading"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        app:loading_width="5dp"
-        android:visibility="gone"
-        app:loading_color="@color/accent"/>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/login_forgot"
-        android:fontFamily="@font/light"
-        android:textColor="@color/accent"
-        android:id="@+id/reset"
-        android:layout_margin="10dp"/>
 
 </LinearLayout>

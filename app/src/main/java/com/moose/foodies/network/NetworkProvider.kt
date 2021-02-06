@@ -1,6 +1,5 @@
-package com.moose.foodies.util
+package com.moose.foodies.network
 
-import com.moose.foodies.network.Authenticator
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -11,7 +10,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.concurrent.TimeUnit
 
 object NetworkProvider {
-    private const val baseUrl = "https://foodies-db.herokuapp.com/"
+    private const val baseUrl = "http://foodies.moose.ac/"
 
     private fun provideRxAdapter(): RxJava2CallAdapterFactory =
         RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io())
