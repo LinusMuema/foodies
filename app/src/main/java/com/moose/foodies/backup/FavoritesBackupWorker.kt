@@ -4,13 +4,12 @@ import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.moose.foodies.db.DbRepository
-import com.moose.foodies.di.network.ApiRepository
 import com.moose.foodies.models.Recipes
+import com.moose.foodies.network.ApiRepository
 import dagger.android.HasAndroidInjector
 import javax.inject.Inject
 
-
-class FavoritesBackupWorker( context: Context, params: WorkerParameters): Worker(context, params) {
+class FavoritesBackupWorker(context: Context, params: WorkerParameters): Worker(context, params) {
 
     object ContextInjection {
         @JvmStatic

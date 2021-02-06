@@ -9,7 +9,7 @@ import androidx.work.WorkManager
 import com.moose.foodies.FoodiesApplication
 import com.moose.foodies.backup.FavoritesBackupWorker
 import com.moose.foodies.db.DbRepository
-import com.moose.foodies.di.network.ApiRepository
+import com.moose.foodies.network.ApiRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers

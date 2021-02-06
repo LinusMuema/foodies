@@ -1,12 +1,10 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.google.firebase.crashlytics'
-
-repositories {
-    mavenCentral()
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
@@ -56,16 +54,17 @@ dependencies {
     implementation "androidx.viewpager2:viewpager2:1.0.0"
 
     //Dagger2
-    implementation 'com.google.dagger:dagger-android-support:2.27'
-    kapt 'com.google.dagger:dagger-android-processor:2.27'
-    kapt 'com.google.dagger:dagger-compiler:2.27'
+    implementation "com.google.dagger:dagger-android:2.31"
+    implementation 'com.google.dagger:dagger-android-support:2.31'
+    kapt 'com.google.dagger:dagger-android-processor:2.31'
+    kapt 'com.google.dagger:dagger-compiler:2.31'
 
     //RxJava
     implementation 'io.reactivex.rxjava2:rxjava:2.2.19'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
     //Work Manager
-    implementation "androidx.work:work-runtime-ktx:2.4.0"
+    implementation "androidx.work:work-runtime-ktx:2.5.0"
     implementation "android.arch.work:work-rxjava2:2.1.0"
 
     //RecyclerView
@@ -74,8 +73,8 @@ dependencies {
     implementation 'com.github.jama5262:CarouselView:1.1.0'
 
     //Firebase
-    implementation 'com.google.firebase:firebase-analytics-ktx:18.0.0'
-    implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
+    implementation 'com.google.firebase:firebase-analytics-ktx:18.0.2'
+    implementation 'com.google.firebase:firebase-crashlytics:17.3.1'
 
     //SwipeRefresh layout
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
@@ -85,15 +84,15 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.11.0'
 
     //Room
-    kapt "androidx.room:room-compiler:2.2.5"
-    implementation "androidx.room:room-runtime:2.2.5"
-    implementation "androidx.room:room-rxjava2:2.2.5"
-    testImplementation "androidx.room:room-testing:2.2.5"
+    kapt "androidx.room:room-compiler:2.2.6"
+    implementation "androidx.room:room-runtime:2.2.6"
+    implementation "androidx.room:room-rxjava2:2.2.6"
+    testImplementation "androidx.room:room-testing:2.2.6"
 
     //Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.8.1'
-    implementation 'com.squareup.okhttp3:okhttp:4.6.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.6.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.8.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.8.1'
     implementation 'com.squareup.retrofit2:converter-scalars:2.8.1'

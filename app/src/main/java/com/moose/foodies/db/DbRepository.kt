@@ -6,7 +6,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-open class DbRepository @Inject constructor(private val dao: Dao)  {
+open class DbRepository @Inject constructor(private val dao: FoodiesDao)  {
     open fun getTodaysRecipes() = dao.getAllRecipes()
 
     open fun getFavorites() = dao.getFavorites()

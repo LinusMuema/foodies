@@ -9,7 +9,7 @@ import com.moose.foodies.models.Recipes
 @Database(entities = [Recipes::class, Recipe::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase: RoomDatabase() {
-    abstract fun getDao(): Dao
+    abstract fun getDao(): FoodiesDao
 
     companion object{
         const val DB_NAME="foodies"
