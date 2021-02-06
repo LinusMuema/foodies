@@ -4,11 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.moose.foodies.di.ViewModelKey
 import com.moose.foodies.di.factory.ViewModelFactory
-import com.moose.foodies.features.home.HomeViewModel
-import com.moose.foodies.features.intolerances.IntolerancesViewModel
-import com.moose.foodies.features.auth.AuthViewModel
 import com.moose.foodies.features.favorites.FavoritesViewModel
 import com.moose.foodies.features.fridge.FridgeViewModel
+import com.moose.foodies.features.home.HomeViewModel
+import com.moose.foodies.features.intolerances.IntolerancesViewModel
 import com.moose.foodies.features.recipe.RecipeViewModel
 import com.moose.foodies.features.reset.ResetPasswordViewModel
 import com.moose.foodies.features.search.SearchViewModel
@@ -23,11 +22,6 @@ abstract class ViewModelModules {
     @Binds
     @ViewModelKey(IntolerancesViewModel::class)
     abstract fun bindIntroViewModel(introlerancesViewModel: IntolerancesViewModel): ViewModel
-
-    @IntoMap
-    @Binds
-    @ViewModelKey(AuthViewModel::class)
-    abstract fun bindAuthViewModel(authViewModel: AuthViewModel): ViewModel
 
     @IntoMap
     @Binds

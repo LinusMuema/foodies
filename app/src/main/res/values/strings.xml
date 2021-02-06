@@ -8,7 +8,7 @@
     <string name="todays_picks">Today\'s Picks</string>
     <string name="todays_joke">Today\'s Joke</string>
     <string name="auth_header">Login</string>
-    <string name="auth_info">Enter your details below to login. If you don\'t have an account, we will create one for you.</string>
+    <string name="auth_info">Enter your email below to continue.</string>
     <string name="login_forgot">Forgot your password?</string>
     <string name="login">login</string>
     <string name="name_label">Your email address</string>

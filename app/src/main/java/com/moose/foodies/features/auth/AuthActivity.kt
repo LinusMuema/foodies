@@ -38,12 +38,12 @@ class AuthActivity : AppCompatActivity() {
             when (it as String) {
                 "login" -> {
                     authViewModel.getBackup()
-                    pushWithoutHistory<HomeActivity>() {
+                    pop<HomeActivity>() {
                         it.putExtra("type", "login")
                     }
                 }
                 "signup" -> {
-                    pushWithoutHistory<IntolerancesActivity> {
+                    pop<IntolerancesActivity> {
                         it.putExtra("type", "signup")
                     }
                 }

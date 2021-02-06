@@ -7,6 +7,7 @@ import com.moose.foodies.di.modules.ActivitiesModule
 import com.moose.foodies.di.modules.FragmentsModule
 import com.moose.foodies.di.modules.ViewModelModules
 import com.moose.foodies.di.modules.WorkerModules
+import com.moose.foodies.features.auth.AuthModule
 import com.moose.foodies.network.ApiModules
 import dagger.BindsInstance
 import dagger.Component
@@ -16,6 +17,7 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [
     AndroidInjectionModule::class,
+    AuthModule::class,
     ActivitiesModule::class,
     FragmentsModule::class,
     DatabaseModules::class,

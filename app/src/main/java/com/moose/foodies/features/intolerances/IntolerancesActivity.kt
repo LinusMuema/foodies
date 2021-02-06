@@ -44,7 +44,7 @@ class IntolerancesActivity @Inject constructor(): AppCompatActivity() {
             intolerancesloading.hide()
             intolerances_submit.show()
             if (it) {
-                pushWithoutHistory<HomeActivity>()
+                pop<HomeActivity>()
             }
             else showSnackbar(intolerances_layout, "something went wrong! Try again later")
         })

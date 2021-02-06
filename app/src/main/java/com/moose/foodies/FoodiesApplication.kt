@@ -1,16 +1,15 @@
 package com.moose.foodies
 
 import android.app.Application
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.ProcessLifecycleOwner
 import com.moose.foodies.di.AppComponent
 import com.moose.foodies.di.DaggerAppComponent
+import com.moose.foodies.util.PreferenceHelper
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import javax.inject.Inject
 
-open class FoodiesApplication: Application(), HasAndroidInjector, LifecycleObserver{
+open class FoodiesApplication: Application(), HasAndroidInjector{
 
     @Inject
     lateinit var androidInjector: DispatchingAndroidInjector<Any>
@@ -19,7 +18,10 @@ open class FoodiesApplication: Application(), HasAndroidInjector, LifecycleObser
 
     override fun onCreate() {
         super.onCreate()
-        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
+
+        val widthDp = resources.displayMetrics.run { widthPixels / density }
+        PreferenceHelper.setDeviceWidth(this, widthDp)
+
         instance = this
         appComponent = DaggerAppComponent.factory().create(this)
         appComponent.inject(this)
