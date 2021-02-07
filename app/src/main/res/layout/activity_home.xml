@@ -8,38 +8,39 @@
     android:fitsSystemWindows="true"
     tools:context=".features.feature_home.HomeActivity">
 
-    <androidx.constraintlayout.motion.widget.MotionLayout
-        android:id="@+id/constraintLayout"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layoutDescription="@xml/activity_home_scene">
+        android:layout_height="match_parent">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardView"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            app:cardCornerRadius="50dp"
-            app:cardElevation="0dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <com.mancj.materialsearchbar.MaterialSearchBar
-            android:id="@+id/searchBar"
-            style="@style/MaterialSearchBarLight"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:layout_margin="8dp"
-            app:layout_constraintBottom_toBottomOf="@id/cardView"
-            app:layout_constraintEnd_toEndOf="@id/cardView"
-            app:layout_constraintStart_toStartOf="@id/cardView"
-            app:layout_constraintTop_toTopOf="@id/cardView"
-            app:mt_hint="Search for a recipe"
-            app:mt_maxSuggestionsCount="10" />
+            <com.mancj.materialsearchbar.MaterialSearchBar
+                android:id="@+id/searchBar"
+                style="@style/MaterialSearchBarLight"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="@id/cardView"
+                app:layout_constraintEnd_toEndOf="@id/cardView"
+                app:layout_constraintStart_toStartOf="@id/cardView"
+                app:layout_constraintTop_toTopOf="@id/cardView"
+                app:mt_hint=""
+                app:mt_maxSuggestionsCount="10"
+                app:mt_placeholder="@string/recipe_search" />
+
+        </com.google.android.material.card.MaterialCardView>
+
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/picks_text"
@@ -58,11 +59,11 @@
             android:id="@+id/recipes_loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
             android:indeterminate="true"
+            app:layout_constraintBottom_toBottomOf="@+id/carousel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/picks_text" />
+            app:layout_constraintTop_toTopOf="@+id/carousel" />
 
         <com.jama.carouselview.CarouselView
             android:id="@+id/carousel"
@@ -259,6 +260,6 @@
             app:layout_constraintTop_toBottomOf="@+id/trivia_text" />
 
 
-    </androidx.constraintlayout.motion.widget.MotionLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.core.widget.NestedScrollView>

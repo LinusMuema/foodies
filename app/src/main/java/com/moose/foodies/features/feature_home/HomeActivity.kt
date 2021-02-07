@@ -1,23 +1,22 @@
 package com.moose.foodies.features.feature_home
 
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.mancj.materialsearchbar.MaterialSearchBar
-import com.moose.foodies.R
+import com.moose.foodies.databinding.ActivityHomeBinding
 import com.moose.foodies.features.feature_favorites.FavoritesActivity
 import com.moose.foodies.features.feature_ingredients.IngredientsActivity
 import com.moose.foodies.features.feature_search.SearchActivity
-import com.moose.foodies.util.*
+import com.moose.foodies.util.ActivityHelper
+import com.moose.foodies.util.PreferenceHelper
+import com.moose.foodies.util.hideBottomBar
+import com.moose.foodies.util.push
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.carousel_item.view.*
 import javax.inject.Inject
 
 class HomeActivity : AppCompatActivity() {
@@ -25,39 +24,54 @@ class HomeActivity : AppCompatActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val homeViewModel by viewModels<HomeViewModel> { viewModelFactory }
-    private lateinit var recentSearches: HashSet<String>
+    private val viewModel by viewModels<HomeViewModel> { viewModelFactory }
+    private lateinit var binding: ActivityHomeBinding
+    private lateinit var set:HashSet<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
         ActivityHelper.initialize(this)
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
 
-        favorites_btn.setOnClickListener { push<FavoritesActivity>() }
-        ingredients_btn.setOnClickListener {push<IngredientsActivity>()}
+        binding = ActivityHomeBinding.inflate(layoutInflater)
 
-        //Search bar section
-        recentSearches = PreferenceHelper.getRecentSearches(this)!!.split(",").toHashSet()
-        searchBar.lastSuggestions = recentSearches.toMutableList()
-        searchBar.setOnSearchActionListener(object : MaterialSearchBar.OnSearchActionListener{
+        binding.favoritesBtn.setOnClickListener { push<FavoritesActivity>() }
+        binding.ingredientsBtn.setOnClickListener {push<IngredientsActivity>()}
 
-            override fun onButtonClicked(buttonCode: Int) {
-                this@HomeActivity.hideBottomBar()
-            }
+        //Search bar config
+        val recent = PreferenceHelper.getRecentSearches(this)!!
+        set = recent.split(",").toHashSet()
+        setSearchBar(set)
 
-            override fun onSearchStateChanged(enabled: Boolean) {
-                this@HomeActivity.hideBottomBar()
-            }
+        setContentView(binding.root)
+    }
 
-            override fun onSearchConfirmed(text: CharSequence?) {
-                recentSearches.add(text.toString())
-                push<SearchActivity> {
-                    it.putExtra("recipeName", text.toString())
+    private fun setSearchBar(set: HashSet<String>) {
+        val searches = set.toMutableList().filter { it != "" }
+
+        with(binding){
+            searchBar.isSuggestionsEnabled = searches.isNotEmpty()
+            if (searches.isNotEmpty()) searchBar.lastSuggestions = searches
+
+            searchBar.setOnSearchActionListener(object : MaterialSearchBar.OnSearchActionListener{
+
+                override fun onButtonClicked(buttonCode: Int) {
+                    hideBottomBar()
                 }
-            }
 
-        })
+                override fun onSearchStateChanged(enabled: Boolean) {
+                    hideBottomBar()
+                }
+
+                override fun onSearchConfirmed(text: CharSequence?) {
+                    set.add(text.toString())
+                    push<SearchActivity> {
+                        it.putExtra("recipeName", text.toString())
+                    }
+                }
+
+            })
+        }
     }
 
 
@@ -67,13 +81,6 @@ class HomeActivity : AppCompatActivity() {
         return activeNetwork != null
     }
 
-    private fun addToClipboard(text: String, type: String){
-        val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clipData = ClipData.newPlainText(type, text)
-        clipboardManager.setPrimaryClip(clipData)
-
-        Toast.makeText(this, "$type copied to clipboard", Toast.LENGTH_LONG).show()
-    }
 
     override fun onResume() {
         super.onResume()
@@ -82,11 +89,6 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        PreferenceHelper.setRecentSearches(this, searchBar.lastSuggestions.joinToString(separator = ","))
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
         PreferenceHelper.setRecentSearches(this, searchBar.lastSuggestions.joinToString(separator = ","))
     }
 }

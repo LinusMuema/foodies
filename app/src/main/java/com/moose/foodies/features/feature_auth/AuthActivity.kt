@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.moose.foodies.R
 import com.moose.foodies.databinding.ActivityAuthBinding
 import com.moose.foodies.features.feature_home.HomeActivity
-import com.moose.foodies.models.State
 import com.moose.foodies.models.onError
 import com.moose.foodies.models.onSuccess
 import com.moose.foodies.util.ActivityHelper
@@ -38,11 +37,16 @@ class AuthActivity : AppCompatActivity() {
 
             if (email.isEmpty())
                 binding.emailLayout.error = "Please provide an email address"
-            else
+            else {
+                binding.loginBtn.text = getString(R.string.loading)
+                binding.loginBtn.isEnabled = false
                 viewModel.register(email)
+            }
         }
 
         viewModel.token.observe(this, { result ->
+            binding.loginBtn.text = getString(R.string.login)
+            binding.loginBtn.isEnabled = true
             result.onSuccess {
                 PreferenceHelper.setAccessToken(this, it.token)
                 PreferenceHelper.setLogged(this, true)
@@ -51,19 +55,6 @@ class AuthActivity : AppCompatActivity() {
             result.onError {
                 this.showToast(it)
             }
-        })
-
-        viewModel.state.observe(this, {
-            when(it){
-                State.LOADING -> {
-                    binding.loginBtn.text = getString(R.string.loading)
-                    binding.loginBtn.isEnabled = false
-                }
-                else -> {
-                    binding.loginBtn.text = getString(R.string.login)
-                    binding.loginBtn.isEnabled = true
-                }
-             }
         })
     }
 }
