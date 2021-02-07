@@ -17,8 +17,8 @@ class AuthViewModel @Inject constructor(private val repository: AuthRepository, 
     private val _token = MutableLiveData<Result<TokenResponse>>()
     val token: LiveData<Result<TokenResponse>> = _token
 
-    fun register(email: String) {
-        val credential = Credential(email)
+    fun register(mail: String) {
+        val credential = Credential(email = mail)
         composite.add(
             repository.register(credential)
                 .observeOn(AndroidSchedulers.mainThread())

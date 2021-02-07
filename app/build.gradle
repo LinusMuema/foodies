@@ -5,6 +5,7 @@ plugins {
     id 'kotlin-kapt'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
+    id 'org.jetbrains.kotlin.plugin.serialization'
 }
 
 android {
@@ -90,7 +91,6 @@ dependencies {
     implementation "androidx.room:room-runtime:2.2.6"
     implementation "androidx.room:room-rxjava2:2.2.6"
     testImplementation "androidx.room:room-testing:2.2.6"
-
 
     // Kotlin serialization
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1'

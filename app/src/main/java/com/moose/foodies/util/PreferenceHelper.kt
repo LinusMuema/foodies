@@ -9,7 +9,6 @@ object PreferenceHelper {
 
     private const val tokenKey = "ACCESS_TOKEN"
     private const val loggedKey = "LOGGED_IN"
-    private const val authTypeKey = "AUTH_TYPE"
     private const val widthKey = "DEVICE_WIDTH"
     private const val searchesKey = "RECENT_SEARCHES"
     private const val favoritesBackupKey = "FAVORITES_BACKUP"
@@ -30,8 +29,6 @@ object PreferenceHelper {
 
     fun getBackupStatus(context: Context) = defaultPrefs(context).getBoolean(favoritesBackupKey, false)
 
-    fun getAuthType(context: Context) = defaultPrefs(context).getString(authTypeKey,"login")
-
     fun setAccessToken(context: Context, token: String) = defaultPrefs(context).set(tokenKey, token)
 
     fun setLogged(context: Context, logged: Boolean) = defaultPrefs(context).set(loggedKey, logged)
@@ -41,8 +38,6 @@ object PreferenceHelper {
     fun setRecentSearches(context: Context, searches: String) = defaultPrefs(context).set(searchesKey, searches)
 
     fun setBackupStatus(context: Context, status: Boolean) = defaultPrefs(context).set(favoritesBackupKey, status)
-
-    fun setAuthType(context: Context, type: String) = defaultPrefs(context).set(authTypeKey, type)
 
     operator fun SharedPreferences.set(key: String, value: Any?) {
         when (value) {

@@ -2,8 +2,10 @@ package com.moose.foodies.features.feature_home
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.serialization.Serializable
 
 @Entity(tableName = "Recipes")
+@Serializable
 data class HomeData(
     @PrimaryKey
     val id: Int = 1,
@@ -13,23 +15,27 @@ data class HomeData(
 )
 
 @Entity(tableName = "Favorites")
+@Serializable
 data class Recipe(
     @PrimaryKey val id: Int,
     val info: Info,
     val instructions: Instructions,
 )
 
+@Serializable
 data class Info(
     val image: String,
     val title: String,
 )
 
+@Serializable
 data class Instructions(
     val equipment: List<Item>,
     val ingredients: List<Item>,
     val sections: List<Section>,
 )
 
+@Serializable
 data class Item(
     val id: Int,
     val image: String,
@@ -37,11 +43,13 @@ data class Item(
     val name: String,
 )
 
+@Serializable
 data class Section(
     val name: String,
     val steps: List<Step>,
 )
 
+@Serializable
 data class Step(
     val instruction: String,
     val number: Int,

@@ -31,6 +31,7 @@ class ApiModules {
     @Provides
     fun provideClient(): OkHttpClient {
         return OkHttpClient.Builder()
+            .addInterceptor(Authenticator)
             .addInterceptor(interceptor)
             .build()
     }

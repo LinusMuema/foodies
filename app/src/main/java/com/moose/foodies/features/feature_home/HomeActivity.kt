@@ -3,6 +3,7 @@ package com.moose.foodies.features.feature_home
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -11,12 +12,12 @@ import com.moose.foodies.databinding.ActivityHomeBinding
 import com.moose.foodies.features.feature_favorites.FavoritesActivity
 import com.moose.foodies.features.feature_ingredients.IngredientsActivity
 import com.moose.foodies.features.feature_search.SearchActivity
-import com.moose.foodies.util.ActivityHelper
-import com.moose.foodies.util.PreferenceHelper
-import com.moose.foodies.util.hideBottomBar
-import com.moose.foodies.util.push
+import com.moose.foodies.models.onError
+import com.moose.foodies.models.onSuccess
+import com.moose.foodies.util.*
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_home.*
+import java.util.*
 import javax.inject.Inject
 
 class HomeActivity : AppCompatActivity() {
@@ -42,6 +43,16 @@ class HomeActivity : AppCompatActivity() {
         val recent = PreferenceHelper.getRecentSearches(this)!!
         set = recent.split(",").toHashSet()
         setSearchBar(set)
+
+        // Get data
+        viewModel.getLocalData()
+        viewModel.getRemoteData()
+        viewModel.data.observe(this, { result ->
+            result.onSuccess {
+                Log.d("Foodies", "onCreate: ${it.joke}")
+            }
+            result.onError { showToast(it) }
+        })
 
         setContentView(binding.root)
     }

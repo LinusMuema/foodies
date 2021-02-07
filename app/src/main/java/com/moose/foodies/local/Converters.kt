@@ -1,7 +1,9 @@
 package com.moose.foodies.local
 
 import androidx.room.TypeConverter
-import com.moose.foodies.features.feature_home.*
+import com.moose.foodies.features.feature_home.Info
+import com.moose.foodies.features.feature_home.Instructions
+import com.moose.foodies.features.feature_home.Recipe
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -25,22 +27,4 @@ class Converters {
 
     @TypeConverter
     fun instructionsFromJson(json: String): Instructions = Json.decodeFromString(json)
-
-    @TypeConverter
-    fun itemToJson(item: Item): String = Json.encodeToString(item)
-
-    @TypeConverter
-    fun itemFromJson(json: String): Item = Json.decodeFromString(json)
-
-    @TypeConverter
-    fun sectionToJson(section: Section): String = Json.encodeToString(section)
-
-    @TypeConverter
-    fun sectionFromJson(json: String): Section = Json.decodeFromString(json)
-
-    @TypeConverter
-    fun stepToJson(step: Step): String = Json.encodeToString(step)
-
-    @TypeConverter
-    fun stepFromJson(json: String): Step = Json.decodeFromString(json)
 }
