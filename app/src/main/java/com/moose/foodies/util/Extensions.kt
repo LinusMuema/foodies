@@ -24,12 +24,18 @@ fun View.show() { this.visibility = View.VISIBLE }
 
 fun View.hide() { this.visibility = View.GONE }
 
-fun View.setHeight(height: Int){
+fun String.formatUrl() = this.replace("312x231", "636x393")
+
+fun View.setImageHeight(){
+    val height = HeightCalculator.getImageHeight(this.context)
+
     this.requestLayout()
     this.layoutParams.height = height
 }
 
-fun ViewGroup.setHeight(height: Int){
+fun ViewGroup.setImageHeight(){
+    val height = HeightCalculator.getImageHeight(this.context)
+
     this.requestLayout()
     this.layoutParams.height = height
 }

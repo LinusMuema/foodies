@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayoutMediator
 import com.moose.foodies.R
 import com.moose.foodies.models.RecipeSuggestion
-import com.moose.foodies.util.*
+import com.moose.foodies.util.hide
+import com.moose.foodies.util.loadImage
+import com.moose.foodies.util.show
 import kotlinx.android.synthetic.main.ingredients_search_item.view.*
 
 class IngredientsAdapter(
@@ -34,7 +36,6 @@ class IngredientsAdapter(
             itemView.prepare_loading.start()
             itemView.recipe_suggestion_name.text = recipe.title
             itemView.recipe_suggestion_image.loadImage(url)
-            itemView.recipe_suggestion_image.setHeight(HeightCalculator.getImageHeight(context))
 
             itemView.view_pager.adapter = IngredientsPagerAdapter(activity, recipe)
             TabLayoutMediator(itemView.tabs, itemView.view_pager){tab, position ->

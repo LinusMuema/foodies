@@ -82,6 +82,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx:18.0.2'
     implementation 'com.google.firebase:firebase-crashlytics:17.3.1'
 
+    // Coil
+    implementation 'io.coil-kt:coil:1.1.1'
+
     //Glide
     kapt 'com.github.bumptech.glide:compiler:4.11.0'
     implementation 'com.github.bumptech.glide:glide:4.11.0'

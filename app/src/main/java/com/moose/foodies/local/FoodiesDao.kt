@@ -14,7 +14,7 @@ import io.reactivex.Single
 @Dao
 interface FoodiesDao{
     @Query("SELECT * FROM recipes")
-    fun getHomeData(): Flowable<List<HomeData>>
+    fun getHomeData(): Flowable<HomeData>
 
     @Query("SELECT * FROM favorites")
     fun getFavorites(): Observable<List<Recipe>>

@@ -8,9 +8,7 @@ import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.moose.foodies.R
 import com.moose.foodies.models.RecipeResults
-import com.moose.foodies.util.HeightCalculator
 import com.moose.foodies.util.loadImage
-import com.moose.foodies.util.setHeight
 import kotlinx.android.synthetic.main.recipe_result_details.view.*
 import kotlinx.android.synthetic.main.recipe_result_item.view.*
 
@@ -30,7 +28,6 @@ class RecipeResultsAdapter(private val results: List<RecipeResults>): RecyclerVi
             val image = "https://spoonacular.com/recipeImages/${recipeResults.id}-636x393.jpg"
             val context = itemView.context
 
-            itemView.recipe_image.setHeight(HeightCalculator.getImageHeight(context))
             itemView.recipe_image.loadImage(image)
             itemView.card_expand.setTitle(recipeResults.title)
             itemView.card_expand.setOnExpandedListener { v, expanded ->

@@ -9,7 +9,10 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.moose.foodies.R
-import com.moose.foodies.util.*
+import com.moose.foodies.util.ActivityHelper
+import com.moose.foodies.util.PreferenceHelper
+import com.moose.foodies.util.loadImage
+import com.moose.foodies.util.showSnackbar
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_recipe.*
 import javax.inject.Inject
@@ -29,7 +32,6 @@ class RecipeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recipe)
 
-        img_food.setHeight(HeightCalculator.getImageHeight(this))
         img_food.loadImage("")
 
         recipeViewModel.isFavorite.observe(this, {

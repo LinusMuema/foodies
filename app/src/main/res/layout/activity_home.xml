@@ -8,9 +8,11 @@
     android:fitsSystemWindows="true"
     tools:context=".features.feature_home.HomeActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/motionLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layoutDescription="@xml/activity_home_scene">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardView"
@@ -92,7 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="48dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/round_relative"
             app:layout_constraintEnd_toEndOf="parent"
@@ -159,13 +161,14 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/joke"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:fontFamily="@font/regular"
-            android:textColor="@color/dark_text"
             android:text="@string/joke_sample"
+            android:textColor="@color/dark_text"
             android:textSize="15sp"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
@@ -179,12 +182,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="48dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/round_relative"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/joke_loading">
+            app:layout_constraintTop_toBottomOf="@+id/joke">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/favorites_icon"
@@ -245,21 +248,22 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/trivia"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:fontFamily="@font/regular"
             android:text="@string/trivia_test"
-            android:visibility="invisible"
             android:textColor="@color/dark_text"
             android:textSize="15sp"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/trivia_text" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 
 </androidx.core.widget.NestedScrollView>

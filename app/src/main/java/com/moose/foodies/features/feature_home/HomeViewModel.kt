@@ -20,8 +20,8 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository):
             repository.getRemoteData()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                    {repository.updateLocalData(it)},
-                    {_data.postValue(Result.Error(it.message))}
+                    { updateLocalData(it) },
+                    { _data.postValue(Result.Error(it.message)) }
                 )
         )
     }
@@ -31,11 +31,19 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository):
             repository.getLocalData()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .map { it.first() }
                 .subscribe(
-                    {_data.postValue(Result.Success(it))},
-                    {_data.postValue(Result.Error(it.message))}
+                    { _data.postValue(Result.Success(it)) },
+                    { _data.postValue(Result.Error(it.message)) }
                 )
+        )
+    }
+
+    private fun updateLocalData(data: HomeData){
+        composite.add(
+            repository.updateLocalData(data)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe()
         )
     }
 

@@ -1,13 +1,13 @@
 package com.moose.foodies.features.feature_home
 
-import android.content.Context
-import android.net.ConnectivityManager
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import coil.load
+import coil.transform.RoundedCornersTransformation
 import com.mancj.materialsearchbar.MaterialSearchBar
+import com.moose.foodies.R
 import com.moose.foodies.databinding.ActivityHomeBinding
 import com.moose.foodies.features.feature_favorites.FavoritesActivity
 import com.moose.foodies.features.feature_ingredients.IngredientsActivity
@@ -16,8 +16,7 @@ import com.moose.foodies.models.onError
 import com.moose.foodies.models.onSuccess
 import com.moose.foodies.util.*
 import dagger.android.AndroidInjection
-import kotlinx.android.synthetic.main.activity_home.*
-import java.util.*
+import kotlinx.android.synthetic.main.carousel_item.view.*
 import javax.inject.Inject
 
 class HomeActivity : AppCompatActivity() {
@@ -27,7 +26,6 @@ class HomeActivity : AppCompatActivity() {
 
     private val viewModel by viewModels<HomeViewModel> { viewModelFactory }
     private lateinit var binding: ActivityHomeBinding
-    private lateinit var set:HashSet<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,21 +33,21 @@ class HomeActivity : AppCompatActivity() {
         ActivityHelper.initialize(this)
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
+        binding.carousel.setImageHeight()
 
         binding.favoritesBtn.setOnClickListener { push<FavoritesActivity>() }
         binding.ingredientsBtn.setOnClickListener {push<IngredientsActivity>()}
 
         //Search bar config
-        val recent = PreferenceHelper.getRecentSearches(this)!!
-        set = recent.split(",").toHashSet()
-        setSearchBar(set)
+        setSearchBar()
 
         // Get data
         viewModel.getLocalData()
         viewModel.getRemoteData()
         viewModel.data.observe(this, { result ->
             result.onSuccess {
-                Log.d("Foodies", "onCreate: ${it.joke}")
+                binding.motionLayout.transitionToState(R.id.loaded)
+                bindData(it)
             }
             result.onError { showToast(it) }
         })
@@ -57,49 +55,44 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
-    private fun setSearchBar(set: HashSet<String>) {
-        val searches = set.toMutableList().filter { it != "" }
-
+    private fun bindData(data: HomeData) {
         with(binding){
-            searchBar.isSuggestionsEnabled = searches.isNotEmpty()
-            if (searches.isNotEmpty()) searchBar.lastSuggestions = searches
+            joke.text = data.joke
+            trivia.text = data.trivia
 
-            searchBar.setOnSearchActionListener(object : MaterialSearchBar.OnSearchActionListener{
+            carousel.apply {
+                size = data.recipes.size
+                setCarouselViewListener { view, position ->
+                    val recipe = data.recipes[position]
+                    val url: String = recipe.info.image.formatUrl()
 
-                override fun onButtonClicked(buttonCode: Int) {
-                    hideBottomBar()
-                }
-
-                override fun onSearchStateChanged(enabled: Boolean) {
-                    hideBottomBar()
-                }
-
-                override fun onSearchConfirmed(text: CharSequence?) {
-                    set.add(text.toString())
-                    push<SearchActivity> {
-                        it.putExtra("recipeName", text.toString())
+                    view.item.setImageHeight()
+                    view.recipeName.text = recipe.info.title
+                    view.recipeImage.load(url){
+                        transformations(RoundedCornersTransformation(topLeft = 10f, topRight = 10f))
                     }
                 }
-
-            })
+                show()
+            }
         }
     }
 
+    private fun setSearchBar() {
+        binding.searchBar.setOnSearchActionListener(object : MaterialSearchBar.OnSearchActionListener{
+            override fun onButtonClicked(buttonCode: Int) { hideBottomBar() }
 
-    private fun connectionAvailable(): Boolean {
-        val manager = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetwork = manager.activeNetworkInfo
-        return activeNetwork != null
+            override fun onSearchStateChanged(enabled: Boolean) { hideBottomBar() }
+
+            override fun onSearchConfirmed(text: CharSequence?) {
+                push<SearchActivity> {
+                    it.putExtra("recipeName", text.toString())
+                }
+            }
+        })
     }
-
 
     override fun onResume() {
         super.onResume()
         ActivityHelper.initialize(this)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        PreferenceHelper.setRecentSearches(this, searchBar.lastSuggestions.joinToString(separator = ","))
     }
 }

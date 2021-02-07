@@ -17,7 +17,9 @@ import javax.inject.Singleton
 @ExperimentalSerializationApi
 class ApiModules {
 
-    private val converter = Json.asConverterFactory("application/json".toMediaType())
+    private val converter = Json {
+        ignoreUnknownKeys = true
+    }.asConverterFactory("application/json".toMediaType())
     private val BASE_URL = "http://foodies.moose.ac/"
     private val interceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 

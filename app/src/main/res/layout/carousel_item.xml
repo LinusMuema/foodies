@@ -1,35 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item"
     android:layout_width="match_parent"
-    android:layout_margin="5dp"
-    android:id="@+id/carousel_item"
     android:layout_height="0dp">
 
     <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/recipeImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/pick_image"/>
+        android:foreground="@drawable/opacity_gradient" />
 
-    <RelativeLayout
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/recipeName"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/opacity_gradient"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/regular"
+        android:gravity="center"
+        android:textColor="@color/light_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/regular"
-            android:textColor="@color/light_text"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:id="@+id/pick_name"/>
-
-    </RelativeLayout>
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
