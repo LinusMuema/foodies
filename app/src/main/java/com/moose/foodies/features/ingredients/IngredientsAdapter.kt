@@ -1,4 +1,4 @@
-package com.moose.foodies.features.fridge
+package com.moose.foodies.features.ingredients
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,12 +11,12 @@ import com.moose.foodies.models.RecipeSuggestion
 import com.moose.foodies.util.*
 import kotlinx.android.synthetic.main.ingredients_search_item.view.*
 
-class FridgeRecipeAdapter(
+class IngredientsAdapter(
     private val recipes: List<RecipeSuggestion>,
-    private val activity: FridgeActivity,
+    private val activity: IngredientsActivity,
     private val getRecipe: (recipe: RecipeSuggestion, position: Int) -> Unit
 ):
-    RecyclerView.Adapter<FridgeRecipeAdapter.RecipeViewHolder>() {
+    RecyclerView.Adapter<IngredientsAdapter.RecipeViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder =
         RecipeViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.ingredients_search_item, parent, false))
@@ -36,7 +36,7 @@ class FridgeRecipeAdapter(
             itemView.recipe_suggestion_image.loadImage(url)
             itemView.recipe_suggestion_image.setHeight(HeightCalculator.getImageHeight(context))
 
-            itemView.view_pager.adapter = FridgeIngredientsPagerAdapter(activity, recipe)
+            itemView.view_pager.adapter = IngredientsPagerAdapter(activity, recipe)
             TabLayoutMediator(itemView.tabs, itemView.view_pager){tab, position ->
                 tab.text = titles[position]
             }.attach()

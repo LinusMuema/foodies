@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.mancj.materialsearchbar.MaterialSearchBar
 import com.moose.foodies.R
 import com.moose.foodies.features.favorites.FavoritesActivity
-import com.moose.foodies.features.fridge.FridgeActivity
+import com.moose.foodies.features.ingredients.IngredientsActivity
 import com.moose.foodies.features.search.SearchActivity
 import com.moose.foodies.util.*
 import dagger.android.AndroidInjection
@@ -39,20 +39,9 @@ class HomeActivity : AppCompatActivity() {
         recipes_loading.setHeight(height)
         jokes_loading.setHeight(height)
         trivia_loading.setHeight(height)
-        premium_card.setHeight(height)
-
-        joke.setOnLongClickListener {
-            addToClipboard(joke.text.toString(), "Joke")
-            true
-        }
-
-        trivia.setOnLongClickListener{
-            addToClipboard(trivia.text.toString(), "Trivia")
-            true
-        }
 
         favorites_btn.setOnClickListener { push<FavoritesActivity>() }
-        fridge_btn.setOnClickListener {push<FridgeActivity>()}
+        fridge_btn.setOnClickListener {push<IngredientsActivity>()}
 
         //Search bar section
         recentSearches = PreferenceHelper.getRecentSearches(this)!!.split(",").toHashSet()

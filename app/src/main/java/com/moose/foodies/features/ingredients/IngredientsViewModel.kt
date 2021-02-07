@@ -1,4 +1,4 @@
-package com.moose.foodies.features.fridge
+package com.moose.foodies.features.ingredients
 
 import androidx.lifecycle.MutableLiveData
 import com.moose.foodies.features.BaseViewModel
@@ -7,7 +7,7 @@ import com.moose.foodies.util.ExceptionParser
 import io.reactivex.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 
-class FridgeViewModel @Inject constructor(): BaseViewModel() {
+class IngredientsViewModel @Inject constructor(): BaseViewModel() {
 
     val instructions: MutableLiveData<FridgeRecipe> = MutableLiveData()
 

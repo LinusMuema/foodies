@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.moose.foodies.db.DbRepository
-import com.moose.foodies.models.Recipes
+import com.moose.foodies.features.home.HomeData
 import com.moose.foodies.network.ApiRepository
 import dagger.android.HasAndroidInjector
 import javax.inject.Inject
@@ -27,7 +27,7 @@ class FavoritesBackupWorker(context: Context, params: WorkerParameters): Worker(
 
     override fun doWork(): Result {
         return dbRepository.getFavorites()
-            .flatMap { apiRepository.backupFavorites(Recipes(0, "", it, "", "")) }
+            .flatMap { apiRepository.backupFavorites(HomeData(0, "", it, "")) }
             .map {
             if (it.message == "success") Result.success()
             else Result.failure()

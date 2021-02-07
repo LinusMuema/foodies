@@ -2,6 +2,8 @@ package com.moose.foodies.di.factory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import dagger.Binds
+import dagger.Module
 import javax.inject.Inject
 import javax.inject.Provider
 import javax.inject.Singleton
@@ -16,4 +18,12 @@ class ViewModelFactory @Inject constructor(
         @Suppress("UNCHECKED_CAST")
         return creator.get() as T
     }
+}
+
+@Module
+abstract class ViewModelFactoryModule{
+
+    @Binds
+    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+
 }

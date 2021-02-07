@@ -1,6 +1,7 @@
 package com.moose.foodies.util
 
-import com.google.gson.GsonBuilder
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import retrofit2.HttpException
 import java.io.IOException
 import java.net.SocketTimeoutException
@@ -13,7 +14,8 @@ object ExceptionParser {
         return when (e){
             is HttpException -> {
                 val body = e.response()!!.errorBody()!!.string()
-                return GsonBuilder().create().fromJson(body, ApiError::class.java).message
+                val error: ApiError = Json.decodeFromString(body)
+                return error.message
             }
             is SocketTimeoutException -> "Connection timed out"
             is IOException -> "A network error occurred"

@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import com.google.android.material.snackbar.Snackbar
-import com.google.gson.Gson
 import com.moose.foodies.R
 import com.moose.foodies.features.recipe.RecipeActivity
 import com.moose.foodies.models.Recipe
@@ -39,10 +38,8 @@ class FavoritesActivity : AppCompatActivity() {
         favoritesViewModel.response.observe(this, Observer { it ->
             favorites = it as ArrayList<Recipe>
             rv.layoutManager = LinearLayoutManager(this)
-            rv.adapter = FavoritesAdapter(favorites) {recipe ->
-                push<RecipeActivity>{
-                    it.putExtra("recipe", Gson().toJson(recipe))
-                }
+            rv.adapter = FavoritesAdapter(favorites) {
+                push<RecipeActivity>()
             }
         })
 

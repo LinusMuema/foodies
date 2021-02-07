@@ -24,7 +24,7 @@ class HomeRepositoryImpl @Inject constructor(
 
     override fun getRemoteData(): Single<HomeData> = api.getRecipes()
 
-    override fun getLocalData(): Flowable<List<HomeData>> = dao.getAllRecipes()
+    override fun getLocalData(): Flowable<List<HomeData>> = dao.getHomeData()
 
-    override fun updateLocalData(data: HomeData): Completable = dao.insertRecipes(data)
+    override fun updateLocalData(data: HomeData): Completable = dao.updateHomeData(data)
 }

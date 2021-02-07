@@ -34,7 +34,7 @@ interface ApiEndpoints {
     fun getRecipeById(@Path("id") id: String): Single<FridgeRecipe>
 
     @POST("/api/recipes/favorites")
-    fun backupRecipes(@Body favorites: Recipes): Observable<AuthResponse>
+    fun backupRecipes(@Body favorites: HomeData): Observable<AuthResponse>
 
     @GET("/api/recipes/favorites")
     fun getBackedUpRecipes(): Single<List<Recipe>>

@@ -1,4 +1,4 @@
-package com.moose.foodies.features.fridge
+package com.moose.foodies.features.ingredients
 
 import android.os.Bundle
 import android.widget.TextView
@@ -6,12 +6,9 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.chip.Chip
-import com.google.gson.Gson
 import com.moose.foodies.R
 import com.moose.foodies.features.recipe.RecipeActivity
 import com.moose.foodies.models.FridgeSearch
-import com.moose.foodies.models.Info
-import com.moose.foodies.models.Recipe
 import com.moose.foodies.models.RecipeSuggestion
 import com.moose.foodies.util.*
 import dagger.android.AndroidInjection
@@ -19,12 +16,12 @@ import kotlinx.android.synthetic.main.activity_fridge.*
 import kotlinx.android.synthetic.main.ingredients_search_item.view.*
 import javax.inject.Inject
 
-class FridgeActivity : AppCompatActivity() {
+class IngredientsActivity : AppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val fridgeViewModel by viewModels<FridgeViewModel> { viewModelFactory }
+    private val fridgeViewModel by viewModels<IngredientsViewModel> { viewModelFactory }
 
     private var ingredients = mutableListOf<String>()
 
@@ -43,7 +40,7 @@ class FridgeActivity : AppCompatActivity() {
             fridge_recycler.show()
             fridge_recycler.apply {
                 setHasFixedSize(true)
-                adapter = FridgeRecipeAdapter(it.recipes, this@FridgeActivity){recipe, position ->
+                adapter = IngredientsAdapter(it.recipes, this@IngredientsActivity){ recipe, position ->
                     currentRecipe = recipe
                     currentPosition = position
                     fridgeViewModel.getRecipeById(recipe.id.toString())
@@ -60,13 +57,7 @@ class FridgeActivity : AppCompatActivity() {
             holder.itemView.btn_prepare.show()
             holder.itemView.prepare_loading.hide()
 
-            push<RecipeActivity>{
-                it.putExtra("recipe", Gson().toJson(Recipe(
-                    currentRecipe.id,
-                    Info(currentRecipe.id, currentRecipe.image, "jpg", currentRecipe.title),
-                    instructions.instructions
-                )))
-            }
+            push<RecipeActivity>()
         })
 
         ingredients_input.setOnEditorActionListener { v, _, _ ->

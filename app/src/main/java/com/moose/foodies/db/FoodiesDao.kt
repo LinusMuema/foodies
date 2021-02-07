@@ -1,12 +1,11 @@
 package com.moose.foodies.db
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 import com.moose.foodies.features.home.HomeData
-import com.moose.foodies.models.Recipe
+import com.moose.foodies.features.home.Recipe
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Observable
@@ -15,7 +14,7 @@ import io.reactivex.Single
 @Dao
 interface FoodiesDao{
     @Query("SELECT * FROM recipes")
-    fun getAllRecipes(): Flowable<List<HomeData>>
+    fun getHomeData(): Flowable<List<HomeData>>
 
     @Query("SELECT * FROM favorites")
     fun getFavorites(): Observable<List<Recipe>>
@@ -24,10 +23,10 @@ interface FoodiesDao{
     fun getFavoritesCount(): Single<Int>
 
     @Query("SELECT * FROM favorites WHERE id LIKE :id LIMIT 1")
-    fun getOneFavorite(id: Int): Single<Recipe>
+    fun getFavoriteById(id: Int): Single<Recipe>
 
     @Insert(onConflict = REPLACE)
-    fun insertRecipes(data: HomeData): Completable
+    fun updateHomeData(data: HomeData): Completable
 
     @Insert(onConflict = REPLACE)
     fun insertFavorite(recipe: Recipe): Completable
@@ -38,6 +37,6 @@ interface FoodiesDao{
     @Query("DELETE FROM recipes")
     fun deleteRecipes(): Completable
 
-    @Delete
-    fun deleteFavorite(recipe: Recipe): Completable
+    @Query("DELETE FROM favorites WHERE id = :id")
+    fun deleteFavorite(id: Int): Completable
 }   

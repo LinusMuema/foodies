@@ -18,7 +18,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup">
 
-        <activity android:name=".features.fridge.FridgeActivity" />
+        <activity android:name=".features.ingredients.IngredientsActivity" />
         <activity android:name=".features.search.SearchActivity" />
         <activity android:name=".features.favorites.FavoritesActivity" />
         <activity android:name=".features.recipe.RecipeActivity" />

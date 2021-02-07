@@ -23,11 +23,5 @@ class FavoritesViewModel @Inject constructor(): BaseViewModel() {
     }
 
     fun removeFavorite(recipe: Recipe){
-        composite.add(
-            dbRepository.deleteFavorite(recipe)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.computation())
-                .subscribe()
-        )
     }
 }

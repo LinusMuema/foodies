@@ -10,9 +10,7 @@ import com.moose.foodies.FoodiesApplication
 import com.moose.foodies.backup.FavoritesBackupWorker
 import com.moose.foodies.db.DbRepository
 import com.moose.foodies.network.ApiRepository
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 open class BaseViewModel @Inject constructor(): ViewModel() {
@@ -34,21 +32,5 @@ open class BaseViewModel @Inject constructor(): ViewModel() {
 
     fun startBackup() {
         workManager.enqueue(work)
-    }
-
-    fun getBackup() {
-        composite.add(
-            apiRepository.getBackedUpRecipes()
-                .subscribe(
-                    { it ->
-                        dbRepository.insertFavorites(it)
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribeOn(Schedulers.computation())
-                            .subscribe(
-                                {exception.value = "Retrieved backed up favorites"},
-                                {exception.value = it.message})
-                    },
-                    {exception.value = it.message})
-        )
     }
 }

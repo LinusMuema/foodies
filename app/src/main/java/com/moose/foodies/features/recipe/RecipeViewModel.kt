@@ -28,12 +28,6 @@ class RecipeViewModel @Inject constructor(): BaseViewModel() {
     }
 
     fun removeFavorite(recipe: Recipe){
-        composite.add(
-            dbRepository.deleteFavorite(recipe)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.computation())
-                .subscribe()
-        )
     }
 
     fun addFavorite(recipe: Recipe){
@@ -51,17 +45,6 @@ class RecipeViewModel @Inject constructor(): BaseViewModel() {
     }
 
     private fun insertFavorite(recipe: Recipe) {
-        composite.add(
-            dbRepository.insertFavorite(recipe)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.computation())
-                .subscribe(
-                    {
-                        isFavorite.value = true
-                        exception.value = "Added recipe to favorites"
-                    },
-                    {exception.value = it.message})
-        )
     }
 
     override fun onCleared() {

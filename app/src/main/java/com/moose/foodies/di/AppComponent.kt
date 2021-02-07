@@ -3,11 +3,13 @@ package com.moose.foodies.di
 import android.content.Context
 import com.moose.foodies.FoodiesApplication
 import com.moose.foodies.db.DatabaseModules
-import com.moose.foodies.di.modules.ActivitiesModule
-import com.moose.foodies.di.modules.FragmentsModule
-import com.moose.foodies.di.modules.ViewModelModules
-import com.moose.foodies.di.modules.WorkerModules
+import com.moose.foodies.di.factory.ViewModelFactoryModule
 import com.moose.foodies.features.auth.AuthModule
+import com.moose.foodies.features.favorites.FavoritesModule
+import com.moose.foodies.features.home.HomeModule
+import com.moose.foodies.features.ingredients.IngredientsModule
+import com.moose.foodies.features.recipe.RecipeModule
+import com.moose.foodies.features.search.SearchModule
 import com.moose.foodies.network.ApiModules
 import dagger.BindsInstance
 import dagger.Component
@@ -16,14 +18,17 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [
-    AndroidInjectionModule::class,
+    ApiModules::class,
     AuthModule::class,
-    ActivitiesModule::class,
-    FragmentsModule::class,
+    HomeModule::class,
+    RecipeModule::class,
+    SearchModule::class,
+    FavoritesModule::class,
     DatabaseModules::class,
-    ViewModelModules::class,
-    WorkerModules::class,
-    ApiModules::class])
+    IngredientsModule::class,
+    ViewModelFactoryModule::class,
+    AndroidInjectionModule::class,
+])
 interface AppComponent{
 
     fun inject(app: FoodiesApplication)

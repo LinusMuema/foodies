@@ -1,43 +1,46 @@
 package com.moose.foodies.db
 
 import androidx.room.TypeConverter
-import com.google.gson.Gson
-import com.moose.foodies.models.*
+import com.moose.foodies.features.home.*
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 class Converters {
-    @TypeConverter
-    fun recipeListToJson(recipes: List<Recipe>): String = Gson().toJson(recipes)
 
     @TypeConverter
-    fun recipeListFromJson(json: String): List<Recipe> = Gson().fromJson(json, Array<Recipe>::class.java).toList()
+    fun recipeListToJson(recipes: List<Recipe>): String = Json.encodeToString(recipes)
 
     @TypeConverter
-    fun infoToJson(info: Info): String = Gson().toJson(info)
+    fun recipeListFromJson(json: String): List<Recipe> = Json.decodeFromString(json)
 
     @TypeConverter
-    fun infoFromJson(json: String): Info = Gson().fromJson(json, Info::class.java)
+    fun infoToJson(info: Info): String = Json.encodeToString(info)
 
     @TypeConverter
-    fun instructionToJson(instruction: Instructions): String = Gson().toJson(instruction)
+    fun infoFromJson(json: String): Info = Json.decodeFromString(json)
 
     @TypeConverter
-    fun instructionFromJson(json: String): Instructions = Gson().fromJson(json, Instructions::class.java)
+    fun instructionsToJson(instructions: Instructions): String = Json.encodeToString(instructions)
 
     @TypeConverter
-    fun instructionItemToJson(instructionItem: InstructionItem): String = Gson().toJson(instructionItem)
+    fun instructionsFromJson(json: String): Instructions = Json.decodeFromString(json)
 
     @TypeConverter
-    fun instructionItemFromJson(json: String): InstructionItem = Gson().fromJson(json, InstructionItem::class.java)
+    fun itemToJson(item: Item): String = Json.encodeToString(item)
 
     @TypeConverter
-    fun sectionToJson(section: Section): String = Gson().toJson(section)
+    fun itemFromJson(json: String): Item = Json.decodeFromString(json)
 
     @TypeConverter
-    fun sectionFromJson(json: String): Section = Gson().fromJson(json, Section::class.java)
+    fun sectionToJson(section: Section): String = Json.encodeToString(section)
 
     @TypeConverter
-    fun stepToJson(step: Step): String = Gson().toJson(step)
+    fun sectionFromJson(json: String): Section = Json.decodeFromString(json)
 
     @TypeConverter
-    fun stepFromJson(json: String): Step = Gson().fromJson(json, Step::class.java)
+    fun stepToJson(step: Step): String = Json.encodeToString(step)
+
+    @TypeConverter
+    fun stepFromJson(json: String): Step = Json.decodeFromString(json)
 }
