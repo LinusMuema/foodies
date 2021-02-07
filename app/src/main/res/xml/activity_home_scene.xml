@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/loaded"
+        motion:constraintSetStart="@id/start"
+        motion:duration="500" />
+
+    <Transition
+        motion:constraintSetEnd="@+id/search"
+        motion:constraintSetStart="@id/loaded"
+        motion:duration="500"/>
+
+    <ConstraintSet android:id="@+id/start" />
+
+    <ConstraintSet android:id="@+id/search">
+
+        <Constraint
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toTopOf="parent">
+
+            <CustomAttribute motion:attributeName="radius" motion:customDimension="10dp" />
+            <CustomAttribute motion:attributeName="cardElevation" motion:customDimension="10dp" />
+
+
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/searchBar"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            motion:layout_constraintBottom_toBottomOf="@id/cardView"
+            motion:layout_constraintEnd_toEndOf="@id/cardView"
+            motion:layout_constraintStart_toStartOf="@id/cardView"
+            motion:layout_constraintTop_toTopOf="@id/cardView" />
+
+    </ConstraintSet>
+
+    <ConstraintSet>
+
+        <Constraint
+            android:id="@+id/recipes_loading"
+            android:visibility="invisible"/>
+
+        <Constraint
+            android:id="@+id/joke_loading"
+            android:visibility="invisible"/>
+
+        <Constraint
+            android:id="@+id/trivia_loading"
+            android:visibility="invisible"/>
+
+        <Constraint
+            android:id="@+id/joke"
+            android:visibility="visible"
+            android:layout_width="wrap_content" />
+
+        <Constraint
+            android:id="@+id/trivia"
+            android:visibility="visible"
+            android:layout_width="wrap_content" />
+
+
+        <Constraint
+            android:id="@+id/carousel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="8dp"
+            android:visibility="visible"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toBottomOf="@+id/picks_text" />
+
+    </ConstraintSet>
+
+</MotionScene>

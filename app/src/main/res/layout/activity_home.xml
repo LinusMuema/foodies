@@ -8,32 +8,38 @@
     android:fitsSystemWindows="true"
     tools:context=".features.feature_home.HomeActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layoutDescription="@xml/activity_home_scene">
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            app:cardCornerRadius="50dp"
+            app:cardElevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <com.mancj.materialsearchbar.MaterialSearchBar
-                android:id="@+id/searchBar"
-                style="@style/MaterialSearchBarLight"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:elevation="5dp"
-                app:mt_hint="Search for a recipe"
-                app:mt_maxSuggestionsCount="10" />
-
-        </androidx.cardview.widget.CardView>
+        <com.mancj.materialsearchbar.MaterialSearchBar
+            android:id="@+id/searchBar"
+            style="@style/MaterialSearchBarLight"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            app:layout_constraintBottom_toBottomOf="@id/cardView"
+            app:layout_constraintEnd_toEndOf="@id/cardView"
+            app:layout_constraintStart_toStartOf="@id/cardView"
+            app:layout_constraintTop_toTopOf="@id/cardView"
+            app:mt_hint="Search for a recipe"
+            app:mt_maxSuggestionsCount="10" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/picks_text"
@@ -90,7 +96,7 @@
             android:background="@drawable/round_relative"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipes_loading">
+            app:layout_constraintTop_toBottomOf="@+id/carousel">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ingredients_icon"
@@ -150,7 +156,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/joke_text" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/joke"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -158,6 +164,7 @@
             android:layout_marginTop="16dp"
             android:fontFamily="@font/regular"
             android:textColor="@color/dark_text"
+            android:text="@string/joke_sample"
             android:textSize="15sp"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
@@ -212,7 +219,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/trivia_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -226,22 +233,24 @@
             app:layout_constraintTop_toBottomOf="@+id/favorites_btn" />
 
         <ProgressBar
+            android:id="@+id/trivia_loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:indeterminate="true"
-            android:id="@+id/trivia_loading"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/trivia_text" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/trivia"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/regular"
+            android:text="@string/trivia_test"
+            android:visibility="invisible"
             android:textColor="@color/dark_text"
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -250,6 +259,6 @@
             app:layout_constraintTop_toBottomOf="@+id/trivia_text" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 
 </androidx.core.widget.NestedScrollView>
