@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.moose.foodies.db.DbRepository
-import com.moose.foodies.features.home.HomeData
+import com.moose.foodies.features.feature_home.HomeData
 import com.moose.foodies.network.ApiRepository
 import dagger.android.HasAndroidInjector
 import javax.inject.Inject

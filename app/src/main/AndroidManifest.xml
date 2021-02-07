@@ -18,15 +18,15 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup">
 
-        <activity android:name=".features.ingredients.IngredientsActivity" />
-        <activity android:name=".features.search.SearchActivity" />
-        <activity android:name=".features.favorites.FavoritesActivity" />
-        <activity android:name=".features.recipe.RecipeActivity" />
+        <activity android:name=".features.feature_ingredients.IngredientsActivity" />
+        <activity android:name=".features.feature_search.SearchActivity" />
+        <activity android:name=".features.feature_favorites.FavoritesActivity" />
+        <activity android:name=".features.feature_recipe.RecipeActivity" />
         <activity android:name=".features.reset.ResetPasswordActivity" />
-        <activity android:name=".features.auth.AuthActivity" />
-        <activity android:name=".features.home.HomeActivity" />
+        <activity android:name=".features.feature_auth.AuthActivity" />
+        <activity android:name=".features.feature_home.HomeActivity" />
         <activity android:name=".features.intolerances.IntolerancesActivity" />
-        <activity android:name=".features.splash.SplashActivity">
+        <activity android:name=".features.feature_splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

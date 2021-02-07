@@ -1,8 +1,8 @@
 package com.moose.foodies.network
 
-import com.moose.foodies.features.auth.Credential
-import com.moose.foodies.features.auth.TokenResponse
-import com.moose.foodies.features.home.HomeData
+import com.moose.foodies.features.feature_auth.Credential
+import com.moose.foodies.features.feature_auth.TokenResponse
+import com.moose.foodies.features.feature_home.HomeData
 import com.moose.foodies.models.*
 import io.reactivex.Observable
 import io.reactivex.Single

@@ -1,6 +1,6 @@
 package com.moose.foodies.network
 
-import com.moose.foodies.features.home.HomeData
+import com.moose.foodies.features.feature_home.HomeData
 import com.moose.foodies.models.Intolerances
 import javax.inject.Inject
 import javax.inject.Singleton

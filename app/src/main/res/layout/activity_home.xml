@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".features.home.HomeActivity">
+    tools:context=".features.feature_home.HomeActivity">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/home_swipe"
@@ -16,7 +16,7 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".features.home.HomeActivity">
+            tools:context=".features.feature_home.HomeActivity">
 
             <LinearLayout
                 android:layout_width="match_parent"

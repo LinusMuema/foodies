@@ -1,6 +1,6 @@
 package com.moose.foodies.db
 
-import com.moose.foodies.features.home.Recipe
+import com.moose.foodies.features.feature_home.Recipe
 import javax.inject.Inject
 import javax.inject.Singleton
 

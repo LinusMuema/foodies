@@ -4,8 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
-import com.moose.foodies.features.home.HomeData
-import com.moose.foodies.features.home.Recipe
+import com.moose.foodies.features.feature_home.HomeData
+import com.moose.foodies.features.feature_home.Recipe
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Observable

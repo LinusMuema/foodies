@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:id="@+id/favorites_layout"
     android:layout_marginTop="30dp"
-    tools:context=".features.favorites.FavoritesActivity">
+    tools:context=".features.feature_favorites.FavoritesActivity">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

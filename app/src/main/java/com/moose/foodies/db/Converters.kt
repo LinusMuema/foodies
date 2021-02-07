@@ -1,7 +1,7 @@
 package com.moose.foodies.db
 
 import androidx.room.TypeConverter
-import com.moose.foodies.features.home.*
+import com.moose.foodies.features.feature_home.*
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
