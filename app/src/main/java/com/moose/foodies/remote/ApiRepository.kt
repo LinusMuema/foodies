@@ -1,4 +1,4 @@
-package com.moose.foodies.network
+package com.moose.foodies.remote
 
 import com.moose.foodies.features.feature_home.HomeData
 import com.moose.foodies.models.Intolerances

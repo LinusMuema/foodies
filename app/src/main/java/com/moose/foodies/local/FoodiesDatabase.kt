@@ -1,4 +1,4 @@
-package com.moose.foodies.db
+package com.moose.foodies.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

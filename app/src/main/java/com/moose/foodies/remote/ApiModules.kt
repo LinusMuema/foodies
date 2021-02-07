@@ -1,4 +1,4 @@
-package com.moose.foodies.network
+package com.moose.foodies.remote
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module

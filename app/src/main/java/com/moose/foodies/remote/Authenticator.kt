@@ -1,4 +1,4 @@
-package com.moose.foodies.network
+package com.moose.foodies.remote
 
 import android.util.Log
 import com.moose.foodies.FoodiesApplication

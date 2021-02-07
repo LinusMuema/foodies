@@ -1,4 +1,4 @@
-package com.moose.foodies.db
+package com.moose.foodies.local
 
 import androidx.room.TypeConverter
 import com.moose.foodies.features.feature_home.*

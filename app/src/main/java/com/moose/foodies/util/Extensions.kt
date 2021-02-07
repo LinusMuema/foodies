@@ -10,8 +10,6 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
@@ -34,10 +32,6 @@ fun View.setHeight(height: Int){
 fun ViewGroup.setHeight(height: Int){
     this.requestLayout()
     this.layoutParams.height = height
-}
-
-fun SwipeRefreshLayout.stopRefreshing() {
-    this.isRefreshing = false
 }
 
 fun Activity.hideBottomBar(){
@@ -67,17 +61,9 @@ fun Fragment.hideKeyboard(): Boolean {
         .hideSoftInputFromWindow((activity?.currentFocus ?: View(context)).windowToken, 0)
 }
 
-fun getProgressDrawable(context: Context): CircularProgressDrawable {
-    return CircularProgressDrawable(context).apply {
-        strokeWidth = 5f
-        centerRadius = 25f
-        start()
-    }
-}
 
 fun ImageView.loadRoundImage(uri: String){
     val options = RequestOptions()
-        .placeholder(getProgressDrawable(this.context))
         .circleCrop()
         .error(R.drawable.image_error)
 
@@ -88,7 +74,6 @@ fun showSnackbar(view: View, message: String) = Snackbar.make(view, message, Sna
 
 fun ImageView.loadCarouselImage(uri: String){
     val options = RequestOptions()
-        .placeholder(getProgressDrawable(this.context))
         .transform(RoundedCorners(25))
         .error(R.drawable.image_error)
 
@@ -102,7 +87,7 @@ fun Context.showToast(message: String?){
 fun ImageView.loadDrawable(drawable: Int) = Glide.with(this.context).load(ContextCompat.getDrawable(this.context, drawable)).into(this)
 
 fun ImageView.loadImage(uri: String) {
-    val options = RequestOptions().placeholder(getProgressDrawable(this.context)).error(R.drawable.image_error)
+    val options = RequestOptions().error(R.drawable.image_error)
     Glide.with(this.context).setDefaultRequestOptions(options).load(uri).into(this)
 }
 

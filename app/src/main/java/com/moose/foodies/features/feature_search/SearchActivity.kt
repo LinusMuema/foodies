@@ -35,14 +35,6 @@ class SearchActivity : AppCompatActivity(), HasAndroidInjector {
         val title = resources.getString(R.string.search_query, query)
         search_title.text = title
 
-        search_layout.setOnRefreshListener {
-            searchViewModel.searchRecipe(query)
-        }
-
-        searchViewModel.loadState.observe(this, {
-            search_layout.isRefreshing = it
-        })
-
         view_pager.adapter = SearchViewpagerAdapter(this)
         TabLayoutMediator(tabs, view_pager){tab, position ->
             tab.text = titles[position]

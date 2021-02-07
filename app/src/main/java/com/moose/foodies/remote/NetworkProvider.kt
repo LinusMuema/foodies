@@ -1,4 +1,4 @@
-package com.moose.foodies.network
+package com.moose.foodies.remote
 
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient

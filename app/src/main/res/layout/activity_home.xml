@@ -1,245 +1,255 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/home_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".features.feature_home.HomeActivity">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/home_swipe"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.core.widget.NestedScrollView
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".features.feature_home.HomeActivity">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
+            <com.mancj.materialsearchbar.MaterialSearchBar
+                android:id="@+id/searchBar"
+                style="@style/MaterialSearchBarLight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="50dp"
-                android:orientation="vertical">
+                android:layout_margin="5dp"
+                android:elevation="5dp"
+                app:mt_hint="Search for a recipe"
+                app:mt_maxSuggestionsCount="10" />
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp">
+        </androidx.cardview.widget.CardView>
 
-                    <com.mancj.materialsearchbar.MaterialSearchBar
-                        style="@style/MaterialSearchBarLight"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:elevation="5dp"
-                        android:id="@+id/searchBar"
-                        app:mt_hint="Search for a recipe"
-                        app:mt_maxSuggestionsCount="10"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/picks_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/regular"
+            android:text="@string/todays_picks"
+            android:textColor="@color/primary"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
-                </androidx.cardview.widget.CardView>
+        <ProgressBar
+            android:id="@+id/recipes_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:indeterminate="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/picks_text" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/todays_picks"
-                        android:fontFamily="@font/regular"
-                        android:textColor="@color/primary"
-                        android:textSize="20sp"
-                        android:layout_margin="5dp"/>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/recipes_loading">
-
-                    <ProgressBar
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:indeterminate="true"/>
-
-                </RelativeLayout>
-
-                    <com.jama.carouselview.CarouselView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/carousel"
-                        app:enableSnapping="true"
-                        app:scaleOnScroll="true"
-                        app:carouselOffset="center"
-                        app:indicatorAnimationType="slide"
-                        app:indicatorRadius="5"
-                        app:indicatorPadding="5"
-                        app:indicatorSelectedColor="@color/accent"
-                        app:spacing="10"
-                        app:resource="@layout/carousel_item"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/round_relative"
-                        android:id="@+id/fridge_btn"
-                        android:padding="5dp"
-                        android:layout_marginTop="50dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginStart="10dp">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="75dp"
-                            android:layout_height="75dp"
-                            android:layout_margin="5dp"
-                            android:src="@drawable/fridge"/>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
-                            android:orientation="vertical">
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="20sp"
-                                android:textColor="@color/primary"
-                                android:fontFamily="@font/bold"
-                                android:text="@string/fridge"/>
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/fridge_instructions"/>
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/todays_joke"
-                        android:fontFamily="@font/regular"
-                        android:textColor="@color/primary"
-                        android:textSize="20sp"
-                        android:layout_marginTop="50dp"
-                        android:padding="5dp"/>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/jokes_loading">
-
-                    <ProgressBar
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:indeterminate="true"/>
-
-                </RelativeLayout>
+        <com.jama.carouselview.CarouselView
+            android:id="@+id/carousel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="8dp"
+            android:visibility="invisible"
+            app:carouselOffset="center"
+            app:enableSnapping="true"
+            app:indicatorAnimationType="slide"
+            app:indicatorPadding="5"
+            app:indicatorRadius="5"
+            app:indicatorSelectedColor="@color/accent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/picks_text"
+            app:resource="@layout/carousel_item"
+            app:scaleOnScroll="true"
+            app:spacing="10" />
 
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/joke"
-                    android:fontFamily="@font/regular"
-                    android:textColor="@color/dark_text"
-                    android:textSize="15sp"
-                    android:layout_margin="10dp"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ingredients_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/round_relative"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recipes_loading">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/round_relative"
-                    android:id="@+id/favorites_btn"
-                    android:padding="5dp"
-                    android:layout_marginTop="50dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ingredients_icon"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/fridge"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
-                        android:layout_margin="5dp"
-                        android:src="@drawable/favorites"/>
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/ingredients_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/bold"
+                android:text="@string/fridge"
+                android:textColor="@color/primary"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/ingredients_icon"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:orientation="vertical">
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/fridge_instructions"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ingredients_icon"
+                app:layout_constraintTop_toBottomOf="@+id/ingredients_title" />
 
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="20sp"
-                            android:textColor="@color/primary"
-                            android:fontFamily="@font/bold"
-                            android:text="@string/favorites_home"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/favorites_instructions"/>
-                    </LinearLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/joke_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/regular"
+            android:text="@string/todays_joke"
+            android:textColor="@color/primary"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ingredients_btn" />
 
-                </LinearLayout>
+        <ProgressBar
+            android:id="@+id/joke_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="32dp"
+            android:indeterminate="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/joke_text" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/joke"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/regular"
+            android:textColor="@color/dark_text"
+            android:textSize="15sp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/joke_text" />
 
 
-                <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/todays_trivia"
-                        android:fontFamily="@font/regular"
-                        android:textColor="@color/primary"
-                        android:textSize="20sp"
-                        android:layout_marginTop="50dp"
-                        android:padding="5dp"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/favorites_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/round_relative"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/joke_loading">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/trivia_loading">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/favorites_icon"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/favorites"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                    <ProgressBar
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:indeterminate="true"/>
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/favorites_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/bold"
+                android:text="@string/favorites_home"
+                android:textColor="@color/primary"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/favorites_icon"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                </RelativeLayout>
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/favorites_instructions"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/favorites_icon"
+                app:layout_constraintTop_toBottomOf="@+id/favorites_title" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/trivia"
-                    android:fontFamily="@font/regular"
-                    android:textColor="@color/dark_text"
-                    android:textSize="15sp"
-                    android:layout_margin="10dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/premium_card"
-                    android:layout_margin="5dp"
-                    app:cardElevation="0dp"
-                    app:cardCornerRadius="10dp">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/trivia_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/regular"
+            android:text="@string/todays_trivia"
+            android:textColor="@color/primary"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/favorites_btn" />
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/rounded_user_image"
-                        android:src="@drawable/premium"
-                        android:scaleType="fitXY"/>
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:indeterminate="true"
+            android:id="@+id/trivia_loading"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/trivia_text" />
 
-                </androidx.cardview.widget.CardView>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/trivia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/regular"
+            android:textColor="@color/dark_text"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/trivia_text" />
 
-            </LinearLayout>
 
-        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-</RelativeLayout>
+</androidx.core.widget.NestedScrollView>

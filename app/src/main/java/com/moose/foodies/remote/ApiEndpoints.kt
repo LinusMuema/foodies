@@ -1,4 +1,4 @@
-package com.moose.foodies.network
+package com.moose.foodies.remote
 
 import com.moose.foodies.features.feature_auth.Credential
 import com.moose.foodies.features.feature_auth.TokenResponse

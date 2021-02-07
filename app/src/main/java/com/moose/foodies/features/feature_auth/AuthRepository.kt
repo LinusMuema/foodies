@@ -1,6 +1,6 @@
 package com.moose.foodies.features.feature_auth
 
-import com.moose.foodies.network.ApiEndpoints
+import com.moose.foodies.remote.ApiEndpoints
 import io.reactivex.Single
 import javax.inject.Inject
 

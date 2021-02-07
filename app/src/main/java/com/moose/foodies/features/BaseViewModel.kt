@@ -8,8 +8,8 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.moose.foodies.FoodiesApplication
 import com.moose.foodies.backup.FavoritesBackupWorker
-import com.moose.foodies.db.DbRepository
-import com.moose.foodies.network.ApiRepository
+import com.moose.foodies.local.DbRepository
+import com.moose.foodies.remote.ApiRepository
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 

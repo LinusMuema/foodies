@@ -34,14 +34,8 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        val height = HeightCalculator.getImageHeight(this)
-
-        recipes_loading.setHeight(height)
-        jokes_loading.setHeight(height)
-        trivia_loading.setHeight(height)
-
         favorites_btn.setOnClickListener { push<FavoritesActivity>() }
-        fridge_btn.setOnClickListener {push<IngredientsActivity>()}
+        ingredients_btn.setOnClickListener {push<IngredientsActivity>()}
 
         //Search bar section
         recentSearches = PreferenceHelper.getRecentSearches(this)!!.split(",").toHashSet()
