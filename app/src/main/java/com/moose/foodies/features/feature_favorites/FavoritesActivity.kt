@@ -1,22 +1,14 @@
 package com.moose.foodies.features.feature_favorites
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.work.WorkInfo
-import androidx.work.WorkManager
 import com.google.android.material.snackbar.Snackbar
 import com.moose.foodies.R
-import com.moose.foodies.features.feature_recipe.RecipeActivity
 import com.moose.foodies.models.Recipe
 import com.moose.foodies.util.ActivityHelper
 import com.moose.foodies.util.PreferenceHelper
-import com.moose.foodies.util.push
-import com.moose.foodies.util.showSnackbar
 import com.tsuryo.swipeablerv.SwipeLeftRightCallback
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_favorites.*
@@ -34,29 +26,6 @@ class FavoritesActivity : AppCompatActivity() {
         ActivityHelper.initialize(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorites)
-
-        favoritesViewModel.response.observe(this, Observer { it ->
-            favorites = it as ArrayList<Recipe>
-            rv.layoutManager = LinearLayoutManager(this)
-            rv.adapter = FavoritesAdapter(favorites) {
-                push<RecipeActivity>()
-            }
-        })
-
-        favoritesViewModel.exception.observe(this, {
-            showSnackbar(favorites_layout, it)
-        })
-
-        WorkManager.getInstance(this).getWorkInfoByIdLiveData(favoritesViewModel.work.id).observe(
-            this,
-            {
-                when (it.state) {
-                    WorkInfo.State.SUCCEEDED -> {
-                        PreferenceHelper.setBackupStatus(this, false)
-                    }
-                    else -> Log.e("Backup", "onCreate: Backup status => ${it.state}")
-                }
-            })
 
         rv.setListener( object : SwipeLeftRightCallback.Listener {
             override fun onSwipedRight(position: Int) { return }
@@ -89,7 +58,6 @@ class FavoritesActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        if (PreferenceHelper.getBackupStatus(this))  favoritesViewModel.startBackup()
     }
 }
 

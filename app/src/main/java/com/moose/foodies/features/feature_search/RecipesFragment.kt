@@ -12,7 +12,6 @@ import com.moose.foodies.R
 import com.moose.foodies.util.hide
 import com.moose.foodies.util.hideBottomBar
 import com.moose.foodies.util.show
-import com.moose.foodies.util.showSnackbar
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.error_404.*
 import kotlinx.android.synthetic.main.fragment_recipes.*
@@ -40,11 +39,6 @@ class RecipesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        searchViewModel.exception.observe(viewLifecycleOwner, {
-            searchViewModel.loadState.value = false
-            showSnackbar(fragment_recipes, it)
-        })
 
         searchViewModel.recipes.observe(viewLifecycleOwner, {
             searchViewModel.loadState.value = false

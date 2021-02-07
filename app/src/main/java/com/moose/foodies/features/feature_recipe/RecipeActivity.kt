@@ -32,10 +32,6 @@ class RecipeActivity : AppCompatActivity() {
         img_food.setHeight(HeightCalculator.getImageHeight(this))
         img_food.loadImage("")
 
-        recipeViewModel.exception.observe(this, {
-            showSnackbar(recipe_layout, it)
-        })
-
         recipeViewModel.isFavorite.observe(this, {
             isFavorite = it
             invalidateOptionsMenu()

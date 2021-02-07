@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.chip.Chip
 import com.moose.foodies.R
 import com.moose.foodies.features.feature_recipe.RecipeActivity
-import com.moose.foodies.models.FridgeSearch
 import com.moose.foodies.models.RecipeSuggestion
 import com.moose.foodies.util.*
 import dagger.android.AndroidInjection
@@ -33,24 +32,6 @@ class IngredientsActivity : AppCompatActivity() {
         ActivityHelper.initialize(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fridge)
-
-        fridgeViewModel.response.observe(this, {
-            it as FridgeSearch
-            fridge_loading.hide()
-            fridge_recycler.show()
-            fridge_recycler.apply {
-                setHasFixedSize(true)
-                adapter = IngredientsAdapter(it.recipes, this@IngredientsActivity){ recipe, position ->
-                    currentRecipe = recipe
-                    currentPosition = position
-                    fridgeViewModel.getRecipeById(recipe.id.toString())
-                }
-            }
-        })
-
-        fridgeViewModel.exception.observe(this, {
-            showSnackbar(fridge_layout, it)
-        })
 
         fridgeViewModel.instructions.observe(this, { instructions ->
             val holder = fridge_recycler.findViewHolderForAdapterPosition(currentPosition)!!

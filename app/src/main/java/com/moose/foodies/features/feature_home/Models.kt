@@ -5,8 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "Recipes")
 data class HomeData(
-    @PrimaryKey (autoGenerate = true)
-    val id: Int,
+    @PrimaryKey
+    val id: Int = 1,
     val joke: String,
     val recipes: List<Recipe>,
     val trivia: String
