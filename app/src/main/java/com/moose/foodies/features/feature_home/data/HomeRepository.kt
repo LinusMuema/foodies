@@ -1,4 +1,4 @@
-package com.moose.foodies.features.feature_home
+package com.moose.foodies.features.feature_home.data
 
 import com.moose.foodies.features.feature_home.domain.HomeData
 import com.moose.foodies.local.FoodiesDao
