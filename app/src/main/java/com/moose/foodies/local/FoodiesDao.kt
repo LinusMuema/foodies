@@ -4,8 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
-import com.moose.foodies.features.feature_home.HomeData
-import com.moose.foodies.features.feature_home.Recipe
+import com.moose.foodies.features.feature_home.domain.HomeData
+import com.moose.foodies.features.feature_home.domain.Recipe
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Observable
@@ -22,8 +22,8 @@ interface FoodiesDao{
     @Query("SELECT COUNT(*) FROM favorites")
     fun getFavoritesCount(): Single<Int>
 
-    @Query("SELECT * FROM favorites WHERE id LIKE :id LIMIT 1")
-    fun getFavoriteById(id: Int): Single<Recipe>
+    @Query("SELECT * FROM favorites WHERE id LIKE :id")
+    fun getFavoriteById(id: Int): Single<List<Recipe>>
 
     @Insert(onConflict = REPLACE)
     fun updateHomeData(data: HomeData): Completable

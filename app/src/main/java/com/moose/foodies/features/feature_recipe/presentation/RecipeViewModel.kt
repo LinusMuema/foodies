@@ -1,0 +1,87 @@
+package com.moose.foodies.features.feature_recipe.presentation
+
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.moose.foodies.features.feature_home.domain.Recipe
+import com.moose.foodies.features.feature_recipe.data.RecipeRepository
+import com.moose.foodies.models.Result
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
+
+class RecipeViewModel @Inject constructor(private val repository: RecipeRepository): ViewModel() {
+
+    private val composite = CompositeDisposable()
+
+    private val _favorite = MutableLiveData<Result<Boolean>>()
+    val isFavorite: LiveData<Result<Boolean>> = _favorite
+
+    private val _recipe = MutableLiveData<Result<Recipe>>()
+    val recipe: LiveData<Result<Recipe>> = _recipe
+
+    fun getRecipe(id: Int){
+        checkFavorite(id)
+        composite.add(
+            repository.getLocalRecipes(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { _recipe.postValue(Result.Success(it)) },
+                    {
+                        if (it.message!!.contains("no element")) getRemoteRecipe(id)
+                        else _recipe.postValue(Result.Error(it.message))
+                    }
+                )
+        )
+    }
+
+    private fun getRemoteRecipe(id: Int){
+        composite.add(
+            repository.getRemoteRecipe(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {_recipe.postValue(Result.Success(it))},
+                    {_recipe.postValue(Result.Error(it.message))}
+                )
+        )
+    }
+
+    private fun checkFavorite(id: Int){
+        composite.add(
+            repository.checkFavorite(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {_favorite.postValue(Result.Success(it))},
+                    {_favorite.postValue(Result.Error(it.message))}
+                )
+        )
+    }
+
+    fun removeFavorite(id: Int){
+        composite.add(
+            repository.deleteFavorite(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe()
+        )
+    }
+
+    fun addFavorite(recipe: Recipe){
+        composite.add(
+            repository.addFavorite(recipe)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe()
+        )
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        composite.dispose()
+    }
+
+}

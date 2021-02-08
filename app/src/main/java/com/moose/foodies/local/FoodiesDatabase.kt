@@ -3,8 +3,8 @@ package com.moose.foodies.local
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.moose.foodies.features.feature_home.HomeData
-import com.moose.foodies.features.feature_home.Recipe
+import com.moose.foodies.features.feature_home.domain.HomeData
+import com.moose.foodies.features.feature_home.domain.Recipe
 
 @Database(entities = [HomeData::class, Recipe::class], version = 2, exportSchema = false)
 @TypeConverters(Converters::class)

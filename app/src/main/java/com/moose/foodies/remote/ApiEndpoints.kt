@@ -2,7 +2,8 @@ package com.moose.foodies.remote
 
 import com.moose.foodies.features.feature_auth.Credential
 import com.moose.foodies.features.feature_auth.TokenResponse
-import com.moose.foodies.features.feature_home.HomeData
+import com.moose.foodies.features.feature_home.domain.HomeData
+import com.moose.foodies.features.feature_home.domain.Recipe
 import com.moose.foodies.models.*
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -30,8 +31,8 @@ interface ApiEndpoints {
     @GET("/api/recipes/search/ingredients/{ingredients}")
     fun searchFridgeRecipes(@Path("ingredients") ingredients: String): Single<FridgeSearch>
 
-    @GET("/api/recipes/one/{id}")
-    fun getRecipeById(@Path("id") id: String): Single<FridgeRecipe>
+    @GET("/api/recipes/{id}")
+    fun getRecipeById(@Path("id") id: Int): Single<Recipe>
 
     @POST("/api/recipes/favorites")
     fun backupRecipes(@Body favorites: HomeData): Observable<AuthResponse>

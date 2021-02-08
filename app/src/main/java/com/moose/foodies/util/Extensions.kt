@@ -15,6 +15,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.snackbar.Snackbar
 import com.moose.foodies.R
+import com.moose.foodies.features.feature_home.domain.Item
 
 fun View.fadeIn() = this.startAnimation(AnimationUtils.loadAnimation(this.context, R.anim.fade_in))
 
@@ -24,7 +25,9 @@ fun View.show() { this.visibility = View.VISIBLE }
 
 fun View.hide() { this.visibility = View.GONE }
 
-fun String.formatUrl() = this.replace("312x231", "636x393")
+fun String.formatUrl(): String = this.replace("312x231", "636x393")
+
+fun List<Item>.clean(): List<Item> = this.toSet().toList()
 
 fun View.setImageHeight(){
     val height = HeightCalculator.getImageHeight(this.context)

@@ -10,8 +10,9 @@ import com.mancj.materialsearchbar.MaterialSearchBar
 import com.moose.foodies.R
 import com.moose.foodies.databinding.ActivityHomeBinding
 import com.moose.foodies.features.feature_favorites.FavoritesActivity
-import com.moose.foodies.features.feature_home.HomeData
+import com.moose.foodies.features.feature_home.domain.HomeData
 import com.moose.foodies.features.feature_ingredients.IngredientsActivity
+import com.moose.foodies.features.feature_recipe.presentation.RecipeActivity
 import com.moose.foodies.features.feature_search.SearchActivity
 import com.moose.foodies.models.onError
 import com.moose.foodies.models.onSuccess
@@ -71,6 +72,9 @@ class HomeActivity : AppCompatActivity() {
                     view.recipeName.text = recipe.info.title
                     view.recipeImage.load(url){
                         transformations(RoundedCornersTransformation(topLeft = 10f, topRight = 10f))
+                    }
+                    view.setOnClickListener {
+                        push<RecipeActivity> { it.putExtra("recipeId", recipe.id) }
                     }
                 }
                 show()

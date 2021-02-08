@@ -1,9 +1,9 @@
 package com.moose.foodies.local
 
 import androidx.room.TypeConverter
-import com.moose.foodies.features.feature_home.Info
-import com.moose.foodies.features.feature_home.Instructions
-import com.moose.foodies.features.feature_home.Recipe
+import com.moose.foodies.features.feature_home.domain.Info
+import com.moose.foodies.features.feature_home.domain.Instructions
+import com.moose.foodies.features.feature_home.domain.Recipe
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json

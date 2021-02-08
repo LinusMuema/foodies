@@ -1,5 +1,6 @@
 package com.moose.foodies.features.feature_home
 
+import com.moose.foodies.features.feature_home.domain.HomeData
 import com.moose.foodies.local.FoodiesDao
 import com.moose.foodies.remote.ApiEndpoints
 import io.reactivex.Completable

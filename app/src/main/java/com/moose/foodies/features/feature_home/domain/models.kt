@@ -1,4 +1,4 @@
-package com.moose.foodies.features.feature_home
+package com.moose.foodies.features.feature_home.domain
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 
 @Entity(tableName = "Recipes")
 @Serializable
-data class HomeData(
+data class HomeData(    
     @PrimaryKey
     val id: Int = 1,
     val joke: String,

@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.chip.Chip
 import com.moose.foodies.R
-import com.moose.foodies.features.feature_recipe.RecipeActivity
+import com.moose.foodies.features.feature_recipe.presentation.RecipeActivity
 import com.moose.foodies.models.RecipeSuggestion
 import com.moose.foodies.util.*
 import dagger.android.AndroidInjection
