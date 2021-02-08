@@ -1,5 +1,6 @@
 package com.moose.foodies.features.feature_recipe.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
@@ -32,12 +33,13 @@ class RecipeActivity : AppCompatActivity() {
         AndroidInjection.inject(this)
         ActivityHelper.initialize(this)
 
-        binding = ActivityRecipeBinding.inflate(layoutInflater)
-        binding.recipeImage.setImageHeight()
-
+        // Get id passed via intent
         var id: Int = intent.getIntExtra("recipeId", 0)
         if (id == 0)
             id = intent.data!!.getQueryParameter("id")!!.toInt()
+
+        binding = ActivityRecipeBinding.inflate(layoutInflater)
+        binding.recipeImage.setImageHeight()
 
         // Get the recipe
         viewModel.getRecipe(id)
@@ -47,6 +49,7 @@ class RecipeActivity : AppCompatActivity() {
                 val url = it.info.image.formatUrl()
                 binding.recipeImage.load(url)
                 updateRecyclerViews(it.instructions)
+                enableShare(it.id, it.info.title)
             }
             result.onError { Log.e("Foodies", "onCreate: $it") }
         })
@@ -60,6 +63,18 @@ class RecipeActivity : AppCompatActivity() {
         })
 
         setContentView(binding.root)
+    }
+
+    private fun enableShare(id: Int, title: String) {
+        val message = getString(R.string.share_recipe, title, id)
+        binding.share.setOnClickListener {
+            val intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, message)
+                type = "text/plain"
+            }
+            startActivity(Intent.createChooser(intent, "Share this recipe via:"))
+        }
     }
 
     private fun updateRecyclerViews(instructions: Instructions) {
