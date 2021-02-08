@@ -1,4 +1,4 @@
-package com.moose.foodies.features.feature_auth
+package com.moose.foodies.features.feature_auth.presentation
 
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.moose.foodies.R
 import com.moose.foodies.databinding.ActivityAuthBinding
-import com.moose.foodies.features.feature_home.HomeActivity
+import com.moose.foodies.features.feature_home.presentation.HomeActivity
 import com.moose.foodies.models.onError
 import com.moose.foodies.models.onSuccess
 import com.moose.foodies.util.ActivityHelper

@@ -1,8 +1,11 @@
-package com.moose.foodies.features.feature_auth
+package com.moose.foodies.features.feature_auth.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.moose.foodies.features.feature_auth.AuthRepository
+import com.moose.foodies.features.feature_auth.Credential
+import com.moose.foodies.features.feature_auth.TokenResponse
 import com.moose.foodies.models.Result
 import com.moose.foodies.util.ExceptionParser
 import io.reactivex.android.schedulers.AndroidSchedulers

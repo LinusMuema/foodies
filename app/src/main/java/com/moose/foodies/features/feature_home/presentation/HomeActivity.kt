@@ -1,4 +1,4 @@
-package com.moose.foodies.features.feature_home
+package com.moose.foodies.features.feature_home.presentation
 
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -10,6 +10,7 @@ import com.mancj.materialsearchbar.MaterialSearchBar
 import com.moose.foodies.R
 import com.moose.foodies.databinding.ActivityHomeBinding
 import com.moose.foodies.features.feature_favorites.FavoritesActivity
+import com.moose.foodies.features.feature_home.HomeData
 import com.moose.foodies.features.feature_ingredients.IngredientsActivity
 import com.moose.foodies.features.feature_search.SearchActivity
 import com.moose.foodies.models.onError

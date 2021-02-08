@@ -5,8 +5,8 @@ import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.moose.foodies.databinding.ActivitySplashBinding
-import com.moose.foodies.features.feature_auth.AuthActivity
-import com.moose.foodies.features.feature_home.HomeActivity
+import com.moose.foodies.features.feature_auth.presentation.AuthActivity
+import com.moose.foodies.features.feature_home.presentation.HomeActivity
 import com.moose.foodies.util.*
 
 class SplashActivity : AppCompatActivity() {

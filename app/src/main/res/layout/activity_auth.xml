@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".features.feature_auth.AuthActivity">
+    tools:context=".features.feature_auth.presentation.AuthActivity">
 
 
     <androidx.appcompat.widget.AppCompatImageView

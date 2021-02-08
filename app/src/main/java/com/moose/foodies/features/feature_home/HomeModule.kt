@@ -3,6 +3,8 @@ package com.moose.foodies.features.feature_home
 import androidx.lifecycle.ViewModel
 import com.moose.foodies.di.ActivityScope
 import com.moose.foodies.di.ViewModelKey
+import com.moose.foodies.features.feature_home.presentation.HomeActivity
+import com.moose.foodies.features.feature_home.presentation.HomeViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector

@@ -23,8 +23,8 @@
         <activity android:name=".features.feature_favorites.FavoritesActivity" />
         <activity android:name=".features.feature_recipe.RecipeActivity" />
         <activity android:name=".features.reset.ResetPasswordActivity" />
-        <activity android:name=".features.feature_auth.AuthActivity" />
-        <activity android:name=".features.feature_home.HomeActivity" />
+        <activity android:name=".features.feature_auth.presentation.AuthActivity" />
+        <activity android:name=".features.feature_home.presentation.HomeActivity" />
         <activity android:name=".features.intolerances.IntolerancesActivity" />
         <activity android:name=".features.feature_splash.SplashActivity">
             <intent-filter>
