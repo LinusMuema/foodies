@@ -21,18 +21,33 @@ class RecipeViewModel @Inject constructor(private val repository: RecipeReposito
     private val _recipe = MutableLiveData<Result<Recipe>>()
     val recipe: LiveData<Result<Recipe>> = _recipe
 
+
     fun getRecipe(id: Int){
-        checkFavorite(id)
+        composite.add(
+            repository.checkFavorite(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        _recipe.postValue(Result.Success(it))
+                        _favorite.postValue(Result.Success(true))
+                    },
+                    {
+                        checkLocalRecipes(id)
+                        _favorite.postValue(Result.Success(false))
+                    }
+                )
+        )
+    }
+
+    private fun checkLocalRecipes(id: Int){
         composite.add(
             repository.getLocalRecipes(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { _recipe.postValue(Result.Success(it)) },
-                    {
-                        if (it.message!!.contains("no element")) getRemoteRecipe(id)
-                        else _recipe.postValue(Result.Error(it.message))
-                    }
+                    { getRemoteRecipe(id) }
                 )
         )
     }
@@ -45,18 +60,6 @@ class RecipeViewModel @Inject constructor(private val repository: RecipeReposito
                 .subscribe(
                     {_recipe.postValue(Result.Success(it))},
                     {_recipe.postValue(Result.Error(it.message))}
-                )
-        )
-    }
-
-    private fun checkFavorite(id: Int){
-        composite.add(
-            repository.checkFavorite(id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    {_favorite.postValue(Result.Success(it))},
-                    {_favorite.postValue(Result.Error(it.message))}
                 )
         )
     }

@@ -9,7 +9,7 @@ import coil.transform.RoundedCornersTransformation
 import com.mancj.materialsearchbar.MaterialSearchBar
 import com.moose.foodies.R
 import com.moose.foodies.databinding.ActivityHomeBinding
-import com.moose.foodies.features.feature_favorites.FavoritesActivity
+import com.moose.foodies.features.feature_favorites.presentation.FavoritesActivity
 import com.moose.foodies.features.feature_home.domain.HomeData
 import com.moose.foodies.features.feature_ingredients.IngredientsActivity
 import com.moose.foodies.features.feature_recipe.presentation.RecipeActivity

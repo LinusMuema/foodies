@@ -20,7 +20,7 @@
 
         <activity android:name=".features.feature_ingredients.IngredientsActivity" />
         <activity android:name=".features.feature_search.presentation.SearchActivity" />
-        <activity android:name=".features.feature_favorites.FavoritesActivity" />
+        <activity android:name=".features.feature_favorites.presentation.FavoritesActivity" />
         <activity android:name=".features.feature_recipe.presentation.RecipeActivity">
 
             <intent-filter android:label="@string/app_name">

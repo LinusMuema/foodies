@@ -8,7 +8,6 @@ import com.moose.foodies.features.feature_home.domain.HomeData
 import com.moose.foodies.features.feature_home.domain.Recipe
 import io.reactivex.Completable
 import io.reactivex.Flowable
-import io.reactivex.Observable
 import io.reactivex.Single
 
 @Dao
@@ -17,13 +16,13 @@ interface FoodiesDao{
     fun getHomeData(): Flowable<HomeData>
 
     @Query("SELECT * FROM favorites")
-    fun getFavorites(): Observable<List<Recipe>>
+    fun getFavorites(): Flowable<List<Recipe>>
 
     @Query("SELECT COUNT(*) FROM favorites")
     fun getFavoritesCount(): Single<Int>
 
     @Query("SELECT * FROM favorites WHERE id LIKE :id")
-    fun getFavoriteById(id: Int): Single<List<Recipe>>
+    fun getFavoriteById(id: Int): Single<Recipe>
 
     @Insert(onConflict = REPLACE)
     fun updateHomeData(data: HomeData): Completable

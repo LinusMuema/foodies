@@ -1,57 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/favorites_layout"
-    android:layout_marginTop="30dp"
-    tools:context=".features.feature_favorites.FavoritesActivity">
+    android:fitsSystemWindows="true"
+    tools:context=".features.feature_favorites.presentation.FavoritesActivity">
 
-    <androidx.core.widget.NestedScrollView
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/back"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/ic_back"
+        app:layout_constraintBottom_toBottomOf="@+id/materialTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/materialTextView" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/materialTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/bold"
+        android:text="@string/favorites"
+        android:textColor="@color/dark_text"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/back"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.tsuryo.swipeablerv.SwipeableRecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialTextView"
+        app:rightBgColor="@color/primary"
+        app:rightImage="@drawable/ic_delete"
+        app:textColor="@color/dark_text"
+        app:textSize="20sp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/favorites_back"
-                    android:background="@drawable/ic_arrow_back"
-                    android:layout_margin="10dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/favorites"
-                    android:textColor="@color/dark_text"
-                    android:layout_margin="10dp"
-                    android:fontFamily="@font/bold"
-                    android:textSize="20sp"/>
 
-            </LinearLayout>
+<!--<LinearLayout-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:gravity="center">-->
 
-            <com.tsuryo.swipeablerv.SwipeableRecyclerView
-                android:id="@+id/rv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:rightBgColor="@color/primary"
-                app:rightImage="@drawable/ic_delete"
-                app:textColor="@color/dark_text"
-                app:textSize="20sp" />
-
-        </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <!--</LinearLayout>-->

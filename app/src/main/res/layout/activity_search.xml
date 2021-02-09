@@ -11,10 +11,10 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:background="@drawable/ic_back"
+        app:layout_constraintBottom_toBottomOf="@+id/searchQuery"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/searchQuery" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/searchQuery"

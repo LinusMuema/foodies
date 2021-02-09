@@ -35,15 +35,11 @@ class RecipeActivity : AppCompatActivity() {
         ActivityHelper.initialize(this)
 
         // Get id passed via intent
-        var id: Int = intent.getIntExtra("recipeId", 0)
-        if (id == 0)
-            id = intent.data!!.getQueryParameter("id")!!.toInt()
+        val id = getRecipeId()
+        viewModel.getRecipe(id)
 
         binding = ActivityRecipeBinding.inflate(layoutInflater)
         binding.recipeImage.setImageHeight()
-
-        // Get the recipe
-        viewModel.getRecipe(id)
 
         viewModel.recipe.observe(this, { result ->
             result.onSuccess { recipe ->
@@ -66,10 +62,22 @@ class RecipeActivity : AppCompatActivity() {
                 if (it) binding.favoriteIcon.load(R.drawable.ic_favorite)
                 else binding.favoriteIcon.load(R.drawable.ic_favorite_outline)
             }
-            result.onError { Log.e(this.localClassName, "onCreate: $it") }
+            result.onError { Log.e("Foodies", "onCreate: $it") }
         })
 
         setContentView(binding.root)
+    }
+
+    private fun getRecipeId(): Int {
+        val fromHome = intent.getIntExtra("recipeId", 0)
+        val fromFavorites = intent.getIntExtra("favoriteId", 0)
+        val fromUri = intent.data!!.getQueryParameter("id")!!.toInt()
+
+        return when {
+            fromHome == 0 && fromFavorites == 0 -> fromUri
+            fromFavorites != 0 && fromHome == 0 -> fromFavorites
+            else -> fromHome
+        }
     }
 
     private fun enableShare(id: Int, title: String) {

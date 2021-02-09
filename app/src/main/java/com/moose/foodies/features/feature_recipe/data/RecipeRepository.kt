@@ -14,7 +14,7 @@ interface RecipeRepository {
 
     fun getRemoteRecipe(id: Int): Single<Recipe>
 
-    fun checkFavorite(id: Int): Single<Boolean>
+    fun checkFavorite(id: Int): Single<Recipe>
 
     fun addFavorite(recipe: Recipe): Completable
 
@@ -30,7 +30,7 @@ class RecipeRepositoryImpl @Inject constructor(
 
     override fun getRemoteRecipe(id: Int): Single<Recipe> = api.getRecipeById(id)
 
-    override fun checkFavorite(id: Int): Single<Boolean> = dao.getFavoriteById(id).toPresentation()
+    override fun checkFavorite(id: Int): Single<Recipe> = dao.getFavoriteById(id)
 
     override fun addFavorite(recipe: Recipe): Completable = dao.insertFavorite(recipe)
 

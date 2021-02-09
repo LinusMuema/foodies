@@ -3,7 +3,6 @@ package com.moose.foodies.backup
 import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.moose.foodies.features.feature_home.domain.HomeData
 import com.moose.foodies.local.DbRepository
 import com.moose.foodies.remote.ApiRepository
 import dagger.android.HasAndroidInjector
@@ -26,11 +25,6 @@ class FavoritesBackupWorker(context: Context, params: WorkerParameters): Worker(
     @Inject lateinit var dbRepository: DbRepository
 
     override fun doWork(): Result {
-        return dbRepository.getFavorites()
-            .flatMap { apiRepository.backupFavorites(HomeData(0, "", it, "")) }
-            .map {
-            if (it.token == "success") Result.success()
-            else Result.failure()
-        }.blockingFirst()
+        return Result.success()
     }
 }

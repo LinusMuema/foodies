@@ -4,6 +4,10 @@ import androidx.lifecycle.ViewModel
 import com.moose.foodies.backup.FavoritesBackupWorker
 import com.moose.foodies.di.ActivityScope
 import com.moose.foodies.di.ViewModelKey
+import com.moose.foodies.features.feature_favorites.data.FavoritesRepository
+import com.moose.foodies.features.feature_favorites.data.FavoritesRepositoryImpl
+import com.moose.foodies.features.feature_favorites.presentation.FavoritesActivity
+import com.moose.foodies.features.feature_favorites.presentation.FavoritesViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -20,6 +24,9 @@ abstract class FavoritesModule {
     @IntoMap
     @ViewModelKey(FavoritesViewModel::class)
     abstract fun bindFavoritesViewModel(favoritesViewModel: FavoritesViewModel): ViewModel
+
+    @Binds
+    abstract fun bindFavoritesRepository(impl: FavoritesRepositoryImpl): FavoritesRepository
 
     @ContributesAndroidInjector
     abstract fun provideFavoritesBackupWorker(): FavoritesBackupWorker
