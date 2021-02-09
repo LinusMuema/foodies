@@ -55,9 +55,5 @@ class FavoritesActivity : AppCompatActivity() {
         favorites_back.setOnClickListener { onBackPressed() }
         favoritesViewModel.getFavorites()
     }
-
-    override fun onPause() {
-        super.onPause()
-    }
 }
 

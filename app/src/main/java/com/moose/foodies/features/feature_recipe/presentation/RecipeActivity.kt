@@ -27,6 +27,7 @@ class RecipeActivity : AppCompatActivity() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var binding: ActivityRecipeBinding
     private val viewModel by viewModels<RecipeViewModel> { viewModelFactory }
+    private var isFavorite = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,18 +46,24 @@ class RecipeActivity : AppCompatActivity() {
         viewModel.getRecipe(id)
 
         viewModel.recipe.observe(this, { result ->
-            result.onSuccess {
-                val url = it.info.image.formatUrl()
+            result.onSuccess { recipe ->
+                val url = recipe.info.image.formatUrl()
                 binding.recipeImage.load(url)
-                updateRecyclerViews(it.instructions)
-                enableShare(it.id, it.info.title)
+                updateRecyclerViews(recipe.instructions)
+                enableShare(recipe.id, recipe.info.title)
+
+                binding.favorite.setOnClickListener {
+                    if (isFavorite) viewModel.removeFavorite(recipe.id)
+                    else viewModel.addFavorite(recipe)
+                }
             }
             result.onError { Log.e(this.localClassName, "onCreate: $it") }
         })
 
         viewModel.isFavorite.observe(this, { result ->
-            result.onSuccess { isFavorite ->
-                if (isFavorite) binding.favoriteIcon.load(R.drawable.ic_favorite)
+            result.onSuccess {
+                isFavorite = it
+                if (it) binding.favoriteIcon.load(R.drawable.ic_favorite)
                 else binding.favoriteIcon.load(R.drawable.ic_favorite_outline)
             }
             result.onError { Log.e(this.localClassName, "onCreate: $it") }

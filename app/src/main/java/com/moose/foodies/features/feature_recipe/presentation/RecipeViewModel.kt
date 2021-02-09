@@ -66,7 +66,7 @@ class RecipeViewModel @Inject constructor(private val repository: RecipeReposito
             repository.deleteFavorite(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe()
+                .subscribe { _favorite.postValue(Result.Success(false)) }
         )
     }
 
@@ -75,7 +75,7 @@ class RecipeViewModel @Inject constructor(private val repository: RecipeReposito
             repository.addFavorite(recipe)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe()
+                .subscribe { _favorite.postValue(Result.Success(true)) }
         )
     }
 
