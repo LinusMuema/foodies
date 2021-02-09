@@ -12,12 +12,7 @@ import com.moose.foodies.databinding.ActivityRecipeBinding
 import com.moose.foodies.features.feature_home.domain.Instructions
 import com.moose.foodies.features.feature_recipe.adapters.ItemListAdapter
 import com.moose.foodies.features.feature_recipe.adapters.ProcedureListAdapter
-import com.moose.foodies.util.onError
-import com.moose.foodies.util.onSuccess
-import com.moose.foodies.util.ActivityHelper
-import com.moose.foodies.util.clean
-import com.moose.foodies.util.formatUrl
-import com.moose.foodies.util.setImageHeight
+import com.moose.foodies.util.*
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
@@ -69,15 +64,9 @@ class RecipeActivity : AppCompatActivity() {
     }
 
     private fun getRecipeId(): Int {
-        val fromHome = intent.getIntExtra("recipeId", 0)
-        val fromFavorites = intent.getIntExtra("favoriteId", 0)
+        val fromActivity = intent.getIntExtra("recipeId", 0)
         val fromUri = intent.data?.getQueryParameter("id")?.toInt()
-
-        return when {
-            fromHome == 0 && fromFavorites == 0 -> fromUri!!
-            fromFavorites != 0 && fromHome == 0 -> fromFavorites
-            else -> fromHome
-        }
+        return if(fromActivity == 0) fromUri!! else fromActivity
     }
 
     private fun enableShare(id: Int, title: String) {

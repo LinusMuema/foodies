@@ -9,11 +9,7 @@ import com.moose.foodies.databinding.ActivityFavoritesBinding
 import com.moose.foodies.features.feature_favorites.adapters.FavoritesAdapter
 import com.moose.foodies.features.feature_home.domain.Recipe
 import com.moose.foodies.features.feature_recipe.presentation.RecipeActivity
-import com.moose.foodies.util.onError
-import com.moose.foodies.util.onSuccess
-import com.moose.foodies.util.ActivityHelper
-import com.moose.foodies.util.PreferenceHelper
-import com.moose.foodies.util.push
+import com.moose.foodies.util.*
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
@@ -42,7 +38,7 @@ class FavoritesActivity : AppCompatActivity() {
                     favorites,
                     removeFavorite = { removeFavorite(it) },
                     showRecipe = { id ->
-                        push<RecipeActivity> { it.putExtra("favoriteId", id) }
+                        push<RecipeActivity> { it.putExtra("recipeId", id) }
                     }
                 )
 

@@ -24,8 +24,6 @@ class IngredientsActivity : AppCompatActivity() {
         binding = ActivityIngredientsBinding.inflate(layoutInflater)
         binding.back.setOnClickListener { onBackPressed() }
 
-        viewModel.instructions.observe(this, {})
-
         setContentView(binding.root)
     }
 }

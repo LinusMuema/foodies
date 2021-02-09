@@ -8,11 +8,7 @@ data class Recipe(
     val title: String,
     val image: String,
     val missedIngredients: List<MissedIngredient>,
-    val unusedIngredients: List<UnusedIngredient>
 )
 
 @Serializable
-data class MissedIngredient(val amount: Double, val name: String, val unitShort: String)
-
-@Serializable
-data class UnusedIngredient(val amount: Int, val name: String, val unitShort: String)
+data class MissedIngredient(val image: String, val amount: Double, val name: String, val unitShort: String)
