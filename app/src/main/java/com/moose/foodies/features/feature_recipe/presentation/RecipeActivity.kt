@@ -12,8 +12,8 @@ import com.moose.foodies.databinding.ActivityRecipeBinding
 import com.moose.foodies.features.feature_home.domain.Instructions
 import com.moose.foodies.features.feature_recipe.adapters.ItemListAdapter
 import com.moose.foodies.features.feature_recipe.adapters.ProcedureListAdapter
-import com.moose.foodies.models.onError
-import com.moose.foodies.models.onSuccess
+import com.moose.foodies.util.onError
+import com.moose.foodies.util.onSuccess
 import com.moose.foodies.util.ActivityHelper
 import com.moose.foodies.util.clean
 import com.moose.foodies.util.formatUrl

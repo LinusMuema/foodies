@@ -1,4 +1,4 @@
-package com.moose.foodies.models
+package com.moose.foodies.util
 
 sealed class Result <out T>{
     data class Success<out R>(val value: R): Result<R>()

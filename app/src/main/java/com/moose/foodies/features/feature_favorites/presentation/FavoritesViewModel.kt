@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.moose.foodies.features.feature_favorites.data.FavoritesRepository
 import com.moose.foodies.features.feature_home.domain.Recipe
-import com.moose.foodies.models.Result
+import com.moose.foodies.util.Result
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers

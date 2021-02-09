@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.moose.foodies.R
 import com.moose.foodies.databinding.ActivityAuthBinding
 import com.moose.foodies.features.feature_home.presentation.HomeActivity
-import com.moose.foodies.models.onError
-import com.moose.foodies.models.onSuccess
+import com.moose.foodies.util.onError
+import com.moose.foodies.util.onSuccess
 import com.moose.foodies.util.ActivityHelper
 import com.moose.foodies.util.PreferenceHelper
 import com.moose.foodies.util.pop

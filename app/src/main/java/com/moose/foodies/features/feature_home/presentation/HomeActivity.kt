@@ -11,11 +11,11 @@ import com.moose.foodies.R
 import com.moose.foodies.databinding.ActivityHomeBinding
 import com.moose.foodies.features.feature_favorites.presentation.FavoritesActivity
 import com.moose.foodies.features.feature_home.domain.HomeData
-import com.moose.foodies.features.feature_ingredients.IngredientsActivity
+import com.moose.foodies.features.feature_ingredients.presentation.IngredientsActivity
 import com.moose.foodies.features.feature_recipe.presentation.RecipeActivity
 import com.moose.foodies.features.feature_search.presentation.SearchActivity
-import com.moose.foodies.models.onError
-import com.moose.foodies.models.onSuccess
+import com.moose.foodies.util.onError
+import com.moose.foodies.util.onSuccess
 import com.moose.foodies.util.*
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.carousel_item.view.*

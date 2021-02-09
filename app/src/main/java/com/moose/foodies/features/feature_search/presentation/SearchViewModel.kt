@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.moose.foodies.features.feature_search.data.SearchRepository
 import com.moose.foodies.features.feature_search.domain.Recipe
 import com.moose.foodies.features.feature_search.domain.Video
-import com.moose.foodies.models.Result
+import com.moose.foodies.util.Result
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject

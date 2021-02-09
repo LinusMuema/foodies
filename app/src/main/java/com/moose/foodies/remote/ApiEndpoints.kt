@@ -5,13 +5,13 @@ import com.moose.foodies.features.feature_auth.TokenResponse
 import com.moose.foodies.features.feature_home.domain.HomeData
 import com.moose.foodies.features.feature_home.domain.Recipe
 import com.moose.foodies.features.feature_search.domain.SearchResults
-import com.moose.foodies.models.FridgeSearch
 import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
+import com.moose.foodies.features.feature_ingredients.domain.Recipe as IngredientsSearchRecipe
 
 interface ApiEndpoints {
     @POST("/api/auth/register")
@@ -23,9 +23,6 @@ interface ApiEndpoints {
     @GET("/api/recipes/search/{query}")
     fun searchRecipes(@Path("query") name: String): Single<SearchResults>
 
-    @GET("/api/recipes/search/ingredients/{ingredients}")
-    fun searchFridgeRecipes(@Path("ingredients") ingredients: String): Single<FridgeSearch>
-
     @GET("/api/recipes/{id}")
     fun getRecipeById(@Path("id") id: Int): Single<Recipe>
 
@@ -34,4 +31,7 @@ interface ApiEndpoints {
 
     @GET("/api/recipes/favorites")
     fun getBackedUpRecipes(): Single<List<Recipe>>
+
+    @GET("/api/recipes/ingredients/{ingredients}")
+    fun getRecipesByIngredients(@Path("ingredients") ingredients: String): Single<List<IngredientsSearchRecipe>>
 }
