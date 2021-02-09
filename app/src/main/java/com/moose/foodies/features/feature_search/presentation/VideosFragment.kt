@@ -45,7 +45,7 @@ class VideosFragment : Fragment(R.layout.pager_layout) {
 
     private fun updateUi(videos: List<Video>) {
         if (videos.isEmpty()) {
-            binding.errorLayout.message.text = resources.getString(R.string.not_found, "recipes")
+            binding.errorLayout.message.text = resources.getString(R.string.not_found, "videos")
             binding.root.transitionToState(R.id.error)
         }
         else {
