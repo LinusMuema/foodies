@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/loading"
+        motion:constraintSetStart="@id/start"
+        motion:duration="500" />
+
+    <Transition
+        motion:constraintSetEnd="@+id/loaded"
+        motion:constraintSetStart="@id/loading"
+        motion:duration="500" />
+
+    <Transition
+        motion:constraintSetEnd="@+id/form"
+        motion:constraintSetStart="@id/start"
+        motion:duration="500" >
+        <OnClick motion:targetId="@id/add"
+            motion:clickAction="toggle" />
+    </Transition>
+
+    <Transition
+        motion:constraintSetEnd="@+id/form"
+        motion:constraintSetStart="@id/loaded"
+        motion:duration="500" >
+        <OnClick motion:targetId="@id/add"
+            motion:clickAction="toggle" />
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start" />
+
+    <ConstraintSet android:id="@+id/loading">
+
+        <Constraint
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toTopOf="parent" />
+
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/loaded">
+        <Constraint
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:visibility="visible"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toBottomOf="@+id/add" />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/form">
+        <Constraint
+            android:id="@+id/form"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible" />
+    </ConstraintSet>
+</MotionScene>

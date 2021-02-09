@@ -4,7 +4,7 @@
     xmlns:motion="http://schemas.android.com/apk/res-auto">
 
     <Transition
-        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetEnd="@+id/loading"
         motion:constraintSetStart="@id/start"
         motion:duration="500" />
 
@@ -15,7 +15,7 @@
 
     <ConstraintSet android:id="@+id/start" />
 
-    <ConstraintSet android:id="@+id/end">
+    <ConstraintSet android:id="@+id/loading">
 
         <Constraint
             android:id="@+id/loading"

@@ -49,7 +49,7 @@ class RecipesFragment : Fragment(R.layout.pager_layout) {
             binding.root.transitionToState(R.id.error)
         } else {
             Log.d("Foodies", "updateUi: recipes === $recipes")
-            binding.root.transitionToState(R.id.end)
+            binding.root.transitionToState(R.id.loading)
             binding.recyclerView.apply {
                 setHasFixedSize(true)
                 adapter = RecipeResultsAdapter(recipes)

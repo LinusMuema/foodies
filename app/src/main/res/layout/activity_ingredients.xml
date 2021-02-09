@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    app:layoutDescription="@xml/activity_ingredients_scene">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/back"
@@ -43,45 +43,63 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/materialButton2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/round_button"
-        android:elevation="0dp"
-        android:text="@string/add_ingredient"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toStartOf="@+id/guide"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/chip_group" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guide"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/add"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/materialButton"
-        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/round_button"
-        android:elevation="0dp"
-        android:text="@string/search"
-        android:textAllCaps="false"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        app:layout_constraintEnd_toStartOf="@id/search"
+        app:layout_constraintTop_toBottomOf="@+id/chip_group">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_add" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guide"
-        app:layout_constraintTop_toTopOf="@id/chip_group" />
+        app:layout_constraintTop_toBottomOf="@+id/chip_group">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_search" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:visibility="invisible"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add" />
 
     <ProgressBar
-        android:id="@+id/loading"
+        android:id="@+id/progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:indeterminate="true"
@@ -91,13 +109,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <include
+        android:id="@+id/form"
+        layout="@layout/add_ingredient"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-
-
-<!--<androidx.recyclerview.widget.RecyclerView-->
-<!--android:layout_width="match_parent"-->
-<!--android:layout_height="wrap_content"-->
-<!--android:id="@+id/fridge_recycler"-->
-<!--app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>-->
+</androidx.constraintlayout.motion.widget.MotionLayout>

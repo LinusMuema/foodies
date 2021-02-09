@@ -50,7 +50,7 @@ class VideosFragment : Fragment(R.layout.pager_layout) {
         }
         else {
             Log.d("Foodies", "updateUi: videos === $videos")
-            binding.root.transitionToState(R.id.end)
+            binding.root.transitionToState(R.id.loading)
             binding.recyclerView.apply {
                 setHasFixedSize(true)
                 adapter = VideoResultsAdapter(videos)

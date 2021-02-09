@@ -60,7 +60,7 @@ fun Activity.hideAllBars(){
             or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
 }
 
-fun Activity.hideKeyboard(): Boolean {
+fun Activity.hideKeyPad(): Boolean {
     return (getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager)
         .hideSoftInputFromWindow((currentFocus ?: View(this)).windowToken, 0)
 }
