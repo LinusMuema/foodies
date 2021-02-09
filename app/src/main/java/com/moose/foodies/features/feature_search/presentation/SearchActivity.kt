@@ -1,4 +1,4 @@
-package com.moose.foodies.features.feature_search
+package com.moose.foodies.features.feature_search.presentation
 
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -6,12 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayoutMediator
 import com.moose.foodies.R
+import com.moose.foodies.databinding.ActivitySearchBinding
+import com.moose.foodies.features.feature_search.adapters.SearchViewpagerAdapter
 import com.moose.foodies.util.ActivityHelper
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
-import kotlinx.android.synthetic.main.activity_search.*
 import javax.inject.Inject
 
 class SearchActivity : AppCompatActivity(), HasAndroidInjector {
@@ -23,26 +24,34 @@ class SearchActivity : AppCompatActivity(), HasAndroidInjector {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val titles = arrayOf("Recipes", "Videos")
-
-    private val searchViewModel by viewModels<SearchViewModel> { viewModelFactory }
+    private val viewModel by viewModels<SearchViewModel> { viewModelFactory }
+    private lateinit var binding: ActivitySearchBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
         ActivityHelper.initialize(this)
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search)
-        val query = intent.getStringExtra("recipeName")!!
+
+        val query = intent.getStringExtra("query")!!
         val title = resources.getString(R.string.search_query, query)
-        search_title.text = title
 
-        view_pager.adapter = SearchViewpagerAdapter(this)
-        TabLayoutMediator(tabs, view_pager){tab, position ->
-            tab.text = titles[position]
-        }.attach()
+        binding = ActivitySearchBinding.inflate(layoutInflater)
 
-        searchViewModel.searchRecipe(query)
+        with(binding){
+            searchQuery.text = title
+            viewPager.adapter = SearchViewpagerAdapter(this@SearchActivity)
+            back.setOnClickListener { onBackPressed() }
 
-        search_back.setOnClickListener { onBackPressed() }
+            TabLayoutMediator(tabs, viewPager){tab, position ->
+                tab.text = titles[position]
+            }.attach()
+
+            setContentView(root)
+        }
+
+        viewModel.searchRecipe(query)
+
+
     }
 
     override fun androidInjector(): AndroidInjector<Any> = dispatchingAndroidInjector

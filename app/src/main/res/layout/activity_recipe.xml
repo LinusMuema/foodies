@@ -156,7 +156,7 @@
         <include
             android:id="@+id/error_layout"
             android:visibility="gone"
-            layout="@layout/error_404"/>
+            layout="@layout/error_layout"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -51,7 +51,7 @@ class RecipeActivity : AppCompatActivity() {
                 updateRecyclerViews(it.instructions)
                 enableShare(it.id, it.info.title)
             }
-            result.onError { Log.e("Foodies", "onCreate: $it") }
+            result.onError { Log.e(this.localClassName, "onCreate: $it") }
         })
 
         viewModel.isFavorite.observe(this, { result ->
@@ -59,7 +59,7 @@ class RecipeActivity : AppCompatActivity() {
                 if (isFavorite) binding.favoriteIcon.load(R.drawable.ic_favorite)
                 else binding.favoriteIcon.load(R.drawable.ic_favorite_outline)
             }
-            result.onError { Log.e("Foodies", "onCreate: $it") }
+            result.onError { Log.e(this.localClassName, "onCreate: $it") }
         })
 
         setContentView(binding.root)

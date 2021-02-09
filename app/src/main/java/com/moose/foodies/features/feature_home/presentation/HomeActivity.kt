@@ -13,7 +13,7 @@ import com.moose.foodies.features.feature_favorites.FavoritesActivity
 import com.moose.foodies.features.feature_home.domain.HomeData
 import com.moose.foodies.features.feature_ingredients.IngredientsActivity
 import com.moose.foodies.features.feature_recipe.presentation.RecipeActivity
-import com.moose.foodies.features.feature_search.SearchActivity
+import com.moose.foodies.features.feature_search.presentation.SearchActivity
 import com.moose.foodies.models.onError
 import com.moose.foodies.models.onSuccess
 import com.moose.foodies.util.*
@@ -90,7 +90,7 @@ class HomeActivity : AppCompatActivity() {
 
             override fun onSearchConfirmed(text: CharSequence?) {
                 push<SearchActivity> {
-                    it.putExtra("recipeName", text.toString())
+                    it.putExtra("query", text.toString())
                 }
             }
         })
