@@ -11,7 +11,8 @@ import com.moose.foodies.features.feature_home.domain.Recipe
 
 class FavoritesAdapter(
     private val recipes: List<Recipe>,
-    val showRecipe: (id: Int) -> Unit
+    val removeFavorite: (index: Int) -> Unit,
+    val showRecipe: (id: Int) -> Unit,
 ) : Adapter<FavoritesViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesViewHolder {
@@ -23,13 +24,16 @@ class FavoritesAdapter(
         val recipe = recipes[position]
 
         with(holder.binding){
-            val url = recipe.info.image.replace("312x231", "90x90")
-            recipeName.text = recipe.info.title
+            val url = recipe.info.image.replace("312x231", "240x150")
             recipeImage.load(url)
         }
 
-        holder.binding.root.setOnClickListener {
+        holder.binding.imageCard.setOnClickListener {
             showRecipe(recipe.id)
+        }
+
+        holder.binding.delete.setOnClickListener {
+            removeFavorite(position)
         }
     }
 

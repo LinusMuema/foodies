@@ -14,7 +14,6 @@ import com.moose.foodies.models.onSuccess
 import com.moose.foodies.util.ActivityHelper
 import com.moose.foodies.util.PreferenceHelper
 import com.moose.foodies.util.push
-import com.tsuryo.swipeablerv.SwipeLeftRightCallback
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
@@ -36,26 +35,18 @@ class FavoritesActivity : AppCompatActivity() {
         binding = ActivityFavoritesBinding.inflate(layoutInflater)
         binding.back.setOnClickListener { onBackPressed() }
 
-
-        binding.recyclerView.setListener( object : SwipeLeftRightCallback.Listener {
-            override fun onSwipedRight(position: Int) { return }
-
-            override fun onSwipedLeft(position: Int) {
-                val recipe = favorites[position]
-                favorites.remove(recipe)
-                binding.recyclerView.adapter!!.notifyDataSetChanged()
-
-                showOption(position, recipe)
-            }
-        })
-
         viewModel.favorites.observe(this, { result ->
-            result.onSuccess { favorites ->
-                this.favorites = favorites.toMutableList()
+            result.onSuccess { recipes ->
+                favorites = recipes.toMutableList()
+                val favoritesAdapter = FavoritesAdapter(
+                    favorites,
+                    removeFavorite = { removeFavorite(it) },
+                    showRecipe = { id ->
+                        push<RecipeActivity> { it.putExtra("favoriteId", id) }
+                    }
+                )
 
-                binding.recyclerView.adapter = FavoritesAdapter(this.favorites){
-                    push<RecipeActivity> { it.putExtra("favoriteId", it) }
-                }
+                binding.recyclerView.adapter = favoritesAdapter
             }
             result.onError { }
         })
@@ -63,7 +54,11 @@ class FavoritesActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
-    private fun showOption(position: Int, recipe: Recipe) {
+    private fun removeFavorite(position: Int) {
+        val recipe = favorites[position]
+        favorites.remove(recipe)
+        binding.recyclerView.adapter!!.notifyDataSetChanged()
+
         val snackbar = Snackbar.make(binding.root, "Recipe removed from Favorites", Snackbar.LENGTH_SHORT)
 
         snackbar.setAction("Undo") {

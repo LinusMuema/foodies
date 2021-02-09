@@ -71,10 +71,10 @@ class RecipeActivity : AppCompatActivity() {
     private fun getRecipeId(): Int {
         val fromHome = intent.getIntExtra("recipeId", 0)
         val fromFavorites = intent.getIntExtra("favoriteId", 0)
-        val fromUri = intent.data!!.getQueryParameter("id")!!.toInt()
+        val fromUri = intent.data?.getQueryParameter("id")?.toInt()
 
         return when {
-            fromHome == 0 && fromFavorites == 0 -> fromUri
+            fromHome == 0 && fromFavorites == 0 -> fromUri!!
             fromFavorites != 0 && fromHome == 0 -> fromFavorites
             else -> fromHome
         }
