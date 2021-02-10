@@ -9,6 +9,7 @@ import com.moose.foodies.databinding.FavoriteItemBinding
 import com.moose.foodies.features.feature_favorites.adapters.FavoritesAdapter.FavoritesViewHolder
 import com.moose.foodies.features.feature_home.domain.Recipe
 import com.moose.foodies.util.extensions.mediumImage
+import com.moose.foodies.util.extensions.shareRecipe
 
 class FavoritesAdapter(
     private val recipes: List<Recipe>,
@@ -35,6 +36,10 @@ class FavoritesAdapter(
 
         holder.binding.delete.setOnClickListener {
             removeFavorite(position)
+        }
+
+        holder.binding.share.setOnClickListener {
+            it.context.shareRecipe(recipe.info.title, recipe.id)
         }
     }
 

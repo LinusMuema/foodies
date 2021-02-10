@@ -1,6 +1,5 @@
 package com.moose.foodies.features.feature_recipe.presentation
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
@@ -16,6 +15,7 @@ import com.moose.foodies.util.ActivityHelper
 import com.moose.foodies.util.extensions.clean
 import com.moose.foodies.util.extensions.largeImage
 import com.moose.foodies.util.extensions.setImageHeight
+import com.moose.foodies.util.extensions.shareRecipe
 import com.moose.foodies.util.onError
 import com.moose.foodies.util.onSuccess
 import dagger.android.AndroidInjection
@@ -46,7 +46,7 @@ class RecipeActivity : AppCompatActivity() {
                 val url = recipe.info.image.largeImage()
                 binding.recipeImage.load(url)
                 updateRecyclerViews(recipe.instructions)
-                enableShare(recipe.id, recipe.info.title)
+                shareRecipe(recipe.info.title, recipe.id)
 
                 binding.favorite.setOnClickListener {
                     if (isFavorite) viewModel.removeFavorite(recipe.id)
@@ -72,18 +72,6 @@ class RecipeActivity : AppCompatActivity() {
         val fromActivity = intent.getIntExtra("recipeId", 0)
         val fromUri = intent.data?.getQueryParameter("id")?.toInt()
         return if(fromActivity == 0) fromUri!! else fromActivity
-    }
-
-    private fun enableShare(id: Int, title: String) {
-        val message = getString(R.string.share_recipe, title, id)
-        binding.share.setOnClickListener {
-            val intent = Intent().apply {
-                action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, message)
-                type = "text/plain"
-            }
-            startActivity(Intent.createChooser(intent, "Share this recipe via:"))
-        }
     }
 
     private fun updateRecyclerViews(instructions: Instructions) {
