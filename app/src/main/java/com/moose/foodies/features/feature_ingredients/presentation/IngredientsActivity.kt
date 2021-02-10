@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.chip.Chip
 import com.moose.foodies.R
 import com.moose.foodies.databinding.ActivityIngredientsBinding
+import com.moose.foodies.features.feature_ingredients.adapters.IngredientsAdapter
 import com.moose.foodies.util.*
 import dagger.android.AndroidInjection
 import javax.inject.Inject
@@ -43,6 +44,7 @@ class IngredientsActivity : AppCompatActivity() {
 
                 if (ingredient.isNotEmpty()) {
                     hideKeyPad()
+                    hideBottomBar()
                     addIngredient(ingredient.toString())
                     ingredient.clear()
                     root.transitionToState(R.id.loaded)
@@ -55,7 +57,9 @@ class IngredientsActivity : AppCompatActivity() {
 
         viewModel.recipes.observe(this, { result ->
             binding.root.transitionToState(R.id.loaded)
-            result.onSuccess { Log.d("Foodies", "onCreate: $it") }
+            result.onSuccess {
+                binding.recyclerView.adapter = IngredientsAdapter(it)
+            }
             result.onError { Log.e("Foodies", "onCreate: $it") }
         })
 
