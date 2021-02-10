@@ -1,16 +1,14 @@
 package com.moose.foodies.features.feature_ingredients.presentation
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.chip.Chip
 import com.moose.foodies.R
 import com.moose.foodies.databinding.ActivityIngredientsBinding
-import com.moose.foodies.util.ActivityHelper
-import com.moose.foodies.util.hideKeyPad
+import com.moose.foodies.util.*
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
@@ -28,13 +26,15 @@ class IngredientsActivity : AppCompatActivity() {
         ActivityHelper.initialize(this)
 
         binding = ActivityIngredientsBinding.inflate(layoutInflater)
+
         with(binding) {
 
             search.setOnClickListener {
-                root.transitionToState(R.id.loading)
-                Handler(Looper.getMainLooper()).postDelayed({
-                    root.transitionToState(R.id.loaded)
-                }, 5000)
+                if (ingredients.isEmpty()) showToast("Please add ingredients first")
+                else {
+                    root.transitionToState(R.id.loading)
+                    viewModel.getRecipes(ingredients.joinToString(separator = ","))
+                }
             }
             form.root.setOnClickListener { root.transitionToState(R.id.loaded) }
 
@@ -52,6 +52,12 @@ class IngredientsActivity : AppCompatActivity() {
             add.setOnClickListener { root.transitionToState(R.id.form) }
             back.setOnClickListener { onBackPressed() }
         }
+
+        viewModel.recipes.observe(this, { result ->
+            binding.root.transitionToState(R.id.loaded)
+            result.onSuccess { Log.d("Foodies", "onCreate: $it") }
+            result.onError { Log.e("Foodies", "onCreate: $it") }
+        })
 
         setContentView(binding.root)
     }
