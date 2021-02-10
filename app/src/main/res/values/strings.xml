@@ -42,5 +42,5 @@
     <string name="test_recipe">Something with something else</string>
     <string name="add_ingredient">Add Ingredient</string>
     <string name="ingredient_hint">e.g. baking flour</string>
-    <string name="missed_ingredients">Missing Ingredients :</string>
+    <string name="missed_ingredients">What you are missing :</string>
 </resources>
