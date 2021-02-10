@@ -1,8 +1,8 @@
-package com.moose.foodies.util
+package com.moose.foodies.util.extensions
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.widget.Toast
 
 /*
     * Use the reified keyword to ensure that the function receives a Generic type class as a
@@ -19,11 +19,6 @@ internal inline fun <reified T> Context.push(noinline intentExtras: ((Intent) ->
     startActivity(intent)
 }
 
-internal inline fun <reified T> Activity.pop(noinline intentExtras: ((Intent) -> Unit)? = null) {
-    val intent = Intent(this, T::class.java)
-    intentExtras?.run {
-        intentExtras(intent)
-    }
-    startActivity(intent)
-    finish()
+fun Context.showToast(message: String?){
+    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }

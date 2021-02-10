@@ -7,12 +7,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.moose.foodies.R
 import com.moose.foodies.databinding.ActivityAuthBinding
 import com.moose.foodies.features.feature_home.presentation.HomeActivity
-import com.moose.foodies.util.onError
-import com.moose.foodies.util.onSuccess
 import com.moose.foodies.util.ActivityHelper
 import com.moose.foodies.util.PreferenceHelper
-import com.moose.foodies.util.pop
-import com.moose.foodies.util.showToast
+import com.moose.foodies.util.extensions.pop
+import com.moose.foodies.util.extensions.showToast
+import com.moose.foodies.util.onError
+import com.moose.foodies.util.onSuccess
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
@@ -52,9 +52,7 @@ class AuthActivity : AppCompatActivity() {
                 PreferenceHelper.setLogged(this, true)
                 pop<HomeActivity>()
             }
-            result.onError {
-                this.showToast(it)
-            }
+            result.onError { showToast(it) }
         })
     }
 }

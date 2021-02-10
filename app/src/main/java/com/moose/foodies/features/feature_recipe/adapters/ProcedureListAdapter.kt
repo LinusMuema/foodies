@@ -8,7 +8,7 @@ import com.moose.foodies.databinding.ProcedureListItemBinding
 import com.moose.foodies.databinding.ProcedureListItemBinding.inflate
 import com.moose.foodies.features.feature_home.domain.Section
 import com.moose.foodies.features.feature_recipe.adapters.ProcedureListAdapter.ProcedureViewHolder
-import com.moose.foodies.util.hide
+import com.moose.foodies.util.extensions.hide
 
 class ProcedureListAdapter(private val sections: List<Section>): Adapter<ProcedureViewHolder>() {
 

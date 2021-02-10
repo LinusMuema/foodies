@@ -10,8 +10,8 @@ import com.moose.foodies.databinding.IngredientsSearchItemBinding.inflate
 import com.moose.foodies.features.feature_ingredients.adapters.IngredientsAdapter.RecipeViewHolder
 import com.moose.foodies.features.feature_ingredients.domain.Recipe
 import com.moose.foodies.features.feature_recipe.presentation.RecipeActivity
-import com.moose.foodies.util.formatUrl
-import com.moose.foodies.util.push
+import com.moose.foodies.util.extensions.largeImage
+import com.moose.foodies.util.extensions.push
 
 class IngredientsAdapter(private val recipes: List<Recipe>): Adapter<RecipeViewHolder>() {
 
@@ -22,7 +22,7 @@ class IngredientsAdapter(private val recipes: List<Recipe>): Adapter<RecipeViewH
 
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
         val recipe = recipes[position]
-        val url = recipe.image.formatUrl()
+        val url = recipe.image.largeImage()
         val context = holder.binding.root.context
 
         with(holder.binding){

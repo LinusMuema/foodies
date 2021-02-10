@@ -18,24 +18,17 @@ object PreferenceHelper {
         return PreferenceManager.getDefaultSharedPreferences(context)
     }
 
-
     fun getAccessToken(context: Context) = defaultPrefs(context).getString(tokenKey, "")
 
     fun getLoggedStatus(context: Context) = defaultPrefs(context).getBoolean(loggedKey, false)
 
     fun getDeviceWidth(context: Context) = defaultPrefs(context).getFloat(widthKey, 360f)
 
-    fun getRecentSearches(context: Context) = defaultPrefs(context).getString(searchesKey, "")
-
-    fun getBackupStatus(context: Context) = defaultPrefs(context).getBoolean(favoritesBackupKey, false)
-
     fun setAccessToken(context: Context, token: String) = defaultPrefs(context).set(tokenKey, token)
 
     fun setLogged(context: Context, logged: Boolean) = defaultPrefs(context).set(loggedKey, logged)
 
     fun setDeviceWidth(context: Context, width: Float) = defaultPrefs(context).set(widthKey, width)
-
-    fun setRecentSearches(context: Context, searches: String) = defaultPrefs(context).set(searchesKey, searches)
 
     fun setBackupStatus(context: Context, status: Boolean) = defaultPrefs(context).set(favoritesBackupKey, status)
 

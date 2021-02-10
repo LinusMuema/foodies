@@ -10,7 +10,7 @@ import coil.load
 import com.moose.foodies.databinding.RecipeResultItemBinding
 import com.moose.foodies.features.feature_search.adapters.RecipeResultsAdapter.RecipeViewHolder
 import com.moose.foodies.features.feature_search.domain.Recipe
-import com.moose.foodies.util.setImageHeight
+import com.moose.foodies.util.extensions.setImageHeight
 import kotlinx.android.synthetic.main.recipe_result_details.view.*
 
 

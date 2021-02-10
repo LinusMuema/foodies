@@ -2,6 +2,7 @@ package com.moose.foodies.util
 
 import android.app.Activity
 import android.content.pm.ActivityInfo
+import com.moose.foodies.util.extensions.hideBottomBar
 
 
 object ActivityHelper {

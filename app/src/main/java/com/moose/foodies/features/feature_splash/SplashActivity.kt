@@ -7,7 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.moose.foodies.databinding.ActivitySplashBinding
 import com.moose.foodies.features.feature_auth.presentation.AuthActivity
 import com.moose.foodies.features.feature_home.presentation.HomeActivity
-import com.moose.foodies.util.*
+import com.moose.foodies.util.PreferenceHelper
+import com.moose.foodies.util.extensions.fadeIn
+import com.moose.foodies.util.extensions.hideAllBars
+import com.moose.foodies.util.extensions.pop
+import com.moose.foodies.util.extensions.slideUp
 
 class SplashActivity : AppCompatActivity() {
 

@@ -8,6 +8,7 @@ import coil.load
 import com.moose.foodies.databinding.FavoriteItemBinding
 import com.moose.foodies.features.feature_favorites.adapters.FavoritesAdapter.FavoritesViewHolder
 import com.moose.foodies.features.feature_home.domain.Recipe
+import com.moose.foodies.util.extensions.mediumImage
 
 class FavoritesAdapter(
     private val recipes: List<Recipe>,
@@ -24,7 +25,7 @@ class FavoritesAdapter(
         val recipe = recipes[position]
 
         with(holder.binding){
-            val url = recipe.info.image.replace("312x231", "240x150")
+            val url = recipe.info.image.mediumImage()
             recipeImage.load(url)
         }
 

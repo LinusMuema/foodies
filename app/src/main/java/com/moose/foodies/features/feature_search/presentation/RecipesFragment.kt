@@ -10,9 +10,9 @@ import com.moose.foodies.R
 import com.moose.foodies.databinding.PagerLayoutBinding
 import com.moose.foodies.features.feature_search.adapters.RecipeResultsAdapter
 import com.moose.foodies.features.feature_search.domain.Recipe
+import com.moose.foodies.util.extensions.hideBottomBar
 import com.moose.foodies.util.onError
 import com.moose.foodies.util.onSuccess
-import com.moose.foodies.util.hideBottomBar
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 

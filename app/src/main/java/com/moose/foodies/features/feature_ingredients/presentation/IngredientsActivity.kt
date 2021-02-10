@@ -9,7 +9,12 @@ import com.google.android.material.chip.Chip
 import com.moose.foodies.R
 import com.moose.foodies.databinding.ActivityIngredientsBinding
 import com.moose.foodies.features.feature_ingredients.adapters.IngredientsAdapter
-import com.moose.foodies.util.*
+import com.moose.foodies.util.ActivityHelper
+import com.moose.foodies.util.extensions.hideBottomBar
+import com.moose.foodies.util.extensions.hideKeyPad
+import com.moose.foodies.util.extensions.showToast
+import com.moose.foodies.util.onError
+import com.moose.foodies.util.onSuccess
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 

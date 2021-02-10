@@ -14,9 +14,10 @@ import com.moose.foodies.features.feature_home.domain.HomeData
 import com.moose.foodies.features.feature_ingredients.presentation.IngredientsActivity
 import com.moose.foodies.features.feature_recipe.presentation.RecipeActivity
 import com.moose.foodies.features.feature_search.presentation.SearchActivity
+import com.moose.foodies.util.ActivityHelper
+import com.moose.foodies.util.extensions.*
 import com.moose.foodies.util.onError
 import com.moose.foodies.util.onSuccess
-import com.moose.foodies.util.*
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.carousel_item.view.*
 import javax.inject.Inject
@@ -66,7 +67,7 @@ class HomeActivity : AppCompatActivity() {
                 size = data.recipes.size
                 setCarouselViewListener { view, position ->
                     val recipe = data.recipes[position]
-                    val url: String = recipe.info.image.formatUrl()
+                    val url: String = recipe.info.image.largeImage()
 
                     view.item.setImageHeight()
                     view.recipeName.text = recipe.info.title

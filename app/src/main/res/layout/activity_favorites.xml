@@ -45,21 +45,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialTextView"
-        tools:listitem="@layout/favorite_item"
-        app:rightBgColor="@color/primary"
-        app:rightImage="@drawable/ic_delete"
         app:spanCount="2"
-        app:textColor="@color/dark_text"
-        app:textSize="20sp" />
-
-
+        tools:listitem="@layout/favorite_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-<!--<LinearLayout-->
-<!--android:layout_width="wrap_content"-->
-<!--android:layout_height="wrap_content"-->
-<!--android:gravity="center">-->
-
-    <!--</LinearLayout>-->

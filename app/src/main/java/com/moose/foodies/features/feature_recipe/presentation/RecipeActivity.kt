@@ -12,7 +12,12 @@ import com.moose.foodies.databinding.ActivityRecipeBinding
 import com.moose.foodies.features.feature_home.domain.Instructions
 import com.moose.foodies.features.feature_recipe.adapters.ItemListAdapter
 import com.moose.foodies.features.feature_recipe.adapters.ProcedureListAdapter
-import com.moose.foodies.util.*
+import com.moose.foodies.util.ActivityHelper
+import com.moose.foodies.util.extensions.clean
+import com.moose.foodies.util.extensions.largeImage
+import com.moose.foodies.util.extensions.setImageHeight
+import com.moose.foodies.util.onError
+import com.moose.foodies.util.onSuccess
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
@@ -38,7 +43,7 @@ class RecipeActivity : AppCompatActivity() {
 
         viewModel.recipe.observe(this, { result ->
             result.onSuccess { recipe ->
-                val url = recipe.info.image.formatUrl()
+                val url = recipe.info.image.largeImage()
                 binding.recipeImage.load(url)
                 updateRecyclerViews(recipe.instructions)
                 enableShare(recipe.id, recipe.info.title)
