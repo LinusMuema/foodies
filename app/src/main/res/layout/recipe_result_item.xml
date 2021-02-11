@@ -8,25 +8,30 @@
     app:cardCornerRadius="10dp"
     app:cardElevation="10dp">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/motionLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/recipe_image"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop" />
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <com.alespero.expandablecardview.ExpandableCardView
-            android:id="@+id/card_expand"
+
+        <include
+            android:id="@+id/content"
+            layout="@layout/recipe_result_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:expandOnClick="true"
-            app:inner_view="@layout/recipe_result_details"
-            app:title="  " />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

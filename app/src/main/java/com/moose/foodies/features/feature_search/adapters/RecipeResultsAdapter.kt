@@ -1,23 +1,26 @@
 package com.moose.foodies.features.feature_search.adapters
 
 import android.content.Intent
-import android.view.LayoutInflater
+import android.util.Log
+import android.view.LayoutInflater.from
 import android.view.ViewGroup
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import coil.load
 import com.moose.foodies.databinding.RecipeResultItemBinding
+import com.moose.foodies.databinding.RecipeResultItemBinding.inflate
 import com.moose.foodies.features.feature_search.adapters.RecipeResultsAdapter.RecipeViewHolder
 import com.moose.foodies.features.feature_search.domain.Recipe
 import com.moose.foodies.util.extensions.setImageHeight
-import kotlinx.android.synthetic.main.recipe_result_details.view.*
 
 
 class RecipeResultsAdapter(private val recipes: List<Recipe>): Adapter<RecipeViewHolder>() {
 
+    class RecipeViewHolder(val binding: RecipeResultItemBinding): ViewHolder(binding.root)
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
-        val binding = RecipeResultItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = inflate(from(parent.context), parent, false)
         return RecipeViewHolder(binding)
     }
 
@@ -33,22 +36,23 @@ class RecipeResultsAdapter(private val recipes: List<Recipe>): Adapter<RecipeVie
 
             recipeImage.setImageHeight()
             recipeImage.load(image)
+            content.recipeName.text = recipe.title.formatRecipeName()
+            Log.d("Foodies", "onBindViewHolder: ${recipe.title}")
 
-            cardExpand.setTitle(recipe.title)
-            cardExpand.setOnExpandedListener { v, expanded ->
-                if (!expanded) cardExpand.setTitle(recipe.title)
-                else {
-                    cardExpand.setTitle(" ")
-                    v.recipe.text = recipe.title
-                    v.time.text = "Ready in ${recipe.readyInMinutes} minutes."
-                    v.people.text = "Serves ${recipe.servings} people."
-                    v.read_more.setOnClickListener {
-                        context.startActivity(Intent(Intent.ACTION_VIEW, url))
-                    }
-                }
+            content.time.text = "Ready in ${recipe.readyInMinutes} minutes."
+            content.people.text = "Serves ${recipe.servings} people."
+            content.readMore.setOnClickListener {
+                context.startActivity(Intent(Intent.ACTION_VIEW, url))
             }
         }
     }
 
-    class RecipeViewHolder(val binding: RecipeResultItemBinding): ViewHolder(binding.root)
+    private fun String.formatRecipeName(): String {
+        return when {
+            this.contains("-") -> this.split("-").first()
+            this.contains(":") -> this.split(":").first()
+            this.contains("–") -> this.split("–").first()
+            else -> this
+        }
+    }
 }
