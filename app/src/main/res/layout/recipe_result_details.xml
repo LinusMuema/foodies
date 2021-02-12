@@ -8,7 +8,7 @@
     app:cardElevation="0dp">
 
     <androidx.constraintlayout.motion.widget.MotionLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/motionLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutDescription="@xml/recipe_details_scene">

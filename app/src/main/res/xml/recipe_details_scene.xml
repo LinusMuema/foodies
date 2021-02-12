@@ -15,7 +15,7 @@
                motion:motionTarget="@+id/toggle" />
        </KeyFrameSet>
 
-        <OnClick motion:targetId="@id/toggle" motion:clickAction="toggle"/>
+        <OnClick motion:targetId="@id/motionLayout" motion:clickAction="toggle"/>
     </Transition>
 
     <ConstraintSet android:id="@+id/start" />
