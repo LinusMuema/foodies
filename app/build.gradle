@@ -104,7 +104,4 @@ dependencies {
 
     //Youtube Player
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
-
-    //Expanding cards
-    implementation 'com.alespero:expandable-cardview:0.8'
 }

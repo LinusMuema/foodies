@@ -8,6 +8,7 @@ import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import coil.load
+import com.moose.foodies.R
 import com.moose.foodies.databinding.RecipeResultItemBinding
 import com.moose.foodies.databinding.RecipeResultItemBinding.inflate
 import com.moose.foodies.features.feature_search.adapters.RecipeResultsAdapter.RecipeViewHolder
@@ -39,8 +40,8 @@ class RecipeResultsAdapter(private val recipes: List<Recipe>): Adapter<RecipeVie
             content.recipeName.text = recipe.title.formatRecipeName()
             Log.d("Foodies", "onBindViewHolder: ${recipe.title}")
 
-            content.time.text = "Ready in ${recipe.readyInMinutes} minutes."
-            content.people.text = "Serves ${recipe.servings} people."
+            content.time.text = context.getString(R.string.cook_time, recipe.readyInMinutes)
+            content.people.text = context.getString(R.string.servings, recipe.servings)
             content.readMore.setOnClickListener {
                 context.startActivity(Intent(Intent.ACTION_VIEW, url))
             }
