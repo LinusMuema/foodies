@@ -46,7 +46,9 @@ class RecipeActivity : AppCompatActivity() {
                 val url = recipe.info.image.largeImage()
                 binding.recipeImage.load(url)
                 updateRecyclerViews(recipe.instructions)
-                shareRecipe(recipe.info.title, recipe.id)
+                binding.share.setOnClickListener {
+                    shareRecipe(recipe.info.title, recipe.id)
+                }
 
                 binding.favorite.setOnClickListener {
                     if (isFavorite) viewModel.removeFavorite(recipe.id)
