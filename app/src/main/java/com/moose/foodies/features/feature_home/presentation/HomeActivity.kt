@@ -9,6 +9,7 @@ import coil.transform.RoundedCornersTransformation
 import com.mancj.materialsearchbar.MaterialSearchBar
 import com.moose.foodies.R
 import com.moose.foodies.databinding.ActivityHomeBinding
+import com.moose.foodies.databinding.CarouselItemBinding
 import com.moose.foodies.features.feature_favorites.presentation.FavoritesActivity
 import com.moose.foodies.features.feature_home.domain.HomeData
 import com.moose.foodies.features.feature_ingredients.presentation.IngredientsActivity
@@ -19,7 +20,6 @@ import com.moose.foodies.util.extensions.*
 import com.moose.foodies.util.onError
 import com.moose.foodies.util.onSuccess
 import dagger.android.AndroidInjection
-import kotlinx.android.synthetic.main.carousel_item.view.*
 import javax.inject.Inject
 
 class HomeActivity : AppCompatActivity() {
@@ -68,10 +68,11 @@ class HomeActivity : AppCompatActivity() {
                 setCarouselViewListener { view, position ->
                     val recipe = data.recipes[position]
                     val url: String = recipe.info.image.largeImage()
+                    val binding = CarouselItemBinding.bind(view)
 
-                    view.item.setImageHeight()
-                    view.recipeName.text = recipe.info.title
-                    view.recipeImage.load(url){
+                    binding.item.setImageHeight()
+                    binding.recipeName.text = recipe.info.title
+                    binding.recipeImage.load(url){
                         transformations(RoundedCornersTransformation(topLeft = 10f, topRight = 10f))
                     }
                     view.setOnClickListener {
