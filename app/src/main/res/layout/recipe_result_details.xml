@@ -42,67 +42,73 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/dishImage"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:src="@drawable/ic_dish"
-            android:visibility="gone"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recipe_name" />
+            app:layout_constraintTop_toBottomOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/timeImage"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:src="@drawable/ic_time"
-            android:visibility="gone"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="@id/time"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/dishImage" />
+            app:layout_constraintTop_toTopOf="@id/time" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/time"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/regular"
             android:textColor="@color/dark_text"
-            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/timeImage"
-            app:layout_constraintTop_toTopOf="@+id/timeImage" />
+            app:layout_constraintTop_toBottomOf="@+id/dishImage" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/peopleImage"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="16dp"
             android:src="@drawable/ic_people"
-            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/timeImage"
+            app:layout_constraintBottom_toBottomOf="@id/people"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/timeImage" />
+            app:layout_constraintTop_toTopOf="@id/people"/>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/people"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/regular"
             android:textColor="@color/dark_text"
-            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/peopleImage"
-            app:layout_constraintTop_toTopOf="@+id/peopleImage" />
+            app:layout_constraintTop_toBottomOf="@+id/time" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/read_more"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/regular"
             android:text="@string/read_more"
             android:textAllCaps="false"
-            android:visibility="gone"
-            app:cornerRadius="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:cornerRadius="50dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/peopleImage" />
 
