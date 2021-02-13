@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".features.feature_home.presentation.HomeActivity">
 
-    <androidx.constraintlayout.motion.widget.MotionLayout
-        android:id="@+id/motionLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layoutDescription="@xml/activity_home_scene">
+    tools:context=".features.feature_home.presentation.HomeActivity">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardView"
@@ -43,227 +37,237 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/picks_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:fontFamily="@font/regular"
-            android:text="@string/todays_picks"
-            android:textColor="@color/primary"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView" />
-
-        <ProgressBar
-            android:id="@+id/recipes_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            app:layout_constraintBottom_toBottomOf="@+id/carousel"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/carousel" />
-
-        <com.jama.carouselview.CarouselView
-            android:id="@+id/carousel"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="8dp"
-            android:visibility="invisible"
-            app:carouselOffset="center"
-            app:enableSnapping="true"
-            app:indicatorAnimationType="slide"
-            app:indicatorPadding="5"
-            app:indicatorRadius="5"
-            app:indicatorSelectedColor="@color/accent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/picks_text"
-            app:resource="@layout/carousel_item"
-            app:scaleOnScroll="true"
-            app:spacing="10" />
+            android:layout_height="match_parent">
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/ingredients_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="48dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/round_relative"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/carousel">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ingredients_icon"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:src="@drawable/fridge"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/ingredients_title"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.motion.widget.MotionLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/bold"
-                android:text="@string/fridge"
-                android:textColor="@color/primary"
-                android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@+id/ingredients_icon"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:id="@+id/motionLayout"
+                app:layoutDescription="@xml/activity_home_scene">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:text="@string/fridge_instructions"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/ingredients_icon"
-                app:layout_constraintTop_toBottomOf="@+id/ingredients_title" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/picks_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="100dp"
+                    android:fontFamily="@font/regular"
+                    android:text="@string/todays_picks"
+                    android:textColor="@color/primary"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <ProgressBar
+                    android:id="@+id/recipes_loading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true"
+                    app:layout_constraintBottom_toBottomOf="@+id/carousel"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/carousel" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/joke_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:fontFamily="@font/regular"
-            android:text="@string/todays_joke"
-            android:textColor="@color/primary"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ingredients_btn" />
-
-        <ProgressBar
-            android:id="@+id/joke_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="32dp"
-            android:indeterminate="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/joke_text" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/joke"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:fontFamily="@font/regular"
-            android:textColor="@color/dark_text"
-            android:textSize="15sp"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/joke_text" />
+                <com.jama.carouselview.CarouselView
+                    android:id="@+id/carousel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="8dp"
+                    android:visibility="invisible"
+                    app:carouselOffset="center"
+                    app:enableSnapping="true"
+                    app:indicatorAnimationType="slide"
+                    app:indicatorPadding="5"
+                    app:indicatorRadius="5"
+                    app:indicatorSelectedColor="@color/accent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/picks_text"
+                    app:resource="@layout/carousel_item"
+                    app:scaleOnScroll="true"
+                    app:spacing="10" />
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/favorites_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="48dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/round_relative"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/joke">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/ingredients_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="48dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/round_relative"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/carousel">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/favorites_icon"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:src="@drawable/favorites"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ingredients_icon"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:src="@drawable/fridge"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/favorites_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/bold"
-                android:text="@string/favorites_home"
-                android:textColor="@color/primary"
-                android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@+id/favorites_icon"
-                app:layout_constraintTop_toTopOf="parent" />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/ingredients_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/bold"
+                        android:text="@string/fridge"
+                        android:textColor="@color/primary"
+                        android:textSize="20sp"
+                        app:layout_constraintStart_toEndOf="@+id/ingredients_icon"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:text="@string/favorites_instructions"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/favorites_icon"
-                app:layout_constraintTop_toBottomOf="@+id/favorites_title" />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/fridge_instructions"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/ingredients_icon"
+                        app:layout_constraintTop_toBottomOf="@+id/ingredients_title" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/trivia_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:fontFamily="@font/regular"
-            android:text="@string/todays_trivia"
-            android:textColor="@color/primary"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/favorites_btn" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/joke_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="32dp"
+                    android:fontFamily="@font/regular"
+                    android:text="@string/todays_joke"
+                    android:textColor="@color/primary"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ingredients_btn" />
 
-        <ProgressBar
-            android:id="@+id/trivia_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:indeterminate="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/trivia_text" />
+                <ProgressBar
+                    android:id="@+id/joke_loading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="32dp"
+                    android:indeterminate="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/joke_text" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/trivia"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:fontFamily="@font/regular"
-            android:textColor="@color/dark_text"
-            android:textSize="15sp"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/trivia_text" />
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/joke"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/regular"
+                    android:textColor="@color/dark_text"
+                    android:textSize="15sp"
+                    android:visibility="invisible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/joke_text" />
 
 
-    </androidx.constraintlayout.motion.widget.MotionLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/favorites_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="48dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/round_relative"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/joke">
 
-</androidx.core.widget.NestedScrollView>
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/favorites_icon"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:src="@drawable/favorites"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/favorites_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/bold"
+                        android:text="@string/favorites_home"
+                        android:textColor="@color/primary"
+                        android:textSize="20sp"
+                        app:layout_constraintStart_toEndOf="@+id/favorites_icon"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/favorites_instructions"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/favorites_icon"
+                        app:layout_constraintTop_toBottomOf="@+id/favorites_title" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/trivia_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="32dp"
+                    android:fontFamily="@font/regular"
+                    android:text="@string/todays_trivia"
+                    android:textColor="@color/primary"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/favorites_btn" />
+
+                <ProgressBar
+                    android:id="@+id/trivia_loading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:indeterminate="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/trivia_text" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/trivia"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/regular"
+                    android:textColor="@color/dark_text"
+                    android:textSize="15sp"
+                    android:visibility="invisible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/trivia_text" />
+
+            </androidx.constraintlayout.motion.widget.MotionLayout>
+
+        </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
