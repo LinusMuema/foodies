@@ -18,6 +18,12 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup">
 
+        <provider
+            android:name="androidx.work.impl.WorkManagerInitializer"
+            android:authorities="${applicationId}.workmanager-init"
+            tools:node="remove"
+            android:exported="false" />
+
         <activity android:name=".features.feature_ingredients.presentation.IngredientsActivity" />
         <activity android:name=".features.feature_search.presentation.SearchActivity" />
         <activity android:name=".features.feature_favorites.presentation.FavoritesActivity" />
