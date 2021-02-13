@@ -31,7 +31,7 @@ interface ApiEndpoints {
     fun backupRecipes(@Body backup: Backup): Single<BackupStatus>
 
     @GET("/api/recipes/favorites")
-    fun getBackedUpRecipes(): Single<List<Backup>>
+    fun getBackedUpRecipes(): Single<List<Recipe>>
 
     @GET("/api/recipes/ingredients/{ingredients}")
     fun getRecipesByIngredients(@Path("ingredients") ingredients: String): Single<List<IngredientsSearchRecipe>>
