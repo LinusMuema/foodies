@@ -27,10 +27,10 @@ interface ApiEndpoints {
     @GET("/api/recipes/{id}")
     fun getRecipeById(@Path("id") id: Int): Single<Recipe>
 
-    @POST("/api/recipes/favorites")
+    @POST("/api/recipes/favorites/backup")
     fun backupRecipes(@Body backup: Backup): Single<BackupStatus>
 
-    @GET("/api/recipes/favorites")
+    @GET("/api/recipes/favorites/backup")
     fun getBackedUpRecipes(): Single<List<Recipe>>
 
     @GET("/api/recipes/ingredients/{ingredients}")
