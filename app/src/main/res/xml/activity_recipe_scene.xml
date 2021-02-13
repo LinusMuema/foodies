@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@id/start"
+        motion:duration="500">
+
+        <OnSwipe motion:dragDirection="dragUp" motion:touchAnchorId="@id/content"/>
+
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+
+        <Constraint
+            android:id="@+id/recipeImage"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toTopOf="parent">
+
+            <CustomAttribute motion:attributeName="foreground" motion:customColorDrawableValue="@android:color/transparent"/>
+
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            motion:layout_constraintBottom_toBottomOf="@+id/recipeImage"
+            motion:layout_constraintStart_toStartOf="parent">
+
+            <CustomAttribute motion:attributeName="ellipsize" motion:customStringValue="none"/>
+            <CustomAttribute motion:attributeName="maxLines" motion:customIntegerValue="2"/>
+
+        </Constraint>
+
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            motion:layout_constraintBottom_toBottomOf="@+id/back"
+            motion:layout_constraintEnd_toEndOf="@id/recipeImage"
+            motion:layout_constraintStart_toEndOf="@+id/back"
+            motion:layout_constraintTop_toTopOf="@+id/back">
+
+            <CustomAttribute motion:attributeName="ellipsize" motion:customStringValue="end"/>
+            <CustomAttribute motion:attributeName="maxLines" motion:customIntegerValue="1"/>
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:layout_marginStart="16dp"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toTopOf="@+id/recipeImage" />
+
+        <Constraint
+            android:id="@+id/recipeImage"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toTopOf="parent">
+
+            <CustomAttribute motion:attributeName="foreground" motion:customColorDrawableValue="@color/primary"/>
+        </Constraint>
+
+    </ConstraintSet>
+</MotionScene>

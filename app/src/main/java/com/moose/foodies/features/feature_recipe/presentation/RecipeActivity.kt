@@ -14,7 +14,6 @@ import com.moose.foodies.features.feature_recipe.adapters.ProcedureListAdapter
 import com.moose.foodies.util.ActivityHelper
 import com.moose.foodies.util.extensions.clean
 import com.moose.foodies.util.extensions.largeImage
-import com.moose.foodies.util.extensions.setImageHeight
 import com.moose.foodies.util.extensions.shareRecipe
 import com.moose.foodies.util.onError
 import com.moose.foodies.util.onSuccess
@@ -39,13 +38,14 @@ class RecipeActivity : AppCompatActivity() {
         viewModel.getRecipe(id)
 
         binding = ActivityRecipeBinding.inflate(layoutInflater)
-        binding.recipeImage.setImageHeight()
 
         viewModel.recipe.observe(this, { result ->
             result.onSuccess { recipe ->
                 val url = recipe.info.image.largeImage()
                 binding.recipeImage.load(url)
                 updateRecyclerViews(recipe.instructions)
+                binding.title.text = recipe.info.title
+                binding.back.setOnClickListener { onBackPressed() }
                 binding.share.setOnClickListener {
                     shareRecipe(recipe.info.title, recipe.id)
                 }

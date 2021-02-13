@@ -30,7 +30,7 @@ class MissedIngredientsAdapter(
         with(holder.binding){
             image.load(ingredient.image)
             name.text = ingredient.name
-            amount.text = context.getString(R.string.amount, value, ingredient.amount)
+            amount.text = context.getString(R.string.amount, value, ingredient.unitShort)
         }
     }
 
