@@ -12,6 +12,7 @@ import com.moose.foodies.features.feature_home.domain.Instructions
 import com.moose.foodies.features.feature_recipe.adapters.ItemListAdapter
 import com.moose.foodies.features.feature_recipe.adapters.ProcedureListAdapter
 import com.moose.foodies.util.ActivityHelper
+import com.moose.foodies.util.PreferenceHelper
 import com.moose.foodies.util.extensions.clean
 import com.moose.foodies.util.extensions.largeImage
 import com.moose.foodies.util.extensions.shareRecipe
@@ -51,6 +52,7 @@ class RecipeActivity : AppCompatActivity() {
                 }
 
                 binding.favorite.setOnClickListener {
+                    PreferenceHelper.setBackupStatus(this, true)
                     if (isFavorite) viewModel.removeFavorite(recipe.id)
                     else viewModel.addFavorite(recipe)
                 }

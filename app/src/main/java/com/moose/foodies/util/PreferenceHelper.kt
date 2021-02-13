@@ -10,8 +10,7 @@ object PreferenceHelper {
     private const val tokenKey = "ACCESS_TOKEN"
     private const val loggedKey = "LOGGED_IN"
     private const val widthKey = "DEVICE_WIDTH"
-    private const val searchesKey = "RECENT_SEARCHES"
-    private const val favoritesBackupKey = "FAVORITES_BACKUP"
+    private const val backupKey = "BACKUP_KEY"
 
     @JvmStatic
     fun defaultPrefs(context: Context): SharedPreferences {
@@ -24,13 +23,15 @@ object PreferenceHelper {
 
     fun getDeviceWidth(context: Context) = defaultPrefs(context).getFloat(widthKey, 360f)
 
+    fun getBackupStatus(context: Context) = defaultPrefs(context).getBoolean(backupKey, true)
+
     fun setAccessToken(context: Context, token: String) = defaultPrefs(context).set(tokenKey, token)
 
     fun setLogged(context: Context, logged: Boolean) = defaultPrefs(context).set(loggedKey, logged)
 
     fun setDeviceWidth(context: Context, width: Float) = defaultPrefs(context).set(widthKey, width)
 
-    fun setBackupStatus(context: Context, status: Boolean) = defaultPrefs(context).set(favoritesBackupKey, status)
+    fun setBackupStatus(context: Context, status: Boolean) = defaultPrefs(context).set(backupKey, status)
 
     operator fun SharedPreferences.set(key: String, value: Any?) {
         when (value) {

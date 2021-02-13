@@ -1,7 +1,7 @@
 package com.moose.foodies.remote
 
-import com.moose.foodies.features.feature_auth.Credential
-import com.moose.foodies.features.feature_auth.TokenResponse
+import com.moose.foodies.features.feature_auth.domain.Credential
+import com.moose.foodies.features.feature_auth.domain.TokenResponse
 import com.moose.foodies.features.feature_favorites.domain.Backup
 import com.moose.foodies.features.feature_favorites.domain.BackupStatus
 import com.moose.foodies.features.feature_home.domain.HomeData

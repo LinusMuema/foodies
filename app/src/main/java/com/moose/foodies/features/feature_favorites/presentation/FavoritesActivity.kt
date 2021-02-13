@@ -77,5 +77,11 @@ class FavoritesActivity : AppCompatActivity() {
 
         snackbar.show()
     }
+
+    override fun onPause() {
+        super.onPause()
+        if (PreferenceHelper.getBackupStatus(this))
+            viewModel.startBackup()
+    }
 }
 

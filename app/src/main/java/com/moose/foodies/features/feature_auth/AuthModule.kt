@@ -3,6 +3,8 @@ package com.moose.foodies.features.feature_auth
 import androidx.lifecycle.ViewModel
 import com.moose.foodies.di.ActivityScope
 import com.moose.foodies.di.ViewModelKey
+import com.moose.foodies.features.feature_auth.data.AuthRepository
+import com.moose.foodies.features.feature_auth.data.AuthRepositoryImpl
 import com.moose.foodies.features.feature_auth.presentation.AuthActivity
 import com.moose.foodies.features.feature_auth.presentation.AuthViewModel
 import dagger.Binds
