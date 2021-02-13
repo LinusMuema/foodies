@@ -20,6 +20,7 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository):
     fun getRemoteData(){
         composite.add(
             repository.getRemoteData()
+                .retry(5)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { updateLocalData(it) },

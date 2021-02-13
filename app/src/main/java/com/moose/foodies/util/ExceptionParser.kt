@@ -1,5 +1,6 @@
 package com.moose.foodies.util
 
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import retrofit2.HttpException
@@ -8,6 +9,7 @@ import java.net.SocketTimeoutException
 
 object ExceptionParser {
 
+    @Serializable
     data class ApiError(val message: String)
 
     fun parse(e: Throwable): String{

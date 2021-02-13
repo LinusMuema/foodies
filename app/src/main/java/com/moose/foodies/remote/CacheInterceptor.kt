@@ -1,19 +1,13 @@
 package com.moose.foodies.remote
 
-import okhttp3.CacheControl
 import okhttp3.Interceptor
 import okhttp3.Response
-import java.util.concurrent.TimeUnit
 
 object CacheInterceptor: Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val response: Response = chain.proceed(chain.request())
-        val cacheControl = CacheControl.Builder()
-            .maxAge(1, TimeUnit.DAYS)
-            .build()
-
         return response.newBuilder()
-            .header("Cache-Control", cacheControl.toString())
+            .header("Cache-Control", "public, only-if-cached, max-stale=86400, max-age=86400")
             .build()
     }
 }
