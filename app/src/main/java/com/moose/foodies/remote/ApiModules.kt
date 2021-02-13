@@ -21,7 +21,7 @@ class ApiModules {
         ignoreUnknownKeys = true
     }.asConverterFactory("application/json".toMediaType())
     private val BASE_URL = "http://foodies.moose.ac/"
-    private val interceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+    private val loggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
     @Singleton
     @Provides
@@ -34,7 +34,8 @@ class ApiModules {
     fun provideClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(Authenticator)
-            .addInterceptor(interceptor)
+            .addInterceptor(loggingInterceptor)
+            .addNetworkInterceptor(CacheInterceptor)
             .build()
     }
 
