@@ -1,20 +1,12 @@
 <resources>
     <string name="app_name">Foodies</string>
-    <string name="splash_image">Splash image</string>
     <string name="splash_text">Foodies</string>
     <string name="intro_header">Before we get cookin\'</string>
     <string name="submit">Submit</string>
     <string name="todays_picks">Today\'s Picks</string>
     <string name="todays_joke">Today\'s Joke</string>
     <string name="auth_header">Login</string>
-    <string name="auth_info">Please provide us with your email address.</string>
-    <string name="login_forgot">Forgot your password?</string>
-    <string name="login">Login</string>
     <string name="loading">Loading…</string>
-    <string name="name_label">Your email address</string>
-    <string name="password_label">Your password</string>
-    <string name="reset_header">Reset password</string>
-    <string name="reset_info">Enter your email address below and well send you a link to reset your password via email.</string>
     <string name="send_email">send email</string>
     <string name="ingredients">Ingredients</string>
     <string name="equipment">Equipment</string>
@@ -44,4 +36,7 @@
     <string name="ingredient_hint">e.g. baking flour</string>
     <string name="missed_ingredients">What you are missing :</string>
     <string name="amount">%1$s %2$s</string>
+    <string name="auth_info">Please provide us with your email</string>
+    <string name="email_label">Email address</string>
+    <string name="login">Login</string>
 </resources>
