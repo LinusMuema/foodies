@@ -10,7 +10,6 @@ import com.moose.foodies.features.feature_favorites.data.FavoritesRepositoryImpl
 import com.moose.foodies.features.feature_favorites.presentation.FavoritesActivity
 import com.moose.foodies.features.feature_favorites.presentation.FavoritesViewModel
 import com.moose.foodies.features.feature_favorites.work.BackupWorker
-import com.moose.foodies.features.feature_favorites.work.UpdateWorker
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -32,11 +31,6 @@ abstract class FavoritesModule {
     @IntoMap
     @WorkerKey(BackupWorker::class)
     abstract fun provideBackupWorker(factory: BackupWorker.Factory): ChildWorkerFactory
-
-    @Binds
-    @IntoMap
-    @WorkerKey(UpdateWorker::class)
-    abstract fun provideUpdateWorker(factory: UpdateWorker.Factory): ChildWorkerFactory
 
     @Binds
     abstract fun bindFavoritesRepository(impl: FavoritesRepositoryImpl): FavoritesRepository

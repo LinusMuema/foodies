@@ -10,7 +10,7 @@ import androidx.work.WorkManager
 import com.moose.foodies.FoodiesApplication
 import com.moose.foodies.features.feature_favorites.data.FavoritesRepository
 import com.moose.foodies.features.feature_favorites.work.BackupWorker
-import com.moose.foodies.features.feature_favorites.work.UpdateWorker
+import com.moose.foodies.features.feature_auth.work.UpdateWorker
 import com.moose.foodies.features.feature_home.domain.Recipe
 import com.moose.foodies.util.Result
 import io.reactivex.android.schedulers.AndroidSchedulers

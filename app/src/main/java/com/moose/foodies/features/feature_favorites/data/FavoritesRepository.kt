@@ -15,10 +15,6 @@ interface FavoritesRepository {
     fun deleteFavorite(id: Int): Completable
 
     fun backupFavorites(recipes: Backup): Single<BackupStatus>
-
-    fun getBackedUpFavorites(): Single<List<Recipe>>
-
-    fun updateFavorites(recipes: List<Recipe>): Completable
 }
 
 class FavoritesRepositoryImpl @Inject constructor(
@@ -30,10 +26,5 @@ class FavoritesRepositoryImpl @Inject constructor(
 
     override fun deleteFavorite(id: Int): Completable = dao.deleteFavorite(id)
 
-    override fun updateFavorites(recipes: List<Recipe>): Completable = dao.insertFavorites(recipes)
-
     override fun backupFavorites(recipes: Backup): Single<BackupStatus> = api.backupRecipes(recipes)
-
-    override fun getBackedUpFavorites(): Single<List<Recipe>> = api.getBackedUpRecipes()
-
 }

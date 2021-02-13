@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.moose.foodies.R
 import com.moose.foodies.databinding.ActivityAuthBinding
-import com.moose.foodies.features.feature_favorites.presentation.FavoritesActivity
 import com.moose.foodies.features.feature_home.presentation.HomeActivity
 import com.moose.foodies.util.ActivityHelper
 import com.moose.foodies.util.PreferenceHelper
@@ -51,7 +50,7 @@ class AuthActivity : AppCompatActivity() {
             result.onSuccess {
                 PreferenceHelper.setAccessToken(this, it.token)
                 PreferenceHelper.setLogged(this, true)
-                if (it.type == "login") FavoritesActivity().getBackup()
+                if (it.type == "login") viewModel.getBackup()
                 pop<HomeActivity>()
             }
             result.onError { showToast(it) }
