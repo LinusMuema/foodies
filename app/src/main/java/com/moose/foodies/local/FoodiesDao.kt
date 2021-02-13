@@ -16,7 +16,7 @@ interface FoodiesDao{
     fun getHomeData(): Flowable<HomeData>
 
     @Query("SELECT * FROM favorites")
-    fun getFavorites(): Flowable<List<Recipe>>
+    fun getFavorites(): Single<List<Recipe>>
 
     @Query("SELECT COUNT(*) FROM favorites")
     fun getFavoritesCount(): Single<Int>
