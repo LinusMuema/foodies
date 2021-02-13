@@ -83,5 +83,9 @@ class FavoritesActivity : AppCompatActivity() {
         if (PreferenceHelper.getBackupStatus(this))
             viewModel.startBackup()
     }
+
+    fun getBackup() {
+        viewModel.getBackup()
+    }
 }
 

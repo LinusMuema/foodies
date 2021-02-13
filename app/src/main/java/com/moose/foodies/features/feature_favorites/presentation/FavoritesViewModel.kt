@@ -10,6 +10,7 @@ import androidx.work.WorkManager
 import com.moose.foodies.FoodiesApplication
 import com.moose.foodies.features.feature_favorites.data.FavoritesRepository
 import com.moose.foodies.features.feature_favorites.work.BackupWorker
+import com.moose.foodies.features.feature_favorites.work.UpdateWorker
 import com.moose.foodies.features.feature_home.domain.Recipe
 import com.moose.foodies.util.Result
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -22,6 +23,12 @@ class FavoritesViewModel @Inject constructor(private val repository: FavoritesRe
 
     private val _favorites = MutableLiveData<Result<List<Recipe>>>()
     val favorites: LiveData<Result<List<Recipe>>> = _favorites
+
+    private val manager = WorkManager.getInstance(FoodiesApplication.getInstance())
+    private val constraints = Constraints.Builder()
+        .setRequiredNetworkType(NetworkType.CONNECTED)
+        .setRequiresBatteryNotLow(true)
+        .build()
 
     fun getFavorites(){
         composite.add(
@@ -50,15 +57,18 @@ class FavoritesViewModel @Inject constructor(private val repository: FavoritesRe
     }
 
     fun startBackup() {
-        val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.CONNECTED)
-            .setRequiresBatteryNotLow(true)
-            .build()
-
         val work = OneTimeWorkRequestBuilder<BackupWorker>()
             .setConstraints(constraints)
             .build()
 
-        WorkManager.getInstance(FoodiesApplication.getInstance()).enqueue(work)
+        manager.enqueue(work)
+    }
+
+    fun getBackup() {
+        val work = OneTimeWorkRequestBuilder<UpdateWorker>()
+            .setConstraints(constraints)
+            .build()
+
+        manager.enqueue(work)
     }
 }

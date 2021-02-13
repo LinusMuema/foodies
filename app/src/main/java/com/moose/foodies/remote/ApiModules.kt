@@ -14,6 +14,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import java.io.File
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -40,6 +41,7 @@ class ApiModules {
 
         return OkHttpClient.Builder()
             .cache(cache)
+            .callTimeout(30, TimeUnit.SECONDS)
             .addNetworkInterceptor(CacheInterceptor)
             .addInterceptor(Authenticator)
             .addInterceptor(loggingInterceptor)
