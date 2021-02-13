@@ -9,6 +9,7 @@ import com.moose.foodies.databinding.IngredientsSearchItemBinding
 import com.moose.foodies.databinding.IngredientsSearchItemBinding.inflate
 import com.moose.foodies.features.feature_ingredients.adapters.IngredientsAdapter.RecipeViewHolder
 import com.moose.foodies.features.feature_ingredients.domain.Recipe
+import com.moose.foodies.features.feature_ingredients.domain.clean
 import com.moose.foodies.features.feature_recipe.presentation.RecipeActivity
 import com.moose.foodies.util.extensions.largeImage
 import com.moose.foodies.util.extensions.push
@@ -28,7 +29,7 @@ class IngredientsAdapter(private val recipes: List<Recipe>): Adapter<RecipeViewH
         with(holder.binding){
             image.load(url)
             recipeName.text = recipe.title
-            recyclerView.adapter = MissedIngredientsAdapter(recipe.missedIngredients)
+            recyclerView.adapter = MissedIngredientsAdapter(recipe.missedIngredients.clean())
             prepare.setOnClickListener {
                 context.push<RecipeActivity>{ it.putExtra("recipeId", recipe.id) }
             }
