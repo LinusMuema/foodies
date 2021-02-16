@@ -43,14 +43,23 @@ class RecipeActivity : AppCompatActivity() {
         viewModel.recipe.observe(this, { result ->
             result.onSuccess { recipe ->
                 val url = recipe.info.image.largeImage()
-                binding.contentLayout.transitionToEnd()
                 binding.recipeImage.load(url)
-                updateRecyclerViews(recipe.instructions)
                 binding.title.text = recipe.info.title
+
                 binding.back.setOnClickListener { onBackPressed() }
                 binding.share.setOnClickListener {
                     shareRecipe(recipe.info.title, recipe.id)
                 }
+
+                if (recipe.instructions.sections.isEmpty()) {
+                    binding.contentLayout.transitionToState(R.id.error)
+                    binding.errorLayout.message.text =
+                        resources.getString(R.string.not_found, "instructions")
+                    return@onSuccess
+                }
+
+                binding.contentLayout.transitionToEnd()
+                updateRecyclerViews(recipe.instructions)
 
                 binding.favorite.setOnClickListener {
                     PreferenceHelper.setBackupStatus(this, true)
@@ -58,7 +67,7 @@ class RecipeActivity : AppCompatActivity() {
                     else viewModel.addFavorite(recipe)
                 }
             }
-            result.onError { Log.e(this.localClassName, "onCreate: $it") }
+            result.onError { Log.d(this.localClassName, "onCreate: $it") }
         })
 
         viewModel.isFavorite.observe(this, { result ->

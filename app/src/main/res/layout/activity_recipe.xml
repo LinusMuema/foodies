@@ -32,7 +32,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginBottom="16dp"
         android:fontFamily="@font/regular"
-        android:text="@string/recipe_hint"
         android:textColor="@color/light_text"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@+id/recipeImage"
