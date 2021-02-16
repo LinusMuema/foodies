@@ -43,6 +43,7 @@ class RecipeActivity : AppCompatActivity() {
         viewModel.recipe.observe(this, { result ->
             result.onSuccess { recipe ->
                 val url = recipe.info.image.largeImage()
+                binding.contentLayout.transitionToEnd()
                 binding.recipeImage.load(url)
                 updateRecyclerViews(recipe.instructions)
                 binding.title.text = recipe.info.title

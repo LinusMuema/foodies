@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -46,9 +47,11 @@
         app:layout_constraintTop_toBottomOf="@id/recipeImage"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.constraintlayout.motion.widget.MotionLayout
+            android:id="@+id/contentLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:layoutDescription="@xml/activity_recipe_content_scene">
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/share"
@@ -95,7 +98,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/ingredientsTitle"
+                android:id="@+id/ingredients_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -110,6 +113,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/favorite" />
 
+            <ProgressBar
+                android:id="@+id/ingredients_loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:indeterminate="true"
+                android:visibility="visible"
+                app:layout_constraintBottom_toTopOf="@+id/equipment_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ingredients_title" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/ingredients_recycler"
                 android:layout_width="match_parent"
@@ -119,13 +135,14 @@
                 android:layout_marginEnd="16dp"
                 android:foregroundGravity="center"
                 android:orientation="horizontal"
+                android:visibility="invisible"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ingredientsTitle" />
+                app:layout_constraintTop_toBottomOf="@id/ingredients_title" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/materialTextView2"
+                android:id="@+id/equipment_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -140,6 +157,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ingredients_recycler" />
 
+            <ProgressBar
+                android:id="@+id/equipment_loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:indeterminate="true"
+                android:visibility="visible"
+                app:layout_constraintBottom_toTopOf="@+id/procedure_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/equipment_title" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/equipment_recycler"
                 android:layout_width="match_parent"
@@ -151,13 +181,14 @@
                 android:foregroundGravity="center"
                 android:orientation="horizontal"
                 android:padding="5dp"
+                android:visibility="invisible"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/materialTextView2" />
+                app:layout_constraintTop_toBottomOf="@+id/equipment_title" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/procedureTitle"
+                android:id="@+id/procedure_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -172,6 +203,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/equipment_recycler" />
 
+            <ProgressBar
+                android:id="@+id/procedure_loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/procedure_title" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/procedure_recycler"
                 android:layout_width="match_parent"
@@ -180,17 +222,22 @@
                 android:layout_marginEnd="16dp"
                 android:foregroundGravity="center"
                 android:orientation="vertical"
+                android:visibility="invisible"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/procedureTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/procedure_title" />
 
             <include
                 android:id="@+id/error_layout"
                 layout="@layout/error_layout"
-                android:visibility="gone" />
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.motion.widget.MotionLayout>
 
     </androidx.core.widget.NestedScrollView>
 
