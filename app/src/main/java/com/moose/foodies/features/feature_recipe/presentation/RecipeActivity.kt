@@ -99,7 +99,7 @@ class RecipeActivity : AppCompatActivity() {
         binding.equipmentRecycler.apply {
             val list = instructions.equipment.clean()
             setHasFixedSize(true)
-            adapter = ItemListAdapter(list, "equipmen   t")
+            adapter = ItemListAdapter(list, "equipment")
         }
 
         binding.procedureRecycler.apply {

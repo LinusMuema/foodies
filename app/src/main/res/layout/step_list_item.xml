@@ -11,12 +11,12 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/bold"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@id/step"
+        app:layout_constraintBottom_toBottomOf="@id/instruction"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/step" />
+        app:layout_constraintTop_toTopOf="@id/instruction" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/step"
+        android:id="@+id/instruction"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

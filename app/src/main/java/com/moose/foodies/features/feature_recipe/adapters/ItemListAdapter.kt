@@ -19,19 +19,11 @@ class ItemListAdapter(private val items: List<Item>, private val type: String): 
     override fun getItemCount(): Int = items.size
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        holder.bind(items[position])
+        val item = items[position]
+        val imageUrl = "https://spoonacular.com/cdn/${type}_100x100/${item.image}"
+        holder.binding.itemName.text = item.name
+        holder.binding.itemImage.load(imageUrl){ placeholder(R.drawable.loading) }
     }
 
-    inner class ItemViewHolder(private val binding: RecipeItemBinding): RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(item: Item) {
-            val imageUrl = "https://spoonacular.com/cdn/${type}_100x100/${item.image}"
-
-            with(binding){
-                itemName.text = item.name
-                itemImage.load(imageUrl){ placeholder(R.drawable.loading) }
-            }
-        }
-
-    }
+    class ItemViewHolder(val binding: RecipeItemBinding): RecyclerView.ViewHolder(binding.root)
 }

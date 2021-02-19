@@ -16,16 +16,14 @@ class StepListAdapter(private val steps: List<Step>): Adapter<StepListViewHolder
     }
 
     override fun onBindViewHolder(holder: StepListViewHolder, position: Int) {
-        holder.bind(steps[position])
+        val step = steps[position]
+        with(holder.binding){
+            stepNumber.text = step.number.toString()
+            instruction.text = step.instruction
+        }
     }
 
     override fun getItemCount(): Int = steps.size
 
-    inner class StepListViewHolder(private val binding: StepListItemBinding): ViewHolder(binding.root) {
-        fun bind(step: Step) {
-            binding.stepNumber.text = step.number.toString()
-            binding.step.text = step.instruction
-        }
-
-    }
+    class StepListViewHolder(val binding: StepListItemBinding): ViewHolder(binding.root)
 }
