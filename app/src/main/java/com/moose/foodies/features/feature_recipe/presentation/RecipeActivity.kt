@@ -27,6 +27,7 @@ class RecipeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRecipeBinding
     private val viewModel by viewModels<RecipeViewModel> { viewModelFactory }
     private var isFavorite = false
+    private var fromDeepLink = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,11 +43,12 @@ class RecipeActivity : AppCompatActivity() {
         viewModel.recipe.observe(this, { result ->
             result.onSuccess { recipe ->
                 val url = recipe.info.image.largeImage()
-                binding.recipeImage.load(url)
+                binding.recipeImage.load(url){ placeholder(R.drawable.loading) }
                 binding.title.text = recipe.info.title
 
                 binding.back.setOnClickListener {
-                    push<HomeActivity>()
+                    if (fromDeepLink) push<HomeActivity>()
+                    else onBackPressed()
                 }
                 binding.share.setOnClickListener {
                     shareRecipe(recipe.info.title, recipe.id)
@@ -86,7 +88,10 @@ class RecipeActivity : AppCompatActivity() {
     private fun getRecipeId(): Int {
         val fromActivity = intent.getIntExtra("recipeId", 0)
         val fromUri = intent.data?.getQueryParameter("id")?.toInt()
-        return if(fromActivity == 0) fromUri!! else fromActivity
+        return if(fromActivity == 0) {
+            fromDeepLink = true
+            fromUri!!
+        } else fromActivity
     }
 
     private fun updateRecyclerViews(instructions: Instructions) {

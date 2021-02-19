@@ -108,22 +108,11 @@
                 android:text="@string/ingredients"
                 android:textColor="@color/dark_text"
                 android:textSize="20sp"
+                android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/favorite" />
 
-            <ProgressBar
-                android:id="@+id/ingredients_loading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:indeterminate="true"
-                android:visibility="visible"
-                app:layout_constraintBottom_toTopOf="@+id/equipment_title"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ingredients_title" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/ingredients_recycler"
@@ -145,29 +134,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="32dp"
                 android:layout_marginEnd="16dp"
                 android:fontFamily="@font/bold"
                 android:padding="5dp"
                 android:text="@string/equipment"
                 android:textColor="@color/dark_text"
                 android:textSize="20sp"
+                android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ingredients_recycler" />
 
-            <ProgressBar
-                android:id="@+id/equipment_loading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:indeterminate="true"
-                android:visibility="visible"
-                app:layout_constraintBottom_toTopOf="@+id/procedure_title"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/equipment_title" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/equipment_recycler"
@@ -191,27 +169,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="32dp"
                 android:layout_marginEnd="16dp"
                 android:fontFamily="@font/bold"
                 android:padding="5dp"
                 android:text="@string/procedure"
                 android:textColor="@color/dark_text"
                 android:textSize="20sp"
+                android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/equipment_recycler" />
 
             <ProgressBar
-                android:id="@+id/procedure_loading"
+                android:id="@+id/loading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
                 android:indeterminate="true"
                 android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/procedure_title" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/procedure_recycler"

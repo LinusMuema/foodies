@@ -16,17 +16,7 @@
     <ConstraintSet android:id="@+id/start" />
 
     <ConstraintSet android:id="@+id/end">
-        <Constraint
-            android:id="@+id/ingredients_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:visibility="invisible"
-            motion:layout_constraintBottom_toTopOf="@+id/equipment_title"
-            motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintTop_toBottomOf="@+id/ingredients_title" />
+
         <Constraint
             android:id="@+id/ingredients_recycler"
             android:layout_width="match_parent"
@@ -38,17 +28,7 @@
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintTop_toBottomOf="@id/ingredients_title" />
-        <Constraint
-            android:id="@+id/equipment_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:visibility="invisible"
-            motion:layout_constraintBottom_toTopOf="@+id/procedure_title"
-            motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintTop_toBottomOf="@+id/equipment_title" />
+
         <Constraint
             android:id="@+id/equipment_recycler"
             android:layout_width="match_parent"
@@ -70,15 +50,51 @@
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintTop_toBottomOf="@+id/procedure_title" />
+
         <Constraint
-            android:id="@+id/procedure_loading"
-            android:layout_width="wrap_content"
+            android:id="@id/procedure_title"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="invisible"
-            motion:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:visibility="visible"
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintTop_toBottomOf="@+id/procedure_title" />
+            motion:layout_constraintTop_toBottomOf="@+id/equipment_recycler" />
+
+        <Constraint
+            android:id="@+id/ingredients_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:visibility="visible"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toBottomOf="@id/favorite" />
+        <Constraint
+            android:id="@+id/equipment_title"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:layout_marginEnd="16dp"
+            motion:layout_constraintTop_toBottomOf="@+id/ingredients_recycler"
+            android:layout_marginStart="16dp"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="32dp" />
+        <Constraint
+            android:id="@+id/loading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:visibility="invisible"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toTopOf="parent" />
+
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/error">
@@ -90,6 +106,7 @@
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintTop_toTopOf="parent" />
+
         <Constraint
             android:id="@+id/procedure_recycler"
             motion:layout_constraintEnd_toEndOf="parent"
