@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.moose.foodies.features.feature_home.data.HomeRepository
 import com.moose.foodies.features.feature_home.domain.HomeData
 import com.moose.foodies.util.Result
+import com.moose.foodies.util.parse
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -20,11 +21,11 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository):
     fun getRemoteData(){
         composite.add(
             repository.getRemoteData()
-                .retry(5)
+                .retry(3)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { updateLocalData(it) },
-                    { _data.postValue(Result.Error(it.message)) }
+                    { _data.postValue(Result.Error(it.parse())) }
                 )
         )
     }
@@ -36,9 +37,13 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository):
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { _data.postValue(Result.Success(it)) },
-                    { _data.postValue(Result.Error(it.message)) }
+                    { _data.postValue(Result.Error(it.parse())) }
                 )
         )
+    }
+
+    fun relaySuccess(){
+        composite.add(repository.relaySuccess().subscribe())
     }
 
     private fun updateLocalData(data: HomeData){

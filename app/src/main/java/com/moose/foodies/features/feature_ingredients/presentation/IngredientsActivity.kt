@@ -1,7 +1,6 @@
 package com.moose.foodies.features.feature_ingredients.presentation
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -65,7 +64,7 @@ class IngredientsActivity : AppCompatActivity() {
             result.onSuccess {
                 binding.recyclerView.adapter = IngredientsAdapter(it)
             }
-            result.onError { Log.e("Foodies", "onCreate: $it") }
+            result.onError { showToast(it) }
         })
 
         setContentView(binding.root)

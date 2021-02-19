@@ -11,6 +11,7 @@ import com.moose.foodies.databinding.PagerLayoutBinding
 import com.moose.foodies.features.feature_search.adapters.RecipeResultsAdapter
 import com.moose.foodies.features.feature_search.domain.Recipe
 import com.moose.foodies.util.extensions.hideBottomBar
+import com.moose.foodies.util.extensions.showToast
 import com.moose.foodies.util.onError
 import com.moose.foodies.util.onSuccess
 import dagger.android.support.AndroidSupportInjection
@@ -39,7 +40,7 @@ class RecipesFragment : Fragment(R.layout.pager_layout) {
 
         viewModel.recipes.observe(viewLifecycleOwner, { result ->
             result.onSuccess { updateUi(it) }
-            result.onError { Log.e(this.javaClass.name, "onViewCreated: $it") }
+            result.onError { requireActivity().showToast(it) }
         })
     }
 

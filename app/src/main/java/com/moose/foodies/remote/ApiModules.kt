@@ -1,19 +1,16 @@
 package com.moose.foodies.remote
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.moose.foodies.FoodiesApplication
 import dagger.Module
 import dagger.Provides
 import io.reactivex.schedulers.Schedulers
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
-import okhttp3.Cache
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import java.io.File
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -34,15 +31,8 @@ class ApiModules {
     @Singleton
     @Provides
     fun provideClient(): OkHttpClient {
-        // Setup the cache
-        val cacheDir = File(FoodiesApplication.getInstance().cacheDir, "responses")
-        val cacheSize = 5 * 1024 * 1024
-        val cache = Cache(cacheDir, cacheSize.toLong())
-
         return OkHttpClient.Builder()
-            .cache(cache)
             .callTimeout(30, TimeUnit.SECONDS)
-            .addNetworkInterceptor(CacheInterceptor)
             .addInterceptor(Authenticator)
             .addInterceptor(loggingInterceptor)
             .build()

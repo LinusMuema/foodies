@@ -51,8 +51,11 @@ class HomeActivity : AppCompatActivity() {
             result.onSuccess {
                 binding.motionLayout.transitionToState(R.id.loaded)
                 bindData(it)
+                viewModel.relaySuccess()
             }
-            result.onError { showToast(it) }
+            result.onError {
+                if (it != "daily limit reached") showToast(it)
+            }
         })
 
         setContentView(binding.root)

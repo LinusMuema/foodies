@@ -4,6 +4,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.serialization.Serializable
 
+@Serializable
+data class RelayResponse(val message: String)
+
 @Entity(tableName = "Recipes")
 @Serializable
 data class HomeData(    

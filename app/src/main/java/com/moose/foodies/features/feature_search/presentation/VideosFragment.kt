@@ -11,6 +11,7 @@ import com.moose.foodies.databinding.PagerLayoutBinding
 import com.moose.foodies.features.feature_search.adapters.VideoResultsAdapter
 import com.moose.foodies.features.feature_search.domain.Video
 import com.moose.foodies.util.extensions.hideBottomBar
+import com.moose.foodies.util.extensions.showToast
 import com.moose.foodies.util.onError
 import com.moose.foodies.util.onSuccess
 import dagger.android.support.AndroidSupportInjection
@@ -39,7 +40,7 @@ class VideosFragment : Fragment(R.layout.pager_layout) {
 
         viewModel.videos.observe(viewLifecycleOwner, { result ->
             result.onSuccess { updateUi(it) }
-            result.onError { Log.e(this.javaClass.name, "onViewCreated: $it") }
+            result.onError { requireActivity().showToast(it) }
         })
     }
 

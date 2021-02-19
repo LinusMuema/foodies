@@ -9,13 +9,12 @@ import coil.load
 import com.moose.foodies.R
 import com.moose.foodies.databinding.ActivityRecipeBinding
 import com.moose.foodies.features.feature_home.domain.Instructions
+import com.moose.foodies.features.feature_home.presentation.HomeActivity
 import com.moose.foodies.features.feature_recipe.adapters.ItemListAdapter
 import com.moose.foodies.features.feature_recipe.adapters.ProcedureListAdapter
 import com.moose.foodies.util.ActivityHelper
 import com.moose.foodies.util.PreferenceHelper
-import com.moose.foodies.util.extensions.clean
-import com.moose.foodies.util.extensions.largeImage
-import com.moose.foodies.util.extensions.shareRecipe
+import com.moose.foodies.util.extensions.*
 import com.moose.foodies.util.onError
 import com.moose.foodies.util.onSuccess
 import dagger.android.AndroidInjection
@@ -46,7 +45,9 @@ class RecipeActivity : AppCompatActivity() {
                 binding.recipeImage.load(url)
                 binding.title.text = recipe.info.title
 
-                binding.back.setOnClickListener { onBackPressed() }
+                binding.back.setOnClickListener {
+                    push<HomeActivity>()
+                }
                 binding.share.setOnClickListener {
                     shareRecipe(recipe.info.title, recipe.id)
                 }
@@ -67,7 +68,7 @@ class RecipeActivity : AppCompatActivity() {
                     else viewModel.addFavorite(recipe)
                 }
             }
-            result.onError { Log.d(this.localClassName, "onCreate: $it") }
+            result.onError { showToast(it) }
         })
 
         viewModel.isFavorite.observe(this, { result ->
@@ -98,7 +99,7 @@ class RecipeActivity : AppCompatActivity() {
         binding.equipmentRecycler.apply {
             val list = instructions.equipment.clean()
             setHasFixedSize(true)
-            adapter = ItemListAdapter(list, "equipment")
+            adapter = ItemListAdapter(list, "equipmen   t")
         }
 
         binding.procedureRecycler.apply {

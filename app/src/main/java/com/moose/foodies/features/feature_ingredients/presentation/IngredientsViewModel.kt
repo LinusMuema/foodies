@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.moose.foodies.features.feature_ingredients.data.IngredientsRepository
 import com.moose.foodies.features.feature_ingredients.domain.Recipe
 import com.moose.foodies.util.Result
+import com.moose.foodies.util.parse
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
@@ -20,9 +21,10 @@ class IngredientsViewModel @Inject constructor(private val repository: Ingredien
         composite.add(
             repository.getRecipes(ingredients)
                 .observeOn(AndroidSchedulers.mainThread())
+                .retry(3)
                 .subscribe(
                     {_recipes.postValue(Result.Success(it))},
-                    {_recipes.postValue(Result.Error(it.message))}
+                    {_recipes.postValue(Result.Error(it.parse()))}
                 )
         )
     }

@@ -12,6 +12,7 @@ import com.moose.foodies.features.feature_recipe.presentation.RecipeActivity
 import com.moose.foodies.util.ActivityHelper
 import com.moose.foodies.util.PreferenceHelper
 import com.moose.foodies.util.extensions.push
+import com.moose.foodies.util.extensions.showToast
 import com.moose.foodies.util.onError
 import com.moose.foodies.util.onSuccess
 import dagger.android.AndroidInjection
@@ -48,7 +49,7 @@ class FavoritesActivity : AppCompatActivity() {
 
                 binding.recyclerView.adapter = favoritesAdapter
             }
-            result.onError { }
+            result.onError {showToast(it) }
         })
 
         setContentView(binding.root)

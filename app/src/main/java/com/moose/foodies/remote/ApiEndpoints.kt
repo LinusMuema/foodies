@@ -6,17 +6,18 @@ import com.moose.foodies.features.feature_favorites.domain.Backup
 import com.moose.foodies.features.feature_favorites.domain.BackupStatus
 import com.moose.foodies.features.feature_home.domain.HomeData
 import com.moose.foodies.features.feature_home.domain.Recipe
+import com.moose.foodies.features.feature_home.domain.RelayResponse
 import com.moose.foodies.features.feature_search.domain.SearchResults
 import io.reactivex.Single
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 import com.moose.foodies.features.feature_ingredients.domain.Recipe as IngredientsSearchRecipe
 
 interface ApiEndpoints {
     @POST("/api/auth/register")
     fun register(@Body credential: Credential): Single<TokenResponse>
+
+    @PUT("/api/auth/relay")
+    fun relaySuccess(): Single<RelayResponse>
 
     @GET("/api/recipes")
     fun getRecipes(): Single<HomeData>

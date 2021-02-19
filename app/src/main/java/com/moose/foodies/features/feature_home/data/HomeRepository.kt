@@ -16,6 +16,8 @@ interface HomeRepository {
 
     fun updateLocalData(data: HomeData): Completable
 
+    fun relaySuccess(): Completable
+
 }
 
 class HomeRepositoryImpl @Inject constructor(
@@ -28,4 +30,6 @@ class HomeRepositoryImpl @Inject constructor(
     override fun getLocalData(): Flowable<HomeData> = dao.getHomeData()
 
     override fun updateLocalData(data: HomeData): Completable = dao.updateHomeData(data)
+
+    override fun relaySuccess(): Completable = api.relaySuccess().toCompletable()
 }
