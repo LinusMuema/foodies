@@ -36,7 +36,7 @@ class RecipeResultsAdapter(private val recipes: List<Recipe>): Adapter<RecipeVie
             val context = root.context
 
             recipeImage.setImageHeight()
-            recipeImage.load(image)
+            recipeImage.load(image){ placeholder(R.drawable.loading) }
             content.recipeName.text = recipe.title.formatRecipeName()
             Log.d("Foodies", "onBindViewHolder: ${recipe.title}")
 

@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.moose.foodies.R
 import com.moose.foodies.databinding.RecipeItemBinding
 import com.moose.foodies.features.feature_home.domain.Item
 import com.moose.foodies.features.feature_recipe.adapters.ItemListAdapter.ItemViewHolder
@@ -28,7 +29,7 @@ class ItemListAdapter(private val items: List<Item>, private val type: String): 
 
             with(binding){
                 itemName.text = item.name
-                itemImage.load(imageUrl)
+                itemImage.load(imageUrl){ placeholder(R.drawable.loading) }
             }
         }
 

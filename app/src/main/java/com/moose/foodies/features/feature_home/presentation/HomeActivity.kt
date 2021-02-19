@@ -76,6 +76,7 @@ class HomeActivity : AppCompatActivity() {
                     binding.item.setImageHeight()
                     binding.recipeName.text = recipe.info.title
                     binding.recipeImage.load(url){
+                        placeholder(R.drawable.loading)
                         transformations(RoundedCornersTransformation(topLeft = 10f, topRight = 10f))
                     }
                     view.setOnClickListener {

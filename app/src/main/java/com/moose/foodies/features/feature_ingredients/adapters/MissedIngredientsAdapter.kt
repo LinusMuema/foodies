@@ -28,7 +28,7 @@ class MissedIngredientsAdapter(
         val context = holder.binding.root.context
 
         with(holder.binding){
-            image.load(ingredient.image)
+            image.load(ingredient.image){ placeholder(R.drawable.loading) }
             name.text = ingredient.name
             amount.text = context.getString(R.string.amount, value, ingredient.unitShort)
         }

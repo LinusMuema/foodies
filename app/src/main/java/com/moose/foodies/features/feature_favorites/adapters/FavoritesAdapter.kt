@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import coil.load
+import com.moose.foodies.R
 import com.moose.foodies.databinding.FavoriteItemBinding
 import com.moose.foodies.features.feature_favorites.adapters.FavoritesAdapter.FavoritesViewHolder
 import com.moose.foodies.features.feature_home.domain.Recipe
@@ -27,7 +28,7 @@ class FavoritesAdapter(
 
         with(holder.binding){
             val url = recipe.info.image.mediumImage()
-            recipeImage.load(url)
+            recipeImage.load(url){ placeholder(R.drawable.loading) }
         }
 
         holder.binding.imageCard.setOnClickListener {
