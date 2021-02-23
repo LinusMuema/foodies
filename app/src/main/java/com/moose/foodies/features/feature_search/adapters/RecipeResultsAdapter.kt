@@ -6,12 +6,12 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import coil.load
 import com.moose.foodies.R
 import com.moose.foodies.databinding.RecipeResultItemBinding
 import com.moose.foodies.databinding.RecipeResultItemBinding.inflate
 import com.moose.foodies.features.feature_search.adapters.RecipeResultsAdapter.RecipeViewHolder
 import com.moose.foodies.features.feature_search.domain.Recipe
+import com.moose.foodies.util.extensions.loadImage
 import com.moose.foodies.util.extensions.setImageHeight
 
 
@@ -38,7 +38,7 @@ class   RecipeResultsAdapter(private val recipes: List<Recipe>): Adapter<RecipeV
             val image = "https://spoonacular.com/recipeImages/${recipe.id}-636x393.jpg"
 
             recipeImage.setImageHeight()
-            recipeImage.load(image){ placeholder(R.drawable.loading) }
+            recipeImage.loadImage(image)
             content.recipeName.text = recipe.title.formatRecipeName()
 
             content.time.text = context.getString(R.string.cook_time, recipe.readyInMinutes)

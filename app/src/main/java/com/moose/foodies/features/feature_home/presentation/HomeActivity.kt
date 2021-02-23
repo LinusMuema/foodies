@@ -5,8 +5,6 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import coil.load
-import coil.transform.RoundedCornersTransformation
 import com.mancj.materialsearchbar.MaterialSearchBar
 import com.moose.foodies.R
 import com.moose.foodies.databinding.ActivityHomeBinding
@@ -88,10 +86,7 @@ class HomeActivity : AppCompatActivity() {
 
                     binding.item.setImageHeight()
                     binding.recipeName.text = recipe.info.title
-                    binding.recipeImage.load(url){
-                        placeholder(R.drawable.loading)
-                        transformations(RoundedCornersTransformation(topLeft = 10f, topRight = 10f))
-                    }
+                    binding.recipeImage.loadRoundedImage(url)
                     view.setOnClickListener {
                         push<RecipeActivity> { it.putExtra("recipeId", recipe.id) }
                     }

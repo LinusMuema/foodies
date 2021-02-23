@@ -4,12 +4,12 @@ import android.view.LayoutInflater.from
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import coil.load
 import com.moose.foodies.R
 import com.moose.foodies.databinding.MissingIngredientBinding
 import com.moose.foodies.databinding.MissingIngredientBinding.inflate
 import com.moose.foodies.features.feature_ingredients.adapters.MissedIngredientsAdapter.MissedIngredientsViewHolder
 import com.moose.foodies.features.feature_ingredients.domain.MissedIngredient
+import com.moose.foodies.util.extensions.loadImage
 
 class MissedIngredientsAdapter(
     private val ingredients: List<MissedIngredient>,
@@ -28,7 +28,7 @@ class MissedIngredientsAdapter(
         val context = holder.binding.root.context
 
         with(holder.binding){
-            image.load(ingredient.image){ placeholder(R.drawable.loading) }
+            image.loadImage(ingredient.image)
             name.text = ingredient.name
             amount.text = context.getString(R.string.amount, value, ingredient.unitShort)
         }
