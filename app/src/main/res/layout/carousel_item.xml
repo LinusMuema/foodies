@@ -9,7 +9,7 @@
         android:id="@+id/recipeImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:foreground="@drawable/opacity_gradient" />
+        android:foreground="@drawable/gradient" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/recipeName"

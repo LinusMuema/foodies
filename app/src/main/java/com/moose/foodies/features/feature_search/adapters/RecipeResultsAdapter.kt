@@ -1,9 +1,8 @@
 package com.moose.foodies.features.feature_search.adapters
 
-import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater.from
 import android.view.ViewGroup
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -16,7 +15,7 @@ import com.moose.foodies.features.feature_search.domain.Recipe
 import com.moose.foodies.util.extensions.setImageHeight
 
 
-class RecipeResultsAdapter(private val recipes: List<Recipe>): Adapter<RecipeViewHolder>() {
+class   RecipeResultsAdapter(private val recipes: List<Recipe>): Adapter<RecipeViewHolder>() {
 
     class RecipeViewHolder(val binding: RecipeResultItemBinding): ViewHolder(binding.root)
 
@@ -28,22 +27,24 @@ class RecipeResultsAdapter(private val recipes: List<Recipe>): Adapter<RecipeVie
     override fun getItemCount(): Int = recipes.size
 
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
+        val context = holder.binding.root.context
         val recipe = recipes[position]
         val url = recipe.sourceUrl.toUri()
+        val builder = CustomTabsIntent.Builder()
+        builder.setToolbarColor(context.getColor(R.color.primary))
+        val intent = builder.build()
 
         with(holder.binding){
             val image = "https://spoonacular.com/recipeImages/${recipe.id}-636x393.jpg"
-            val context = root.context
 
             recipeImage.setImageHeight()
             recipeImage.load(image){ placeholder(R.drawable.loading) }
             content.recipeName.text = recipe.title.formatRecipeName()
-            Log.d("Foodies", "onBindViewHolder: ${recipe.title}")
 
             content.time.text = context.getString(R.string.cook_time, recipe.readyInMinutes)
             content.people.text = context.getString(R.string.servings, recipe.servings)
             content.readMore.setOnClickListener {
-                context.startActivity(Intent(Intent.ACTION_VIEW, url))
+                intent.launchUrl(context, url)
             }
         }
     }

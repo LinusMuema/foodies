@@ -18,7 +18,7 @@ fun Throwable.parse(): String {
             return error.message
         }
         is SocketTimeoutException -> "Connection timed out"
-        is IOException -> "A network error occurred"
+        is IOException -> "No connection available"
         else -> this.message!!
     }
 }

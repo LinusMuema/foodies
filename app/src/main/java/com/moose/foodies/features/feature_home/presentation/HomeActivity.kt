@@ -1,6 +1,7 @@
 package com.moose.foodies.features.feature_home.presentation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -16,10 +17,12 @@ import com.moose.foodies.features.feature_ingredients.presentation.IngredientsAc
 import com.moose.foodies.features.feature_recipe.presentation.RecipeActivity
 import com.moose.foodies.features.feature_search.presentation.SearchActivity
 import com.moose.foodies.util.ActivityHelper
+import com.moose.foodies.util.PreferenceHelper
 import com.moose.foodies.util.extensions.*
 import com.moose.foodies.util.onError
 import com.moose.foodies.util.onSuccess
 import dagger.android.AndroidInjection
+import java.util.*
 import javax.inject.Inject
 
 class HomeActivity : AppCompatActivity() {
@@ -45,16 +48,26 @@ class HomeActivity : AppCompatActivity() {
         setSearchBar()
 
         // Get data
+        val lastUpdate = PreferenceHelper.getLastUpdate(this)
+        val today = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+        if (lastUpdate != today) viewModel.getRemoteData()
+
         viewModel.getLocalData()
-        viewModel.getRemoteData()
         viewModel.data.observe(this, { result ->
             result.onSuccess {
                 binding.motionLayout.transitionToState(R.id.loaded)
                 bindData(it)
-                viewModel.relaySuccess()
             }
             result.onError {
+                Log.d("Foodies", "onCreate: $it")
                 if (it != "daily limit reached") showToast(it)
+            }
+        })
+
+        viewModel.updated.observe(this, {
+            if (it){
+                viewModel.relaySuccess()
+                PreferenceHelper.setLastUpdate(this, today)
             }
         })
 

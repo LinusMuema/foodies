@@ -1,5 +1,6 @@
 package com.moose.foodies.features.feature_home.presentation
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,13 +19,19 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository):
     private val _data = MutableLiveData<Result<HomeData>>()
     val data: LiveData<Result<HomeData>> = _data
 
+    private val _updated = MutableLiveData<Boolean>()
+    val updated: LiveData<Boolean> = _updated
+
     fun getRemoteData(){
         composite.add(
             repository.getRemoteData()
                 .retry(3)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                    { updateLocalData(it) },
+                    {
+                        updateLocalData(it)
+                        _updated.postValue(true)
+                    },
                     { _data.postValue(Result.Error(it.parse())) }
                 )
         )
@@ -43,7 +50,12 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository):
     }
 
     fun relaySuccess(){
-        composite.add(repository.relaySuccess().subscribe())
+        composite.add(
+            repository.relaySuccess()
+                .retry(3)
+                .doOnError { Log.e("Relay", "relaySuccess: ${it.parse()}") }
+                .subscribe()
+        )
     }
 
     private fun updateLocalData(data: HomeData){

@@ -22,7 +22,7 @@
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintTop_toTopOf="parent">
 
-            <CustomAttribute motion:attributeName="foreground" motion:customColorDrawableValue="@android:color/transparent"/>
+            <CustomAttribute motion:attributeName="foreground" motion:customColorDrawableValue="#66000000"/>
 
         </Constraint>
 
