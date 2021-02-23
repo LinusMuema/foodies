@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
+import com.moose.foodies.R
 import com.moose.foodies.databinding.ActivityFavoritesBinding
 import com.moose.foodies.features.feature_favorites.adapters.FavoritesAdapter
 import com.moose.foodies.features.feature_home.domain.Recipe
@@ -38,6 +39,9 @@ class FavoritesActivity : AppCompatActivity() {
 
         viewModel.favorites.observe(this, { result ->
             result.onSuccess { recipes ->
+                if (recipes.isEmpty()) binding.root.transitionToEnd()
+                binding.errorLayout.message.text = resources.getString(R.string.missing_favorites)
+
                 favorites = recipes.toMutableList()
                 val favoritesAdapter = FavoritesAdapter(
                     favorites,
@@ -46,7 +50,6 @@ class FavoritesActivity : AppCompatActivity() {
                         push<RecipeActivity> { it.putExtra("recipeId", id) }
                     }
                 )
-
                 binding.recyclerView.adapter = favoritesAdapter
             }
             result.onError {showToast(it) }
@@ -72,6 +75,8 @@ class FavoritesActivity : AppCompatActivity() {
                 if (event == DISMISS_EVENT_TIMEOUT || event == DISMISS_EVENT_CONSECUTIVE){
                     viewModel.removeFavorite(recipe.id)
                     PreferenceHelper.setBackupStatus(applicationContext, true)
+
+                    if (favorites.isEmpty()) binding.root.transitionToEnd()
                 }
             }
         })
@@ -81,12 +86,7 @@ class FavoritesActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        if (PreferenceHelper.getBackupStatus(this))
-            viewModel.startBackup()
-    }
-
-    fun getBackup() {
-        viewModel.getBackup()
+        if (PreferenceHelper.getBackupStatus(this)) viewModel.startBackup()
     }
 }
 
