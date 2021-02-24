@@ -31,6 +31,7 @@ class   RecipeResultsAdapter(private val recipes: List<Recipe>): Adapter<RecipeV
         val recipe = recipes[position]
         val url = recipe.sourceUrl.toUri()
         val builder = CustomTabsIntent.Builder()
+        builder.setDefaultShareMenuItemEnabled(true)
         builder.setToolbarColor(context.getColor(R.color.primary))
         val intent = builder.build()
 
