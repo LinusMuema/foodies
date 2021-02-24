@@ -9,7 +9,6 @@ import com.moose.foodies.features.feature_auth.presentation.AuthActivity
 import com.moose.foodies.features.feature_home.presentation.HomeActivity
 import com.moose.foodies.util.PreferenceHelper
 import com.moose.foodies.util.extensions.fadeIn
-import com.moose.foodies.util.extensions.hideAllBars
 import com.moose.foodies.util.extensions.pop
 import com.moose.foodies.util.extensions.slideUp
 
@@ -19,8 +18,6 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.hideAllBars()
-
         binding = ActivitySplashBinding.inflate(layoutInflater)
 
         val loggedIn = PreferenceHelper.getLoggedStatus(this)
@@ -33,7 +30,7 @@ class SplashActivity : AppCompatActivity() {
     private fun navigate(destination: () -> Unit){
         Handler(Looper.getMainLooper()).postDelayed({
             destination()
-        }, 3000)
+        }, 1000)
     }
 
     override fun onStart() {

@@ -8,8 +8,6 @@ import com.google.android.material.chip.Chip
 import com.moose.foodies.R
 import com.moose.foodies.databinding.ActivityIngredientsBinding
 import com.moose.foodies.features.feature_ingredients.adapters.IngredientsAdapter
-import com.moose.foodies.util.ActivityHelper
-import com.moose.foodies.util.extensions.hideBottomBar
 import com.moose.foodies.util.extensions.hideKeyPad
 import com.moose.foodies.util.extensions.showToast
 import com.moose.foodies.util.onError
@@ -28,8 +26,6 @@ class IngredientsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
-        ActivityHelper.initialize(this)
-
         binding = ActivityIngredientsBinding.inflate(layoutInflater)
 
         with(binding) {
@@ -48,7 +44,6 @@ class IngredientsActivity : AppCompatActivity() {
 
                 if (ingredient.isNotEmpty()) {
                     hideKeyPad()
-                    hideBottomBar()
                     addIngredient(ingredient.toString())
                     ingredient.clear()
                     root.transitionToState(R.id.loaded)

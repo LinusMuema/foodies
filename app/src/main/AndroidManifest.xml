@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/Theme.Foodies"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup">
 
@@ -41,10 +41,11 @@
         </activity>
         <activity android:name=".features.feature_auth.presentation.AuthActivity" />
         <activity android:name=".features.feature_home.presentation.HomeActivity" />
-        <activity android:name=".features.feature_splash.SplashActivity">
+        <activity
+            android:name=".features.feature_splash.SplashActivity"
+            android:theme="@style/Theme.Foodies.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -8,7 +8,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.moose.foodies.R
 import com.moose.foodies.databinding.ActivitySearchBinding
 import com.moose.foodies.features.feature_search.adapters.SearchViewpagerAdapter
-import com.moose.foodies.util.ActivityHelper
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -30,7 +29,6 @@ class SearchActivity : AppCompatActivity(), HasAndroidInjector {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
-        ActivityHelper.initialize(this)
 
         val query = intent.getStringExtra("query")!!
         val title = resources.getString(R.string.search_query, query)

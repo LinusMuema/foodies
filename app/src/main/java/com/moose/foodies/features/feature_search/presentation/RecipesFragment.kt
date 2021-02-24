@@ -10,7 +10,6 @@ import com.moose.foodies.R
 import com.moose.foodies.databinding.PagerLayoutBinding
 import com.moose.foodies.features.feature_search.adapters.RecipeResultsAdapter
 import com.moose.foodies.features.feature_search.domain.Recipe
-import com.moose.foodies.util.extensions.hideBottomBar
 import com.moose.foodies.util.extensions.showToast
 import com.moose.foodies.util.onError
 import com.moose.foodies.util.onSuccess
@@ -27,7 +26,6 @@ class RecipesFragment : Fragment(R.layout.pager_layout) {
     private lateinit var binding: PagerLayoutBinding
 
     override fun onAttach(context: Context) {
-        this.requireActivity().hideBottomBar()
         AndroidSupportInjection.inject(this)
         super.onAttach(context)
     }

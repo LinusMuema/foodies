@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.moose.foodies.R
 import com.moose.foodies.databinding.ActivityAuthBinding
 import com.moose.foodies.features.feature_home.presentation.HomeActivity
-import com.moose.foodies.util.ActivityHelper
 import com.moose.foodies.util.PreferenceHelper
 import com.moose.foodies.util.extensions.pop
 import com.moose.foodies.util.extensions.showToast
@@ -27,7 +26,6 @@ class AuthActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         AndroidInjection.inject(this)
-        ActivityHelper.initialize(this)
 
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)

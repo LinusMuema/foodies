@@ -12,7 +12,6 @@ import com.moose.foodies.features.feature_home.domain.Instructions
 import com.moose.foodies.features.feature_home.presentation.HomeActivity
 import com.moose.foodies.features.feature_recipe.adapters.ItemListAdapter
 import com.moose.foodies.features.feature_recipe.adapters.ProcedureListAdapter
-import com.moose.foodies.util.ActivityHelper
 import com.moose.foodies.util.PreferenceHelper
 import com.moose.foodies.util.extensions.*
 import com.moose.foodies.util.onError
@@ -32,7 +31,6 @@ class RecipeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
-        ActivityHelper.initialize(this)
 
         // Get id passed via intent
         val id = getRecipeId()

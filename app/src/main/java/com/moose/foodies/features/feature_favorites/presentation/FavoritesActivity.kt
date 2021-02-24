@@ -10,7 +10,6 @@ import com.moose.foodies.databinding.ActivityFavoritesBinding
 import com.moose.foodies.features.feature_favorites.adapters.FavoritesAdapter
 import com.moose.foodies.features.feature_home.domain.Recipe
 import com.moose.foodies.features.feature_recipe.presentation.RecipeActivity
-import com.moose.foodies.util.ActivityHelper
 import com.moose.foodies.util.PreferenceHelper
 import com.moose.foodies.util.extensions.push
 import com.moose.foodies.util.extensions.showToast
@@ -30,7 +29,6 @@ class FavoritesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
-        ActivityHelper.initialize(this)
 
         viewModel.getFavorites()
 

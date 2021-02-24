@@ -1,7 +1,6 @@
 package com.moose.foodies.features.feature_home.presentation
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -14,7 +13,6 @@ import com.moose.foodies.features.feature_home.domain.HomeData
 import com.moose.foodies.features.feature_ingredients.presentation.IngredientsActivity
 import com.moose.foodies.features.feature_recipe.presentation.RecipeActivity
 import com.moose.foodies.features.feature_search.presentation.SearchActivity
-import com.moose.foodies.util.ActivityHelper
 import com.moose.foodies.util.PreferenceHelper
 import com.moose.foodies.util.extensions.*
 import com.moose.foodies.util.onError
@@ -34,7 +32,6 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
-        ActivityHelper.initialize(this)
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
         binding.carousel.setImageHeight()
@@ -57,7 +54,6 @@ class HomeActivity : AppCompatActivity() {
                 bindData(it)
             }
             result.onError {
-                Log.d("Foodies", "onCreate: $it")
                 if (it != "daily limit reached") showToast(it)
             }
         })
@@ -98,9 +94,9 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setSearchBar() {
         binding.searchBar.setOnSearchActionListener(object : MaterialSearchBar.OnSearchActionListener{
-            override fun onButtonClicked(buttonCode: Int) { hideBottomBar() }
+            override fun onButtonClicked(buttonCode: Int) {}
 
-            override fun onSearchStateChanged(enabled: Boolean) { hideBottomBar() }
+            override fun onSearchStateChanged(enabled: Boolean) {}
 
             override fun onSearchConfirmed(text: CharSequence?) {
                 push<SearchActivity> {
@@ -108,10 +104,5 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
         })
-    }
-
-    override fun onResume() {
-        super.onResume()
-        ActivityHelper.initialize(this)
     }
 }
