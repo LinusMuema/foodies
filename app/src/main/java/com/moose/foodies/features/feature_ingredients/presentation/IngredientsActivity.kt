@@ -8,7 +8,9 @@ import com.google.android.material.chip.Chip
 import com.moose.foodies.R
 import com.moose.foodies.databinding.ActivityIngredientsBinding
 import com.moose.foodies.features.feature_ingredients.adapters.IngredientsAdapter
+import com.moose.foodies.features.feature_recipe.presentation.RecipeActivity
 import com.moose.foodies.util.extensions.hideKeyPad
+import com.moose.foodies.util.extensions.push
 import com.moose.foodies.util.extensions.showToast
 import com.moose.foodies.util.onError
 import com.moose.foodies.util.onSuccess
@@ -56,8 +58,10 @@ class IngredientsActivity : AppCompatActivity() {
 
         viewModel.recipes.observe(this, { result ->
             binding.root.transitionToState(R.id.loaded)
-            result.onSuccess {
-                binding.recyclerView.adapter = IngredientsAdapter(it)
+            result.onSuccess { data ->
+                binding.recyclerView.adapter = IngredientsAdapter(data){ id ->
+                    push<RecipeActivity>{ it.putExtra("recipeId", id) }
+                }
             }
             result.onError { showToast(it) }
         })
@@ -80,4 +84,5 @@ class IngredientsActivity : AppCompatActivity() {
             ingredients.remove(ingredient)
         }
     }
+
 }

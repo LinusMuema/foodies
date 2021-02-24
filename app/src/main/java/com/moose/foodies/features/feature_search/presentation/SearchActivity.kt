@@ -52,5 +52,6 @@ class SearchActivity : AppCompatActivity(), HasAndroidInjector {
 
     }
 
+
     override fun androidInjector(): AndroidInjector<Any> = dispatchingAndroidInjector
 }

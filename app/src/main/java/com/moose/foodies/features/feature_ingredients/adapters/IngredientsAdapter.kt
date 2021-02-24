@@ -9,12 +9,13 @@ import com.moose.foodies.databinding.IngredientsSearchItemBinding.inflate
 import com.moose.foodies.features.feature_ingredients.adapters.IngredientsAdapter.RecipeViewHolder
 import com.moose.foodies.features.feature_ingredients.domain.Recipe
 import com.moose.foodies.features.feature_ingredients.domain.clean
-import com.moose.foodies.features.feature_recipe.presentation.RecipeActivity
 import com.moose.foodies.util.extensions.largeImage
 import com.moose.foodies.util.extensions.loadImage
-import com.moose.foodies.util.extensions.push
 
-class IngredientsAdapter(private val recipes: List<Recipe>): Adapter<RecipeViewHolder>() {
+class IngredientsAdapter(
+    private val recipes: List<Recipe>,
+    private val prepare: (id: Int) -> Unit
+): Adapter<RecipeViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
         val binding = inflate(from(parent.context), parent, false)
@@ -24,14 +25,13 @@ class IngredientsAdapter(private val recipes: List<Recipe>): Adapter<RecipeViewH
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
         val recipe = recipes[position]
         val url = recipe.image.largeImage()
-        val context = holder.binding.root.context
 
         with(holder.binding){
             image.loadImage(url)
             recipeName.text = recipe.title
             recyclerView.adapter = MissedIngredientsAdapter(recipe.missedIngredients.clean())
             prepare.setOnClickListener {
-                context.push<RecipeActivity>{ it.putExtra("recipeId", recipe.id) }
+                prepare(recipe.id)
             }
         }
     }
