@@ -68,7 +68,6 @@
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:cursorVisible="false"
             android:fontFamily="@font/regular"
             android:inputType="textEmailAddress" />
 
