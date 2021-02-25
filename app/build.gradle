@@ -15,8 +15,8 @@ android {
         applicationId "com.moose.foodies"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 12
-        versionName "2.02"
+        versionCode 13
+        versionName "2.03"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
