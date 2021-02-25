@@ -1,5 +1,6 @@
 package com.moose.foodies.features.feature_favorites.presentation
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,11 +9,12 @@ import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.moose.foodies.FoodiesApplication
+import com.moose.foodies.features.feature_auth.work.UpdateWorker
 import com.moose.foodies.features.feature_favorites.data.FavoritesRepository
 import com.moose.foodies.features.feature_favorites.work.BackupWorker
-import com.moose.foodies.features.feature_auth.work.UpdateWorker
 import com.moose.foodies.features.feature_home.domain.Recipe
 import com.moose.foodies.util.Result
+import com.moose.foodies.util.parse
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -47,7 +49,7 @@ class FavoritesViewModel @Inject constructor(private val repository: FavoritesRe
             repository.deleteFavorite(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe()
+                .subscribe{ Log.d("Favorites", "removeFavorite: Operation successful") }
         )
     }
 

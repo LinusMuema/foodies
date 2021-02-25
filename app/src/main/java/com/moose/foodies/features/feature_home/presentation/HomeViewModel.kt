@@ -53,8 +53,8 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository):
         composite.add(
             repository.relaySuccess()
                 .retry(3)
-                .doOnError { Log.e("Relay", "relaySuccess: ${it.parse()}") }
-                .subscribe()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { Log.d("HomeActivity", "relaySuccess: Operaton successful") }
         )
     }
 
@@ -63,7 +63,7 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository):
             repository.updateLocalData(data)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe()
+                .subscribe { Log.d("HomeActivity", "updateLocalData: Opeation successful") }
         )
     }
 
