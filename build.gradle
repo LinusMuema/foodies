@@ -1,4 +1,6 @@
 buildscript {
+    ext.room_version = '2.3.0'
+    ext.work_version = '2.6.0'
     ext.compose_version = '1.0.2'
     ext.kotlin_version = '1.5.30'
 
