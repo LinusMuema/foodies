@@ -5,9 +5,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 
 @Composable
-fun FoodiesTheme(content: @Composable () -> Unit){
-    val colors = if (isSystemInDarkTheme()) darkColors else lightColors
-
+fun FoodiesTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit){
+    val colors = if (darkTheme) darkColors else lightColors
     MaterialTheme(
         shapes = shapes,
         colors = colors,

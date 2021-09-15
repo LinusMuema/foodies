@@ -17,33 +17,7 @@
         android:theme="@style/Theme.Foodies"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup">
-
-        <provider
-            android:name="androidx.work.impl.WorkManagerInitializer"
-            android:authorities="${applicationId}.workmanager-init"
-            tools:node="remove"
-            android:exported="false" />
-
-        <activity android:name=".features.feature_ingredients.presentation.IngredientsActivity" />
-        <activity android:name=".features.feature_search.presentation.SearchActivity" />
-        <activity android:name=".features.feature_favorites.presentation.FavoritesActivity" />
-        <activity android:name=".features.feature_recipe.presentation.RecipeActivity">
-
-            <intent-filter android:label="@string/app_name">
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="http"
-                    android:host="foodies.moose.ac"
-                    android:pathPrefix="/recipes" />
-            </intent-filter>
-
-        </activity>
-        <activity android:name=".features.feature_auth.presentation.AuthActivity" />
-        <activity android:name=".features.feature_home.presentation.HomeActivity" />
-        <activity
-            android:name=".features.feature_splash.SplashActivity"
-            android:theme="@style/Theme.Foodies.Splash">
+        <activity android:name=".features.splash.SplashActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

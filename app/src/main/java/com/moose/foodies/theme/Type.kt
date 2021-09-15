@@ -16,70 +16,50 @@ private val Poppins = FontFamily(
 )
 
 val typography = Typography(
-    h1 = TextStyle(
-        fontFamily = Poppins,
-        fontSize = 96.sp,
-        fontWeight = FontWeight.Bold,
-        lineHeight = 117.sp,
-        letterSpacing = (-1.5).sp
-    ),
-    h2 = TextStyle(
-        fontFamily = Poppins,
-        fontSize = 60.sp,
-        fontWeight = FontWeight.Bold,
-        lineHeight = 73.sp,
-        letterSpacing = (-0.5).sp
-    ),
-    h3 = TextStyle(
-        fontFamily = Poppins,
-        fontSize = 48.sp,
-        fontWeight = FontWeight.Normal,
-        lineHeight = 59.sp
-    ),
     h4 = TextStyle(
-        fontFamily = Poppins,
         fontSize = 30.sp,
+        lineHeight = 37.sp,
+        fontFamily = Poppins,
         fontWeight = FontWeight.Bold,
-        lineHeight = 37.sp
     ),
     h5 = TextStyle(
-        fontFamily = Poppins,
         fontSize = 24.sp,
-        fontWeight = FontWeight.Bold,
-        lineHeight = 29.sp
+        lineHeight = 29.sp,
+        fontFamily = Poppins,
+        fontWeight = FontWeight.Normal,
     ),
     h6 = TextStyle(
-        fontFamily = Poppins,
         fontSize = 20.sp,
+        lineHeight = 24.sp,
+        fontFamily = Poppins,
         fontWeight = FontWeight.Normal,
-        lineHeight = 24.sp
     ),
     body1 = TextStyle(
-        fontFamily = Poppins,
         fontSize = 16.sp,
-        fontWeight = FontWeight.Normal,
         lineHeight = 28.sp,
-        letterSpacing = 0.15.sp
+        fontFamily = Poppins,
+        letterSpacing = 0.15.sp,
+        fontWeight = FontWeight.Normal,
     ),
     body2 = TextStyle(
-        fontFamily = Poppins,
         fontSize = 14.sp,
-        fontWeight = FontWeight.Normal,
         lineHeight = 20.sp,
-        letterSpacing = 0.25.sp
+        fontFamily = Poppins,
+        letterSpacing = 0.25.sp,
+        fontWeight = FontWeight.Normal,
     ),
     button = TextStyle(
-        fontFamily = Poppins,
         fontSize = 14.sp,
-        fontWeight = FontWeight.Normal,
         lineHeight = 16.sp,
-        letterSpacing = 1.25.sp
+        fontFamily = Poppins,
+        letterSpacing = 1.25.sp,
+        fontWeight = FontWeight.Normal,
     ),
     caption = TextStyle(
-        fontFamily = Poppins,
         fontSize = 12.sp,
-        fontWeight = FontWeight.Light,
         lineHeight = 16.sp,
-        letterSpacing = 0.4.sp
+        fontFamily = Poppins,
+        letterSpacing = 0.4.sp,
+        fontWeight = FontWeight.Light,
     ),
 )

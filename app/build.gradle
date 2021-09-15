@@ -1,7 +1,7 @@
 plugins {
     id 'kotlin-kapt'
-    id 'kotlin-android'
     id 'com.android.application'
+    id 'kotlin-android'
     id 'org.jetbrains.kotlin.plugin.serialization'
 }
 
@@ -70,6 +70,7 @@ dependencies {
     // accompanist
     implementation "com.google.accompanist:accompanist-pager:$accompanist"
     implementation "com.google.accompanist:accompanist-swiperefresh:$accompanist"
+    implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist"
 
     // Jetpack compose tooling
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"

@@ -1,0 +1,7 @@
+<resources>
+    <style name="Theme.Foodies" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="android:background">@color/primaryLight</item>
+        <item name="android:statusBarColor">@color/primaryLight</item>
+        <item name="android:navigationBarColor">@color/primaryLight</item>
+    </style>
+</resources>
