@@ -1,7 +1,7 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <style name="Theme.Foodies" parent="Theme.MaterialComponents.NoActionBar">
         <item name="android:background">@color/primaryDark</item>
-        <item name="android:statusBarColor">@color/primaryDark</item>
         <item name="android:navigationBarColor">@color/primaryDark</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/primaryDark</item>
     </style>
 </resources>
