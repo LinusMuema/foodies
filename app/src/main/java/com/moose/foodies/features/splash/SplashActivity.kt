@@ -1,7 +1,9 @@
 package com.moose.foodies.features.splash
 
+import android.content.Intent
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
@@ -22,15 +24,26 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.moose.foodies.R
+import com.moose.foodies.components.CenterColumn
+import com.moose.foodies.features.auth.AuthActivity
+import com.moose.foodies.features.navigation.NavigationActivity
 import com.moose.foodies.theme.FoodiesTheme
+import com.moose.foodies.util.Preferences
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
+import javax.inject.Inject
+import kotlin.concurrent.timerTask
 
 @AndroidEntryPoint
 @ExperimentalAnimationApi
 class SplashActivity : ComponentActivity() {
+
+    @Inject lateinit var preferences: Preferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent { Screen() }
+        redirect()
     }
 
     @Preview(name = "Light Theme")
@@ -39,11 +52,7 @@ class SplashActivity : ComponentActivity() {
     private fun Screen(){
         FoodiesTheme {
             Surface(color = MaterialTheme.colors.primary) {
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
+                CenterColumn {
                     val visible by remember { mutableStateOf(true) }
                     AnimatedVisibility(visible = visible, enter = fadeIn()) {
                         Icon(
@@ -56,5 +65,18 @@ class SplashActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    private fun redirect(){
+        val navigate = timerTask {
+            // get the token
+            val token = preferences.getToken()
+            val context = this@SplashActivity
+
+            // navigate to required screen
+            if (token == null) startActivity(Intent(context, AuthActivity::class.java))
+            else startActivity(Intent(context, NavigationActivity::class.java))
+        }
+        Timer().schedule(navigate, 3000)
     }
 }

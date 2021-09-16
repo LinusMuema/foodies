@@ -18,6 +18,9 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup">
         <activity
+            android:name=".features.navigation.NavigationActivity"
+            android:exported="true" />
+        <activity
             android:name=".features.auth.AuthActivity"
             android:exported="true" />
         <activity
