@@ -61,6 +61,11 @@ class AuthActivity : ComponentActivity() {
             OutlinedInput(text = password, label = "Password", onChanged = { password = it })
             SmallSpacing()
             FilledButton(text = "Login", size = 0.85f) {}
+            SmallSpacing()
+            Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()) {
+               Text("Sign up")
+               Text("Forgot password")
+            }
         }
     }
     
