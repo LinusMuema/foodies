@@ -48,13 +48,10 @@ class AuthActivity : ComponentActivity() {
                         tint = MaterialTheme.colors.secondary,
                         painter = painterResource(id = R.drawable.ic_chef),
                     )
-
-                    Crossfade(targetState = screen, animationSpec = tween(300)) { index ->
-                        when (index){
-                            0 -> Login()
-                            1 -> Signup()
-                            2 -> Forgot()
-                        }
+                    when (screen){
+                        0 -> Login()
+                        1 -> Signup()
+                        2 -> Forgot()
                     }
                 }
             }
