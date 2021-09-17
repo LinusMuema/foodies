@@ -1,10 +1,7 @@
 package com.moose.foodies.components
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
@@ -19,7 +16,7 @@ fun FilledButton(text: String, size: Float, loading: Boolean = false, onClick: (
     val style = MaterialTheme.typography.body1
     val color = MaterialTheme.colors.onSecondary
     val label = if (loading) "Loading..." else text
-    val modifier = Modifier.fillMaxWidth(fraction = size).fillMaxHeight(fraction = 0.1f)
+    val modifier = Modifier.fillMaxWidth(fraction = size).height(40.dp)
     val colors = ButtonDefaults.textButtonColors(backgroundColor = MaterialTheme.colors.secondary)
 
     Button(onClick = onClick, modifier = modifier, colors = colors) {

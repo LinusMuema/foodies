@@ -11,8 +11,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,7 +49,7 @@ class AuthActivity : ComponentActivity() {
                     when (screen){
                         0 -> Login()
                         1 -> Signup()
-                        3 -> Forgot()
+                        2 -> Forgot()
                     }
                 }
             }
@@ -62,9 +61,9 @@ class AuthActivity : ComponentActivity() {
     @Composable
     private fun Login(){
         val rowArrangement = Arrangement.SpaceEvenly
-        val email by viewmodel.email.observeAsState("")
-        val toggle by viewmodel.toggle.observeAsState(false)
-        val password by viewmodel.password.observeAsState("")
+        var email by remember { mutableStateOf("") }
+        var password by remember { mutableStateOf("") }
+        var toggle by remember { mutableStateOf(false) }
 
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(text = "Before we get cookin`")
@@ -74,22 +73,22 @@ class AuthActivity : ComponentActivity() {
                 text = email,
                 label = "Email address",
                 type = KeyboardType.Email,
-                onChanged = { viewmodel.changeEmail(it) }
+                onChanged = { email = it }
             )
             OutlinedInput(
                 toggle = toggle,
                 text = password,
                 label = "Password",
                 type = KeyboardType.Password,
-                togglePass = { viewmodel.changeToggle(it) },
-                onChanged = { viewmodel.changePassword(it) }
+                togglePass = { toggle = it },
+                onChanged = { password = it }
             )
             SmallSpacing()
             FilledButton(text = "Login", size = 0.85f) {}
             SmallSpacing()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = rowArrangement) {
                 TextButton(text = "Sign up", onClick = { viewmodel.changeScreen(1) })
-                TextButton(text = "Forgot password", onClick = { viewmodel.changeScreen(1) })
+                TextButton(text = "Forgot password", onClick = { viewmodel.changeScreen(2) })
             }
         }
     }
@@ -98,14 +97,71 @@ class AuthActivity : ComponentActivity() {
     @Preview(name = "Dark Theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
     @Composable
     private fun Forgot(){
-
+        var email by remember { mutableStateOf("") }
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(text = "Forgot your password?")
+            Text(text = "Don't worry. We'll send you a reset link")
+            SmallSpacing()
+            OutlinedInput(
+                text = email,
+                label = "Email address",
+                type = KeyboardType.Email,
+                onChanged = { email  = it }
+            )
+            SmallSpacing()
+            FilledButton(text = "Submit", size = 0.85f) {}
+            SmallSpacing()
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
+                SmallSpacing()
+                TextButton(text = "Back to login", onClick = { viewmodel.changeScreen(0) })
+            }
+        }
     }
 
     @Preview(name = "Light Theme")
     @Preview(name = "Dark Theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
     @Composable
     private fun Signup(){
+        var email by remember { mutableStateOf("") }
+        var confirm by remember { mutableStateOf("") }
+        var password by remember { mutableStateOf("") }
+        var toggle by remember { mutableStateOf(false) }
+        var toggleConfirm by remember { mutableStateOf(false) }
 
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(text = "Don't have an account?")
+            Text(text = "Enter your details below to get started")
+            SmallSpacing()
+            OutlinedInput(
+                text = email,
+                label = "Email address",
+                type = KeyboardType.Email,
+                onChanged = { email  = it }
+            )
+            OutlinedInput(
+                toggle = toggle,
+                text = password,
+                label = "Password",
+                type = KeyboardType.Password,
+                togglePass = { toggle = it },
+                onChanged = { password = it }
+            )
+            OutlinedInput(
+                text = confirm,
+                toggle = toggleConfirm,
+                label = "Confirm password",
+                type = KeyboardType.Password,
+                onChanged = { confirm = it },
+                togglePass = { toggleConfirm = it },
+            )
+            SmallSpacing()
+            FilledButton(text = "Sign up", size = 0.85f) {}
+            SmallSpacing()
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
+                SmallSpacing()
+                TextButton(text = "Back to login", onClick = { viewmodel.changeScreen(0) })
+            }
+        }
     }
     
 }
