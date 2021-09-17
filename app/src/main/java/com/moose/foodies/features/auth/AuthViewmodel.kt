@@ -20,5 +20,9 @@ class AuthViewmodel: ViewModel() {
     val toggle: LiveData<Boolean> = _toggle
     fun changeToggle(value: Boolean) = value.also { _toggle.value = it }
 
+    private val _screen = MutableLiveData(0)
+    val screen: LiveData<Int> = _screen
+    fun changeScreen(value: Int) = value.also { _screen.value = it }
+
 
 }
