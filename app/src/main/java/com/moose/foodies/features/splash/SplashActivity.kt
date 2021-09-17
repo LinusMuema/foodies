@@ -76,7 +76,7 @@ class SplashActivity : ComponentActivity() {
             // navigate to required screen
             if (token == null) startActivity(Intent(context, AuthActivity::class.java))
             else startActivity(Intent(context, NavigationActivity::class.java))
-//            finish()
+            finish()
         }
         Timer().schedule(navigate, 3000)
     }

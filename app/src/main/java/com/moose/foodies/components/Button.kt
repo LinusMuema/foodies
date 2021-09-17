@@ -30,7 +30,7 @@ fun FilledButton(text: String, size: Float, loading: Boolean = false, onClick: (
 @Composable
 fun TextButton(text: String, onClick: () -> Unit){
     val shape = MaterialTheme.shapes.small
-    Box(modifier = Modifier.clip(shape).clickable { onClick }){
+    Box(modifier = Modifier.clip(shape).clickable { onClick() }){
         Text(text = text, modifier = Modifier.padding(10.dp, 20.dp))
     }
 }
