@@ -5,6 +5,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
@@ -46,10 +48,13 @@ class AuthActivity : ComponentActivity() {
                         tint = MaterialTheme.colors.secondary,
                         painter = painterResource(id = R.drawable.ic_chef),
                     )
-                    when (screen){
-                        0 -> Login()
-                        1 -> Signup()
-                        2 -> Forgot()
+
+                    Crossfade(targetState = screen, animationSpec = tween(300)) { index ->
+                        when (index){
+                            0 -> Login()
+                            1 -> Signup()
+                            2 -> Forgot()
+                        }
                     }
                 }
             }

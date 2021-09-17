@@ -8,6 +8,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -53,8 +54,9 @@ class SplashActivity : ComponentActivity() {
         FoodiesTheme {
             Surface(color = MaterialTheme.colors.primary) {
                 CenterColumn {
+                    val animation = fadeIn(animationSpec = tween(2000))
                     val visible by remember { mutableStateOf(true) }
-                    AnimatedVisibility(visible = visible, enter = fadeIn()) {
+                    AnimatedVisibility(visible = visible, enter = animation) {
                         Icon(
                             modifier = Modifier.size(150.dp),
                             contentDescription = "splash icon",
