@@ -26,14 +26,20 @@ fun OutlinedInput(
 ){
     val color = MaterialTheme.colors.onPrimary
     val icon = if (toggle) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
-    val colors = outlinedTextFieldColors(focusedBorderColor = color, focusedLabelColor = color)
     val transformation = if (toggle) VisualTransformation.None else PasswordVisualTransformation()
 
     OutlinedTextField(
         value = text,
-        colors = colors,
         label = { Text(label) },
         onValueChange = onChanged,
+        visualTransformation = transformation,
+        keyboardOptions = KeyboardOptions.Default.copy(keyboardType = type),
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 30.dp, vertical = 5.dp),
+        colors = outlinedTextFieldColors(
+            cursorColor = color,
+            focusedLabelColor = color,
+            focusedBorderColor = color
+        ),
         trailingIcon = {
             if (type == KeyboardType.Password) {
                 IconButton(onClick = { togglePass(!toggle) }) {
@@ -41,8 +47,5 @@ fun OutlinedInput(
                 }
             }
         },
-        visualTransformation = transformation,
-        keyboardOptions = KeyboardOptions.Default.copy(keyboardType = type),
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 30.dp, vertical = 5.dp),
     )
 }
