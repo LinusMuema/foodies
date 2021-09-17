@@ -28,7 +28,7 @@ val secondaryLight = Color(0xffCB4335)
 val lightColors = lightColors(
     onPrimary = textLight,
     primary = primaryLight,
-    onSecondary = textLight,
+    onSecondary = primaryLight,
     secondary = secondaryLight,
     primaryVariant = variantLight,
 )
