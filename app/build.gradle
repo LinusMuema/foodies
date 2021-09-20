@@ -91,6 +91,9 @@ dependencies {
     // serialization
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1'
 
+    // Sentry
+    implementation 'io.sentry:sentry-android:5.1.2'
+
     // Room
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"

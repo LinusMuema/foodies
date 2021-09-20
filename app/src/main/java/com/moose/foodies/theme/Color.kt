@@ -24,8 +24,11 @@ val primaryLight = Color(0xffFBFFFE)
 val variantLight = Color(0xffEEF0F2)
 val secondaryLight = Color(0xffCB4335)
 
+val errorColor = Color(0xffB03A2E)
+
 
 val lightColors = lightColors(
+    error = errorColor,
     onPrimary = textLight,
     primary = primaryLight,
     onSecondary = primaryLight,
@@ -34,6 +37,7 @@ val lightColors = lightColors(
 )
 
 val darkColors = darkColors(
+    error = errorColor,
     onPrimary = textDark,
     primary = primaryDark,
     onSecondary = textDark,

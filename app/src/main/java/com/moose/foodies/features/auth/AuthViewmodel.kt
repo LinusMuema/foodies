@@ -13,4 +13,17 @@ class AuthViewmodel: ViewModel() {
     fun changeScreen(value: Int) = value.also { _screen.value = it }
 
 
+    fun login(email: String, password: String) {
+        TODO("Not yet implemented")
+    }
+
+    fun forgot(email: String) {
+        TODO("Not yet implemented")
+    }
+
+    fun signup(email: String, password: String) {
+        TODO("Not yet implemented")
+    }
+
+
 }

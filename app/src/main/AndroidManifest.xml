@@ -17,6 +17,11 @@
         android:theme="@style/Theme.Foodies"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup">
+
+        <meta-data
+            android:name="io.sentry.dsn"
+            android:value="https://fce7fe200cad4993bf3a5fc7780734c4@o998282.ingest.sentry.io/5964421" />
+
         <activity
             android:name=".features.navigation.NavigationActivity"
             android:exported="true" />
@@ -33,5 +38,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

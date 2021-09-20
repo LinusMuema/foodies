@@ -5,9 +5,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.animation.Crossfade
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -17,7 +14,6 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.moose.foodies.R
 import com.moose.foodies.components.*
 import com.moose.foodies.theme.FoodiesTheme
+import java.util.regex.Pattern
 
 class AuthActivity : ComponentActivity() {
     private val viewmodel: AuthViewmodel by viewModels()
@@ -63,7 +60,11 @@ class AuthActivity : ComponentActivity() {
     @Composable
     private fun Login(){
         val rowArrangement = Arrangement.SpaceEvenly
+
         var email by remember { mutableStateOf("") }
+        val pattern = Pattern.compile(".+@.+\\.[a-z]+")
+        var emailError by remember { mutableStateOf(false) }
+
         var password by remember { mutableStateOf("") }
         var toggle by remember { mutableStateOf(false) }
 
@@ -86,7 +87,12 @@ class AuthActivity : ComponentActivity() {
                 onChanged = { password = it }
             )
             SmallSpacing()
-            FilledButton(text = "Login", size = 0.85f) {}
+            FilledButton(text = "Login", size = 0.85f) {
+                when {
+                    !pattern.matcher(email).matches() -> emailError = true
+                    else -> viewmodel.login(email, password)
+                }
+            }
             SmallSpacing()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = rowArrangement) {
                 TextButton(text = "Sign up", onClick = { viewmodel.changeScreen(1) })
@@ -111,7 +117,9 @@ class AuthActivity : ComponentActivity() {
                 onChanged = { email  = it }
             )
             SmallSpacing()
-            FilledButton(text = "Submit", size = 0.85f) {}
+            FilledButton(text = "Submit", size = 0.85f) {
+                viewmodel.forgot(email)
+            }
             SmallSpacing()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
                 SmallSpacing()
@@ -125,8 +133,13 @@ class AuthActivity : ComponentActivity() {
     @Composable
     private fun Signup(){
         var email by remember { mutableStateOf("") }
+        val pattern = Pattern.compile(".+@.+\\.[a-z]+")
+        var emailError by remember { mutableStateOf(false) }
+
         var confirm by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
+        var passwordError by remember { mutableStateOf(false) }
+
         var toggle by remember { mutableStateOf(false) }
         var toggleConfirm by remember { mutableStateOf(false) }
 
@@ -136,9 +149,11 @@ class AuthActivity : ComponentActivity() {
             SmallSpacing()
             OutlinedInput(
                 text = email,
+                hasError = emailError,
                 label = "Email address",
                 type = KeyboardType.Email,
-                onChanged = { email  = it }
+                onChanged = { email  = it },
+                message = "invalid email address",
             )
             OutlinedInput(
                 toggle = toggle,
@@ -151,13 +166,21 @@ class AuthActivity : ComponentActivity() {
             OutlinedInput(
                 text = confirm,
                 toggle = toggleConfirm,
+                hasError = passwordError,
                 label = "Confirm password",
                 type = KeyboardType.Password,
                 onChanged = { confirm = it },
+                message = "Passwords do not match",
                 togglePass = { toggleConfirm = it },
             )
             SmallSpacing()
-            FilledButton(text = "Sign up", size = 0.85f) {}
+            FilledButton(text = "Sign up", size = 0.85f) {
+                when {
+                    !pattern.matcher(email).matches() -> emailError = true
+                    password != confirm -> passwordError = true
+                    else -> viewmodel.signup(email, password)
+                }
+            }
             SmallSpacing()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
                 SmallSpacing()
