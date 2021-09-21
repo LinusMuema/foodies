@@ -61,38 +61,24 @@ class AuthActivity : ComponentActivity() {
     private fun Login(){
         val rowArrangement = Arrangement.SpaceEvenly
 
-        var email by remember { mutableStateOf("") }
-        val pattern = Pattern.compile(".+@.+\\.[a-z]+")
-        var emailError by remember { mutableStateOf(false) }
-
-        var password by remember { mutableStateOf("") }
-        var toggle by remember { mutableStateOf(false) }
-
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(text = "Before we get cookin`")
             Text(text = "We need to verify your identity.")
             SmallSpacing()
             OutlinedInput(
-                text = email,
                 label = "Email address",
                 type = KeyboardType.Email,
-                onChanged = { email = it }
+                validation = listOf(Validation.EMAIL, Validation.REQUIRED)
             )
             OutlinedInput(
-                toggle = toggle,
-                text = password,
+                toggle = true,
+                togglePass = {},
                 label = "Password",
                 type = KeyboardType.Password,
-                togglePass = { toggle = it },
-                onChanged = { password = it }
+                validation = listOf(Validation.EMAIL, Validation.REQUIRED)
             )
             SmallSpacing()
-            FilledButton(text = "Login", size = 0.85f) {
-                when {
-                    !pattern.matcher(email).matches() -> emailError = true
-                    else -> viewmodel.login(email, password)
-                }
-            }
+            FilledButton(text = "Login", size = 0.85f) {}
             SmallSpacing()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = rowArrangement) {
                 TextButton(text = "Sign up", onClick = { viewmodel.changeScreen(1) })
@@ -105,21 +91,17 @@ class AuthActivity : ComponentActivity() {
     @Preview(name = "Dark Theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
     @Composable
     private fun Forgot(){
-        var email by remember { mutableStateOf("") }
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(text = "Forgot your password?")
             Text(text = "Don't worry. We'll send you a reset link")
             SmallSpacing()
             OutlinedInput(
-                text = email,
                 label = "Email address",
                 type = KeyboardType.Email,
-                onChanged = { email  = it }
+                validation = listOf(Validation.EMAIL, Validation.REQUIRED)
             )
             SmallSpacing()
-            FilledButton(text = "Submit", size = 0.85f) {
-                viewmodel.forgot(email)
-            }
+            FilledButton(text = "Submit", size = 0.85f) {}
             SmallSpacing()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
                 SmallSpacing()
@@ -132,55 +114,31 @@ class AuthActivity : ComponentActivity() {
     @Preview(name = "Dark Theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
     @Composable
     private fun Signup(){
-        var email by remember { mutableStateOf("") }
-        val pattern = Pattern.compile(".+@.+\\.[a-z]+")
-        var emailError by remember { mutableStateOf(false) }
-
-        var confirm by remember { mutableStateOf("") }
-        var password by remember { mutableStateOf("") }
-        var passwordError by remember { mutableStateOf(false) }
-
-        var toggle by remember { mutableStateOf(false) }
-        var toggleConfirm by remember { mutableStateOf(false) }
-
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(text = "Don't have an account?")
             Text(text = "Enter your details below to get started")
             SmallSpacing()
             OutlinedInput(
-                text = email,
-                hasError = emailError,
                 label = "Email address",
                 type = KeyboardType.Email,
-                onChanged = { email  = it },
-                message = "invalid email address",
+                validation = listOf(Validation.EMAIL, Validation.REQUIRED)
             )
             OutlinedInput(
-                toggle = toggle,
-                text = password,
+                toggle = true,
+                togglePass = {},
                 label = "Password",
                 type = KeyboardType.Password,
-                togglePass = { toggle = it },
-                onChanged = { password = it }
+                validation = listOf(Validation.EMAIL, Validation.REQUIRED)
             )
             OutlinedInput(
-                text = confirm,
-                toggle = toggleConfirm,
-                hasError = passwordError,
+                toggle = true,
+                togglePass = {},
                 label = "Confirm password",
                 type = KeyboardType.Password,
-                onChanged = { confirm = it },
-                message = "Passwords do not match",
-                togglePass = { toggleConfirm = it },
+                validation = listOf(Validation.EMAIL, Validation.REQUIRED)
             )
             SmallSpacing()
-            FilledButton(text = "Sign up", size = 0.85f) {
-                when {
-                    !pattern.matcher(email).matches() -> emailError = true
-                    password != confirm -> passwordError = true
-                    else -> viewmodel.signup(email, password)
-                }
-            }
+            FilledButton(text = "Sign up", size = 0.85f) {}
             SmallSpacing()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
                 SmallSpacing()
