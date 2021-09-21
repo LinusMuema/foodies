@@ -71,8 +71,7 @@ class AuthActivity : ComponentActivity() {
                 validation = listOf(Validation.EMAIL, Validation.REQUIRED)
             )
             OutlinedInput(
-                toggle = true,
-                togglePass = {},
+                hide = true,
                 label = "Password",
                 type = KeyboardType.Password,
                 validation = listOf(Validation.EMAIL, Validation.REQUIRED)
@@ -114,6 +113,7 @@ class AuthActivity : ComponentActivity() {
     @Preview(name = "Dark Theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
     @Composable
     private fun Signup(){
+
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(text = "Don't have an account?")
             Text(text = "Enter your details below to get started")
@@ -124,15 +124,13 @@ class AuthActivity : ComponentActivity() {
                 validation = listOf(Validation.EMAIL, Validation.REQUIRED)
             )
             OutlinedInput(
-                toggle = true,
-                togglePass = {},
+                hide = true,
                 label = "Password",
                 type = KeyboardType.Password,
                 validation = listOf(Validation.EMAIL, Validation.REQUIRED)
             )
             OutlinedInput(
-                toggle = true,
-                togglePass = {},
+                hide = true,
                 label = "Confirm password",
                 type = KeyboardType.Password,
                 validation = listOf(Validation.EMAIL, Validation.REQUIRED)
