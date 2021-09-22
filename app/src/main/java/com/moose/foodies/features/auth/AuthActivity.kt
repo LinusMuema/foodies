@@ -1,5 +1,6 @@
 package com.moose.foodies.features.auth
 
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
@@ -7,10 +8,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -21,8 +19,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.moose.foodies.R
 import com.moose.foodies.components.*
+import com.moose.foodies.features.navigation.NavigationActivity
 import com.moose.foodies.theme.FoodiesTheme
+import com.moose.foodies.util.onError
+import com.moose.foodies.util.onSuccess
+import com.moose.foodies.util.toast
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AuthActivity : ComponentActivity() {
     private val viewmodel: AuthViewmodel by viewModels()
 
@@ -36,6 +40,14 @@ class AuthActivity : ComponentActivity() {
     @Composable
     private fun Screen(){
         val screen by viewmodel.screen.observeAsState(0)
+
+        viewmodel.result.observe(this, {
+            viewmodel.changeLoading(false)
+
+            it.onError { error -> toast(error) }
+            it.onSuccess { startActivity(Intent(this, NavigationActivity::class.java)) }
+        })
+
         FoodiesTheme {
             Surface(color = MaterialTheme.colors.primary) {
                 CenterColumn {
@@ -60,6 +72,7 @@ class AuthActivity : ComponentActivity() {
     @Composable
     private fun Login(){
         val rowArrangement = Arrangement.SpaceEvenly
+        val loading by viewmodel.loading.observeAsState(false)
         val passwordState = remember { TextFieldState(validators = listOf(Required())) }
         val emailState = remember { TextFieldState(validators = listOf(Email(), Required())) }
 
@@ -80,12 +93,12 @@ class AuthActivity : ComponentActivity() {
                 type = KeyboardType.Password,
             )
             SmallSpacing()
-            FilledButton(text = "Login", size = 0.85f) {
+            FilledButton(text = "Login", loading = loading, size = 0.85f) {
                 emailState.validate()
                 passwordState.validate()
 
-                if (!emailState.hasError && !passwordState.hasError){
-                    Log.d("Form", "Login: We are good to go")
+                if (!emailState.hasError && !passwordState.hasError && !loading){
+                    viewmodel.login(emailState.text, passwordState.text)
                 }
             }
             SmallSpacing()
@@ -100,6 +113,7 @@ class AuthActivity : ComponentActivity() {
     @Preview(name = "Dark Theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
     @Composable
     private fun Forgot(){
+        val loading by viewmodel.loading.observeAsState(false)
         val emailState = remember { TextFieldState(validators = listOf(Email(), Required())) }
 
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -112,7 +126,12 @@ class AuthActivity : ComponentActivity() {
                 type = KeyboardType.Email,
             )
             SmallSpacing()
-            FilledButton(text = "Submit", size = 0.85f) {}
+            FilledButton(text = "Submit", size = 0.85f, loading = loading) {
+                emailState.validate()
+                if (!emailState.hasError && !loading) {
+                    viewmodel.forgot(emailState.text)
+                }
+            }
             SmallSpacing()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
                 SmallSpacing()
@@ -125,6 +144,7 @@ class AuthActivity : ComponentActivity() {
     @Preview(name = "Dark Theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
     @Composable
     private fun Signup(){
+        val loading by viewmodel.loading.observeAsState(false)
         val confirmState = remember { TextFieldState(validators = listOf(Required())) }
         val passwordState = remember { TextFieldState(validators = listOf(Required())) }
         val emailState = remember { TextFieldState(validators = listOf(Email(), Required())) }
@@ -151,7 +171,17 @@ class AuthActivity : ComponentActivity() {
                 type = KeyboardType.Password,
             )
             SmallSpacing()
-            FilledButton(text = "Sign up", size = 0.85f) {}
+            FilledButton(text = "Sign up", size = 0.85f, loading = loading) {
+                emailState.validate()
+                confirmState.validate()
+                passwordState.validate()
+
+                if (confirmState.text != passwordState.text){
+                    confirmState.showError("passwords do not match")
+                } else if (!passwordState.hasError && !emailState.hasError && !loading){
+                    viewmodel.signup(emailState.text, passwordState.text)
+                }
+            }
             SmallSpacing()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
                 SmallSpacing()

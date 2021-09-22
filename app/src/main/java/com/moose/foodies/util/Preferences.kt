@@ -3,8 +3,17 @@ package com.moose.foodies.util
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Inject
+
+@EntryPoint
+@InstallIn(SingletonComponent::class)
+interface PreferencesHelper {
+    fun preferences(): Preferences
+}
 
 class Preferences @Inject constructor(@ApplicationContext context: Context) {
 

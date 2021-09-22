@@ -9,7 +9,7 @@ import retrofit2.http.Path
 
 interface ApiEndpoints {
 
-    @POST("/api/users/login")
+    @POST("/api/auth/login")
     suspend fun login(@Body credentials: Credentials): Auth
 
     @POST("/api/auth/signup")

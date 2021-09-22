@@ -24,7 +24,7 @@ open class TextFieldState (private val validators: List<Validators>){
     var text: String by mutableStateOf("")
     var hasError: Boolean by mutableStateOf(false)
 
-    private fun showError(error: String){
+    fun showError(error: String){
         hasError = true
         message = error
     }
@@ -35,7 +35,6 @@ open class TextFieldState (private val validators: List<Validators>){
     }
 
     fun validate() {
-        println(validators)
         for (validator in validators){
             when (validator){
                 is Email -> if (!email()) showError(validator.message)

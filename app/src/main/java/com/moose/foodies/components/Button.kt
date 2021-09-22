@@ -19,7 +19,7 @@ fun FilledButton(text: String, size: Float, loading: Boolean = false, onClick: (
     val modifier = Modifier.fillMaxWidth(fraction = size).height(40.dp)
     val colors = ButtonDefaults.textButtonColors(backgroundColor = MaterialTheme.colors.secondary)
 
-    Button(onClick = onClick, modifier = modifier, colors = colors) {
+    Button(onClick = onClick, modifier = modifier, colors = colors, enabled = !loading) {
         Text(label, style = style, color = color)
     }
 }

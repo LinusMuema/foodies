@@ -13,11 +13,12 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
-@ExperimentalSerializationApi
 @Module
+@ExperimentalSerializationApi
 @InstallIn(SingletonComponent::class)
 object NetworkService {
-    private val baseUrl = "http://foodies.moose.ac/"
+
+    private const val baseUrl = "http://foodies.moose.ac/"
 
     private val level = HttpLoggingInterceptor.Level.BODY
     private val interceptor = HttpLoggingInterceptor().setLevel(level)
@@ -27,11 +28,12 @@ object NetworkService {
 
 
     private val client = OkHttpClient.Builder()
-        .addInterceptor(interceptor)
         .addInterceptor(Authenticator)
+        .addInterceptor(interceptor)
         .build()
 
     private val retrofit = Retrofit.Builder()
+        .addConverterFactory(converter)
         .baseUrl(baseUrl)
         .client(client)
         .build()
