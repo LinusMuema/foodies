@@ -2,6 +2,7 @@ package com.moose.foodies.features.auth
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -21,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import com.moose.foodies.R
 import com.moose.foodies.components.*
 import com.moose.foodies.theme.FoodiesTheme
-import java.util.regex.Pattern
 
 class AuthActivity : ComponentActivity() {
     private val viewmodel: AuthViewmodel by viewModels()
@@ -60,24 +60,34 @@ class AuthActivity : ComponentActivity() {
     @Composable
     private fun Login(){
         val rowArrangement = Arrangement.SpaceEvenly
+        val passwordState = remember { TextFieldState(validators = listOf(Required())) }
+        val emailState = remember { TextFieldState(validators = listOf(Email(), Required())) }
 
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(text = "Before we get cookin`")
             Text(text = "We need to verify your identity.")
             SmallSpacing()
+
             OutlinedInput(
+                state = emailState,
                 label = "Email address",
                 type = KeyboardType.Email,
-                validation = listOf(Validation.EMAIL, Validation.REQUIRED)
             )
             OutlinedInput(
                 hide = true,
                 label = "Password",
+                state = passwordState,
                 type = KeyboardType.Password,
-                validation = listOf(Validation.EMAIL, Validation.REQUIRED)
             )
             SmallSpacing()
-            FilledButton(text = "Login", size = 0.85f) {}
+            FilledButton(text = "Login", size = 0.85f) {
+                emailState.validate()
+                passwordState.validate()
+
+                if (!emailState.hasError && !passwordState.hasError){
+                    Log.d("Form", "Login: We are good to go")
+                }
+            }
             SmallSpacing()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = rowArrangement) {
                 TextButton(text = "Sign up", onClick = { viewmodel.changeScreen(1) })
@@ -90,14 +100,16 @@ class AuthActivity : ComponentActivity() {
     @Preview(name = "Dark Theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
     @Composable
     private fun Forgot(){
+        val emailState = remember { TextFieldState(validators = listOf(Email(), Required())) }
+
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(text = "Forgot your password?")
             Text(text = "Don't worry. We'll send you a reset link")
             SmallSpacing()
             OutlinedInput(
+                state = emailState,
                 label = "Email address",
                 type = KeyboardType.Email,
-                validation = listOf(Validation.EMAIL, Validation.REQUIRED)
             )
             SmallSpacing()
             FilledButton(text = "Submit", size = 0.85f) {}
@@ -113,27 +125,30 @@ class AuthActivity : ComponentActivity() {
     @Preview(name = "Dark Theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
     @Composable
     private fun Signup(){
+        val confirmState = remember { TextFieldState(validators = listOf(Required())) }
+        val passwordState = remember { TextFieldState(validators = listOf(Required())) }
+        val emailState = remember { TextFieldState(validators = listOf(Email(), Required())) }
 
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(text = "Don't have an account?")
             Text(text = "Enter your details below to get started")
             SmallSpacing()
             OutlinedInput(
+                state = emailState,
                 label = "Email address",
                 type = KeyboardType.Email,
-                validation = listOf(Validation.EMAIL, Validation.REQUIRED)
             )
             OutlinedInput(
                 hide = true,
                 label = "Password",
+                state = passwordState,
                 type = KeyboardType.Password,
-                validation = listOf(Validation.EMAIL, Validation.REQUIRED)
             )
             OutlinedInput(
                 hide = true,
+                state = confirmState,
                 label = "Confirm password",
                 type = KeyboardType.Password,
-                validation = listOf(Validation.EMAIL, Validation.REQUIRED)
             )
             SmallSpacing()
             FilledButton(text = "Sign up", size = 0.85f) {}
