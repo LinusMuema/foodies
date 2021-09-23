@@ -32,13 +32,14 @@ class AuthActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent { Screen() }
+        setContent { Content() }
     }
 
     @Preview(name = "Light Theme")
     @Preview(name = "Dark Theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
     @Composable
-    private fun Screen(){
+    private fun Content
+                (){
         val screen by viewmodel.screen.observeAsState(0)
 
         viewmodel.result.observe(this, {

@@ -43,14 +43,14 @@ class SplashActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent { Screen() }
+        setContent { Content() }
         redirect()
     }
 
     @Preview(name = "Light Theme")
     @Preview(name = "Dark Theme", uiMode = UI_MODE_NIGHT_YES)
     @Composable
-    private fun Screen(){
+    private fun Content(){
         FoodiesTheme {
             Surface(color = MaterialTheme.colors.primary) {
                 CenterColumn {
