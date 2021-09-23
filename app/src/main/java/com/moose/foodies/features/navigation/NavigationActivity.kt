@@ -4,16 +4,20 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
@@ -53,18 +57,24 @@ class NavigationActivity : ComponentActivity() {
                         screens.forEach { screen ->
                             BottomNavigationItem(
                                 alwaysShowLabel = false,
+                                label = { Text(stringResource(screen.name)) },
                                 selectedContentColor = MaterialTheme.colors.onSurface,
                                 unselectedContentColor = MaterialTheme.colors.secondaryVariant,
-                                icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
-                                label = { Text(stringResource(screen.resourceId)) },
                                 selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+                                icon = {
+                                    Icon(
+                                        painter = painterResource(screen.icon),
+                                        modifier = Modifier.size(24.dp),
+                                        contentDescription = null
+                                    )
+                               },
                                 onClick = {
                                     navController.navigate(screen.route) {
-                                        popUpTo(navController.graph.findStartDestination().id) {
-                                            saveState = true
-                                        }
                                         restoreState = true
                                         launchSingleTop = true
+
+                                        val destination = navController.graph.findStartDestination().id
+                                        popUpTo(destination) { saveState = true }
                                     }
                                 }
                             )
@@ -84,10 +94,10 @@ class NavigationActivity : ComponentActivity() {
     }
 }
 
-sealed class Screen(val route: String, @StringRes val resourceId: Int) {
-    object Home : Screen("/home", R.string.home)
-    object Fridge : Screen("/fridge", R.string.fridge)
-    object Explore : Screen("/explore", R.string.explore)
-    object Profile : Screen("/profile", R.string.profile)
-    object Favorites : Screen("/favorites", R.string.favorites)
+sealed class Screen(val route: String, @StringRes val name: Int, @DrawableRes val icon: Int) {
+    object Home : Screen("/home", R.string.home, R.drawable.ic_home)
+    object Fridge : Screen("/fridge", R.string.fridge, R.drawable.ic_fridge)
+    object Explore : Screen("/explore", R.string.explore, R.drawable.ic_explore)
+    object Profile : Screen("/profile", R.string.profile, R.drawable.ic_profile)
+    object Favorites : Screen("/favorites", R.string.favorites, R.drawable.ic_favorites)
 }
