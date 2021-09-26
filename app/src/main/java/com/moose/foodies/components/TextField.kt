@@ -68,7 +68,14 @@ fun OutlinedInput(label: String, type: KeyboardType, hide: Boolean = false, stat
         .fillMaxWidth()
         .padding(horizontal = 30.dp, vertical = 5.dp)
     val transformation = if (hidden)  PasswordVisualTransformation() else VisualTransformation.None
-    val colors = Colors(cursorColor = color, focusedLabelColor = color, focusedBorderColor = color)
+    val colors = Colors(
+        cursorColor = color,
+        focusedLabelColor = color,
+        trailingIconColor = color,
+        focusedBorderColor = color,
+        unfocusedLabelColor = color,
+        unfocusedBorderColor = color,
+    )
 
     Column {
         OutlinedTextField(

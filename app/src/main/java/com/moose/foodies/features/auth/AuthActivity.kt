@@ -52,7 +52,10 @@ class AuthActivity : ComponentActivity() {
             viewmodel.changeLoading(false)
 
             it.onError { error -> toast(error) }
-            it.onSuccess { startActivity(Intent(this, NavigationActivity::class.java)) }
+            it.onSuccess {
+                startActivity(Intent(this, NavigationActivity::class.java))
+                finish()
+            }
         })
 
         FoodiesTheme {
