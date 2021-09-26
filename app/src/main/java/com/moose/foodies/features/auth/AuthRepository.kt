@@ -26,6 +26,6 @@ interface AuthRepository {
 abstract class AuthRepositoryBinding {
 
     @Binds
-    abstract fun provideAuthRepository(impl: AuthRepositoryImpl): AuthRepository
+    abstract fun provideRepository(impl: AuthRepositoryImpl): AuthRepository
 }
 

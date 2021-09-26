@@ -24,6 +24,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.pager.ExperimentalPagerApi
 import com.moose.foodies.R
 import com.moose.foodies.features.explore.Explore
 import com.moose.foodies.features.favorites.Favorites
@@ -32,7 +33,10 @@ import com.moose.foodies.features.home.Home
 import com.moose.foodies.features.navigation.Screen.*
 import com.moose.foodies.features.profile.Profile
 import com.moose.foodies.theme.FoodiesTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
+@ExperimentalPagerApi
 class NavigationActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +68,7 @@ class NavigationActivity : ComponentActivity() {
                                 icon = {
                                     Icon(
                                         painter = painterResource(screen.icon),
-                                        modifier = Modifier.size(24.dp),
+                                        modifier = Modifier.size(22.dp),
                                         contentDescription = null
                                     )
                                },
@@ -82,7 +86,7 @@ class NavigationActivity : ComponentActivity() {
                     }
                 }) {
                     NavHost(navController, startDestination = Home.route, Modifier.padding(it)) {
-                        composable(Home.route) { Home(navController) }
+                        composable(Home.route) { Home() }
                         composable(Fridge.route) { Fridge(navController) }
                         composable(Explore.route) { Explore(navController) }
                         composable(Profile.route) { Profile(navController) }
