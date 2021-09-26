@@ -41,8 +41,8 @@ fun Home(){
         SmallSpacing()
         HorizontalPager(
             state = pagerState,
-            itemSpacing = 20.dp,
-            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.Start,
+            modifier = Modifier.fillMaxWidth()
         ) {
             RecipeCard()
         }
@@ -65,7 +65,10 @@ private fun Header(profile: Profile?){
             Spacer(modifier = Modifier)
             Box(
                 contentAlignment = Alignment.Center,
-                modifier = Modifier.size(36.dp).clip(MaterialTheme.shapes.large).clickable { },
+                modifier = Modifier
+                    .size(36.dp)
+                    .clip(MaterialTheme.shapes.large)
+                    .clickable { },
             ) {
                 Icon(
                     modifier = Modifier.size(24.dp),
@@ -94,16 +97,18 @@ private fun TimeCaption(){
 
 @Composable
 private fun RecipeCard(){
-    Card(modifier = Modifier.fillMaxWidth(0.75f).fillMaxHeight(0.275f)) {
-        Image(
-            modifier = Modifier.fillMaxWidth(),
-            contentScale = ContentScale.Crop,
-            painter = painterResource(id = R.drawable.sample),
-            contentDescription = "sample"
-        )
-        Box(modifier = Modifier.fillMaxSize()){
-            Column {
+    Box(modifier = Modifier.padding(start = 10.dp, end = 10.dp)){
+        Card(modifier = Modifier.fillMaxWidth(0.85f).fillMaxHeight(0.275f)) {
+            Image(
+                modifier = Modifier.fillMaxWidth(),
+                contentScale = ContentScale.Crop,
+                painter = painterResource(id = R.drawable.sample),
+                contentDescription = "sample"
+            )
+            Box(modifier = Modifier.fillMaxSize()){
+                Column {
 
+                }
             }
         }
     }
