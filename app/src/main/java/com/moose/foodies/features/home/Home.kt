@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -45,10 +46,6 @@ fun Home(){
         ) {
             RecipeCard()
         }
-        HorizontalPagerIndicator(
-            pagerState = pagerState,
-            modifier = Modifier.align(Alignment.CenterHorizontally).padding(16.dp),
-        )
     }
 }
 
@@ -57,7 +54,12 @@ private fun Header(profile: Profile?){
     Box(modifier = Modifier.padding(10.dp)) {
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Column {
-                Text("Hi ${profile?.username},", style = MaterialTheme.typography.h5)
+                Text(
+                    "Hi ${profile?.username},",
+                    fontWeight = FontWeight.SemiBold,
+                    style = MaterialTheme.typography.h5,
+                    color = MaterialTheme.colors.onSurface
+                )
                 TimeCaption()
             }
             Spacer(modifier = Modifier)
