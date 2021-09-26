@@ -1,7 +1,8 @@
 package com.moose.foodies.remote
 
-import com.moose.foodies.features.auth.Auth
-import com.moose.foodies.features.auth.Credentials
+import com.moose.foodies.models.Auth
+import com.moose.foodies.models.Credentials
+import okhttp3.ResponseBody
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -16,5 +17,5 @@ interface ApiEndpoints {
     suspend fun signup(@Body credentials: Credentials): Auth
 
     @GET("/api/auth/forgot/{email}")
-    suspend fun forgot(@Path("email") email: String): Auth
+    suspend fun forgot(@Path("email") email: String): ResponseBody
 }

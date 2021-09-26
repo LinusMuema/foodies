@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.moose.foodies.models.Auth
+import com.moose.foodies.models.Credentials
 import com.moose.foodies.remote.ApiEndpoints
 import com.moose.foodies.util.Preferences
 import com.moose.foodies.util.parse
@@ -14,10 +16,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AuthViewmodel @Inject constructor(
-    private val api: ApiEndpoints,
-    private val preferences: Preferences
-): ViewModel() {
+class AuthViewmodel @Inject constructor(private val authRepository: AuthRepository): ViewModel() {
 
     private val _screen = MutableLiveData(0)
     val screen: LiveData<Int> = _screen
@@ -38,18 +37,15 @@ class AuthViewmodel @Inject constructor(
     fun login(email: String, password: String) {
         _loading.value = true
         viewModelScope.launch(handler) {
-            val result = api.login(Credentials(email, password))
+            val result = authRepository.login(Credentials(email, password))
             _result.value = Result.Success(result)
-
-            // set the user token
-            preferences.setToken(result.token)
         }
     }
 
     fun forgot(email: String) {
         _loading.value = true
         viewModelScope.launch(handler) {
-            api.forgot(email)
+            authRepository.forgot(email)
 
             changeScreen(0)
             _result.value = Result.Error("check your email for code")
@@ -59,11 +55,8 @@ class AuthViewmodel @Inject constructor(
     fun signup(email: String, password: String) {
         _loading.value = true
         viewModelScope.launch(handler) {
-            val result = api.signup(Credentials(email, password))
+            val result = authRepository.signup(Credentials(email, password))
             _result.value = Result.Success(result)
-
-            // set the user token
-            preferences.setToken(result.token)
         }
     }
 }
