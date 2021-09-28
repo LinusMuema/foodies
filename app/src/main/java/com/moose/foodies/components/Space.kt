@@ -7,6 +7,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
+fun TinySpacing() = Box(modifier = Modifier.padding(2.5.dp))
+
+@Composable
 fun SmallSpacing() = Box(modifier = Modifier.padding(10.dp))
 
 @Composable

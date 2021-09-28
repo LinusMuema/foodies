@@ -17,7 +17,7 @@ val textDark = Color(0xffFBFFFE)
 val primaryDark = Color(0xff082032)
 val variantDark = Color(0xff2C394B)
 val secondaryDark = Color(0xff2C394B)
-val secondaryVariant = Color(0xff808B96)
+val secondaryVariant = Color(0xff566573)
 
 // Light colors
 val textLight = Color(0xff1B1B1E)
