@@ -105,5 +105,5 @@ sealed class Screen(val route: String, @StringRes val name: Int, @DrawableRes va
     object Fridge : Screen("/fridge", R.string.fridge, R.drawable.ic_fridge)
     object Explore : Screen("/explore", R.string.explore, R.drawable.ic_explore)
     object Profile : Screen("/profile", R.string.profile, R.drawable.ic_profile)
-    object Favorites : Screen("/favorites", R.string.favorites, R.drawable.ic_favorites)
+    object Favorites : Screen("/favorites", R.string.favorites, R.drawable.ic_star)
 }

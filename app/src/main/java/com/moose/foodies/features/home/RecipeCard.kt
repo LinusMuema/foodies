@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.Color.Companion.White
@@ -37,16 +38,14 @@ import com.moose.foodies.components.TinySpacing
 fun RecipeCard(){
     val arrangement = SpaceBetween
     val timeGray = Gray.copy(.8f)
-    val variant = colors.secondaryVariant
 
     // create the gradient
+    val variant = colors.secondaryVariant
     val colors = listOf(Transparent, Transparent, Transparent, variant)
     val gradient = Brush.verticalGradient(colors = colors)
 
     Box(modifier = Modifier.padding(start = 10.dp, end = 10.dp)){
-        Card(modifier = Modifier
-            .fillMaxWidth(0.85f)
-            .fillMaxHeight(0.275f), elevation = 5.dp) {
+        Card(modifier = Modifier.width(300.dp).height(175.dp), elevation = 5.dp) {
             Image(
                 modifier = Modifier.fillMaxWidth(),
                 contentScale = Crop,
@@ -62,7 +61,7 @@ fun RecipeCard(){
                     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = arrangement) {
                         Box(modifier = Modifier
                             .clip(shapes.medium)
-                            .blur(30.dp)
+                            .background(timeGray)
                             .padding(5.dp)) {
                             Row (verticalAlignment = Alignment.CenterVertically){
                                 TinySpacing()
@@ -80,7 +79,7 @@ fun RecipeCard(){
                         Box(modifier = Modifier
                             .clickable { }
                             .clip(shapes.large)
-                            .background(variant)
+                            .background(White)
                             .padding(2.5.dp)){
                             Image(
                                 painter = rememberImagePainter(
@@ -95,9 +94,9 @@ fun RecipeCard(){
                         }
                     }
                     Text(
-                        "Pancakes",
+                        text = "Pancakes",
                         style = typography.h6.copy(color = White),
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Medium
                     )
                 }
             }
