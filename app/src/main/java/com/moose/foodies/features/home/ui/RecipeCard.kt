@@ -1,4 +1,4 @@
-package com.moose.foodies.features.home
+package com.moose.foodies.features.home.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

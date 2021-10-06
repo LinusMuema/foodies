@@ -1,4 +1,4 @@
-package com.moose.foodies.features.home
+package com.moose.foodies.features.home.ui
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -37,6 +37,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.moose.foodies.components.SmallSpacing
+import com.moose.foodies.features.home.ui.RecipeItems
 import kotlinx.coroutines.launch
 
 @Composable

@@ -1,4 +1,4 @@
-package com.moose.foodies.features.auth
+package com.moose.foodies.features.auth.ui
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
@@ -16,6 +16,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.moose.foodies.components.*
+import com.moose.foodies.features.auth.AuthViewmodel
 
 @Preview(name = "Light Theme")
 @Preview(name = "Dark Theme", uiMode = Configuration.UI_MODE_NIGHT_YES)

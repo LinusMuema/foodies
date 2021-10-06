@@ -26,7 +26,7 @@
             android:name=".features.navigation.NavigationActivity"
             android:exported="true" />
         <activity
-            android:name=".features.auth.AuthActivity"
+            android:name=".features.auth.ui.AuthActivity"
             android:exported="true" />
         <activity
             android:name=".features.splash.SplashActivity"
