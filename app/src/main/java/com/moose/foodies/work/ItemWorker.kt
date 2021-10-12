@@ -1,8 +1,10 @@
 package com.moose.foodies.work
 
 import android.content.Context
+import android.util.Log
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
+import androidx.work.Data
 import androidx.work.WorkerParameters
 import com.moose.foodies.local.ItemsDao
 import com.moose.foodies.remote.ApiEndpoints
@@ -22,19 +24,11 @@ class ItemWorker @AssistedInject constructor(
 ): CoroutineWorker(appContext, params) {
 
     override suspend fun doWork(): Result {
-        // 1. get the last update timestamp from preferences
         val update = preferences.getUpdate()
-
-        // 2. Get the items from network
         val items = api.getItems(update)
-
-        // 3. Add items to local db
         dao.addItems(items)
-
-        // 4. update our "update" record in preferences
         val now = SimpleDateFormat("yyyy:MM:dd_HH:mm:ss", Locale.US).format(Date())
         preferences.setUpdate(now)
-
         return Result.success()
     }
 }
