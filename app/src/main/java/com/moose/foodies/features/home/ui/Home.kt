@@ -37,6 +37,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.moose.foodies.components.SmallSpacing
+import com.moose.foodies.features.home.HomeViewmodel
 import com.moose.foodies.features.home.ui.RecipeItems
 import kotlinx.coroutines.launch
 

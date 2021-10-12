@@ -1,6 +1,5 @@
 package com.moose.foodies.components
 
-import android.util.Log
 import android.util.Patterns
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -20,8 +19,8 @@ import androidx.compose.material.TextFieldDefaults.outlinedTextFieldColors as Co
 
 open class TextFieldState (private val validators: List<Validators>){
 
-    var message: String by mutableStateOf("")
     var text: String by mutableStateOf("")
+    var message: String by mutableStateOf("")
     var hasError: Boolean by mutableStateOf(false)
 
     fun showError(error: String){

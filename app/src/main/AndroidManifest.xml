@@ -23,6 +23,10 @@
             android:value="https://fce7fe200cad4993bf3a5fc7780734c4@o998282.ingest.sentry.io/5964421" />
 
         <activity
+            android:name=".features.add.AddActivity"
+            android:exported="true" />
+
+        <activity
             android:name=".features.navigation.NavigationActivity"
             android:exported="true" />
         <activity
@@ -38,4 +42,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>

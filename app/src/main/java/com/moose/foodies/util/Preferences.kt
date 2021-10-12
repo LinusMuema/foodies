@@ -20,17 +20,18 @@ class Preferences @Inject constructor(@ApplicationContext context: Context) {
     private val tokenKey = "ACCESS_TOKEN"
     private val preferences = context.getSharedPreferences("FOODIES_PREFS", Context.MODE_PRIVATE)
 
+    fun getToken() = preferences.getString(tokenKey, null)
+
     fun setToken(token: String) = preferences.set(tokenKey, token)
 
-    fun getToken() = preferences.getString(tokenKey, null)
 
     operator fun SharedPreferences.set(key: String, value: Any?){
         when (value) {
-            is String? -> edit { this.putString(key, value) }
             is Int -> edit { this.putInt(key, value) }
-            is Boolean -> edit { this.putBoolean(key, value) }
-            is Float -> edit { this.putFloat(key, value) }
             is Long -> edit { this.putLong(key, value) }
+            is Float -> edit { this.putFloat(key, value) }
+            is String? -> edit { this.putString(key, value) }
+            is Boolean -> edit { this.putBoolean(key, value) }
             else -> throw UnsupportedOperationException("Not yet implemented")
         }
     }

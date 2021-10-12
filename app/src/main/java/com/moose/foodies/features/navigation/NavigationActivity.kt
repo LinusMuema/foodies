@@ -9,8 +9,6 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -28,9 +26,8 @@ import coil.annotation.ExperimentalCoilApi
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.moose.foodies.R
 import com.moose.foodies.features.explore.Explore
-import com.moose.foodies.features.favorites.Favorites
 import com.moose.foodies.features.fridge.Fridge
-import com.moose.foodies.features.home.Home
+import com.moose.foodies.features.home.ui.Home
 import com.moose.foodies.features.navigation.Screen.*
 import com.moose.foodies.features.profile.Profile
 import com.moose.foodies.theme.FoodiesTheme
@@ -50,7 +47,7 @@ class NavigationActivity : ComponentActivity() {
     @Composable
     private fun Content(){
         val navController = rememberNavController()
-        val screens = listOf(Home, Explore, Fridge, Favorites, Profile)
+        val screens = listOf(Home, Explore, Fridge, Profile)
         
         FoodiesTheme {
             Surface(color = MaterialTheme.colors.primary) {
@@ -69,7 +66,7 @@ class NavigationActivity : ComponentActivity() {
                                 selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
                                 icon = {
                                     Icon(
-                                        painter = painterResource(screen.icon),
+                                        painter = painterResource(screen.icon!!),
                                         modifier = Modifier.size(22.dp),
                                         contentDescription = null
                                     )
@@ -89,10 +86,9 @@ class NavigationActivity : ComponentActivity() {
                 }) {
                     NavHost(navController, startDestination = Home.route, Modifier.padding(it)) {
                         composable(Home.route) { Home() }
-                        composable(Fridge.route) { Fridge(navController) }
-                        composable(Explore.route) { Explore(navController) }
-                        composable(Profile.route) { Profile(navController) }
-                        composable(Favorites.route) { Favorites(navController) }
+                        composable(Fridge.route) { Fridge() }
+                        composable(Explore.route) { Explore() }
+                        composable(Profile.route) { Profile() }
                     }
                 }
             }
@@ -100,10 +96,9 @@ class NavigationActivity : ComponentActivity() {
     }
 }
 
-sealed class Screen(val route: String, @StringRes val name: Int, @DrawableRes val icon: Int) {
+sealed class Screen(val route: String, @StringRes val name: Int, @DrawableRes val icon: Int?) {
     object Home : Screen("/home", R.string.home, R.drawable.ic_home)
     object Fridge : Screen("/fridge", R.string.fridge, R.drawable.ic_fridge)
     object Explore : Screen("/explore", R.string.explore, R.drawable.ic_explore)
     object Profile : Screen("/profile", R.string.profile, R.drawable.ic_profile)
-    object Favorites : Screen("/favorites", R.string.favorites, R.drawable.ic_star)
 }
