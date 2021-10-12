@@ -17,6 +17,7 @@ interface PreferencesHelper {
 
 class Preferences @Inject constructor(@ApplicationContext context: Context) {
 
+    private val updateKey = "UPDATE_KEY"
     private val tokenKey = "ACCESS_TOKEN"
     private val preferences = context.getSharedPreferences("FOODIES_PREFS", Context.MODE_PRIVATE)
 
@@ -24,6 +25,9 @@ class Preferences @Inject constructor(@ApplicationContext context: Context) {
 
     fun setToken(token: String) = preferences.set(tokenKey, token)
 
+    fun getUpdate() = preferences.getString(updateKey, null)
+
+    fun setUpdate(update: String) = preferences.set(updateKey, update)
 
     operator fun SharedPreferences.set(key: String, value: Any?){
         when (value) {

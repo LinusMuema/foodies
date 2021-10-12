@@ -25,4 +25,8 @@ object DatabaseService {
     @Provides
     @Singleton
     fun provideUserDao(appDatabase: FoodiesDatabase) = appDatabase.getUserDao()
+
+    @Provides
+    @Singleton
+    fun provideItemDao(appDatabase: FoodiesDatabase) = appDatabase.getItemDao()
 }

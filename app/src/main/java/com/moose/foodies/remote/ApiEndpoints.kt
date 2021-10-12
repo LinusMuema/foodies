@@ -2,11 +2,9 @@ package com.moose.foodies.remote
 
 import com.moose.foodies.models.Auth
 import com.moose.foodies.models.Credentials
+import com.moose.foodies.models.Item
 import okhttp3.ResponseBody
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface ApiEndpoints {
 
@@ -18,4 +16,7 @@ interface ApiEndpoints {
 
     @GET("/api/auth/forgot/{email}")
     suspend fun forgot(@Path("email") email: String): ResponseBody
+
+    @GET("/api/recipes/items")
+    suspend fun getItems(@Query("update") update: String?): List<Item>
 }
