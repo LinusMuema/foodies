@@ -1,5 +1,7 @@
 package com.moose.foodies.features.add
 
+import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,7 +16,8 @@ class AddViewmodel @Inject constructor(private val cloudinary: Cloudinary): View
 
     val progress: LiveData<UploadState> = cloudinary.progress
 
-    suspend fun uploadImage(path: String){
+    fun uploadImage(path: Uri){
+        Log.d("Image Upload", "uploadImage: path is $path")
         viewModelScope.launch {
             cloudinary.uploadImage(path)
         }

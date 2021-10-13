@@ -1,6 +1,7 @@
 package com.moose.foodies.util
 
 import android.app.Activity
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.cloudinary.android.MediaManager
@@ -52,8 +53,9 @@ class Cloudinary @Inject constructor(val dao: UserDao, val manager: MediaManager
     private val _progress: MutableLiveData<UploadState> = MutableLiveData()
     val progress: LiveData<UploadState> = _progress
 
-    suspend fun uploadImage(path: String) {
-        val user = dao.getProfile().first().email
+    suspend fun uploadImage(path: Uri) {
+        val name = RandomIdGenerator.getRandom()
+        val user = dao.getProfile().first()._id
         val callback = object : UploadCallback {
             override fun onStart(requestId: String?) {
                 _progress.value = UploadState.Loading(0)
@@ -78,7 +80,7 @@ class Cloudinary @Inject constructor(val dao: UserDao, val manager: MediaManager
         }
 
         manager.upload(path)
-            .option("public_id", "Foodies/recipes/$user")
+            .option("public_id", "Foodies/recipes/$user/$name")
             .callback(callback)
             .dispatch()
     }
