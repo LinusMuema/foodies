@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontWeight.Companion.SemiBold
 import androidx.compose.ui.unit.dp
 import com.moose.foodies.R
@@ -26,7 +27,7 @@ fun Header(profile: Profile?){
             Column {
                 Text(
                     text = "Hi ${profile?.username},",
-                    style = typography.h5.copy(fontWeight = SemiBold, color = colors.onSurface),
+                    style = typography.h5.copy(color = colors.onSurface),
                 )
                 TimeCaption()
             }

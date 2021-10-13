@@ -77,7 +77,7 @@ fun Home(){
         ){
             Text(
                 text = "Discover Chefs",
-                style = typography.h5.copy(fontWeight = SemiBold, color = colors.onSurface)
+                style = typography.h5.copy(color = colors.onSurface)
             )
             Text(
                 text = "See all",
@@ -111,7 +111,7 @@ fun Home(){
         Text(
             text = "Recipes",
             modifier = Modifier.padding(10.dp),
-            style = typography.h5.copy(fontWeight = SemiBold, color = colors.onSurface)
+            style = typography.h5.copy(color = colors.onSurface)
         )
         ScrollableTabRow(
             edgePadding = 0.dp,

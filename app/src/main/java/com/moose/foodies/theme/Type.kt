@@ -26,7 +26,7 @@ val typography = Typography(
         fontSize = 24.sp,
         lineHeight = 29.sp,
         fontFamily = Poppins,
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.Medium,
     ),
     h6 = TextStyle(
         fontSize = 20.sp,

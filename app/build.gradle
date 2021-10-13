@@ -87,8 +87,8 @@ dependencies {
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
 
     // Dependency Injection
-    implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
+    implementation "com.google.dagger:hilt-android:$hilt_version"
 
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -100,6 +100,12 @@ dependencies {
 
     // Sentry
     implementation 'io.sentry:sentry-android:5.2.0'
+
+    // Image picker
+    implementation 'com.github.dhaval2404:imagepicker:2.1'
+    
+    // Cloudinary
+    implementation 'com.cloudinary:cloudinary-android:1.30.0'
 
     // Room
     kapt "androidx.room:room-compiler:$room_version"
