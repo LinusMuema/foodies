@@ -20,7 +20,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
+
 sealed class UploadState {
+    object Idle : UploadState()
     data class Success(val url: String) : UploadState()
     data class Loading(val percentage: Long) : UploadState()
     data class Error(val message: String?) : UploadState()
@@ -48,7 +50,7 @@ object CloudinaryModule {
 }
 
 
-class Cloudinary @Inject constructor(val dao: UserDao, val manager: MediaManager) {
+class Cloudinary @Inject constructor(private val dao: UserDao, private val manager: MediaManager) {
 
     private val _progress: MutableLiveData<UploadState> = MutableLiveData()
     val progress: LiveData<UploadState> = _progress

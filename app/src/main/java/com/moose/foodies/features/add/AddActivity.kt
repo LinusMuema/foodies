@@ -14,6 +14,8 @@ import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
@@ -24,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.moose.foodies.components.SmallSpacing
 import com.moose.foodies.theme.FoodiesTheme
+import com.moose.foodies.util.UploadState
 import com.moose.foodies.util.toast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -51,6 +54,8 @@ class AddActivity : AppCompatActivity() {
 
     @Composable
     private fun Content() {
+        val cloudinaryProgress by viewmodel.progress.observeAsState()
+
         FoodiesTheme {
            Surface(color = colors.primary) {
                val dashColor = colors.onSurface
@@ -59,6 +64,7 @@ class AddActivity : AppCompatActivity() {
 
                Column(modifier = Modifier.padding(10.dp)) {
                    SmallSpacing()
+
                    Text(
                        text = "Upload a new recipe",
                        style = typography.h6.copy(color = colors.onSurface)
@@ -79,11 +85,44 @@ class AddActivity : AppCompatActivity() {
                                cornerRadius = CornerRadius(10f, 10f)
                            )
                        }
-                       Text(
-                           textAlign = TextAlign.Center,
-                           text = "Tap to upload the photo",
-                           style = typography.body1.copy(color = colors.onPrimary)
-                       )
+
+                       when (val progress: UploadState? = cloudinaryProgress){
+                           is UploadState.Idle -> {
+                               Text(
+                                   textAlign = TextAlign.Center,
+                                   text = "Tap to upload the photo",
+                                   style = typography.body1.copy(color = colors.onPrimary)
+                               )
+                           }
+                           is UploadState.Error -> {
+                               Text(
+                                   textAlign = TextAlign.Center,
+                                   text = "Could not upload image. Please try again later",
+                                   style = typography.body1.copy(color = colors.onPrimary)
+                               )
+                           }
+                           is UploadState.Loading -> {
+                               Text(
+                                   textAlign = TextAlign.Center,
+                                   text = "${progress.percentage}% done",
+                                   style = typography.body1.copy(color = colors.onPrimary)
+                               )
+                           }
+                           is UploadState.Success -> {
+                               Text(
+                                   textAlign = TextAlign.Center,
+                                   text = "Image url is ${progress.url}",
+                                   style = typography.body1.copy(color = colors.onPrimary)
+                               )
+                           }
+                           else -> {
+                               Text(
+                                   textAlign = TextAlign.Center,
+                                   text = "Tap to upload the photo",
+                                   style = typography.body1.copy(color = colors.onPrimary)
+                               )
+                           }
+                       }
                    }
                }
             }

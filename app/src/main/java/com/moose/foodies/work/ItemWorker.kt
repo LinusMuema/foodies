@@ -11,6 +11,7 @@ import com.moose.foodies.remote.ApiEndpoints
 import com.moose.foodies.util.Preferences
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -27,7 +28,7 @@ class ItemWorker @AssistedInject constructor(
         val update = preferences.getUpdate()
         val items = api.getItems(update)
         dao.addItems(items)
-        val now = SimpleDateFormat("yyyy:MM:dd_HH:mm:ss", Locale.US).format(Date())
+        val now = Timestamp(System.currentTimeMillis()).toString()
         preferences.setUpdate(now)
         return Result.success()
     }
