@@ -16,7 +16,7 @@ fun FilledButton(text: String, size: Float, loading: Boolean = false, onClick: (
     val style = MaterialTheme.typography.body1
     val color = MaterialTheme.colors.onSecondary
     val label = if (loading) "Loading..." else text
-    val modifier = Modifier.fillMaxWidth(fraction = size).height(40.dp)
+    val modifier = Modifier.fillMaxWidth(fraction = size).padding(vertical = 5.dp).height(45.dp)
     val colors = ButtonDefaults.textButtonColors(backgroundColor = MaterialTheme.colors.secondary)
 
     Button(onClick = onClick, modifier = modifier, colors = colors, enabled = !loading) {

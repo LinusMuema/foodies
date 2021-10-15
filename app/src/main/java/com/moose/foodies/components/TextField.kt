@@ -64,14 +64,13 @@ fun OutlinedInput(label: String, type: KeyboardType, hide: Boolean = false, stat
     val color = Color.Gray.copy(alpha = .2f)
     var hidden by remember { mutableStateOf(hide) }
 
-
     val icon = if (hidden) Icons.Filled.VisibilityOff else Icons.Filled.Visibility
-    val modifier = Modifier.fillMaxWidth().padding(horizontal = 30.dp, vertical = 10.dp)
     val transformation = if (hidden)  PasswordVisualTransformation() else VisualTransformation.None
 
     val colors = Colors(
         backgroundColor = color,
         trailingIconColor = color,
+        errorBorderColor = Color.Transparent,
         focusedBorderColor = Color.Transparent,
         unfocusedBorderColor = Color.Transparent,
         cursorColor = MaterialTheme.colors.onPrimary,
@@ -79,12 +78,12 @@ fun OutlinedInput(label: String, type: KeyboardType, hide: Boolean = false, stat
         unfocusedLabelColor =  MaterialTheme.colors.onPrimary,
     )
 
-    Column {
+    Column(modifier = Modifier.fillMaxWidth().padding(5.dp)) {
+        Text(label, modifier = Modifier.padding(5.dp))
         TextField(
             colors = colors,
             value = state.text,
-            modifier = modifier,
-            label = { Text(label) },
+            modifier = Modifier.fillMaxWidth(),
             isError = state.hasError,
             shape = MaterialTheme.shapes.small,
             visualTransformation = transformation,
@@ -107,7 +106,6 @@ fun OutlinedInput(label: String, type: KeyboardType, hide: Boolean = false, stat
         )
         if (state.hasError) {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
-                MediumSpacing()
                 Text(state.message, color = MaterialTheme.colors.error)
             }
         }

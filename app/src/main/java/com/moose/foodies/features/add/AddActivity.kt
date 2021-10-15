@@ -24,13 +24,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.PathEffect.Companion.dashPathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import coil.transform.RoundedCornersTransformation
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.moose.foodies.components.OutlinedInput
+import com.moose.foodies.components.Required
 import com.moose.foodies.components.SmallSpacing
+import com.moose.foodies.components.TextFieldState
 import com.moose.foodies.features.add.ui.ImageUpload
 import com.moose.foodies.theme.FoodiesTheme
 import com.moose.foodies.util.UploadState
@@ -62,6 +66,8 @@ class AddActivity : AppCompatActivity() {
     @Composable
     private fun Content() {
         val path by viewmodel.path.observeAsState()
+        val nameState = remember { TextFieldState(validators = listOf(Required())) }
+        val descriptionState = remember { TextFieldState(validators = listOf(Required())) }
 
         FoodiesTheme {
             Surface(color = colors.primary) {
@@ -74,6 +80,17 @@ class AddActivity : AppCompatActivity() {
                     SmallSpacing()
                     ImageUpload(path = path, onClick = { getImage() })
                     SmallSpacing()
+                    OutlinedInput(
+                        label = "Name",
+                        state = nameState,
+                        type = KeyboardType.Email,
+                    )
+                    SmallSpacing()
+                    OutlinedInput(
+                        label = "Description",
+                        state = descriptionState,
+                        type = KeyboardType.Email,
+                    )
                 }
             }
         }

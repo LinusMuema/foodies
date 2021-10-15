@@ -1,10 +1,7 @@
 package com.moose.foodies.features.auth.ui
 
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -14,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.moose.foodies.components.*
 import com.moose.foodies.features.auth.AuthViewmodel
@@ -31,25 +29,25 @@ fun Signup(){
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Text(text = "Don't have an account?")
         Text(text = "Enter your details below to get started")
-        SmallSpacing()
-        OutlinedInput(
-            state = emailState,
-            label = "Email address",
-            type = KeyboardType.Email,
-        )
-        OutlinedInput(
-            hide = true,
-            label = "Password",
-            state = passwordState,
-            type = KeyboardType.Password,
-        )
-        OutlinedInput(
-            hide = true,
-            state = confirmState,
-            label = "Confirm password",
-            type = KeyboardType.Password,
-        )
-        SmallSpacing()
+        Column(modifier = Modifier.padding(20.dp, 10.dp)) {
+            OutlinedInput(
+                state = emailState,
+                label = "Email address",
+                type = KeyboardType.Email,
+            )
+            OutlinedInput(
+                hide = true,
+                label = "Password",
+                state = passwordState,
+                type = KeyboardType.Password,
+            )
+            OutlinedInput(
+                hide = true,
+                state = confirmState,
+                label = "Confirm password",
+                type = KeyboardType.Password,
+            )
+        }
         FilledButton(text = "Sign up", size = 0.85f, loading = loading) {
             emailState.validate()
             confirmState.validate()

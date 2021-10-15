@@ -36,7 +36,7 @@ import coil.transform.RoundedCornersTransformation
             modifier = Modifier.fillMaxWidth().height(150.dp),
             contentAlignment = Alignment.Center
         ) {
-            Canvas(modifier = Modifier.fillMaxSize().clickable { onClick }) {
+            Canvas(modifier = Modifier.fillMaxSize().clickable { onClick() }) {
                 drawRoundRect(style = stroke, color = dashColor, cornerRadius = radius)
             }
 
