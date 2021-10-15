@@ -11,6 +11,5 @@ data class Profile(
     val _id: String,
     val email: String,
     val username: String,
-    val recipes: List<Recipe>,
     val favorites: List<Recipe>
 )

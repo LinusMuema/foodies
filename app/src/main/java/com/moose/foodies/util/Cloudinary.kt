@@ -2,6 +2,7 @@ package com.moose.foodies.util
 
 import android.app.Activity
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.cloudinary.android.MediaManager
@@ -24,8 +25,8 @@ import javax.inject.Singleton
 sealed class UploadState {
     object Idle : UploadState()
     data class Success(val url: String) : UploadState()
-    data class Loading(val percentage: Long) : UploadState()
     data class Error(val message: String?) : UploadState()
+    data class Loading(val current: Long, val total: Long) : UploadState()
 }
 
 
@@ -60,12 +61,11 @@ class Cloudinary @Inject constructor(private val dao: UserDao, private val manag
         val user = dao.getProfile().first()._id
         val callback = object : UploadCallback {
             override fun onStart(requestId: String?) {
-                _progress.value = UploadState.Loading(0)
+                _progress.value = UploadState.Loading(0, 0)
             }
 
             override fun onProgress(requestId: String?, bytes: Long, totalBytes: Long) {
-                val percentage = (bytes / totalBytes) * 100
-                _progress.value = UploadState.Loading(percentage)
+                _progress.value = UploadState.Loading(bytes, totalBytes)
             }
 
             override fun onSuccess(requestId: String?, resultData: MutableMap<Any?, Any?>?) {
