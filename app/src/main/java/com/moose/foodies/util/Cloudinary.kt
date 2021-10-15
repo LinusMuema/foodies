@@ -86,9 +86,4 @@ class Cloudinary @Inject constructor(private val dao: UserDao, private val manag
             .callback(callback)
             .dispatch()
     }
-
-    suspend fun deleteImage() {
-
-    }
-
 }

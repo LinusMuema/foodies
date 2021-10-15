@@ -10,10 +10,13 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.moose.foodies.theme.secondaryVariant
 import java.util.regex.Pattern
 import androidx.compose.material.TextFieldDefaults.outlinedTextFieldColors as Colors
 
@@ -58,32 +61,34 @@ open class TextFieldState (private val validators: List<Validators>){
 
 @Composable
 fun OutlinedInput(label: String, type: KeyboardType, hide: Boolean = false, state: TextFieldState){
-    val color = MaterialTheme.colors.onPrimary
+    val color = Color.Gray.copy(alpha = .2f)
     var hidden by remember { mutableStateOf(hide) }
 
 
     val icon = if (hidden) Icons.Filled.VisibilityOff else Icons.Filled.Visibility
-    val modifier = Modifier
-        .fillMaxWidth()
-        .padding(horizontal = 30.dp, vertical = 5.dp)
+    val modifier = Modifier.fillMaxWidth().padding(horizontal = 30.dp, vertical = 10.dp)
     val transformation = if (hidden)  PasswordVisualTransformation() else VisualTransformation.None
+
     val colors = Colors(
-        cursorColor = color,
-        focusedLabelColor = color,
+        backgroundColor = color,
         trailingIconColor = color,
-        focusedBorderColor = color,
-        unfocusedLabelColor = color,
-        unfocusedBorderColor = color,
+        focusedBorderColor = Color.Transparent,
+        unfocusedBorderColor = Color.Transparent,
+        cursorColor = MaterialTheme.colors.onPrimary,
+        focusedLabelColor = MaterialTheme.colors.onPrimary,
+        unfocusedLabelColor =  MaterialTheme.colors.onPrimary,
     )
 
     Column {
-        OutlinedTextField(
+        TextField(
             colors = colors,
             value = state.text,
             modifier = modifier,
             label = { Text(label) },
             isError = state.hasError,
+            shape = MaterialTheme.shapes.small,
             visualTransformation = transformation,
+            textStyle = MaterialTheme.typography.body1.copy(fontSize = 14.sp),
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = type),
             onValueChange = {
                 state.text = it
