@@ -2,16 +2,11 @@ package com.moose.foodies.features.add
 
 import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.Surface
@@ -19,25 +14,15 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.CornerRadius
-import androidx.compose.ui.graphics.PathEffect.Companion.dashPathEffect
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import coil.compose.ImagePainter
-import coil.compose.rememberImagePainter
-import coil.transform.RoundedCornersTransformation
 import com.github.dhaval2404.imagepicker.ImagePicker
-import com.moose.foodies.components.OutlinedInput
-import com.moose.foodies.components.Required
-import com.moose.foodies.components.SmallSpacing
-import com.moose.foodies.components.TextFieldState
+import com.moose.foodies.components.*
 import com.moose.foodies.features.add.ui.ImageUpload
+import com.moose.foodies.features.add.ui.Items
+import com.moose.foodies.models.Item
 import com.moose.foodies.theme.FoodiesTheme
-import com.moose.foodies.util.UploadState
 import com.moose.foodies.util.toast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -66,8 +51,10 @@ class AddActivity : AppCompatActivity() {
     @Composable
     private fun Content() {
         val path by viewmodel.path.observeAsState()
+        var ingredients by remember { mutableStateOf(mutableListOf<Item>()) }
         val nameState = remember { TextFieldState(validators = listOf(Required())) }
         val descriptionState = remember { TextFieldState(validators = listOf(Required())) }
+
 
         FoodiesTheme {
             Surface(color = colors.primary) {
@@ -90,6 +77,11 @@ class AddActivity : AppCompatActivity() {
                         label = "Description",
                         state = descriptionState,
                         type = KeyboardType.Email,
+                    )
+                    Items(
+                        type = "Ingredient",
+                        viewmodel = viewmodel,
+                        onClick = { ingredients.add(it) },
                     )
                 }
             }

@@ -1,5 +1,6 @@
 package com.moose.foodies.local
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -13,6 +14,6 @@ interface ItemsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addItems(items: List<Item>)
 
-    @Query("select * from item where name like :name and type = :type")
-    fun searchItem(name: String, type: String): Flow<List<Item>>
+    @Query("select * from item where name like :name and type = :type limit 5")
+    suspend fun searchItem(name: String, type: String): List<Item>
 }

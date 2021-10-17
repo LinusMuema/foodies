@@ -20,7 +20,7 @@ import com.moose.foodies.theme.secondaryVariant
 import java.util.regex.Pattern
 import androidx.compose.material.TextFieldDefaults.outlinedTextFieldColors as Colors
 
-open class TextFieldState (private val validators: List<Validators>){
+open class TextFieldState (val validators: List<Validators>){
 
     var text: String by mutableStateOf("")
     var message: String by mutableStateOf("")
@@ -35,6 +35,8 @@ open class TextFieldState (private val validators: List<Validators>){
         message = ""
         hasError = false
     }
+
+    fun clear() = "".also { text = it }
 
     fun validate() {
         for (validator in validators){
@@ -60,7 +62,14 @@ open class TextFieldState (private val validators: List<Validators>){
 }
 
 @Composable
-fun OutlinedInput(label: String, type: KeyboardType, hide: Boolean = false, state: TextFieldState){
+fun OutlinedInput(
+    label: String,
+    type: KeyboardType,
+    hide: Boolean = false,
+    state: TextFieldState,
+    modifier: Modifier = Modifier,
+    onChanged: (String) -> Unit = {}
+){
     val color = Color.Gray.copy(alpha = .2f)
     var hidden by remember { mutableStateOf(hide) }
 
@@ -83,13 +92,14 @@ fun OutlinedInput(label: String, type: KeyboardType, hide: Boolean = false, stat
         TextField(
             colors = colors,
             value = state.text,
-            modifier = Modifier.fillMaxWidth(),
             isError = state.hasError,
+            modifier = modifier.fillMaxWidth(),
             shape = MaterialTheme.shapes.small,
             visualTransformation = transformation,
             textStyle = MaterialTheme.typography.body1.copy(fontSize = 14.sp),
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = type),
             onValueChange = {
+                onChanged(it)
                 state.text = it
                 state.hideError()
             },
