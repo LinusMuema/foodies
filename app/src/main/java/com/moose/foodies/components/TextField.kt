@@ -16,7 +16,9 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.moose.foodies.theme.secondaryDark
 import com.moose.foodies.theme.secondaryVariant
+import com.moose.foodies.theme.variantDark
 import java.util.regex.Pattern
 import androidx.compose.material.TextFieldDefaults.outlinedTextFieldColors as Colors
 
@@ -70,7 +72,7 @@ fun OutlinedInput(
     modifier: Modifier = Modifier,
     onChanged: (String) -> Unit = {}
 ){
-    val color = Color.Gray.copy(alpha = .2f)
+    val color = secondaryVariant.copy(alpha = .2f)
     var hidden by remember { mutableStateOf(hide) }
 
     val icon = if (hidden) Icons.Filled.VisibilityOff else Icons.Filled.Visibility
