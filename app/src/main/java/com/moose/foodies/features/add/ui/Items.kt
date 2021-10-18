@@ -11,9 +11,9 @@ fun Items(viewmodel: AddViewmodel, type: String, onClick: (Item) -> Unit) {
     var items by remember { mutableStateOf(viewmodel.getItems("", type)) }
 
     TextDropdown(
+        label = type,
         items = items,
         onClick = onClick,
-        label = "${type}s",
         onChange = { items = viewmodel.getItems(it, type) }
     )
 }

@@ -42,7 +42,7 @@ fun Login(){
                 type = KeyboardType.Password,
             )
         }
-        FilledButton(text = "Login", loading = loading, size = 0.85f) {
+        FilledButton(text = "Login", loading = loading, size = .9f) {
             emailState.validate()
             passwordState.validate()
 

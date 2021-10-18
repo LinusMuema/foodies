@@ -65,7 +65,7 @@ open class TextFieldState (val validators: List<Validators>){
 
 @Composable
 fun OutlinedInput(
-    label: String,
+    label: String?,
     type: KeyboardType,
     hide: Boolean = false,
     state: TextFieldState,
@@ -90,7 +90,7 @@ fun OutlinedInput(
     )
 
     Column(modifier = Modifier.fillMaxWidth().padding(5.dp)) {
-        Text(label, modifier = Modifier.padding(5.dp))
+        if (label !=  null) Text(label, modifier = Modifier.padding(5.dp))
         TextField(
             colors = colors,
             value = state.text,

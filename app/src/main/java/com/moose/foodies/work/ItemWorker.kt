@@ -26,10 +26,12 @@ class ItemWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result {
         val update = preferences.getUpdate()
-        val items = api.getItems(update)
-        dao.addItems(items)
-        val now = Timestamp(System.currentTimeMillis()).toString()
-        preferences.setUpdate(now)
+        val time = SimpleDateFormat("hh:mm:ss", Locale.UK).format(Date())
+        val date = SimpleDateFormat("yyyy-MM-dd", Locale.UK).format(Date())
+
+        dao.addItems(api.getItems(update))
+        preferences.setUpdate("${date}T$time")
+
         return Result.success()
     }
 }
