@@ -23,6 +23,7 @@ import javax.inject.Singleton
 
 
 sealed class UploadState {
+    object Idle: UploadState()
     data class Success(val url: String) : UploadState()
     data class Error(val message: String?) : UploadState()
     data class Loading(val current: Long, val total: Long) : UploadState()
@@ -54,6 +55,8 @@ class Cloudinary @Inject constructor(private val dao: UserDao, private val manag
 
     private val _progress: MutableLiveData<UploadState> = MutableLiveData()
     val progress: LiveData<UploadState> = _progress
+
+    fun clearProgress()  = UploadState.Idle.also { _progress.value = it }
 
     suspend fun uploadImage(path: Uri) {
         val name = RandomIdGenerator.getRandom()

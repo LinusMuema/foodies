@@ -1,6 +1,7 @@
 package com.moose.foodies.features.add
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.setContent
@@ -35,10 +36,14 @@ import com.google.accompanist.flowlayout.FlowRow
 import com.moose.foodies.components.*
 import com.moose.foodies.features.add.ui.ImageUpload
 import com.moose.foodies.features.add.ui.Items
+import com.moose.foodies.features.navigation.NavigationActivity
 import com.moose.foodies.models.Item
+import com.moose.foodies.models.RawRecipe
 import com.moose.foodies.theme.FoodiesTheme
 import com.moose.foodies.theme.shapes
 import com.moose.foodies.util.UploadState
+import com.moose.foodies.util.onError
+import com.moose.foodies.util.onSuccess
 import com.moose.foodies.util.toast
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -52,6 +57,11 @@ class AddActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent { Content() }
+
+        viewmodel.result.observe(this, {
+            it.onSuccess { finish() }
+            it.onError { error -> toast(error) }
+        })
     }
 
     private val launcher = registerForActivityResult(StartActivityForResult()) {
@@ -93,11 +103,13 @@ class AddActivity : AppCompatActivity() {
                 val allSteps = steps.map { it.text }
                 val time = if (selected == 5) "${timeState.text} mins" else times[selected]
                 viewmodel.uploadRecipe(
-                    url = state.url,
-                    name = nameState.text,
-                    ingredients = ingredients,
-                    description = descriptionState.text,
-                    equipment = equipment, time = time, steps = allSteps
+                    RawRecipe(
+                        name = nameState.text,
+                        description = descriptionState.text,
+                        equipment = equipment.map { it._id },
+                        ingredients = ingredients.map { it._id },
+                        image = state.url, time = time, steps = allSteps,
+                    )
                 )
             }
         }
@@ -253,7 +265,7 @@ class AddActivity : AppCompatActivity() {
                     }
                     SmallSpacing()
                     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Center) {
-                        FilledButton(text = button, size = .9f) {
+                        FilledButton(text = button, size = .95f) {
                             val validSteps = steps.map { it.validate() }.all { it }
                             val validTime = if (selected == 5) timeState.validate() else true
 

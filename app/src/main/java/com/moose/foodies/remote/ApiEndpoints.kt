@@ -1,8 +1,6 @@
 package com.moose.foodies.remote
 
-import com.moose.foodies.models.Auth
-import com.moose.foodies.models.Credentials
-import com.moose.foodies.models.Item
+import com.moose.foodies.models.*
 import okhttp3.ResponseBody
 import retrofit2.http.*
 
@@ -19,4 +17,7 @@ interface ApiEndpoints {
 
     @GET("/api/recipes/items")
     suspend fun getItems(@Query("update") update: String?): List<Item>
+
+    @POST("/api/recipes")
+    suspend fun uploadRecipe(@Body recipe: RawRecipe): Recipe
 }
