@@ -40,16 +40,32 @@ open class TextFieldState (val validators: List<Validators>){
 
     fun clear() = "".also { text = it }
 
-    fun validate() {
-        for (validator in validators){
-            when (validator){
-                is Email -> if (!email()) showError(validator.message)
-                is Required -> if (!required()) showError(validator.message)
-                is Regex -> if (!regex(validator.regex)) showError("value does not match required regex")
-                is Max -> if (!max(validator.limit)) showError("value cannot be more than ${validator.limit}")
-                is Min -> if (!min(validator.limit)) showError("value cannot be less than ${validator.limit}")
+    fun validate(): Boolean {
+        return validators.map {
+            when (it){
+                is Email -> {
+                    if (!email()) showError(it.message)
+                    email()
+
+                }
+                is Required -> {
+                    if (!required()) showError(it.message)
+                    required()
+                }
+                is Regex -> {
+                    if (!regex(it.regex)) showError("value does not match required regex")
+                    regex(it.regex)
+                }
+                is Max -> {
+                    if (!max(it.limit)) showError("value cannot be more than ${it.limit}")
+                    max(it.limit)
+                }
+                is Min -> {
+                    if (!min(it.limit)) showError("value cannot be less than ${it.limit}")
+                    min(it.limit)
+                }
             }
-        }
+        }.all { it }
     }
 
     private fun required(): Boolean = text.isNotEmpty()

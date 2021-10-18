@@ -1,9 +1,7 @@
 package com.moose.foodies.features.add
 
 import android.app.Activity
-import android.os.Build
 import android.os.Bundle
-import android.text.Layout
 import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
@@ -12,19 +10,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement.Center
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.Arrangement.SpaceBetween
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.MaterialTheme.typography
-import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.Icons.Filled
 import androidx.compose.material.icons.Icons.Outlined
-import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.ArrowDropUp
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.outlined.AddCircle
 import androidx.compose.material.icons.outlined.AddCircleOutline
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
@@ -44,6 +38,7 @@ import com.moose.foodies.features.add.ui.Items
 import com.moose.foodies.models.Item
 import com.moose.foodies.theme.FoodiesTheme
 import com.moose.foodies.theme.shapes
+import com.moose.foodies.util.UploadState
 import com.moose.foodies.util.toast
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -75,8 +70,10 @@ class AddActivity : AppCompatActivity() {
     @Composable
     private fun Content() {
         val path by viewmodel.path.observeAsState()
+        val progress by viewmodel.progress.observeAsState()
         var selected by remember { mutableStateOf(0) }
         var expanded by remember { mutableStateOf(false) }
+        var button by remember { mutableStateOf("Upload") }
         var equipment by remember { mutableStateOf(setOf<Item>()) }
         var ingredients by remember { mutableStateOf(setOf<Item>()) }
         var steps by remember { mutableStateOf(listOf<TextFieldState>()) }
@@ -85,9 +82,33 @@ class AddActivity : AppCompatActivity() {
         val descriptionState = remember { TextFieldState(validators = listOf(Required())) }
         val times = listOf("10 mins", "15 mins", "30 mins", "45 mins", "60 mins", "Custom (mins)")
 
+        when (val state = progress){
+            is UploadState.Error -> toast(state.message)
+            is UploadState.Loading -> {
+                val percentage = (state.current.toDouble() / state.total.toDouble()) * 100
+                button = "Uploading image...${percentage.toInt()}%"
+            }
+            is UploadState.Success -> {
+                button = "Saving recipe..."
+                val allSteps = steps.map { it.text }
+                val time = if (selected == 5) "${timeState.text} mins" else times[selected]
+                viewmodel.uploadRecipe(
+                    url = state.url,
+                    name = nameState.text,
+                    ingredients = ingredients,
+                    description = descriptionState.text,
+                    equipment = equipment, time = time, steps = allSteps
+                )
+            }
+        }
+
         FoodiesTheme {
             Surface(color = colors.primary) {
-                Column(modifier = Modifier.padding(10.dp).verticalScroll(rememberScrollState())) {
+                Column(
+                    modifier = Modifier
+                        .padding(10.dp)
+                        .verticalScroll(rememberScrollState())
+                ) {
                     SmallSpacing()
                     Text(
                         text = "Upload a new recipe",
@@ -144,13 +165,12 @@ class AddActivity : AppCompatActivity() {
                         }
                     }
                     Row(
-                        horizontalArrangement = Arrangement.SpaceBetween,
+                        horizontalArrangement = SpaceBetween,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 10.dp)
                     ) {
                         Text("Preparation time", modifier = Modifier.padding(top = 10.dp))
-
                         Box {
                             val icon = if (expanded) Filled.ArrowDropUp else Filled.ArrowDropDown
                             Row(
@@ -159,7 +179,7 @@ class AddActivity : AppCompatActivity() {
                                     .clip(shapes.small)
                                     .clickable { expanded = true }
                                     .padding(10.dp)
-                            ){
+                            ) {
                                 Text(text = times[selected])
                                 Icon(icon, contentDescription = "dropdown icon")
                             }
@@ -179,7 +199,7 @@ class AddActivity : AppCompatActivity() {
                             }
                         }
                     }
-                    if (selected == 5){
+                    if (selected == 5) {
                         OutlinedInput(
                             label = null,
                             state = timeState,
@@ -187,10 +207,9 @@ class AddActivity : AppCompatActivity() {
                         )
                     }
                     SmallSpacing()
-                    Row (
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp)
-                    ){
+                    Row(horizontalArrangement = SpaceBetween, modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 10.dp)) {
                         Text("Procedure", modifier = Modifier.padding(top = 5.dp))
                         Row(
                             verticalAlignment = CenterVertically,
@@ -202,24 +221,30 @@ class AddActivity : AppCompatActivity() {
                                 }
                                 .padding(10.dp)
                         ) {
-                            Icon(Outlined.AddCircleOutline, modifier = Modifier.size(20.dp), contentDescription = "add step icon")
-                            Text("Add step",modifier = Modifier.padding(horizontal = 5.dp))
+                            Icon(
+                                Outlined.AddCircleOutline,
+                                modifier = Modifier.size(20.dp),
+                                contentDescription = "add step icon"
+                            )
+                            Text("Add step", modifier = Modifier.padding(horizontal = 5.dp))
                         }
                     }
                     steps.forEachIndexed { index, state ->
                         Row(
-                            modifier = Modifier.fillMaxWidth().padding(5.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(5.dp),
                             verticalAlignment = CenterVertically
-                        )  {
+                        ) {
                             Box(modifier = Modifier.fillMaxWidth(.9f)) {
                                 OutlinedInput(
                                     state = state,
-                                    label = "Step ${index+1}",
+                                    label = "Step ${index + 1}",
                                     type = KeyboardType.Text,
                                 )
                             }
                             IconButton(onClick = { steps = steps - listOf(state) }) {
-                                Column{
+                                Column {
                                     SmallSpacing()
                                     Icon(Filled.Delete, contentDescription = "delete step icon")
                                 }
@@ -227,8 +252,21 @@ class AddActivity : AppCompatActivity() {
                         }
                     }
                     SmallSpacing()
-                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Center){
-                        FilledButton(text = "Upload", size = .9f, onClick = {})
+                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Center) {
+                        FilledButton(text = button, size = .9f) {
+                            val validSteps = steps.map { it.validate() }.all { it }
+                            val validTime = if (selected == 5) timeState.validate() else true
+
+                            when {
+                                path == null -> toast("Upload the recipe image")
+                                steps.isEmpty() -> toast("Add at least one step")
+                                equipment.isEmpty() -> toast("Add at least one equipment")
+                                ingredients.isEmpty() -> toast("Add at least one ingredient")
+                                nameState.validate() && descriptionState.validate() && validSteps && validTime -> {
+                                    viewmodel.uploadImage()
+                                }
+                            }
+                        }
                     }
                 }
             }

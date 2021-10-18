@@ -25,4 +25,21 @@ class AddViewmodel @Inject constructor(private val cloudinary: Cloudinary, priva
     fun getItems(name: String, type: String): List<Item> {
         return runBlocking{ repository.getItems(name, type) }
     }
+
+    fun uploadImage() {
+        viewModelScope.launch {
+            cloudinary.uploadImage(_path.value!!)
+        }
+    }
+
+    fun uploadRecipe(
+        url: String,
+        time: String,
+        name: String,
+        steps: List<String>,
+        description: String,
+        equipment: Set<Item>,
+        ingredients: Set<Item>
+    ) {
+    }
 }

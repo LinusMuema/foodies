@@ -3,6 +3,7 @@ package com.moose.foodies.features.add.ui
 import android.net.Uri
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -46,12 +47,11 @@ import coil.transform.RoundedCornersTransformation
                     contentDescription = "uploaded image",
                     modifier = Modifier.fillMaxSize()
                 )
-            else
-                Text(
-                    textAlign = TextAlign.Center,
-                    text = "Tap to upload the photo",
-                    style = typography.body1.copy(color = colors.onPrimary)
-                )
+            Text(
+                textAlign = TextAlign.Center,
+                text = "Tap to upload the photo",
+                style = typography.body1.copy(color = colors.onPrimary)
+            )
 
         }
     }
