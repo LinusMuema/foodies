@@ -19,9 +19,9 @@ import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
-class AddViewmodel @Inject constructor(private val cloudinary: Cloudinary, private val repository: AddRepository): ViewModel() {
+class AddViewmodel @Inject constructor(private val repository: AddRepository): ViewModel() {
 
-    val progress: LiveData<UploadState> = cloudinary.progress
+    val progress: LiveData<UploadState> = repository.progress
 
     private val _path: MutableLiveData<Uri> = MutableLiveData()
     fun setUri(uri: Uri) = uri.also { _path.value = it }
@@ -41,12 +41,11 @@ class AddViewmodel @Inject constructor(private val cloudinary: Cloudinary, priva
 
     fun uploadImage() {
         viewModelScope.launch {
-            cloudinary.uploadImage(_path.value!!)
+            repository.uploadImage(_path.value!!)
         }
     }
 
     fun uploadRecipe(rawRecipe: RawRecipe) {
-        cloudinary.clearProgress()
         viewModelScope.launch(handler) {
             val result = repository.uploadRecipe(rawRecipe)
             _result.value = Result.Success(result)

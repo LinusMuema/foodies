@@ -1,5 +1,10 @@
 package com.moose.foodies.features.profile
 
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class ProfileViewmodel: ViewModel()
+@HiltViewModel
+class ProfileViewmodel @Inject constructor(private val repository: ProfileRepository): ViewModel() {
+
+}

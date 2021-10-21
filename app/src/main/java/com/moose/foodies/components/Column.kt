@@ -8,12 +8,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun CenterColumn(content: @Composable () -> Unit){
+fun CenterColumn(modifier: Modifier = Modifier, content: @Composable () -> Unit){
     val arrangement = Arrangement.Center
-    val modifier = Modifier.fillMaxSize()
     val alignment = Alignment.CenterHorizontally
 
-    Column(modifier, arrangement, alignment){
+    Column(modifier.fillMaxSize(), arrangement, alignment){
         content()
     }
 }
