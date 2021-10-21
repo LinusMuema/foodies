@@ -1,9 +1,7 @@
 package com.moose.foodies.features.add
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.activity.viewModels
@@ -21,14 +19,11 @@ import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.ArrowDropUp
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.outlined.AddCircleOutline
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.github.dhaval2404.imagepicker.ImagePicker
@@ -36,7 +31,6 @@ import com.google.accompanist.flowlayout.FlowRow
 import com.moose.foodies.components.*
 import com.moose.foodies.features.add.ui.ImageUpload
 import com.moose.foodies.features.add.ui.Items
-import com.moose.foodies.features.navigation.NavigationActivity
 import com.moose.foodies.models.Item
 import com.moose.foodies.models.RawRecipe
 import com.moose.foodies.theme.FoodiesTheme
@@ -46,9 +40,6 @@ import com.moose.foodies.util.onError
 import com.moose.foodies.util.onSuccess
 import com.moose.foodies.util.toast
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.util.*
 
 @AndroidEntryPoint
 class AddActivity : AppCompatActivity() {
@@ -116,11 +107,7 @@ class AddActivity : AppCompatActivity() {
 
         FoodiesTheme {
             Surface(color = colors.primary) {
-                Column(
-                    modifier = Modifier
-                        .padding(10.dp)
-                        .verticalScroll(rememberScrollState())
-                ) {
+                Column(modifier = Modifier.padding(10.dp).verticalScroll(rememberScrollState())) {
                     SmallSpacing()
                     Text(
                         text = "Upload a new recipe",
@@ -154,7 +141,10 @@ class AddActivity : AppCompatActivity() {
                                 .clickable { ingredients = ingredients - setOf(it) }
                                 .padding(15.dp, 5.dp)) {
 
-                                Text(text = it.name)
+                                Text(
+                                    text = it.name,
+                                    style = typography.body1.copy(color = colors.onSurface)
+                                )
                             }
                         }
                     }
@@ -172,25 +162,23 @@ class AddActivity : AppCompatActivity() {
                                 .clickable { equipment = equipment - setOf(it) }
                                 .padding(15.dp, 5.dp)) {
 
-                                Text(text = it.name)
+                                Text(
+                                    text = it.name,
+                                    style = typography.body1.copy(color = colors.onSurface)
+                                )
                             }
                         }
                     }
                     Row(
                         horizontalArrangement = SpaceBetween,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 10.dp)
+                        modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp)
                     ) {
                         Text("Preparation time", modifier = Modifier.padding(top = 10.dp))
                         Box {
                             val icon = if (expanded) Filled.ArrowDropUp else Filled.ArrowDropDown
                             Row(
                                 verticalAlignment = CenterVertically,
-                                modifier = Modifier
-                                    .clip(shapes.small)
-                                    .clickable { expanded = true }
-                                    .padding(10.dp)
+                                modifier = Modifier.clip(shapes.small).clickable { expanded = true }.padding(10.dp)
                             ) {
                                 Text(text = times[selected])
                                 Icon(icon, contentDescription = "dropdown icon")
@@ -219,9 +207,7 @@ class AddActivity : AppCompatActivity() {
                         )
                     }
                     SmallSpacing()
-                    Row(horizontalArrangement = SpaceBetween, modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 10.dp)) {
+                    Row(horizontalArrangement = SpaceBetween, modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp)) {
                         Text("Procedure", modifier = Modifier.padding(top = 5.dp))
                         Row(
                             verticalAlignment = CenterVertically,
@@ -243,9 +229,7 @@ class AddActivity : AppCompatActivity() {
                     }
                     steps.forEachIndexed { index, state ->
                         Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(5.dp),
+                            modifier = Modifier.fillMaxWidth().padding(5.dp),
                             verticalAlignment = CenterVertically
                         ) {
                             Box(modifier = Modifier.fillMaxWidth(.9f)) {
