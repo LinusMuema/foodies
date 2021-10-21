@@ -34,6 +34,7 @@ import coil.transform.CircleCropTransformation
 import com.moose.foodies.components.CenterColumn
 import com.moose.foodies.components.MediumSpacing
 import com.moose.foodies.components.SmallSpacing
+import com.moose.foodies.components.TinySpacing
 import com.moose.foodies.features.add.AddActivity
 
 @Composable
@@ -42,16 +43,14 @@ fun Profile() {
     val profile by viewmodel.profile.observeAsState()
 
     Scaffold(backgroundColor = colors.primary, floatingActionButton = { Fab() }) {
-        CenterColumn(modifier = Modifier
-            .padding(10.dp)
-            .verticalScroll(rememberScrollState())) {
-            MediumSpacing()
+        CenterColumn(modifier = Modifier.padding(10.dp).verticalScroll(rememberScrollState())) {
+            SmallSpacing()
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = CenterVertically,
                 horizontalArrangement = SpaceAround
             ) {
-                SmallSpacing()
+               TinySpacing()
                 Image(
                     painter = rememberImagePainter(
                         data = "https://avatars.githubusercontent.com/u/47350130?v=4",
@@ -60,12 +59,9 @@ fun Profile() {
                         }
                     ),
                     contentDescription = "user avatar",
-                    modifier = Modifier
-                        .size(100.dp)
-                        .clip(CircleShape)
-                        .clickable { }
+                    modifier = Modifier.size(100.dp).clip(CircleShape).clickable { }
                 )
-                SmallSpacing()
+                TinySpacing()
                 Column(horizontalAlignment = CenterHorizontally) {
                     Row(modifier = Modifier.fillMaxSize(),  horizontalArrangement = SpaceAround) {
                         Column(horizontalAlignment = CenterHorizontally) {
@@ -80,7 +76,7 @@ fun Profile() {
                     SmallSpacing()
                     Text("Your awesome tagline here...", textAlign = TextAlign.Center)
                 }
-                SmallSpacing()
+                TinySpacing()
             }
         }
     }
