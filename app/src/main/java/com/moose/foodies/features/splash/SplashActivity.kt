@@ -49,7 +49,7 @@ class SplashActivity : ComponentActivity() {
     @Composable
     private fun Content(){
         FoodiesTheme {
-            Surface(color = MaterialTheme.colors.primary) {
+            Surface {
                 CenterColumn {
                     val animation = fadeIn(animationSpec = tween(2000))
                     val visible by remember { mutableStateOf(true) }

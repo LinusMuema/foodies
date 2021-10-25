@@ -1,51 +1,40 @@
 package com.moose.foodies.theme
 
-import android.annotation.SuppressLint
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.ui.graphics.Color
 
-/**
- * [textDark] & [textLight] will take care of text-based graphics. Icons, texts and vectors.
- * [primaryDark] & [primaryLight] will color the background and system components, i.e, the navigation bar and status bars
- * [secondaryDark] & [secondaryLight] will work on the small ui components like borders, buttons
- * [variantDark] & [variantLight] will take care of large surface components like cards
- * */
-
-// Dark colors
-val textDark = Color(0xffFBFFFE)
-val primaryDark = Color(0xff082032)
-val variantDark = Color(0xff2C394B)
-val secondaryDark = Color(0xff2C394B)
-val secondaryVariant = Color(0xff566573)
-
-// Light colors
-val textLight = Color(0xff1B1B1E)
-val primaryLight = Color(0xffFBFFFE)
-val variantLight = Color(0xffEEF0F2)
-val secondaryLight = Color(0xffCB4335)
-
-val errorColor = Color(0xffB03A2E)
+val red400 = Color(0xffCB4335)
+val red500 = Color(0xffB03A2E)
+val grey200 = Color(0xff566573)
+val grey500 = Color(0xff2C394B)
+val grey800 = Color(0xff1B1B1E)
+val black600 = Color(0xff082032)
+val white200 = Color(0xffFBFFFE)
+val white300 = Color(0xffEEF0F2)
 
 
 val lightColors = lightColors(
-    error = errorColor,
-    onPrimary = textLight,
-    primary = primaryLight,
-    onSecondary = primaryLight,
-    secondary = secondaryLight,
-    onSurface = secondaryLight,
-    primaryVariant = variantLight,
-    secondaryVariant = secondaryVariant,
+    error = red500,
+    primary = red400,
+    secondary = red500,
+    surface = white200,
+    onSurface = grey800,
+    onPrimary = white200,
+    background = white200,
+    onBackground = grey800,
+    onSecondary = white200,
+    primaryVariant = grey200,
 )
 
 val darkColors = darkColors(
-    error = errorColor,
-    onPrimary = textDark,
-    onSurface = textDark,
-    primary = primaryDark,
-    onSecondary = textDark,
-    secondary = secondaryDark,
-    primaryVariant = variantDark,
-    secondaryVariant = secondaryVariant,
+    error = red500,
+    primary = white300,
+    surface = black600,
+    secondary = grey500,
+    onSurface = white200,
+    background = black600,
+    onSecondary = white200,
+    onBackground = white200,
+    primaryVariant = grey200,
 )

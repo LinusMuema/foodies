@@ -13,16 +13,13 @@ import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontWeight.Companion.SemiBold
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -32,7 +29,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
 import com.moose.foodies.components.CenterColumn
-import com.moose.foodies.components.MediumSpacing
 import com.moose.foodies.components.SmallSpacing
 import com.moose.foodies.components.TinySpacing
 import com.moose.foodies.features.add.AddActivity
@@ -41,6 +37,15 @@ import com.moose.foodies.features.add.AddActivity
 fun Profile() {
     val viewmodel: ProfileViewmodel = hiltViewModel()
     val profile by viewmodel.profile.observeAsState()
+    var open by remember { mutableStateOf(false)  }
+
+    if (open)
+        AlertDialog(
+            onDismissRequest = { open = false },
+            title = { Text(text = "Update your profile") },
+            text = { Text("Here is a text ") },
+            buttons = {}
+        )
 
     Scaffold(backgroundColor = colors.primary, floatingActionButton = { Fab() }) {
         CenterColumn(modifier = Modifier.padding(10.dp).verticalScroll(rememberScrollState())) {
@@ -59,7 +64,7 @@ fun Profile() {
                         }
                     ),
                     contentDescription = "user avatar",
-                    modifier = Modifier.size(100.dp).clip(CircleShape).clickable { }
+                    modifier = Modifier.size(100.dp).clip(CircleShape).clickable { open = true }
                 )
                 TinySpacing()
                 Column(horizontalAlignment = CenterHorizontally) {
@@ -80,6 +85,11 @@ fun Profile() {
             }
         }
     }
+}
+
+@Composable
+fun ProfileDialog(){
+
 }
 
 @Composable

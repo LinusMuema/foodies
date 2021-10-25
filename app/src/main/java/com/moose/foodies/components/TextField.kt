@@ -16,9 +16,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.moose.foodies.theme.secondaryDark
-import com.moose.foodies.theme.secondaryVariant
-import com.moose.foodies.theme.variantDark
+import com.moose.foodies.theme.grey200
 import java.util.regex.Pattern
 import androidx.compose.material.TextFieldDefaults.outlinedTextFieldColors as Colors
 
@@ -46,7 +44,6 @@ open class TextFieldState (val validators: List<Validators>){
                 is Email -> {
                     if (!email()) showError(it.message)
                     email()
-
                 }
                 is Required -> {
                     if (!required()) showError(it.message)
@@ -88,7 +85,7 @@ fun OutlinedInput(
     modifier: Modifier = Modifier,
     onChanged: (String) -> Unit = {}
 ){
-    val color = secondaryVariant.copy(alpha = .2f)
+    val color = grey200.copy(alpha = .2f)
     var hidden by remember { mutableStateOf(hide) }
 
     val icon = if (hidden) Icons.Filled.VisibilityOff else Icons.Filled.Visibility
@@ -100,7 +97,6 @@ fun OutlinedInput(
         errorBorderColor = Color.Transparent,
         focusedBorderColor = Color.Transparent,
         unfocusedBorderColor = Color.Transparent,
-        cursorColor = MaterialTheme.colors.onPrimary,
         focusedLabelColor = MaterialTheme.colors.onPrimary,
         unfocusedLabelColor =  MaterialTheme.colors.onPrimary,
     )

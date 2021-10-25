@@ -4,7 +4,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.ButtonDefaults.textButtonColors
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -14,13 +16,12 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun FilledButton(text: String, size: Float, loading: Boolean = false, onClick: () -> Unit){
     val style = MaterialTheme.typography.body1
-    val color = MaterialTheme.colors.onSecondary
     val label = if (loading) "Loading..." else text
     val modifier = Modifier.fillMaxWidth(fraction = size).padding(vertical = 5.dp).height(45.dp)
-    val colors = ButtonDefaults.textButtonColors(backgroundColor = MaterialTheme.colors.secondary)
+    val colors = textButtonColors(backgroundColor = colors.secondary, contentColor = colors.onSecondary)
 
     Button(onClick = onClick, modifier = modifier, colors = colors, enabled = !loading) {
-        Text(label, style = style, color = color)
+        Text(label, style = style)
     }
 }
 

@@ -55,7 +55,7 @@ class AuthActivity : ComponentActivity() {
         })
 
         FoodiesTheme {
-            Surface(color = MaterialTheme.colors.primary) {
+            Surface {
                 CenterColumn {
                     Icon(
                         modifier = Modifier.size(150.dp),
