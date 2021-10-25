@@ -10,6 +10,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -32,7 +33,7 @@ fun RecipeItems(type: String){
             val timeGray = Color.Gray.copy(.8f)
 
             // create the gradient
-            val variant = MaterialTheme.colors.secondaryVariant
+            val variant = colors.primaryVariant
             val colors = listOf(Color.Transparent, Color.Transparent, Color.Transparent, variant)
             val gradient = Brush.verticalGradient(colors = colors)
 

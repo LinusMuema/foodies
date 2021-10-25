@@ -25,8 +25,8 @@ import androidx.compose.ui.Alignment.Companion.Start
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.debugInspectorInfo
-import androidx.compose.ui.text.font.FontWeight.Companion.SemiBold
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -38,7 +38,6 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.moose.foodies.components.SmallSpacing
 import com.moose.foodies.features.home.HomeViewmodel
-import com.moose.foodies.features.home.ui.RecipeItems
 import kotlinx.coroutines.launch
 
 @Composable
@@ -115,6 +114,7 @@ fun Home(){
         )
         ScrollableTabRow(
             edgePadding = 0.dp,
+            backgroundColor = Color.Transparent,
             selectedTabIndex = recipesState.currentPage,
             divider = {},
             indicator = { positions ->
@@ -126,19 +126,9 @@ fun Home(){
             }
         ) {
             titles.forEachIndexed { index, title ->
-                val interactionSource = remember { MutableInteractionSource() }
-                val color = if (recipesState.currentPage == index) colors.secondary else colors.onPrimary
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier
-                        .clickable(
-                            interactionSource = interactionSource,
-                            indication = null
-                        ) { coroutineScope.launch { recipesState.animateScrollToPage(index) } }
-                        .background(colors.primary)
-                        .padding(10.dp, 10.dp)
-                ){
-                    Text(title, color = color)
+                val color = if (recipesState.currentPage == index) colors.secondary else colors.onSurface
+                Tab(selected = false, onClick = { coroutineScope.launch { recipesState.animateScrollToPage(index) } }) {
+                    Text(title, color = color, modifier = Modifier.padding(15.dp))
                 }
             }
         }

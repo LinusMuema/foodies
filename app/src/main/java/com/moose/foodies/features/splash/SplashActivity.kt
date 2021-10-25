@@ -12,6 +12,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.Surface
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.*
@@ -49,7 +50,7 @@ class SplashActivity : ComponentActivity() {
     @Composable
     private fun Content(){
         FoodiesTheme {
-            Surface {
+            Surface(color = colors.background) {
                 CenterColumn {
                     val animation = fadeIn(animationSpec = tween(2000))
                     val visible by remember { mutableStateOf(true) }
@@ -57,7 +58,7 @@ class SplashActivity : ComponentActivity() {
                         Icon(
                             modifier = Modifier.size(150.dp),
                             contentDescription = "splash icon",
-                            tint = MaterialTheme.colors.secondary,
+                            tint = colors.secondary,
                             painter = painterResource(id = R.drawable.ic_chef),
                         )
                     }

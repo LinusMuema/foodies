@@ -50,19 +50,18 @@ class NavigationActivity : ComponentActivity() {
         val screens = listOf(Home, Explore, Fridge, Profile)
         
         FoodiesTheme {
-            Surface(color = MaterialTheme.colors.primary) {
+            Surface {
                 Scaffold(
-                    backgroundColor = MaterialTheme.colors.primary,
                     bottomBar = {
-                    BottomNavigation(backgroundColor = MaterialTheme.colors.primary) {
+                    BottomNavigation(backgroundColor = MaterialTheme.colors.background) {
                         val navBackStackEntry by navController.currentBackStackEntryAsState()
                         val currentDestination = navBackStackEntry?.destination
                         screens.forEach { screen ->
                             BottomNavigationItem(
                                 alwaysShowLabel = false,
                                 label = { Text(stringResource(screen.name)) },
-                                selectedContentColor = MaterialTheme.colors.onSurface,
-                                unselectedContentColor = MaterialTheme.colors.secondaryVariant,
+                                selectedContentColor = MaterialTheme.colors.primary,
+                                unselectedContentColor = MaterialTheme.colors.primaryVariant,
                                 selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
                                 icon = {
                                     Icon(

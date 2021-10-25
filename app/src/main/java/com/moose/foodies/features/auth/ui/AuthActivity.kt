@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -55,12 +56,12 @@ class AuthActivity : ComponentActivity() {
         })
 
         FoodiesTheme {
-            Surface {
+            Surface(color = colors.background) {
                 CenterColumn {
                     Icon(
                         modifier = Modifier.size(150.dp),
                         contentDescription = "splash icon",
-                        tint = MaterialTheme.colors.secondary,
+                        tint = colors.secondary,
                         painter = painterResource(id = R.drawable.ic_chef),
                     )
                     when (screen){

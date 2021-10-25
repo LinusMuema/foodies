@@ -38,7 +38,7 @@ fun RecipeCard(){
     val timeGray = Gray.copy(.8f)
 
     // create the gradient
-    val variant = colors.secondaryVariant
+    val variant = colors.primaryVariant
     val colors = listOf(Transparent, Transparent, Transparent, variant)
     val gradient = Brush.verticalGradient(colors = colors)
 
