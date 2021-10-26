@@ -198,7 +198,7 @@ class AddActivity : AppCompatActivity() {
                                 DropdownMenu(
                                     expanded = expanded,
                                     onDismissRequest = { expanded = false },
-                                    modifier = Modifier.background(colors.primary),
+                                    modifier = Modifier.background(colors.background),
                                 ) {
                                     times.forEachIndexed { index, s ->
                                         DropdownMenuItem(onClick = {
