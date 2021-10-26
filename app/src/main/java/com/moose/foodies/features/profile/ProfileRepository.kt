@@ -1,7 +1,9 @@
 package com.moose.foodies.features.profile
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import com.moose.foodies.models.Profile
+import com.moose.foodies.util.UploadState
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -10,11 +12,17 @@ import kotlinx.coroutines.flow.Flow
 
 interface ProfileRepository {
     val profile: Flow<Profile>
+
+    val progress: LiveData<UploadState>
+
+    suspend fun updateProfile(profile: Profile)
+
+    suspend fun uploadImage(dir: String, path: Uri)
 }
 
 @Module
 @InstallIn(ViewModelComponent::class)
-abstract class ProfileRepositoryBinding(){
+abstract class ProfileRepositoryBinding{
 
     @Binds
     abstract fun provideRepository(impl: ProfileRepositoryImpl): ProfileRepository

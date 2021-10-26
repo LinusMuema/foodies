@@ -3,7 +3,6 @@ package com.moose.foodies.features.profile
 import android.app.Activity
 import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -39,6 +38,9 @@ import com.github.dhaval2404.imagepicker.ImagePicker
 import com.moose.foodies.components.*
 import com.moose.foodies.features.add.AddActivity
 import com.moose.foodies.models.Profile
+import com.moose.foodies.models.RawRecipe
+import com.moose.foodies.util.UploadState
+import com.moose.foodies.util.UploadState.*
 import com.moose.foodies.util.getActivity
 import com.moose.foodies.util.toast
 
@@ -106,19 +108,35 @@ fun Profile() {
 fun ProfileDialog(viewmodel: ProfileViewmodel, profile: Profile){
     val context = LocalContext.current
     val activity = context.getActivity()!!
-    val url by viewmodel.path.observeAsState()
+    val url by viewmodel.url.observeAsState()
+    val progress by viewmodel.progress.observeAsState()
+    var button by remember { mutableStateOf("Update profile") }
 
-    val tagState = remember { TextFieldState(profile.username, listOf(Required()))}
+
     val nameState = remember { TextFieldState(profile.username, listOf(Required()))}
+    val descriptionState = remember { TextFieldState(profile.description, listOf(Required()))}
 
     val launcher = rememberLauncherForActivityResult(StartActivityForResult()){
         val data = it.data
         when (it.resultCode) {
-            Activity.RESULT_OK -> viewmodel.setUri(data?.data!!)
+            Activity.RESULT_OK -> viewmodel.uploadAvatar(data?.data!!)
             ImagePicker.RESULT_ERROR -> context.toast(ImagePicker.getError(data))
             else -> context.toast("Image upload cancelled")
         }
     }
+
+    when (val state = progress){
+        is Error -> context.toast(state.message)
+        is Loading -> {
+            val percentage = (state.current.toDouble() / state.total.toDouble()) * 100
+            button = "Uploading image...${percentage.toInt()}%"
+        }
+        is Success -> {
+            button = "Updating profile..."
+            viewmodel.updateProfile(profile.copy(avatar = state.url))
+        }
+    }
+
 
     fun pick() = ImagePicker.with(activity).galleryOnly().createIntent { launcher.launch(it) }
 
@@ -141,9 +159,13 @@ fun ProfileDialog(viewmodel: ProfileViewmodel, profile: Profile){
         }
         SmallSpacing()
         OutlinedInput(label = "username", type = KeyboardType.Text , state = nameState)
-        OutlinedInput(label = "tagline", type = KeyboardType.Text , state = tagState)
+        OutlinedInput(label = "tagline", type = KeyboardType.Text , state = descriptionState)
         TinySpacing()
-        FilledButton(text = "Update profile", size = .97f) {}
+        FilledButton(text = button, size = .97f) {
+            if(descriptionState.validate() && nameState.validate()){
+
+            }
+        }
         SmallSpacing()
     }
 }

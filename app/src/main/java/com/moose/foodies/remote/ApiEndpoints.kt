@@ -20,4 +20,7 @@ interface ApiEndpoints {
 
     @POST("/api/recipes")
     suspend fun uploadRecipe(@Body recipe: RawRecipe): Recipe
+
+    @POST("/api/users/update")
+    suspend fun updateProfile(@Body update: Profile): Profile
 }

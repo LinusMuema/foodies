@@ -34,8 +34,6 @@ sealed class UploadState {
 @InstallIn(SingletonComponent::class)
 object CloudinaryModule {
 
-
-
     @Provides
     @Singleton
     fun provideManager(): MediaManager {
@@ -45,22 +43,18 @@ object CloudinaryModule {
 
     @Provides
     @Singleton
-    fun providesCloudinary(dao: UserDao, manager: MediaManager): Cloudinary {
-        return Cloudinary(dao, manager)
-    }
+    fun providesCloudinary(manager: MediaManager): Cloudinary = Cloudinary(manager)
 }
 
 
-class Cloudinary @Inject constructor(private val dao: UserDao, private val manager: MediaManager) {
+class Cloudinary @Inject constructor(private val manager: MediaManager) {
 
     private val _progress: MutableLiveData<UploadState> = MutableLiveData()
     val progress: LiveData<UploadState> = _progress
 
     fun clearProgress()  = UploadState.Idle.also { _progress.value = it }
 
-    suspend fun uploadImage(path: Uri) {
-        val name = RandomIdGenerator.getRandom()
-        val user = dao.getProfile().first()._id
+    fun uploadImage(dir: String, path: Uri) {
         val callback = object : UploadCallback {
             override fun onStart(requestId: String?) {
                 _progress.value = UploadState.Loading(1, 100)
@@ -84,7 +78,7 @@ class Cloudinary @Inject constructor(private val dao: UserDao, private val manag
         }
 
         manager.upload(path)
-            .option("public_id", "Foodies/recipes/$user/$name")
+            .option("public_id", dir)
             .callback(callback)
             .dispatch()
     }

@@ -7,13 +7,11 @@ import com.moose.foodies.models.Auth
 import com.moose.foodies.models.Item
 import com.moose.foodies.models.RawRecipe
 import com.moose.foodies.models.Recipe
-import com.moose.foodies.util.Cloudinary
-import com.moose.foodies.util.Result
-import com.moose.foodies.util.UploadState
-import com.moose.foodies.util.parse
+import com.moose.foodies.util.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
@@ -31,7 +29,6 @@ class AddViewmodel @Inject constructor(private val repository: AddRepository): V
     val result: LiveData<Result<Recipe>> = _result
 
     private val handler = CoroutineExceptionHandler { _, exception ->
-        Log.e("Error", "Error caught : $exception")
         _result.value = Result.Error(exception.parse())
     }
 
@@ -41,7 +38,10 @@ class AddViewmodel @Inject constructor(private val repository: AddRepository): V
 
     fun uploadImage() {
         viewModelScope.launch {
-            repository.uploadImage(_path.value!!)
+            val name = RandomIdGenerator.getRandom()
+            val user = repository.profile.first()._id
+            val dir = "Foodies/recipes/$user/$name"
+            repository.uploadImage(dir, _path.value!!)
         }
     }
 
