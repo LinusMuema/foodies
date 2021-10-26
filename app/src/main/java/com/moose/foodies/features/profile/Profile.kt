@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight.Companion.SemiBold
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -35,9 +36,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
 import com.github.dhaval2404.imagepicker.ImagePicker
-import com.moose.foodies.components.CenterColumn
-import com.moose.foodies.components.SmallSpacing
-import com.moose.foodies.components.TinySpacing
+import com.moose.foodies.components.*
 import com.moose.foodies.features.add.AddActivity
 import com.moose.foodies.models.Profile
 import com.moose.foodies.util.getActivity
@@ -51,11 +50,12 @@ fun Profile() {
 
     if (open)
         AlertDialog(
-            buttons = {},
-            text = { ProfileDialog(viewmodel, profile!!) },
+            text = null,
+            title = null,
+            modifier = Modifier.fillMaxWidth(),
             backgroundColor = colors.background,
             onDismissRequest = { open = false },
-            title = { Text(text = "Update your profile") },
+            buttons = { ProfileDialog(viewmodel, profile!!) },
         )
 
     Scaffold(floatingActionButton = { Fab() }) {
@@ -108,6 +108,9 @@ fun ProfileDialog(viewmodel: ProfileViewmodel, profile: Profile){
     val activity = context.getActivity()!!
     val url by viewmodel.path.observeAsState()
 
+    val tagState = remember { TextFieldState(profile.username, listOf(Required()))}
+    val nameState = remember { TextFieldState(profile.username, listOf(Required()))}
+
     val launcher = rememberLauncherForActivityResult(StartActivityForResult()){
         val data = it.data
         when (it.resultCode) {
@@ -119,7 +122,8 @@ fun ProfileDialog(viewmodel: ProfileViewmodel, profile: Profile){
 
     fun pick() = ImagePicker.with(activity).galleryOnly().createIntent { launcher.launch(it) }
 
-    Column {
+    Column(horizontalAlignment = CenterHorizontally, modifier = Modifier.padding(10.dp)) {
+        SmallSpacing()
         Box(modifier = Modifier.size(100.dp).clip(CircleShape).clickable { pick() }) {
             Image(
                 painter = rememberImagePainter(
@@ -135,6 +139,12 @@ fun ProfileDialog(viewmodel: ProfileViewmodel, profile: Profile){
                 modifier = Modifier.align(Alignment.Center)
             )
         }
+        SmallSpacing()
+        OutlinedInput(label = "username", type = KeyboardType.Text , state = nameState)
+        OutlinedInput(label = "tagline", type = KeyboardType.Text , state = tagState)
+        TinySpacing()
+        FilledButton(text = "Update profile", size = .97f) {}
+        SmallSpacing()
     }
 }
 

@@ -20,9 +20,9 @@ import com.moose.foodies.theme.grey200
 import java.util.regex.Pattern
 import androidx.compose.material.TextFieldDefaults.outlinedTextFieldColors as Colors
 
-open class TextFieldState (val validators: List<Validators>){
+open class TextFieldState (initial: String = "", val validators: List<Validators>){
 
-    var text: String by mutableStateOf("")
+    var text: String by mutableStateOf(initial)
     var message: String by mutableStateOf("")
     var hasError: Boolean by mutableStateOf(false)
 
