@@ -25,7 +25,7 @@ import coil.transform.RoundedCornersTransformation
 
 @Composable
     fun ImageUpload(path: Uri?, onClick: () -> Unit) {
-        val dashColor = colors.onSurface
+        val dashColor = colors.primary
         val radius = CornerRadius(10f, 10f)
         val effect = dashPathEffect(floatArrayOf(10f, 10f), 0f)
         val stroke = Stroke(width = 2f, pathEffect = effect)
@@ -50,7 +50,7 @@ import coil.transform.RoundedCornersTransformation
             Text(
                 textAlign = TextAlign.Center,
                 text = "Tap to upload the photo",
-                style = typography.body1.copy(color = colors.onPrimary)
+                style = typography.body1
             )
 
         }

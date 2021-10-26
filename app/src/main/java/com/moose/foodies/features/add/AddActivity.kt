@@ -106,160 +106,173 @@ class AddActivity : AppCompatActivity() {
         }
 
         FoodiesTheme {
-            Surface(color = colors.primary) {
-                Column(modifier = Modifier.padding(10.dp).verticalScroll(rememberScrollState())) {
-                    SmallSpacing()
-                    Text(
-                        text = "Upload a new recipe",
-                        style = typography.h6.copy(color = colors.onSurface)
-                    )
-                    SmallSpacing()
-                    ImageUpload(path = path, onClick = { getImage() })
-                    SmallSpacing()
-                    OutlinedInput(
-                        label = "Name",
-                        state = nameState,
-                        type = KeyboardType.Email,
-                    )
-                    SmallSpacing()
-                    OutlinedInput(
-                        label = "Description",
-                        state = descriptionState,
-                        type = KeyboardType.Email,
-                    )
-                    Items(
-                        type = "Ingredients",
-                        viewmodel = viewmodel,
-                        onClick = { ingredients = ingredients + setOf(it) },
-                    )
-                    FlowRow(modifier = Modifier.padding(top = 10.dp)) {
-                        ingredients.forEach {
-                            Box(modifier = Modifier
-                                .padding(5.dp)
-                                .border(1.dp, colors.onSurface, shapes.large)
-                                .clip(shapes.large)
-                                .clickable { ingredients = ingredients - setOf(it) }
-                                .padding(15.dp, 5.dp)) {
+            Surface {
+                Scaffold {
+                    Column(modifier = Modifier
+                        .padding(10.dp)
+                        .verticalScroll(rememberScrollState())) {
+                        SmallSpacing()
+                        Text(
+                            text = "Upload a new recipe",
+                            style = typography.h6.copy(color = colors.onSurface)
+                        )
+                        SmallSpacing()
+                        ImageUpload(path = path, onClick = { getImage() })
+                        SmallSpacing()
+                        OutlinedInput(
+                            label = "Name",
+                            state = nameState,
+                            type = KeyboardType.Email,
+                        )
+                        SmallSpacing()
+                        OutlinedInput(
+                            label = "Description",
+                            state = descriptionState,
+                            type = KeyboardType.Email,
+                        )
+                        Items(
+                            type = "Ingredients",
+                            viewmodel = viewmodel,
+                            onClick = { ingredients = ingredients + setOf(it) },
+                        )
+                        FlowRow(modifier = Modifier.padding(top = 10.dp)) {
+                            ingredients.forEach {
+                                Box(modifier = Modifier
+                                    .padding(5.dp)
+                                    .border(1.dp, colors.onSurface, shapes.large)
+                                    .clip(shapes.large)
+                                    .clickable { ingredients = ingredients - setOf(it) }
+                                    .padding(15.dp, 5.dp)) {
 
-                                Text(
-                                    text = it.name,
-                                    style = typography.body1.copy(color = colors.onSurface)
-                                )
+                                    Text(
+                                        text = it.name,
+                                        style = typography.body1.copy(color = colors.onSurface)
+                                    )
+                                }
                             }
                         }
-                    }
-                    Items(
-                        type = "Equipment",
-                        viewmodel = viewmodel,
-                        onClick = { equipment = equipment + setOf(it) },
-                    )
-                    FlowRow(modifier = Modifier.padding(top = 10.dp)) {
-                        equipment.forEach {
-                            Box(modifier = Modifier
-                                .padding(5.dp)
-                                .border(1.dp, colors.onSurface, shapes.large)
-                                .clip(shapes.large)
-                                .clickable { equipment = equipment - setOf(it) }
-                                .padding(15.dp, 5.dp)) {
+                        Items(
+                            type = "Equipment",
+                            viewmodel = viewmodel,
+                            onClick = { equipment = equipment + setOf(it) },
+                        )
+                        FlowRow(modifier = Modifier.padding(top = 10.dp)) {
+                            equipment.forEach {
+                                Box(modifier = Modifier
+                                    .padding(5.dp)
+                                    .border(1.dp, colors.onSurface, shapes.large)
+                                    .clip(shapes.large)
+                                    .clickable { equipment = equipment - setOf(it) }
+                                    .padding(15.dp, 5.dp)) {
 
-                                Text(
-                                    text = it.name,
-                                    style = typography.body1.copy(color = colors.onSurface)
-                                )
+                                    Text(
+                                        text = it.name,
+                                        style = typography.body1.copy(color = colors.onSurface)
+                                    )
+                                }
                             }
                         }
-                    }
-                    Row(
-                        horizontalArrangement = SpaceBetween,
-                        modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp)
-                    ) {
-                        Text("Preparation time", modifier = Modifier.padding(top = 10.dp))
-                        Box {
-                            val icon = if (expanded) Filled.ArrowDropUp else Filled.ArrowDropDown
-                            Row(
-                                verticalAlignment = CenterVertically,
-                                modifier = Modifier.clip(shapes.small).clickable { expanded = true }.padding(10.dp)
-                            ) {
-                                Text(text = times[selected])
-                                Icon(icon, contentDescription = "dropdown icon")
-                            }
-                            DropdownMenu(
-                                expanded = expanded,
-                                onDismissRequest = { expanded = false },
-                                modifier = Modifier.background(colors.primary),
-                            ) {
-                                times.forEachIndexed { index, s ->
-                                    DropdownMenuItem(onClick = {
-                                        selected = index
-                                        expanded = false
-                                    }) {
-                                        Text(text = s)
+                        Row(
+                            horizontalArrangement = SpaceBetween,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 10.dp)
+                        ) {
+                            Text("Preparation time", modifier = Modifier.padding(top = 10.dp))
+                            Box {
+                                val icon = if (expanded) Filled.ArrowDropUp else Filled.ArrowDropDown
+                                Row(
+                                    verticalAlignment = CenterVertically,
+                                    modifier = Modifier
+                                        .clip(shapes.small)
+                                        .clickable { expanded = true }
+                                        .padding(10.dp)
+                                ) {
+                                    Text(text = times[selected])
+                                    Icon(icon, contentDescription = "dropdown icon")
+                                }
+                                DropdownMenu(
+                                    expanded = expanded,
+                                    onDismissRequest = { expanded = false },
+                                    modifier = Modifier.background(colors.primary),
+                                ) {
+                                    times.forEachIndexed { index, s ->
+                                        DropdownMenuItem(onClick = {
+                                            selected = index
+                                            expanded = false
+                                        }) {
+                                            Text(text = s)
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                    if (selected == 5) {
-                        OutlinedInput(
-                            label = null,
-                            state = timeState,
-                            type = KeyboardType.Number,
-                        )
-                    }
-                    SmallSpacing()
-                    Row(horizontalArrangement = SpaceBetween, modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp)) {
-                        Text("Procedure", modifier = Modifier.padding(top = 5.dp))
-                        Row(
-                            verticalAlignment = CenterVertically,
-                            modifier = Modifier
-                                .clip(shapes.small)
-                                .clickable {
-                                    steps =
-                                        steps + listOf(TextFieldState(validators = listOf(Required())))
-                                }
-                                .padding(10.dp)
-                        ) {
-                            Icon(
-                                Outlined.AddCircleOutline,
-                                modifier = Modifier.size(20.dp),
-                                contentDescription = "add step icon"
+                        if (selected == 5) {
+                            OutlinedInput(
+                                label = null,
+                                state = timeState,
+                                type = KeyboardType.Number,
                             )
-                            Text("Add step", modifier = Modifier.padding(horizontal = 5.dp))
                         }
-                    }
-                    steps.forEachIndexed { index, state ->
-                        Row(
-                            modifier = Modifier.fillMaxWidth().padding(5.dp),
-                            verticalAlignment = CenterVertically
-                        ) {
-                            Box(modifier = Modifier.fillMaxWidth(.9f)) {
-                                OutlinedInput(
-                                    state = state,
-                                    label = "Step ${index + 1}",
-                                    type = KeyboardType.Text,
+                        SmallSpacing()
+                        Row(horizontalArrangement = SpaceBetween, modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 10.dp)) {
+                            Text("Procedure", modifier = Modifier.padding(top = 5.dp))
+                            Row(
+                                verticalAlignment = CenterVertically,
+                                modifier = Modifier
+                                    .clip(shapes.small)
+                                    .clickable {
+                                        steps =
+                                            steps + listOf(TextFieldState(validators = listOf(Required())))
+                                    }
+                                    .padding(10.dp)
+                            ) {
+                                Icon(
+                                    Outlined.AddCircleOutline,
+                                    modifier = Modifier.size(20.dp),
+                                    contentDescription = "add step icon"
                                 )
+                                Text("Add step", modifier = Modifier.padding(horizontal = 5.dp))
                             }
-                            IconButton(onClick = { steps = steps - listOf(state) }) {
-                                Column {
-                                    SmallSpacing()
-                                    Icon(Filled.Delete, contentDescription = "delete step icon")
+                        }
+                        steps.forEachIndexed { index, state ->
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(5.dp),
+                                verticalAlignment = CenterVertically
+                            ) {
+                                Box(modifier = Modifier.fillMaxWidth(.9f)) {
+                                    OutlinedInput(
+                                        state = state,
+                                        label = "Step ${index + 1}",
+                                        type = KeyboardType.Text,
+                                    )
+                                }
+                                IconButton(onClick = { steps = steps - listOf(state) }) {
+                                    Column {
+                                        SmallSpacing()
+                                        Icon(Filled.Delete, contentDescription = "delete step icon")
+                                    }
                                 }
                             }
                         }
-                    }
-                    SmallSpacing()
-                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Center) {
-                        FilledButton(text = button, size = .95f) {
-                            val validSteps = steps.map { it.validate() }.all { it }
-                            val validTime = if (selected == 5) timeState.validate() else true
+                        SmallSpacing()
+                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Center) {
+                            FilledButton(text = button, size = .95f) {
+                                val validSteps = steps.map { it.validate() }.all { it }
+                                val validTime = if (selected == 5) timeState.validate() else true
 
-                            when {
-                                path == null -> toast("Upload the recipe image")
-                                steps.isEmpty() -> toast("Add at least one step")
-                                equipment.isEmpty() -> toast("Add at least one equipment")
-                                ingredients.isEmpty() -> toast("Add at least one ingredient")
-                                nameState.validate() && descriptionState.validate() && validSteps && validTime -> {
-                                    viewmodel.uploadImage()
+                                when {
+                                    path == null -> toast("Upload the recipe image")
+                                    steps.isEmpty() -> toast("Add at least one step")
+                                    equipment.isEmpty() -> toast("Add at least one equipment")
+                                    ingredients.isEmpty() -> toast("Add at least one ingredient")
+                                    nameState.validate() && descriptionState.validate() && validSteps && validTime -> {
+                                        viewmodel.uploadImage()
+                                    }
                                 }
                             }
                         }

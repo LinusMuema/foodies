@@ -70,17 +70,15 @@ fun Home(){
         Row(
             verticalAlignment = CenterVertically,
             horizontalArrangement = SpaceBetween,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp)
+            modifier = Modifier.fillMaxWidth().padding(10.dp)
         ){
             Text(
                 text = "Discover Chefs",
-                style = typography.h5.copy(color = colors.onSurface)
+                style = typography.h5.copy(color = colors.primary)
             )
             Text(
                 text = "See all",
-                style = typography.body1.copy(color = colors.secondaryVariant)
+                style = typography.body1.copy(color = colors.primary)
             )
         }
         LazyRow(
@@ -97,10 +95,7 @@ fun Home(){
                             }
                         ),
                         contentDescription = "chef avatar",
-                        modifier = Modifier
-                            .size(75.dp)
-                            .clip(shapes.large)
-                            .clickable { }
+                        modifier = Modifier.size(75.dp).clip(shapes.large).clickable { }
                     )
                     Text("moose")
                 }

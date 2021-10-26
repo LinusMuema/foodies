@@ -47,7 +47,7 @@ fun Profile() {
             buttons = {}
         )
 
-    Scaffold(backgroundColor = colors.primary, floatingActionButton = { Fab() }) {
+    Scaffold(floatingActionButton = { Fab() }) {
         CenterColumn(modifier = Modifier.padding(10.dp).verticalScroll(rememberScrollState())) {
             SmallSpacing()
             Row(

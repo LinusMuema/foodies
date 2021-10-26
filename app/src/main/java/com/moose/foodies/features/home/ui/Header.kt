@@ -27,17 +27,14 @@ fun Header(profile: Profile?){
             Column {
                 Text(
                     text = "Hi ${profile?.username},",
-                    style = typography.h5.copy(color = colors.onSurface),
+                    style = typography.h5.copy(color = colors.primary),
                 )
                 TimeCaption()
             }
             Spacer(modifier = Modifier)
             Box(
                 contentAlignment = Center,
-                modifier = Modifier
-                    .size(36.dp)
-                    .clip(shapes.large)
-                    .clickable { },
+                modifier = Modifier.size(36.dp).clip(shapes.large).clickable { },
             ) {
                 Icon(
                     modifier = Modifier.size(24.dp),
