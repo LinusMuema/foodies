@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.accompanist.flowlayout.FlowRow
 import com.moose.foodies.components.*
+import com.moose.foodies.features.add.ui.Categories
 import com.moose.foodies.features.add.ui.ImageUpload
 import com.moose.foodies.features.add.ui.Items
 import com.moose.foodies.models.Item
@@ -71,12 +72,14 @@ class AddActivity : AppCompatActivity() {
     @Composable
     private fun Content() {
         val path by viewmodel.path.observeAsState()
+        val loading by viewmodel.loading.observeAsState()
         val progress by viewmodel.progress.observeAsState()
         var selected by remember { mutableStateOf(0) }
         var expanded by remember { mutableStateOf(false) }
         var button by remember { mutableStateOf("Upload") }
         var equipment by remember { mutableStateOf(setOf<Item>()) }
         var ingredients by remember { mutableStateOf(setOf<Item>()) }
+        var categories by remember { mutableStateOf(listOf<String>()) }
         var steps by remember { mutableStateOf(listOf<TextFieldState>()) }
         val nameState = remember { TextFieldState(validators = listOf(Required())) }
         val timeState = remember { TextFieldState(validators = listOf(Required())) }
@@ -96,6 +99,7 @@ class AddActivity : AppCompatActivity() {
                 viewmodel.uploadRecipe(
                     RawRecipe(
                         name = nameState.text,
+                        categories = categories,
                         description = descriptionState.text,
                         equipment = equipment.map { it._id },
                         ingredients = ingredients.map { it._id },
@@ -108,9 +112,7 @@ class AddActivity : AppCompatActivity() {
         FoodiesTheme {
             Surface {
                 Scaffold {
-                    Column(modifier = Modifier
-                        .padding(10.dp)
-                        .verticalScroll(rememberScrollState())) {
+                    Column(modifier = Modifier.padding(10.dp).verticalScroll(rememberScrollState())) {
                         SmallSpacing()
                         Text(
                             text = "Upload a new recipe",
@@ -124,7 +126,6 @@ class AddActivity : AppCompatActivity() {
                             state = nameState,
                             type = KeyboardType.Email,
                         )
-                        SmallSpacing()
                         OutlinedInput(
                             label = "Description",
                             state = descriptionState,
@@ -139,14 +140,13 @@ class AddActivity : AppCompatActivity() {
                             ingredients.forEach {
                                 Box(modifier = Modifier
                                     .padding(5.dp)
-                                    .border(1.dp, colors.onSurface, shapes.large)
+                                    .border(1.dp, colors.primary, shapes.large)
                                     .clip(shapes.large)
                                     .clickable { ingredients = ingredients - setOf(it) }
                                     .padding(15.dp, 5.dp)) {
-
                                     Text(
                                         text = it.name,
-                                        style = typography.body1.copy(color = colors.onSurface)
+                                        style = typography.body1.copy(color = colors.primary)
                                     )
                                 }
                             }
@@ -160,23 +160,27 @@ class AddActivity : AppCompatActivity() {
                             equipment.forEach {
                                 Box(modifier = Modifier
                                     .padding(5.dp)
-                                    .border(1.dp, colors.onSurface, shapes.large)
+                                    .border(1.dp, colors.primary, shapes.large)
                                     .clip(shapes.large)
                                     .clickable { equipment = equipment - setOf(it) }
                                     .padding(15.dp, 5.dp)) {
 
                                     Text(
                                         text = it.name,
-                                        style = typography.body1.copy(color = colors.onSurface)
+                                        style = typography.body1.copy(color = colors.primary)
                                     )
                                 }
                             }
                         }
+                        TinySpacing()
+                        Text(
+                            text = "Select the recipe categories",
+                            modifier = Modifier.padding(10.dp, 5.dp)
+                        )
+                        Categories(onChange = { categories = it })
                         Row(
                             horizontalArrangement = SpaceBetween,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 10.dp)
+                            modifier = Modifier.fillMaxWidth().padding(10.dp, 5.dp)
                         ) {
                             Text("Preparation time", modifier = Modifier.padding(top = 10.dp))
                             Box {
@@ -215,17 +219,17 @@ class AddActivity : AppCompatActivity() {
                             )
                         }
                         SmallSpacing()
-                        Row(horizontalArrangement = SpaceBetween, modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 10.dp)) {
+                        Row(
+                            horizontalArrangement = SpaceBetween,
+                            modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp)
+                        ) {
                             Text("Procedure", modifier = Modifier.padding(top = 5.dp))
                             Row(
                                 verticalAlignment = CenterVertically,
                                 modifier = Modifier
                                     .clip(shapes.small)
                                     .clickable {
-                                        steps =
-                                            steps + listOf(TextFieldState(validators = listOf(Required())))
+                                        steps = steps + listOf(TextFieldState(validators = listOf(Required())))
                                     }
                                     .padding(10.dp)
                             ) {
@@ -239,9 +243,7 @@ class AddActivity : AppCompatActivity() {
                         }
                         steps.forEachIndexed { index, state ->
                             Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(5.dp),
+                                modifier = Modifier.fillMaxWidth().padding(5.dp),
                                 verticalAlignment = CenterVertically
                             ) {
                                 Box(modifier = Modifier.fillMaxWidth(.9f)) {
@@ -266,9 +268,11 @@ class AddActivity : AppCompatActivity() {
                                 val validTime = if (selected == 5) timeState.validate() else true
 
                                 when {
+                                    loading == true -> {}
                                     path == null -> toast("Upload the recipe image")
                                     steps.isEmpty() -> toast("Add at least one step")
                                     equipment.isEmpty() -> toast("Add at least one equipment")
+                                    categories.isEmpty() -> toast("Select at least one category")
                                     ingredients.isEmpty() -> toast("Add at least one ingredient")
                                     nameState.validate() && descriptionState.validate() && validSteps && validTime -> {
                                         viewmodel.uploadImage()

@@ -22,6 +22,8 @@ class ProfileRepositoryImpl @Inject constructor(
     override val progress: LiveData<UploadState>
         get() = cloudinary.progress
 
+    override fun clearProgress() = cloudinary.clearProgress()
+
     override suspend fun updateProfile(profile: Profile) {
         dao.addProfile(api.updateProfile(profile))
     }

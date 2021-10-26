@@ -105,7 +105,7 @@ fun Home(){
         Text(
             text = "Recipes",
             modifier = Modifier.padding(10.dp),
-            style = typography.h5.copy(color = colors.onSurface)
+            style = typography.h5.copy(color = colors.primary)
         )
         ScrollableTabRow(
             edgePadding = 0.dp,

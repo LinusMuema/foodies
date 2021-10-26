@@ -38,8 +38,6 @@ import com.github.dhaval2404.imagepicker.ImagePicker
 import com.moose.foodies.components.*
 import com.moose.foodies.features.add.AddActivity
 import com.moose.foodies.models.Profile
-import com.moose.foodies.models.RawRecipe
-import com.moose.foodies.util.UploadState
 import com.moose.foodies.util.UploadState.*
 import com.moose.foodies.util.getActivity
 import com.moose.foodies.util.toast
@@ -48,7 +46,7 @@ import com.moose.foodies.util.toast
 fun Profile() {
     val viewmodel: ProfileViewmodel = hiltViewModel()
     val profile by viewmodel.profile.observeAsState()
-    var open by remember { mutableStateOf(false)  }
+    var open by remember { mutableStateOf(false) }
 
     if (open)
         AlertDialog(
@@ -60,63 +58,67 @@ fun Profile() {
             buttons = { ProfileDialog(viewmodel, profile!!) },
         )
 
-    Scaffold(floatingActionButton = { Fab() }) {
-        CenterColumn(modifier = Modifier
-            .padding(10.dp)
-            .verticalScroll(rememberScrollState())) {
-            SmallSpacing()
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = CenterVertically,
-                horizontalArrangement = SpaceAround
-            ) {
-               TinySpacing()
-                Image(
-                    painter = rememberImagePainter(
-                        data = profile?.avatar,
-                        builder = { transformations(CircleCropTransformation()) }
-                    ),
-                    contentDescription = "user avatar",
-                    modifier = Modifier
-                        .size(100.dp)
-                        .clip(CircleShape)
-                        .clickable { open = true }
-                )
-                TinySpacing()
-                Column(horizontalAlignment = CenterHorizontally) {
-                    Row(modifier = Modifier.fillMaxSize(),  horizontalArrangement = SpaceAround) {
-                        Column(horizontalAlignment = CenterHorizontally) {
-                            Text("24", style = typography.body1.copy(fontWeight = SemiBold))
-                            Text("Recipes", style = typography.h6.copy(fontSize = 16.sp))
+    if (profile != null)
+        Scaffold(floatingActionButton = { Fab() }) {
+            CenterColumn(modifier = Modifier.padding(10.dp).verticalScroll(rememberScrollState())) {
+                SmallSpacing()
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = CenterVertically,
+                    horizontalArrangement = SpaceAround
+                ) {
+                    TinySpacing()
+                    Image(
+                        painter = rememberImagePainter(
+                            data = profile?.avatar,
+                            builder = { transformations(CircleCropTransformation()) }
+                        ),
+                        contentDescription = "user avatar",
+                        modifier = Modifier.size(100.dp).clip(CircleShape).clickable { open = true }
+                    )
+                    TinySpacing()
+                    Column(horizontalAlignment = CenterHorizontally) {
+                        Row(
+                            modifier = Modifier.fillMaxSize(),
+                            horizontalArrangement = SpaceAround
+                        ) {
+                            Column(horizontalAlignment = CenterHorizontally) {
+                                Text("24", style = typography.body1.copy(fontWeight = SemiBold))
+                                Text("Recipes", style = typography.h6.copy(fontSize = 16.sp))
+                            }
+                            Column(horizontalAlignment = CenterHorizontally) {
+                                Text("2.5k", style = typography.body1.copy(fontWeight = SemiBold))
+                                Text("Likes", style = typography.h6.copy(fontSize = 16.sp))
+                            }
                         }
-                        Column(horizontalAlignment = CenterHorizontally) {
-                            Text("2.5k", style = typography.body1.copy(fontWeight = SemiBold))
-                            Text("Likes", style = typography.h6.copy(fontSize = 16.sp))
-                        }
+                        SmallSpacing()
+                        Text(profile!!.description, textAlign = TextAlign.Center)
                     }
-                    SmallSpacing()
-                    Text("Your awesome tagline here...", textAlign = TextAlign.Center)
+                    TinySpacing()
                 }
-                TinySpacing()
             }
         }
-    }
 }
 
 
 @Composable
-fun ProfileDialog(viewmodel: ProfileViewmodel, profile: Profile){
+fun ProfileDialog(viewmodel: ProfileViewmodel, profile: Profile) {
     val context = LocalContext.current
     val activity = context.getActivity()!!
     val url by viewmodel.url.observeAsState()
     val progress by viewmodel.progress.observeAsState()
-    var button by remember { mutableStateOf("Update profile") }
 
+    val error by viewmodel.error.observeAsState()
+    if (error != null) context.toast(error)
 
-    val nameState = remember { TextFieldState(profile.username, listOf(Required()))}
-    val descriptionState = remember { TextFieldState(profile.description, listOf(Required()))}
+    val loading by viewmodel.loading.observeAsState()
+    var button by remember { mutableStateOf("") }
+    button = if (loading == true) "Updating profile..." else "Update profile"
 
-    val launcher = rememberLauncherForActivityResult(StartActivityForResult()){
+    val nameState = remember { TextFieldState(profile.username, listOf(Required())) }
+    val descriptionState = remember { TextFieldState(profile.description, listOf(Required())) }
+
+    val launcher = rememberLauncherForActivityResult(StartActivityForResult()) {
         val data = it.data
         when (it.resultCode) {
             Activity.RESULT_OK -> viewmodel.uploadAvatar(data?.data!!)
@@ -125,18 +127,14 @@ fun ProfileDialog(viewmodel: ProfileViewmodel, profile: Profile){
         }
     }
 
-    when (val state = progress){
+    when (val state = progress) {
         is Error -> context.toast(state.message)
+        is Success -> viewmodel.updateProfile(profile.copy(avatar = state.url))
         is Loading -> {
             val percentage = (state.current.toDouble() / state.total.toDouble()) * 100
             button = "Uploading image...${percentage.toInt()}%"
         }
-        is Success -> {
-            button = "Updating profile..."
-            viewmodel.updateProfile(profile.copy(avatar = state.url))
-        }
     }
-
 
     fun pick() = ImagePicker.with(activity).galleryOnly().createIntent { launcher.launch(it) }
 
@@ -158,12 +156,13 @@ fun ProfileDialog(viewmodel: ProfileViewmodel, profile: Profile){
             )
         }
         SmallSpacing()
-        OutlinedInput(label = "username", type = KeyboardType.Text , state = nameState)
-        OutlinedInput(label = "tagline", type = KeyboardType.Text , state = descriptionState)
+        OutlinedInput(label = "username", type = KeyboardType.Text, state = nameState)
+        OutlinedInput(label = "tagline", type = KeyboardType.Text, state = descriptionState)
         TinySpacing()
         FilledButton(text = button, size = .97f) {
-            if(descriptionState.validate() && nameState.validate()){
-
+            if (descriptionState.validate() && nameState.validate() && !loading!!) {
+                val update = profile.copy(username = nameState.text, description = descriptionState.text)
+                viewmodel.updateProfile(update)
             }
         }
         SmallSpacing()

@@ -42,7 +42,7 @@ fun TextDropdown(label: String, items: List<Item>, onClick: (Item) -> Unit, onCh
             expanded = expanded,
             onDismissRequest = { expanded = false },
             properties = PopupProperties(focusable = false),
-            modifier = Modifier.fillMaxWidth(.95f).background(colors.primary),
+            modifier = Modifier.fillMaxWidth(.95f).background(colors.background),
         ) {
             items.forEach {
                 DropdownMenuItem(onClick = { select(it) }) {

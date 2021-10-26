@@ -28,6 +28,9 @@ class AddViewmodel @Inject constructor(private val repository: AddRepository): V
     private val _result = MutableLiveData<Result<Recipe>>()
     val result: LiveData<Result<Recipe>> = _result
 
+    private val _loading = MutableLiveData<Boolean>()
+    val loading: LiveData<Boolean> = _loading
+
     private val handler = CoroutineExceptionHandler { _, exception ->
         _result.value = Result.Error(exception.parse())
     }
@@ -38,6 +41,7 @@ class AddViewmodel @Inject constructor(private val repository: AddRepository): V
 
     fun uploadImage() {
         viewModelScope.launch {
+            _loading.value = true
             val name = RandomIdGenerator.getRandom()
             val user = repository.profile.first()._id
             val dir = "Foodies/recipes/$user/$name"
@@ -48,6 +52,7 @@ class AddViewmodel @Inject constructor(private val repository: AddRepository): V
     fun uploadRecipe(rawRecipe: RawRecipe) {
         viewModelScope.launch(handler) {
             val result = repository.uploadRecipe(rawRecipe)
+            _loading.value = false
             _result.value = Result.Success(result)
         }
     }

@@ -15,6 +15,8 @@ interface ProfileRepository {
 
     val progress: LiveData<UploadState>
 
+    fun clearProgress(): UploadState.Idle
+
     suspend fun updateProfile(profile: Profile)
 
     suspend fun uploadImage(dir: String, path: Uri)

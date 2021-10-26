@@ -10,5 +10,6 @@ data class RawRecipe(
     val description: String,
     val steps: List<String>,
     val equipment: List<String>,
+    val categories: List<String>,
     val ingredients: List<String>,
 )
