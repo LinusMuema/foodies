@@ -10,6 +10,7 @@ data class Profile(
     @PrimaryKey
     val _id: String,
     val email: String,
+    val avatar: String,
     val username: String,
     val favorites: List<Recipe>
 )
