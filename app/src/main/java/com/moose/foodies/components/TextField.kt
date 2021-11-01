@@ -65,6 +65,8 @@ open class TextFieldState (initial: String = "", val validators: List<Validators
         }.all { it }
     }
 
+
+
     private fun required(): Boolean = text.isNotEmpty()
 
     private fun max(limit: Double): Boolean = text.toDouble() > limit

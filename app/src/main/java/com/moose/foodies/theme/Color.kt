@@ -21,8 +21,8 @@ val lightColors = lightColors(
     onSurface = grey800,
     onPrimary = white200,
     background = white200,
-    onBackground = grey800,
     onSecondary = white200,
+    onBackground = grey800,
     primaryVariant = grey200,
 )
 
