@@ -3,6 +3,7 @@ package com.moose.foodies.features.profile
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import com.moose.foodies.models.Profile
+import com.moose.foodies.models.Recipe
 import com.moose.foodies.util.UploadState
 import dagger.Binds
 import dagger.Module
@@ -12,6 +13,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface ProfileRepository {
     val profile: Flow<Profile>
+
+    val recipes: Flow<List<Recipe>>
 
     val progress: LiveData<UploadState>
 

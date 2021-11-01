@@ -36,7 +36,7 @@ class AddRepositoryImpl @Inject constructor(
     override suspend fun uploadRecipe(recipe: RawRecipe): Recipe {
         cloudinary.clearProgress()
         val result = api.uploadRecipe(recipe)
-        dao.addRecipe(result)
+        dao.addRecipe(result.copy(type = "PERSONAL"))
         return result
     }
 }

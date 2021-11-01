@@ -20,4 +20,7 @@ interface ItemsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addRecipe(recipe: Recipe)
+
+    @Query("select * from recipe where type = 'PERSONAL'")
+    fun getUserRecipes(): Flow<List<Recipe>>
 }

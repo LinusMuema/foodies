@@ -16,6 +16,7 @@ class ProfileViewmodel @Inject constructor(private val repository: ProfileReposi
 
     val progress = repository.progress
     val profile = repository.profile.asLiveData()
+    val recipes = repository.recipes.asLiveData()
 
     private val _url: MutableLiveData<String> = MutableLiveData()
     val url: LiveData<String> = _url
