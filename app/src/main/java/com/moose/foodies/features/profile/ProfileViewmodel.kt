@@ -31,6 +31,8 @@ class ProfileViewmodel @Inject constructor(private val repository: ProfileReposi
         _error.value = exception.parse()
     }
 
+    fun logout() = repository.logout()
+
     fun uploadAvatar(uri: Uri) {
         viewModelScope.launch(handler) {
             val dir = "Foodies/users/${repository.profile.first()._id}"

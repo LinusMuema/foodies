@@ -6,6 +6,7 @@ import androidx.core.view.WindowCompat
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.*
 import com.moose.foodies.work.ItemWorker
+import com.moose.foodies.work.RecipesWorker
 import dagger.hilt.android.HiltAndroidApp
 import io.sentry.Sentry
 import java.util.concurrent.TimeUnit

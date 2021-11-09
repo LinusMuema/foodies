@@ -8,19 +8,21 @@ import com.moose.foodies.models.Profile
 import com.moose.foodies.models.Recipe
 import com.moose.foodies.remote.ApiEndpoints
 import com.moose.foodies.util.Cloudinary
+import com.moose.foodies.util.Preferences
 import com.moose.foodies.util.UploadState
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class ProfileRepositoryImpl @Inject constructor(
-    private val dao: UserDao,
+    private val userDao: UserDao,
     private val itemsDao: ItemsDao,
     private val api: ApiEndpoints,
-    private val cloudinary: Cloudinary
+    private val cloudinary: Cloudinary,
+    private val preferences: Preferences,
 ): ProfileRepository {
 
     override val profile: Flow<Profile>
-        get() = dao.getProfile()
+        get() = userDao.getProfile()
 
     override val recipes: Flow<List<Recipe>>
         get() = itemsDao.getUserRecipes()
@@ -30,8 +32,14 @@ class ProfileRepositoryImpl @Inject constructor(
 
     override fun clearProgress() = cloudinary.clearProgress()
 
+    override fun logout() {
+        preferences.setToken(null)
+        preferences.setUpdate(null)
+        itemsDao.nukeRecipes()
+    }
+
     override suspend fun updateProfile(profile: Profile) {
-        dao.addProfile(api.updateProfile(profile))
+        userDao.addProfile(api.updateProfile(profile))
     }
 
     override suspend fun uploadImage(dir: String, path: Uri) {

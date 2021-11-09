@@ -19,8 +19,11 @@ interface ItemsDao {
     suspend fun searchItem(name: String, type: String): List<Item>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addRecipe(recipe: Recipe)
+    suspend fun addRecipe(vararg recipe: Recipe)
 
     @Query("select * from recipe where type = 'PERSONAL'")
     fun getUserRecipes(): Flow<List<Recipe>>
+
+    @Query("delete from recipe")
+    fun nukeRecipes()
 }

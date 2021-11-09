@@ -13,7 +13,7 @@ data class Recipe(
     val time: String,
     val image: String,
     val user: Profile,
-    val type: String = "",
+    var type: String = "",
     val description: String,
     val steps: List<String>,
     val equipment: List<String>,

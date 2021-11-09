@@ -23,11 +23,11 @@ class Preferences @Inject constructor(@ApplicationContext context: Context) {
 
     fun getToken() = preferences.getString(tokenKey, null)
 
-    fun setToken(token: String) = preferences.set(tokenKey, token)
+    fun setToken(token: String?) = preferences.set(tokenKey, token)
 
     fun getUpdate() = preferences.getString(updateKey, null)
 
-    fun setUpdate(update: String) = preferences.set(updateKey, update)
+    fun setUpdate(update: String?) = preferences.set(updateKey, update)
 
     operator fun SharedPreferences.set(key: String, value: Any?){
         when (value) {

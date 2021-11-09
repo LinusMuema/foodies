@@ -2,6 +2,7 @@ package com.moose.foodies.features.profile
 
 import android.app.Activity
 import android.content.Intent
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.compose.foundation.*
@@ -48,17 +49,23 @@ import com.moose.foodies.util.toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement.Center
+import androidx.compose.foundation.layout.Arrangement.End
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme.shapes
 import androidx.compose.material.Text
-import com.airbnb.lottie.compose.LottieAnimation
-import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.animateLottieCompositionAsState
-import com.airbnb.lottie.compose.rememberLottieComposition
+import androidx.compose.ui.graphics.toArgb
+import coil.annotation.ExperimentalCoilApi
+import coil.compose.ImagePainter
+import com.airbnb.lottie.LottieProperty
+import com.airbnb.lottie.compose.*
+import com.google.accompanist.pager.ExperimentalPagerApi
 import com.moose.foodies.components.TinySpacing
-
+import com.moose.foodies.features.auth.ui.AuthActivity
 
 @Composable
+@ExperimentalPagerApi
 fun Profile() {
     val viewmodel: ProfileViewmodel = hiltViewModel()
 
@@ -105,11 +112,16 @@ fun Profile() {
                                 horizontalArrangement = SpaceAround
                             ) {
                                 Column(horizontalAlignment = CenterHorizontally) {
-                                    Text("24", style = typography.body1.copy(fontWeight = SemiBold))
+                                    recipes?.let {
+                                        Text(
+                                            text = it.size.toString(),
+                                            style = typography.body1.copy(fontWeight = SemiBold)
+                                        )
+                                    }
                                     Text("Recipes", style = typography.h6.copy(fontSize = 16.sp))
                                 }
                                 Column(horizontalAlignment = CenterHorizontally) {
-                                    Text("2.5k", style = typography.body1.copy(fontWeight = SemiBold))
+                                    Text("0", style = typography.body1.copy(fontWeight = SemiBold))
                                     Text("Likes", style = typography.h6.copy(fontSize = 16.sp))
                                 }
                             }
@@ -118,12 +130,7 @@ fun Profile() {
                         }
                         TinySpacing()
                     }
-                    Text(
-                        text = "My recipes",
-                        modifier = Modifier.padding(10.dp, 20.dp),
-                        style = typography.h5.copy(color = colors.primary),
-                    )
-
+                    SmallSpacing()
                     recipes?.let { if (it.isEmpty()) Empty() else Recipes(viewmodel) }
                 }
             }
@@ -140,18 +147,39 @@ fun Recipes(viewmodel: ProfileViewmodel) {
                 val timeGray = Color.Gray.copy(.8f)
 
                 // create the gradient
+                val painter = rememberImagePainter(
+                    data = it.image,
+                    builder = { crossfade(true) }
+                )
                 val variant = colors.primaryVariant
                 val colors = listOf(Color.Transparent, Color.Transparent, Color.Transparent, variant)
                 val gradient = Brush.verticalGradient(colors = colors)
 
                 Box(modifier = Modifier.padding(10.dp)){
-                    Card(modifier = Modifier.fillMaxWidth().height(175.dp), elevation = 5.dp) {
+                    Card(modifier = Modifier
+                        .fillMaxWidth()
+                        .height(175.dp), elevation = 5.dp) {
+                        when (painter.state){
+                            is ImagePainter.State.Loading -> {
+                                val resource = if (isSystemInDarkTheme()) R.raw.pulse_dark else R.raw.pulse_light
+                                val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(resource))
+                                CenterColumn {
+                                    LottieAnimation(
+                                        composition = composition,
+                                        iterations = Int.MAX_VALUE,
+                                        modifier = Modifier.width(75.dp),
+                                    )
+                                }
+                            }
+                        }
+
                         Image(
                             modifier = Modifier.fillMaxWidth(),
                             contentScale = ContentScale.Crop,
-                            painter = rememberImagePainter(data = it.image),
+                            painter = painter,
                             contentDescription = "${it.name} image"
                         )
+
                         Box(modifier = Modifier
                             .fillMaxSize()
                             .background(brush = gradient)
@@ -159,10 +187,7 @@ fun Recipes(viewmodel: ProfileViewmodel) {
                             .padding(10.dp)){
                             Column(modifier = Modifier.fillMaxSize(), verticalArrangement = arrangement) {
                                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = arrangement) {
-                                    Box(modifier = Modifier
-                                        .clip(MaterialTheme.shapes.medium)
-                                        .background(timeGray)
-                                        .padding(5.dp)) {
+                                    Box(modifier = Modifier.clip(shapes.medium).background(timeGray).padding(5.dp)) {
                                         Row (verticalAlignment = CenterVertically){
                                             TinySpacing()
                                             Icon(
@@ -177,11 +202,13 @@ fun Recipes(viewmodel: ProfileViewmodel) {
                                         }
                                     }
                                 }
-                                Text(
-                                    text = it.name,
-                                    style = typography.h6.copy(color = Color.White),
-                                    fontWeight = FontWeight.Medium
-                                )
+                                Box(modifier = Modifier.padding(10.dp)){
+                                    Text(
+                                        text = it.name,
+                                        style = typography.h6.copy(color = Color.White),
+                                        fontWeight = FontWeight.Medium
+                                    )
+                                }
                             }
                         }
                     }
@@ -193,27 +220,23 @@ fun Recipes(viewmodel: ProfileViewmodel) {
 
 @Composable
 fun Empty(){
-    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loading))
-    Column(modifier = Modifier.padding(10.dp), horizontalAlignment = CenterHorizontally) {
-        MediumSpacing()
-        LottieAnimation(
-            composition = composition,
-            iterations = Int.MAX_VALUE,
-            modifier = Modifier.height(200.dp)
-        )
-        SmallSpacing()
+    Column(
+        verticalArrangement = Center,
+        horizontalAlignment = CenterHorizontally,
+        modifier = Modifier.fillMaxSize().padding(10.dp),
+    ) {
         Text("No recipes around here...")
-        Text("Click the button below to add your recipes")
     }
 }
 
+@ExperimentalPagerApi
 @Composable
 fun ProfileDialog(viewmodel: ProfileViewmodel) {
     val context = LocalContext.current
     val activity = context.getActivity()!!
     val url by viewmodel.url.observeAsState()
-    val progress by viewmodel.progress.observeAsState()
     val user by viewmodel.profile.observeAsState()
+    val progress by viewmodel.progress.observeAsState()
 
     val error by viewmodel.error.observeAsState()
     if (error != null) context.toast(error)
@@ -277,6 +300,13 @@ fun ProfileDialog(viewmodel: ProfileViewmodel) {
                 }
             }
             SmallSpacing()
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = End){
+                TextButton(text = "Logout") {
+                    viewmodel.logout()
+                    context.startActivity(Intent(context, AuthActivity::class.java))
+                    context.getActivity().let { it!!.finish() }
+                }
+            }
         }
     }
 }
