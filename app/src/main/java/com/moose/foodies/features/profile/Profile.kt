@@ -2,7 +2,6 @@ package com.moose.foodies.features.profile
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.compose.foundation.*
@@ -42,7 +41,7 @@ import coil.transform.CircleCropTransformation
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.moose.foodies.R
 import com.moose.foodies.components.*
-import com.moose.foodies.features.add.AddActivity
+import com.moose.foodies.features.add.Add
 import com.moose.foodies.util.UploadState.*
 import com.moose.foodies.util.getActivity
 import com.moose.foodies.util.toast
@@ -55,10 +54,8 @@ import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme.shapes
 import androidx.compose.material.Text
-import androidx.compose.ui.graphics.toArgb
-import coil.annotation.ExperimentalCoilApi
+import androidx.navigation.NavHostController
 import coil.compose.ImagePainter
-import com.airbnb.lottie.LottieProperty
 import com.airbnb.lottie.compose.*
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.moose.foodies.components.TinySpacing
@@ -66,14 +63,14 @@ import com.moose.foodies.features.auth.ui.AuthActivity
 
 @Composable
 @ExperimentalPagerApi
-fun Profile() {
+fun Profile(controller: NavHostController) {
     val viewmodel: ProfileViewmodel = hiltViewModel()
 
     val user by viewmodel.profile.observeAsState()
     val recipes by viewmodel.recipes.observeAsState()
     var open by remember { mutableStateOf(false) }
 
-        user?.let { profile ->
+    user?.let { profile ->
 
             if (open)
                 AlertDialog(
@@ -85,7 +82,7 @@ fun Profile() {
                     buttons = { ProfileDialog(viewmodel) },
                 )
 
-            Scaffold(floatingActionButton = { Fab() }) {
+            Scaffold(floatingActionButton = { Fab(controller) }) {
                 Column(modifier = Modifier.padding(10.dp)) {
                     SmallSpacing()
                     Row(
@@ -312,10 +309,8 @@ fun ProfileDialog(viewmodel: ProfileViewmodel) {
 }
 
 @Composable
-fun Fab() {
-    val context = LocalContext.current
-    val intent = Intent(context, AddActivity::class.java)
-    FloatingActionButton(onClick = { context.startActivity(intent) }) {
+fun Fab(controller: NavHostController) {
+    FloatingActionButton(onClick = { controller.navigate("/add") }) {
         Icon(Icons.Default.Add, contentDescription = "add icon")
     }
 }

@@ -6,4 +6,6 @@
     <string name="profile">Profile</string>
     <string name="favorites">Favorites</string>
     <string name="add">Add</string>
+    <string name="main">Main</string>
+    <string name="recipe">Recipe</string>
 </resources>

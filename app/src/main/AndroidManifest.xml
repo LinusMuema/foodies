@@ -17,14 +17,16 @@
         android:theme="@style/Theme.Foodies"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup">
+        <activity
+            android:name=".features.recipe.Recipe"
+            android:exported="true" />
 
         <meta-data
             android:name="io.sentry.dsn"
             android:value="https://fce7fe200cad4993bf3a5fc7780734c4@o998282.ingest.sentry.io/5964421" />
-
         <meta-data
             android:name="CLOUDINARY_URL"
-            android:value="cloudinary://174548668845171:X1yZhbyB1NSUFkxxbCbEWt_W06k@dnp5ccl7d"/>
+            android:value="cloudinary://174548668845171:X1yZhbyB1NSUFkxxbCbEWt_W06k@dnp5ccl7d" />
 
         <provider
             android:name="androidx.startup.InitializationProvider"
@@ -38,9 +40,8 @@
         </provider>
 
         <activity
-            android:name=".features.add.AddActivity"
+            android:name=".features.add.Add"
             android:exported="true" />
-
         <activity
             android:name=".features.navigation.NavigationActivity"
             android:exported="true" />
