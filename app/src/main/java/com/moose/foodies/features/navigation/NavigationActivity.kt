@@ -10,6 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import coil.annotation.ExperimentalCoilApi
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.moose.foodies.features.add.Add
+import com.moose.foodies.features.recipe.Recipe
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,7 +28,7 @@ class NavigationActivity : ComponentActivity() {
 
         NavHost(navController = navController, startDestination = "/main") {
             composable("/main") { Main(navController) }
-            composable("/recipe") { Main(navController) }
+            composable("/recipe/{id}") { Recipe(it.arguments?.getString("id")) }
             composable("/add") { Add(navController) }
         }
     }

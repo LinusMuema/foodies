@@ -4,11 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
-import androidx.compose.foundation.*
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement.Center
+import androidx.compose.foundation.layout.Arrangement.End
 import androidx.compose.foundation.layout.Arrangement.SpaceAround
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.colors
@@ -16,7 +17,7 @@ import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.Icons.Outlined
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.outlined.*
+import androidx.compose.material.icons.outlined.CameraAlt
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -24,42 +25,23 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontWeight.Companion.SemiBold
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
 import com.github.dhaval2404.imagepicker.ImagePicker
-import com.moose.foodies.R
+import com.google.accompanist.pager.ExperimentalPagerApi
 import com.moose.foodies.components.*
-import com.moose.foodies.features.add.Add
+import com.moose.foodies.features.auth.ui.AuthActivity
 import com.moose.foodies.util.UploadState.*
 import com.moose.foodies.util.getActivity
 import com.moose.foodies.util.toast
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement.Center
-import androidx.compose.foundation.layout.Arrangement.End
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme.shapes
-import androidx.compose.material.Text
-import androidx.navigation.NavHostController
-import coil.compose.ImagePainter
-import com.airbnb.lottie.compose.*
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.moose.foodies.components.TinySpacing
-import com.moose.foodies.features.auth.ui.AuthActivity
 
 @Composable
 @ExperimentalPagerApi
@@ -128,91 +110,10 @@ fun Profile(controller: NavHostController) {
                         TinySpacing()
                     }
                     SmallSpacing()
-                    recipes?.let { if (it.isEmpty()) Empty() else Recipes(viewmodel) }
+                    recipes?.let { if (it.isEmpty()) Empty() else Recipes(controller) }
                 }
             }
         }
-}
-
-@Composable
-fun Recipes(viewmodel: ProfileViewmodel) {
-    val items by viewmodel.recipes.observeAsState()
-    items?.let {
-        LazyColumn {
-            items(it) {
-                val arrangement = Arrangement.SpaceBetween
-                val timeGray = Color.Gray.copy(.8f)
-
-                // create the gradient
-                val painter = rememberImagePainter(
-                    data = it.image,
-                    builder = { crossfade(true) }
-                )
-                val variant = colors.primaryVariant
-                val colors = listOf(Color.Transparent, Color.Transparent, Color.Transparent, variant)
-                val gradient = Brush.verticalGradient(colors = colors)
-
-                Box(modifier = Modifier.padding(10.dp)){
-                    Card(modifier = Modifier
-                        .fillMaxWidth()
-                        .height(175.dp), elevation = 5.dp) {
-                        when (painter.state){
-                            is ImagePainter.State.Loading -> {
-                                val resource = if (isSystemInDarkTheme()) R.raw.pulse_dark else R.raw.pulse_light
-                                val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(resource))
-                                CenterColumn {
-                                    LottieAnimation(
-                                        composition = composition,
-                                        iterations = Int.MAX_VALUE,
-                                        modifier = Modifier.width(75.dp),
-                                    )
-                                }
-                            }
-                        }
-
-                        Image(
-                            modifier = Modifier.fillMaxWidth(),
-                            contentScale = ContentScale.Crop,
-                            painter = painter,
-                            contentDescription = "${it.name} image"
-                        )
-
-                        Box(modifier = Modifier
-                            .fillMaxSize()
-                            .background(brush = gradient)
-                            .clickable { }
-                            .padding(10.dp)){
-                            Column(modifier = Modifier.fillMaxSize(), verticalArrangement = arrangement) {
-                                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = arrangement) {
-                                    Box(modifier = Modifier.clip(shapes.medium).background(timeGray).padding(5.dp)) {
-                                        Row (verticalAlignment = CenterVertically){
-                                            TinySpacing()
-                                            Icon(
-                                                tint = Color.White,
-                                                contentDescription = "time",
-                                                modifier = Modifier.size(14.dp),
-                                                painter = painterResource(id = R.drawable.ic_clock)
-                                            )
-                                            TinySpacing()
-                                            Text(it.time, color = Color.White, fontSize = 14.sp)
-                                            TinySpacing()
-                                        }
-                                    }
-                                }
-                                Box(modifier = Modifier.padding(10.dp)){
-                                    Text(
-                                        text = it.name,
-                                        style = typography.h6.copy(color = Color.White),
-                                        fontWeight = FontWeight.Medium
-                                    )
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
 }
 
 @Composable
@@ -220,14 +121,17 @@ fun Empty(){
     Column(
         verticalArrangement = Center,
         horizontalAlignment = CenterHorizontally,
-        modifier = Modifier.fillMaxSize().padding(10.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(10.dp),
     ) {
         Text("No recipes around here...")
     }
 }
 
-@ExperimentalPagerApi
+
 @Composable
+@ExperimentalPagerApi
 fun ProfileDialog(viewmodel: ProfileViewmodel) {
     val context = LocalContext.current
     val activity = context.getActivity()!!

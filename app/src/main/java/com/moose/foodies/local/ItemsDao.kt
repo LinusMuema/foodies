@@ -24,6 +24,12 @@ interface ItemsDao {
     @Query("select * from recipe where type = 'PERSONAL'")
     fun getUserRecipes(): Flow<List<Recipe>>
 
+    @Query("select * from recipe where _id = :id limit 1")
+    suspend fun getRecipeById(id: String): Recipe
+
+    @Query("select * from item where _id = :id limit 1")
+    suspend fun getItemById(id: String): Item
+
     @Query("delete from recipe")
     fun nukeRecipes()
 }
