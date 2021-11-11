@@ -4,11 +4,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowCompat
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -18,12 +22,14 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import coil.annotation.ExperimentalCoilApi
 import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.moose.foodies.features.explore.Explore
 import com.moose.foodies.features.fridge.Fridge
 import com.moose.foodies.features.home.ui.Home
 import com.moose.foodies.features.navigation.Screen.*
 import com.moose.foodies.features.profile.Profile
 import com.moose.foodies.theme.FoodiesTheme
+import com.moose.foodies.util.getActivity
 
 @Composable
 @ExperimentalCoilApi
@@ -32,7 +38,16 @@ fun Main(mainController: NavHostController) {
     val navController = rememberNavController()
     val screens = listOf(Home, Explore, Fridge, Profile)
 
+    val context = LocalContext.current
+    val window = context.getActivity()!!.window
+    WindowCompat.setDecorFitsSystemWindows(window, true)
+
     FoodiesTheme {
+        // set system bar colors
+        val primary = MaterialTheme.colors.background
+        val controller = rememberSystemUiController()
+        SideEffect { controller.setSystemBarsColor(color = primary) }
+
         Surface {
             Scaffold(
                 bottomBar = {

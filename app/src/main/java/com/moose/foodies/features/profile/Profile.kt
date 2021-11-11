@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight.Companion.SemiBold
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -37,6 +38,7 @@ import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.accompanist.pager.ExperimentalPagerApi
+import com.moose.foodies.R
 import com.moose.foodies.components.*
 import com.moose.foodies.features.auth.ui.AuthActivity
 import com.moose.foodies.util.UploadState.*
@@ -121,10 +123,14 @@ fun Empty(){
     Column(
         verticalArrangement = Center,
         horizontalAlignment = CenterHorizontally,
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(10.dp),
+        modifier = Modifier.fillMaxSize().padding(10.dp),
     ) {
+        Image(
+            contentDescription = "empty",
+            modifier = Modifier.size(100.dp),
+            painter = painterResource(id = R.drawable.desert),
+        )
+        SmallSpacing()
         Text("No recipes around here...")
     }
 }
