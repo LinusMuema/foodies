@@ -38,6 +38,7 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.moose.foodies.components.SmallSpacing
 import com.moose.foodies.features.home.HomeViewmodel
+import com.moose.foodies.util.customTabIndicatorOffset
 import kotlinx.coroutines.launch
 
 @Composable
@@ -128,21 +129,5 @@ fun Home(){
             }
         }
         RecipeItems(type = titles[recipesState.currentPage])
-    }
-}
-
-fun Modifier.customTabIndicatorOffset(position: TabPosition): Modifier {
-    return composed(debugInspectorInfo { position }) {
-        val indicatorWidth = 7.5.dp
-        val currentTabWidth = position.width
-        val indicatorOffset by animateDpAsState(
-            targetValue = position.left + currentTabWidth / 2 - indicatorWidth / 2,
-            animationSpec = tween(durationMillis = 500, easing = FastOutSlowInEasing)
-        )
-        fillMaxWidth()
-            .wrapContentSize(Alignment.BottomStart)
-            .offset(x = indicatorOffset)
-            .width(indicatorWidth)
-            .clip(shapes.large)
     }
 }

@@ -57,10 +57,7 @@ fun RecipeCard(){
                 .padding(10.dp)){
                 Column(modifier = Modifier.fillMaxSize(), verticalArrangement = arrangement) {
                     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = arrangement) {
-                        Box(modifier = Modifier
-                            .clip(shapes.medium)
-                            .background(timeGray)
-                            .padding(5.dp)) {
+                        Box(modifier = Modifier.clip(shapes.medium).background(timeGray).padding(5.dp)) {
                             Row (verticalAlignment = Alignment.CenterVertically){
                                 TinySpacing()
                                 Icon(

@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement.Center
@@ -82,10 +83,7 @@ fun Profile(controller: NavHostController) {
                                 builder = { transformations(CircleCropTransformation()) }
                             ),
                             contentDescription = "user avatar",
-                            modifier = Modifier
-                                .size(100.dp)
-                                .clip(CircleShape)
-                                .clickable { open = true }
+                            modifier = Modifier.size(100.dp).clip(CircleShape).clickable { open = true }
                         )
                         TinySpacing()
                         Column(horizontalAlignment = CenterHorizontally) {

@@ -5,11 +5,23 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material.BottomSheetScaffoldState
-import androidx.compose.material.BottomSheetValue
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material.*
 import androidx.compose.material.BottomSheetValue.Collapsed
 import androidx.compose.material.BottomSheetValue.Expanded
-import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.debugInspectorInfo
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import kotlinx.coroutines.Dispatchers
@@ -27,5 +39,21 @@ fun Context.getActivity(): Activity? {
         is Activity -> this
         is ContextWrapper -> this.baseContext.getActivity()
         else -> null
+    }
+}
+
+fun Modifier.customTabIndicatorOffset(position: TabPosition): Modifier {
+    return composed(debugInspectorInfo { position }) {
+        val indicatorWidth = 7.5.dp
+        val currentTabWidth = position.width
+        val indicatorOffset by animateDpAsState(
+            targetValue = position.left + currentTabWidth / 2 - indicatorWidth / 2,
+            animationSpec = tween(durationMillis = 500, easing = FastOutSlowInEasing)
+        )
+        fillMaxWidth()
+            .wrapContentSize(Alignment.BottomStart)
+            .offset(x = indicatorOffset)
+            .width(indicatorWidth)
+            .clip(MaterialTheme.shapes.large)
     }
 }

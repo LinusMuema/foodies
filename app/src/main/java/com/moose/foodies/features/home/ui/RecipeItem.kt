@@ -53,13 +53,13 @@ fun RecipeItems(type: String){
                         Box(
                             Modifier
                                 .align(Alignment.End)
-                                .clip(MaterialTheme.shapes.medium)
+                                .clip(MaterialTheme.shapes.large)
                                 .background(timeGray)
-                                .padding(2.5.dp)) {
+                                .padding(7.5.dp)) {
                             Icon(
                                 tint = Color.White,
                                 contentDescription = "time",
-                                modifier = Modifier.size(24.dp),
+                                modifier = Modifier.size(18.dp),
                                 painter = painterResource(id = R.drawable.ic_favorites)
                             )
                         }
