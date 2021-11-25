@@ -31,6 +31,7 @@ import com.moose.foodies.features.profile.Profile
 import com.moose.foodies.theme.FoodiesTheme
 import com.moose.foodies.util.getActivity
 
+@ExperimentalMaterialApi
 @Composable
 @ExperimentalCoilApi
 @ExperimentalPagerApi

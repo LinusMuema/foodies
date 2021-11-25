@@ -5,6 +5,11 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.material.BottomSheetScaffoldState
+import androidx.compose.material.BottomSheetValue
+import androidx.compose.material.BottomSheetValue.Collapsed
+import androidx.compose.material.BottomSheetValue.Expanded
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import kotlinx.coroutines.Dispatchers

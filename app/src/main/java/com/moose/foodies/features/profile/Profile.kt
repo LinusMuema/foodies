@@ -45,6 +45,7 @@ import com.moose.foodies.util.UploadState.*
 import com.moose.foodies.util.getActivity
 import com.moose.foodies.util.toast
 
+@ExperimentalMaterialApi
 @Composable
 @ExperimentalPagerApi
 fun Profile(controller: NavHostController) {
@@ -136,6 +137,7 @@ fun Empty(){
 }
 
 
+@ExperimentalMaterialApi
 @Composable
 @ExperimentalPagerApi
 fun ProfileDialog(viewmodel: ProfileViewmodel) {

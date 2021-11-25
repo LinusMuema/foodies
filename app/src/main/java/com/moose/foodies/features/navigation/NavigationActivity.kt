@@ -3,6 +3,7 @@ package com.moose.foodies.features.navigation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
@@ -15,9 +16,10 @@ import coil.annotation.ExperimentalCoilApi
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.moose.foodies.features.add.Add
-import com.moose.foodies.features.recipe.Recipe
+import com.moose.foodies.features.recipe.ui.Recipe
 import dagger.hilt.android.AndroidEntryPoint
 
+@ExperimentalMaterialApi
 @AndroidEntryPoint
 @ExperimentalCoilApi
 @ExperimentalPagerApi
