@@ -33,13 +33,7 @@ class NavigationActivity : ComponentActivity() {
 
     @Composable
     private fun Content(){
-        val isDark = colors.isLight
         val navController = rememberNavController()
-        val systemUiController = rememberSystemUiController()
-
-        SideEffect {
-            systemUiController.setSystemBarsColor(color = Transparent, darkIcons = isDark)
-        }
 
         NavHost(navController = navController, startDestination = "/main") {
             composable("/main") { Main(navController) }

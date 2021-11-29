@@ -29,6 +29,7 @@ import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberImagePainter
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.systemBarsPadding
@@ -47,6 +48,12 @@ import com.moose.foodies.util.getActivity
 @Composable
 fun Recipe(id: String?, controller: NavHostController) {
     val viewmodel: RecipeViewmodel = hiltViewModel()
+
+    val isDark = colors.isLight
+    val systemUiController = rememberSystemUiController()
+    SideEffect {
+        systemUiController.setSystemBarsColor(color = Transparent, darkIcons = isDark)
+    }
 
     FoodiesTheme {
         val recipe by viewmodel.recipe.observeAsState()
