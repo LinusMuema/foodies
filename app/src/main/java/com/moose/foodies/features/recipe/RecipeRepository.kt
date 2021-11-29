@@ -13,6 +13,10 @@ interface RecipeRepository {
     suspend fun getItem(id: String): Item
 
     suspend fun getRecipe(id: String): Recipe
+
+    suspend fun getFavorite(id: String):Recipe?
+
+    suspend fun updateRecipe(recipe: Recipe)
 }
 
 @Module

@@ -4,11 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
@@ -45,7 +43,7 @@ class NavigationActivity : ComponentActivity() {
 
         NavHost(navController = navController, startDestination = "/main") {
             composable("/main") { Main(navController) }
-            composable("/recipe/{id}") { Recipe(it.arguments?.getString("id")) }
+            composable("/recipe/{id}") { Recipe(it.arguments?.getString("id"), navController) }
             composable("/add") { Add(navController) }
         }
     }

@@ -1,10 +1,7 @@
 package com.moose.foodies.local
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.moose.foodies.models.Item
 import com.moose.foodies.models.Recipe
 import kotlinx.coroutines.flow.Flow
@@ -21,11 +18,17 @@ interface ItemsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addRecipe(vararg recipe: Recipe)
 
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updateRecipe(vararg recipe: Recipe)
+
     @Query("select * from recipe where type = 'PERSONAL'")
     fun getUserRecipes(): Flow<List<Recipe>>
 
     @Query("select * from recipe where _id = :id limit 1")
     suspend fun getRecipeById(id: String): Recipe
+
+    @Query("select * from recipe where _id = :id and type = 'FAVORITE' limit 1")
+    suspend fun getFavoriteById(id: String): Recipe?
 
     @Query("select * from item where _id = :id limit 1")
     suspend fun getItemById(id: String): Item

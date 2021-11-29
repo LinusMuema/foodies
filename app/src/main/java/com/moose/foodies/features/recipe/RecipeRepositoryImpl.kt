@@ -19,4 +19,12 @@ class RecipeRepositoryImpl @Inject constructor(
     override suspend fun getRecipe(id: String): Recipe {
         return itemsDao.getRecipeById(id)
     }
+
+    override suspend fun getFavorite(id: String): Recipe? {
+        return itemsDao.getFavoriteById(id)
+    }
+
+    override suspend fun updateRecipe(recipe: Recipe) {
+        return itemsDao.updateRecipe(recipe)
+    }
 }

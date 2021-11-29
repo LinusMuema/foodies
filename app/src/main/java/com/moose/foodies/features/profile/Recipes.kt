@@ -42,6 +42,7 @@ import com.moose.foodies.components.TinySpacing
 fun Recipes(controller: NavHostController) {
     val viewmodel: ProfileViewmodel = hiltViewModel()
     val items by viewmodel.recipes.observeAsState()
+
     items?.let {
         LazyColumn {
             items(it){
@@ -89,10 +90,7 @@ fun Recipes(controller: NavHostController) {
                             .padding(10.dp)){
                             Column(modifier = Modifier.fillMaxSize(), verticalArrangement = arrangement) {
                                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = arrangement) {
-                                    Box(modifier = Modifier
-                                        .clip(shapes.medium)
-                                        .background(timeGray)
-                                        .padding(5.dp)) {
+                                    Box(modifier = Modifier.clip(shapes.medium).background(timeGray).padding(5.dp)) {
                                         Row (verticalAlignment = CenterVertically){
                                             TinySpacing()
                                             Icon(
