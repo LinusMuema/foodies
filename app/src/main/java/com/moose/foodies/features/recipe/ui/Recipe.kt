@@ -34,15 +34,6 @@ fun Recipe(id: String?) {
     val viewmodel: RecipeViewmodel = hiltViewModel()
 
     FoodiesTheme {
-
-        val context = LocalContext.current
-        val window = context.getActivity()!!.window
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-
-        // set status bar colors
-        val controller = rememberSystemUiController()
-        SideEffect { controller.setSystemBarsColor(color = Transparent) }
-
         val recipe by viewmodel.recipe.observeAsState()
         val equipment by viewmodel.equipment.observeAsState()
         val ingredients by viewmodel.ingredients.observeAsState()

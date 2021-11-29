@@ -17,9 +17,6 @@
         android:theme="@style/Theme.Foodies"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup">
-        <activity
-            android:name=".features.recipe.Recipe"
-            android:exported="true" />
 
         <meta-data
             android:name="io.sentry.dsn"
@@ -40,14 +37,12 @@
         </provider>
 
         <activity
-            android:name=".features.add.Add"
-            android:exported="true" />
-        <activity
             android:name=".features.navigation.NavigationActivity"
             android:exported="true" />
         <activity
             android:name=".features.auth.ui.AuthActivity"
             android:exported="true" />
+
         <activity
             android:name=".features.splash.SplashActivity"
             android:exported="true">

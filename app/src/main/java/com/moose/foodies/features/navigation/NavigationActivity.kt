@@ -5,9 +5,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -26,12 +28,20 @@ import dagger.hilt.android.AndroidEntryPoint
 class NavigationActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
         setContent { Content() }
     }
 
     @Composable
     private fun Content(){
+        val isDark = colors.isLight
         val navController = rememberNavController()
+        val systemUiController = rememberSystemUiController()
+
+        SideEffect {
+            systemUiController.setSystemBarsColor(color = Transparent, darkIcons = isDark)
+        }
 
         NavHost(navController = navController, startDestination = "/main") {
             composable("/main") { Main(navController) }
