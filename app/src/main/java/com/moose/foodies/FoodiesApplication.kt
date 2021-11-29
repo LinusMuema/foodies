@@ -16,12 +16,6 @@ import javax.inject.Inject
 open class FoodiesApplication: Application(), Configuration.Provider {
     @Inject
     lateinit var workerFactory: HiltWorkerFactory
-    lateinit var manager: WorkManager
-
-    private val constraints = Constraints.Builder()
-        .setRequiredNetworkType(NetworkType.CONNECTED)
-        .setRequiresBatteryNotLow(true)
-        .build()
 
     override fun getWorkManagerConfiguration() =
         Configuration.Builder()
@@ -31,22 +25,9 @@ open class FoodiesApplication: Application(), Configuration.Provider {
     override fun onCreate() {
         super.onCreate()
         appContext = applicationContext
-        manager = WorkManager.getInstance(this)
-
-        itemWork()
     }
 
     companion object {
         lateinit  var appContext: Context
-    }
-
-    // start item work
-    private fun itemWork(){
-        val work = PeriodicWorkRequest
-            .Builder(ItemWorker::class.java, 6, TimeUnit.HOURS)
-            .setConstraints(constraints)
-            .build()
-
-        manager.enqueue(work)
     }
 }

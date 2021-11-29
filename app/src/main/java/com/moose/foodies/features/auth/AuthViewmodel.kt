@@ -5,18 +5,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.work.Constraints
-import androidx.work.NetworkType
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
+import androidx.work.*
 import com.moose.foodies.FoodiesApplication
 import com.moose.foodies.models.Auth
 import com.moose.foodies.models.Credentials
 import com.moose.foodies.util.parse
+import com.moose.foodies.work.ItemWorker
 import com.moose.foodies.work.RecipesWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltViewModel
@@ -43,20 +42,31 @@ class AuthViewmodel @Inject constructor(private val repository: AuthRepository) 
         viewModelScope.launch(handler) {
             val result = repository.login(Credentials(email, password))
             _result.value = Result.Success(result)
-            getRecipes()
+
+            startWork()
         }
     }
 
-    private fun getRecipes() {
+    private fun startWork() {
         val manager = WorkManager.getInstance(FoodiesApplication.appContext)
+
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .setRequiresBatteryNotLow(true)
             .build()
-        val work = OneTimeWorkRequestBuilder<RecipesWorker>()
+
+        // get user's recipes
+        val recipesWork = OneTimeWorkRequestBuilder<RecipesWorker>()
             .setConstraints(constraints)
             .build()
-        manager.enqueue(work)
+        manager.enqueue(recipesWork)
+
+        // get the ingredients and recipes
+        val itemsWork = PeriodicWorkRequest
+            .Builder(ItemWorker::class.java, 6, TimeUnit.HOURS)
+            .setConstraints(constraints)
+            .build()
+        manager.enqueue(itemsWork)
     }
 
     fun forgot(email: String) {
