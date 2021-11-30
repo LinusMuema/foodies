@@ -1,13 +1,13 @@
 package com.moose.foodies.work
 
 import android.content.Context
-import android.util.Log
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.moose.foodies.local.ItemsDao
-import com.moose.foodies.local.UserDao
-import com.moose.foodies.remote.ApiEndpoints
+import androidx.work.workDataOf
+import com.moose.foodies.data.local.ItemsDao
+import com.moose.foodies.data.local.UserDao
+import com.moose.foodies.data.remote.ApiEndpoints
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.first
@@ -26,10 +26,7 @@ class RecipesWorker @AssistedInject constructor(
             val id = userDao.getProfile().first()._id
             val recipes = api.getUserRecipes(id)
             itemsDao.addRecipe(*recipes.map { it.type = "PERSONAL"; it }.toTypedArray())
-            Result.success()
-        } catch (e: Throwable) {
-            Log.e("ItemWorker", "doWork: $e")
-            Result.failure()
-        }
+            Result.success(workDataOf("status" to "success"))
+        } catch (e: Throwable) { Result.failure(workDataOf("error" to e.message)) }
     }
 }

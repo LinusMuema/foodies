@@ -37,14 +37,14 @@
         </provider>
 
         <activity
-            android:name=".features.navigation.NavigationActivity"
+            android:name="com.moose.foodies.presentation.features.navigation.NavigationActivity"
             android:exported="true" />
         <activity
-            android:name=".features.auth.ui.AuthActivity"
+            android:name="com.moose.foodies.presentation.features.auth.AuthActivity"
             android:exported="true" />
 
         <activity
-            android:name=".features.splash.SplashActivity"
+            android:name="com.moose.foodies.presentation.features.splash.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
