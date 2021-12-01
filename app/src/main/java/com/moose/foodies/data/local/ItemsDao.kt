@@ -23,7 +23,7 @@ interface ItemsDao {
     @Query("select * from recipe where type = 'PERSONAL'")
     fun getUserRecipes(): Flow<List<Recipe>>
 
-    @Query("select * from recipe where type != 'PERSONAL' and type != 'FAVORITE'")
+    @Query("select * from recipe where type != 'PERSONAL'")
     fun getFeedRecipes(): Flow<List<Recipe>>
 
     @Query("select * from recipe where _id = :id limit 1")

@@ -1,9 +1,11 @@
 package com.moose.foodies.presentation.features.home
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement.SpaceBetween
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.MaterialTheme.shapes
@@ -18,6 +20,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
@@ -28,21 +31,21 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.moose.foodies.presentation.components.SmallSpacing
+import com.moose.foodies.presentation.components.TinySpacing
 import com.moose.foodies.util.customTabIndicatorOffset
 import kotlinx.coroutines.launch
 
 @Composable
 @ExperimentalCoilApi
 @ExperimentalPagerApi
-fun Home(){
+fun Home(controller: NavController){
     val viewmodel: HomeViewmodel = hiltViewModel()
-    val profile = viewmodel.profile.observeAsState().value
+    val chefs by viewmodel.chefs.observeAsState()
+    val recipes by viewmodel.recipes.observeAsState()
+    val profile by viewmodel.profile.observeAsState()
     val refreshing by viewmodel.refreshing.observeAsState()
-    val highlightState = rememberPagerState(pageCount = 10,  initialOffscreenLimit = 2)
 
     val coroutineScope = rememberCoroutineScope()
-    val recipesState = rememberPagerState(pageCount = 5)
-    val titles = listOf("New", "Breakfast", "Lunch", "Supper", "Snacks")
 
     SwipeRefresh(
         state =  rememberSwipeRefreshState(refreshing!!),
@@ -57,22 +60,29 @@ fun Home(){
             )
         }
     ) {
-        Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+        Column(modifier = Modifier.animateContentSize().verticalScroll(rememberScrollState())) {
             SmallSpacing()
             profile?.let { Header(profile = it) }
             SmallSpacing()
-            HorizontalPager(
-                state = highlightState,
-                horizontalAlignment = Start,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                RecipeCard()
+
+            recipes?.let {
+                val items = it.filter { recipe -> recipe.type == viewmodel.type }
+                val highlightState = rememberPagerState(pageCount = items.size,  initialOffscreenLimit = 2)
+                HorizontalPager(
+                    state = highlightState,
+                    horizontalAlignment = Start,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    RecipeCard(controller, items[it])
+                }
             }
             SmallSpacing()
             Row(
                 verticalAlignment = CenterVertically,
                 horizontalArrangement = SpaceBetween,
-                modifier = Modifier.fillMaxWidth().padding(10.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
             ) {
                 Text(
                     text = "Discover Chefs",
@@ -83,26 +93,27 @@ fun Home(){
                     style = typography.body1.copy(color = colors.primary)
                 )
             }
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(20.dp),
-                contentPadding = PaddingValues(horizontal = 10.dp),
-            ) {
-                items(10) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Image(
-                            painter = rememberImagePainter(
-                                data = "https://avatars.githubusercontent.com/u/47350130?v=4",
-                                builder = {
-                                    transformations(CircleCropTransformation())
-                                }
-                            ),
-                            contentDescription = "chef avatar",
-                            modifier = Modifier
-                                .size(75.dp)
-                                .clip(shapes.large)
-                                .clickable { }
-                        )
-                        Text("moose")
+            chefs?.let {
+                LazyRow(
+                    horizontalArrangement = Arrangement.spacedBy(20.dp),
+                    contentPadding = PaddingValues(horizontal = 10.dp),
+                ) {
+                    items(it){
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Image(
+                                painter = rememberImagePainter(
+                                    data = it.avatar,
+                                    builder = { transformations(CircleCropTransformation()) }
+                                ),
+                                contentDescription = "${it.username} avatar",
+                                modifier = Modifier
+                                    .size(75.dp)
+                                    .clip(shapes.large)
+                                    .clickable { }
+                            )
+                            TinySpacing()
+                            Text(it.username, style = typography.body1)
+                        }
                     }
                 }
             }
@@ -112,30 +123,37 @@ fun Home(){
                 modifier = Modifier.padding(10.dp),
                 style = typography.h5.copy(color = colors.primary)
             )
-            ScrollableTabRow(
-                edgePadding = 0.dp,
-                backgroundColor = Color.Transparent,
-                selectedTabIndex = recipesState.currentPage,
-                divider = {},
-                indicator = { positions ->
-                    TabRowDefaults.Indicator(
-                        height = 7.5.dp,
-                        color = colors.secondary,
-                        modifier = Modifier.customTabIndicatorOffset(positions[recipesState.currentPage])
-                    )
-                }
-            ) {
-                titles.forEachIndexed { index, title ->
-                    val color =
-                        if (recipesState.currentPage == index) colors.secondary else colors.onSurface
-                    Tab(
-                        selected = false,
-                        onClick = { coroutineScope.launch { recipesState.animateScrollToPage(index) } }) {
-                        Text(title, color = color, modifier = Modifier.padding(15.dp))
+            recipes?.let {
+                val recipesState = rememberPagerState(pageCount = 4)
+                val titles = mutableListOf("Breakfast", "Snacks", "Main", "Others")
+                titles.remove(viewmodel.type)
+
+                val items = it.filter { recipe -> recipe.type == titles[recipesState.currentPage]}
+
+                TabRow(
+                    backgroundColor = Color.Transparent,
+                    selectedTabIndex = recipesState.currentPage,
+                    divider = {},
+                    indicator = { positions ->
+                        TabRowDefaults.Indicator(
+                            height = 7.5.dp,
+                            color = colors.secondary,
+                            modifier = Modifier.customTabIndicatorOffset(positions[recipesState.currentPage])
+                        )
+                    }
+                ) {
+                    titles.forEachIndexed { index, title ->
+                        val color =
+                            if (recipesState.currentPage == index) colors.secondary else colors.onSurface
+                        Tab(
+                            selected = false,
+                            onClick = { coroutineScope.launch { recipesState.animateScrollToPage(index) } }) {
+                            Text(title, color = color, modifier = Modifier.padding(15.dp))
+                        }
                     }
                 }
+                RecipeItems(controller, items)
             }
-            RecipeItems(type = titles[recipesState.currentPage])
         }
     }
 }

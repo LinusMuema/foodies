@@ -23,17 +23,17 @@ import androidx.compose.ui.layout.ContentScale.Companion.Crop
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
 import com.moose.foodies.R.drawable.ic_clock
-import com.moose.foodies.R.drawable.sample
+import com.moose.foodies.domain.models.Recipe
 import com.moose.foodies.presentation.components.TinySpacing
 
 @Composable
 @ExperimentalCoilApi
-fun RecipeCard(){
+fun RecipeCard(controller: NavController, recipe: Recipe) {
     val arrangement = SpaceBetween
     val timeGray = Gray.copy(.8f)
 
@@ -47,13 +47,13 @@ fun RecipeCard(){
             Image(
                 modifier = Modifier.fillMaxWidth(),
                 contentScale = Crop,
-                painter = painterResource(id = sample),
-                contentDescription = "sample"
+                painter = rememberImagePainter(data = recipe.image),
+                contentDescription = "${recipe.name} image"
             )
             Box(modifier = Modifier
                 .fillMaxSize()
                 .background(brush = gradient)
-                .clickable {  }
+                .clickable { controller.navigate("/recipe/${recipe._id}")  }
                 .padding(10.dp)){
                 Column(modifier = Modifier.fillMaxSize(), verticalArrangement = arrangement) {
                     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = arrangement) {
@@ -67,7 +67,7 @@ fun RecipeCard(){
                                     painter = painterResource(id = ic_clock)
                                 )
                                 TinySpacing()
-                                Text("30 mins", color = White, fontSize = 14.sp)
+                                Text(recipe.time, style = typography.body2.copy(color = White))
                                 TinySpacing()
                             }
                         }
@@ -78,10 +78,8 @@ fun RecipeCard(){
                             .padding(2.5.dp)){
                             Image(
                                 painter = rememberImagePainter(
-                                    data = "https://avatars.githubusercontent.com/u/47350130?v=4",
-                                    builder = {
-                                        transformations(CircleCropTransformation())
-                                    }
+                                    data = recipe.user.avatar,
+                                    builder = { transformations(CircleCropTransformation()) }
                                 ),
                                 contentDescription = "chef avatar",
                                 modifier = Modifier.size(35.dp)
@@ -89,7 +87,7 @@ fun RecipeCard(){
                         }
                     }
                     Text(
-                        text = "Pancakes",
+                        text = recipe.name,
                         style = typography.h6.copy(color = White),
                         fontWeight = FontWeight.Medium
                     )

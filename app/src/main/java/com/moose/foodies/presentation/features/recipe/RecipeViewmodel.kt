@@ -27,7 +27,6 @@ class RecipeViewmodel @Inject constructor(val repository: RecipeRepository): Vie
     fun checkFavorite(id: String){
         viewModelScope.launch {
             val favorite = repository.getFavorite(id)
-            Log.d("Favorite", "checkFavorite: favorite is $favorite");
             _favorite.value = favorite != null
         }
     }
@@ -46,7 +45,7 @@ class RecipeViewmodel @Inject constructor(val repository: RecipeRepository): Vie
     fun toggleFavorite() {
         viewModelScope.launch {
             val recipe = _recipe.value!!
-            if (_favorite.value!!) recipe.type = "FAVORITE" else recipe.type = ""
+            if (_favorite.value!!) recipe.type = "FAVORITE"
 
             repository.updateRecipe(recipe)
             _favorite.value = !_favorite.value!!
