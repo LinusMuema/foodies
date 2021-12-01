@@ -49,11 +49,11 @@ fun Home(){
         onRefresh = { viewmodel.fetchData() },
         indicator = { state, trigger ->
             SwipeRefreshIndicator(
-                state = state,
-                refreshTriggerDistance = trigger,
                 scale = true,
-                backgroundColor = colors.background,
+                state = state,
                 contentColor = colors.primary,
+                refreshTriggerDistance = trigger,
+                backgroundColor = colors.background,
             )
         }
     ) {

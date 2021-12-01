@@ -12,7 +12,9 @@ import javax.inject.Inject
 class HomeViewmodel @Inject constructor(val repository: HomeRepository): ViewModel() {
 
     val profile: LiveData<Profile> = repository.profile.asLiveData()
+    val chefs: LiveData<List<Profile>> = repository.chefs.asLiveData()
     val recipes: LiveData<List<Recipe>> = repository.feed.asLiveData()
+
 
     private val _refreshing: MutableLiveData<Boolean> = MutableLiveData(false)
     val refreshing: LiveData<Boolean> = _refreshing

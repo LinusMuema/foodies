@@ -13,5 +13,6 @@ data class Profile(
     val avatar: String,
     val username: String,
     val description: String,
-    val favorites: List<Recipe>
+    val favorites: List<Recipe>,
+    val current: Boolean = false,
 )

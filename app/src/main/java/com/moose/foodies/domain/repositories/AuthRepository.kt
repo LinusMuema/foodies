@@ -30,15 +30,19 @@ class AuthRepositoryImpl @Inject constructor(val userDao: UserDao, val preferenc
 
     override suspend fun login(credentials: Credentials): Auth {
         val result = apiEndpoints.login(credentials)
-        userDao.addProfile(result.user)
+
         preferences.setToken(result.token)
+        userDao.addProfile(result.user.copy(current = true))
+
         return result
     }
 
     override suspend fun signup(credentials: Credentials): Auth {
         val result = apiEndpoints.signup(credentials)
+
         userDao.addProfile(result.user)
         preferences.setToken(result.token)
+
         return result
     }
 }
