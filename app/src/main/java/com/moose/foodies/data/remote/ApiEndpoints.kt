@@ -31,6 +31,9 @@ interface ApiEndpoints {
     suspend fun getItems(@Query("update") update: String?): List<Item>
 
     // User's endpoints
+    @GET("/api/users/discover")
+    suspend fun getChefs(): List<Profile>
+
     @PUT("/api/users/update")
     suspend fun updateProfile(@Body update: Profile): Profile
 }

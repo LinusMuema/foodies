@@ -59,7 +59,7 @@ fun Home(){
     ) {
         Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
             SmallSpacing()
-            Header(profile = profile)
+            profile?.let { Header(profile = it) }
             SmallSpacing()
             HorizontalPager(
                 state = highlightState,
@@ -72,9 +72,7 @@ fun Home(){
             Row(
                 verticalAlignment = CenterVertically,
                 horizontalArrangement = SpaceBetween,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp)
+                modifier = Modifier.fillMaxWidth().padding(10.dp)
             ) {
                 Text(
                     text = "Discover Chefs",

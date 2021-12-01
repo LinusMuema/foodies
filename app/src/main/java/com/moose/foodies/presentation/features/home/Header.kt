@@ -19,12 +19,12 @@ import com.moose.foodies.domain.models.Profile
 import java.util.*
 
 @Composable
-fun Header(profile: Profile?){
+fun Header(profile: Profile){
     Box(modifier = Modifier.padding(10.dp)) {
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = SpaceBetween) {
             Column {
                 Text(
-                    text = "Hi ${profile?.username},",
+                    text = "Hi ${profile.username},",
                     style = typography.h5.copy(color = colors.primary),
                 )
                 TimeCaption()

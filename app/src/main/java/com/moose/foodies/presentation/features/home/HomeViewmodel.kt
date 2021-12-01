@@ -1,6 +1,8 @@
 package com.moose.foodies.presentation.features.home
 
 import androidx.lifecycle.*
+import com.moose.foodies.domain.models.Profile
+import com.moose.foodies.domain.models.Recipe
 import com.moose.foodies.domain.repositories.HomeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -8,6 +10,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewmodel @Inject constructor(val repository: HomeRepository): ViewModel() {
+
+    val profile: LiveData<Profile> = repository.profile.asLiveData()
+    val recipes: LiveData<List<Recipe>> = repository.feed.asLiveData()
+
     private val _refreshing: MutableLiveData<Boolean> = MutableLiveData(false)
     val refreshing: LiveData<Boolean> = _refreshing
 
@@ -18,6 +24,4 @@ class HomeViewmodel @Inject constructor(val repository: HomeRepository): ViewMod
             _refreshing.value = false
         }
     }
-
-    val profile = repository.profile.asLiveData()
 }

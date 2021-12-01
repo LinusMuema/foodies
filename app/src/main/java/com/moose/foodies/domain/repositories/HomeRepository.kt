@@ -10,6 +10,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 interface HomeRepository {
@@ -28,6 +29,10 @@ class HomeRepositoryImpl @Inject constructor(val api: ApiEndpoints, val userDao:
 
     override suspend fun fetchData() {
         val feed = api.getFeed()
+        val chefs = api.getChefs()
+        val id = profile.first()._id
+
+        userDao.updateChefs(id, chefs)
         itemsDao.updateFeedRecipes(feed)
     }
 }
