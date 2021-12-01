@@ -14,7 +14,7 @@ interface UserDao {
     @Query("select * from profile where current = 0")
     fun getChefs(): Flow<List<Profile>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addProfile(vararg profile: Profile)
 
     @Query("delete from profile where _id != :id")

@@ -55,7 +55,8 @@ class ProfileRepositoryImpl @Inject constructor(val userDao: UserDao, val itemsD
     }
 
     override suspend fun updateProfile(profile: Profile) {
-        userDao.addProfile(api.updateProfile(profile))
+        val update = api.updateProfile(profile)
+        userDao.addProfile(update.copy(current = true))
     }
 
     override suspend fun uploadImage(dir: String, path: Uri) {

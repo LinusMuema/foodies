@@ -1,6 +1,7 @@
 package com.moose.foodies.presentation.features.profile
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.*
 import androidx.work.WorkManager
 import com.moose.foodies.FoodiesApplication
@@ -23,7 +24,7 @@ class ProfileViewmodel @Inject constructor(private val repository: ProfileReposi
     private val _url: MutableLiveData<String> = MutableLiveData()
     val url: LiveData<String> = _url
 
-    private val _loading: MutableLiveData<Boolean> = MutableLiveData()
+    private val _loading: MutableLiveData<Boolean> = MutableLiveData(false)
     val loading: LiveData<Boolean> = _loading
 
     private val _error = MutableLiveData<String>()
