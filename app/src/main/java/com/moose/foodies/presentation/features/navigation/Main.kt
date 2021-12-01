@@ -25,7 +25,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.moose.foodies.presentation.features.explore.Explore
 import com.moose.foodies.presentation.features.fridge.Fridge
-import com.moose.foodies.presentation.features.home.ui.Home
+import com.moose.foodies.presentation.features.home.Home
 import com.moose.foodies.presentation.features.navigation.Screen.*
 import com.moose.foodies.presentation.features.profile.Profile
 import com.moose.foodies.presentation.theme.FoodiesTheme

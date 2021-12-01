@@ -12,7 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import coil.annotation.ExperimentalCoilApi
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.moose.foodies.presentation.features.add.Add
-import com.moose.foodies.presentation.features.recipe.ui.Recipe
+import com.moose.foodies.presentation.features.recipe.Recipe
 import dagger.hilt.android.AndroidEntryPoint
 
 @ExperimentalMaterialApi

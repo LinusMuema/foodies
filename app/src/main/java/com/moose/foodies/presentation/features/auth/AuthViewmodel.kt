@@ -48,6 +48,26 @@ class AuthViewmodel @Inject constructor(private val repository: AuthRepository) 
         }
     }
 
+    fun signup(email: String, password: String) {
+        _loading.value = true
+        viewModelScope.launch(handler) {
+            val result = repository.signup(Credentials(email, password))
+            _result.value = Result.Success(result)
+
+            startWork()
+        }
+    }
+
+    fun forgot(email: String) {
+        _loading.value = true
+        viewModelScope.launch(handler) {
+            repository.forgot(email)
+
+            changeScreen(0)
+            _result.value = Result.Error("check your email for code")
+        }
+    }
+
     private fun startWork() {
         val manager = WorkManager.getInstance(FoodiesApplication.appContext)
 
@@ -68,23 +88,5 @@ class AuthViewmodel @Inject constructor(private val repository: AuthRepository) 
             .setConstraints(constraints)
             .build()
         manager.enqueue(itemsWork)
-    }
-
-    fun forgot(email: String) {
-        _loading.value = true
-        viewModelScope.launch(handler) {
-            repository.forgot(email)
-
-            changeScreen(0)
-            _result.value = Result.Error("check your email for code")
-        }
-    }
-
-    fun signup(email: String, password: String) {
-        _loading.value = true
-        viewModelScope.launch(handler) {
-            val result = repository.signup(Credentials(email, password))
-            _result.value = Result.Success(result)
-        }
     }
 }

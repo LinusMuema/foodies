@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.moose.foodies.domain.models.Item
 import com.moose.foodies.domain.models.Recipe
+import com.moose.foodies.domain.repositories.RecipeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

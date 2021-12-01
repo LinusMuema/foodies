@@ -31,9 +31,9 @@ import com.google.accompanist.flowlayout.FlowRow
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.systemBarsPadding
 import com.moose.foodies.presentation.components.*
-import com.moose.foodies.presentation.features.add.ui.Categories
-import com.moose.foodies.presentation.features.add.ui.ImageUpload
-import com.moose.foodies.presentation.features.add.ui.Items
+import com.moose.foodies.presentation.features.add.Categories
+import com.moose.foodies.presentation.features.add.ImageUpload
+import com.moose.foodies.presentation.features.add.Items
 import com.moose.foodies.domain.models.Item
 import com.moose.foodies.domain.models.RawRecipe
 import com.moose.foodies.presentation.theme.FoodiesTheme

@@ -2,6 +2,8 @@ package com.moose.foodies.presentation.features.profile
 
 import android.net.Uri
 import androidx.lifecycle.*
+import androidx.work.WorkManager
+import com.moose.foodies.FoodiesApplication
 import com.moose.foodies.domain.models.Profile
 import com.moose.foodies.domain.repositories.ProfileRepository
 import com.moose.foodies.util.parse
@@ -31,7 +33,14 @@ class ProfileViewmodel @Inject constructor(private val repository: ProfileReposi
         _error.value = exception.parse()
     }
 
-    fun logout() = repository.logout()
+    fun logout() {
+        val manager = WorkManager.getInstance(FoodiesApplication.appContext)
+
+        viewModelScope.launch {
+            repository.clearData()
+            manager.cancelAllWork()
+        }
+    }
 
     fun uploadAvatar(uri: Uri) {
         viewModelScope.launch(handler) {

@@ -23,6 +23,9 @@ interface ItemsDao {
     @Query("select * from recipe where type = 'PERSONAL'")
     fun getUserRecipes(): Flow<List<Recipe>>
 
+    @Query("select * from recipe where type != 'PERSONAL' and type != 'FAVORITE'")
+    fun getFeedRecipes(): Flow<List<Recipe>>
+
     @Query("select * from recipe where _id = :id limit 1")
     suspend fun getRecipeById(id: String): Recipe
 
@@ -32,6 +35,15 @@ interface ItemsDao {
     @Query("select * from item where _id = :id limit 1")
     suspend fun getItemById(id: String): Item
 
+    @Query("delete from recipe where type != 'PERSONAL' and type != 'FAVORITE'")
+    suspend fun nukeFeedRecipes()
+
     @Query("delete from recipe")
-    fun nukeRecipes()
+    suspend fun nukeRecipes()
+
+    @Transaction
+    suspend fun updateFeedRecipes(recipes: List<Recipe>){
+        nukeFeedRecipes()
+        addRecipe(*recipes.toTypedArray())
+    }
 }

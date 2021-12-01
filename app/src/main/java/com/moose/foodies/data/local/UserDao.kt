@@ -15,4 +15,7 @@ interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addProfile(profile: Profile)
+
+    @Query("delete from profile")
+    suspend fun nukeProfile()
 }

@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import com.moose.foodies.domain.models.Item
 import com.moose.foodies.domain.models.RawRecipe
 import com.moose.foodies.domain.models.Recipe
+import com.moose.foodies.domain.repositories.AddRepository
 import com.moose.foodies.util.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler

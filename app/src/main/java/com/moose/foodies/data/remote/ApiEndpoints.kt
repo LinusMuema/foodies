@@ -18,6 +18,9 @@ interface ApiEndpoints {
 
 
     // Recipes endpoints
+    @GET("/api/recipes")
+    suspend fun getFeed(): List<Recipe>
+
     @POST("/api/recipes")
     suspend fun uploadRecipe(@Body recipe: RawRecipe): Recipe
 

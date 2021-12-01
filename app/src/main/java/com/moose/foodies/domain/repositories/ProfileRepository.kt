@@ -24,7 +24,7 @@ interface ProfileRepository {
 
     val progress: LiveData<UploadState>
 
-    fun logout()
+    suspend fun clearData()
 
     fun clearProgress(): UploadState.Idle
 
@@ -46,9 +46,11 @@ class ProfileRepositoryImpl @Inject constructor(val userDao: UserDao, val itemsD
 
     override fun clearProgress() = cloudinary.clearProgress()
 
-    override fun logout() {
+    override suspend fun clearData() {
         preferences.setToken(null)
         preferences.setUpdate(null)
+
+        userDao.nukeProfile()
         itemsDao.nukeRecipes()
     }
 
