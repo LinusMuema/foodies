@@ -1,24 +1,32 @@
 package com.moose.foodies.presentation.features.chef
 
 import android.content.Intent
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -30,6 +38,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.systemBarsPadding
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.moose.foodies.R
 import com.moose.foodies.domain.models.Profile
 import com.moose.foodies.presentation.components.CenterColumn
@@ -39,6 +48,7 @@ import com.moose.foodies.presentation.theme.FoodiesTheme
 import com.moose.foodies.presentation.theme.shapes
 import com.moose.foodies.presentation.theme.typography
 
+@ExperimentalFoundationApi
 @Composable
 @OptIn(ExperimentalMaterialApi::class)
 fun Chef(id: String?, controller: NavHostController) {
@@ -54,6 +64,14 @@ fun Chef(id: String?, controller: NavHostController) {
 
 
     FoodiesTheme {
+
+        val isDark = colors.isLight
+        val color = colors.background
+        val systemUiController = rememberSystemUiController()
+        SideEffect {
+            systemUiController.setSystemBarsColor(color = color, darkIcons = isDark)
+        }
+
         ProvideWindowInsets {
             if (chef != null){
                 Scaffold(modifier = Modifier.systemBarsPadding(), floatingActionButton = { Fab(chef!!) }) {
@@ -61,9 +79,7 @@ fun Chef(id: String?, controller: NavHostController) {
                         TinySpacing()
                         IconButton(onClick = { controller.popBackStack() }) {
                             Icon(
-                                modifier = Modifier
-                                    .size(30.dp)
-                                    .padding(5.dp),
+                                modifier = Modifier.size(30.dp).padding(5.dp),
                                 painter = painterResource(id = R.drawable.ic_back),
                                 contentDescription = "back icon",
                             )
@@ -109,6 +125,44 @@ fun Chef(id: String?, controller: NavHostController) {
                                 Text(chef!!.description, textAlign = TextAlign.Center)
                             }
                             TinySpacing()
+                        }
+                        SmallSpacing()
+                        recipes?.let { items ->
+                            val arrangement = Arrangement.SpaceBetween
+                            val timeGray = Color.Gray.copy(.8f)
+
+                            // create the gradient
+                            val variant = colors.primaryVariant
+                            val colors = listOf(Color.Transparent, Color.Transparent, Color.Transparent, variant)
+                            val gradient = Brush.verticalGradient(colors = colors)
+                            LazyVerticalGrid(cells = GridCells.Fixed(2)) {
+                                items(items){
+                                    Card(modifier = Modifier.height(250.dp).padding(10.dp), elevation = 5.dp){
+                                        Image(
+                                            modifier = Modifier.fillMaxWidth(),
+                                            contentScale = ContentScale.Crop,
+                                            painter = rememberImagePainter(data = it.image),
+                                            contentDescription = "${it.name} image"
+                                        )
+                                        Box(modifier = Modifier
+                                            .fillMaxSize()
+                                            .background(brush = gradient)
+                                            .clickable {  controller.navigate("/recipe/${it._id}")}
+                                            .padding(10.dp)){
+                                            Column(Modifier.fillMaxSize(), arrangement) {
+                                                TinySpacing()
+                                                Text(
+                                                    maxLines = 1,
+                                                    text = it.name,
+                                                    fontWeight = FontWeight.Medium,
+                                                    overflow = TextOverflow.Ellipsis,
+                                                    style = MaterialTheme.typography.h6.copy(color = Color.White)
+                                                )
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }

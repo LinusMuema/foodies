@@ -28,6 +28,7 @@ import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.moose.foodies.R
 import com.moose.foodies.domain.models.Recipe
+import com.moose.foodies.presentation.components.TinySpacing
 
 @Composable
 fun RecipeItems(controller: NavController, recipes: List<Recipe>){
@@ -54,14 +55,7 @@ fun RecipeItems(controller: NavController, recipes: List<Recipe>){
                     .clickable {  controller.navigate("/recipe/${recipe._id}")}
                     .padding(10.dp)){
                     Column(Modifier.fillMaxSize(), arrangement) {
-                        Box(Modifier.align(Alignment.End).clip(shapes.large).background(timeGray).padding(7.5.dp)) {
-                            Icon(
-                                tint = White,
-                                contentDescription = "favorite",
-                                modifier = Modifier.size(18.dp),
-                                painter = painterResource(id = R.drawable.ic_favorites)
-                            )
-                        }
+                       TinySpacing()
                         Text(
                             maxLines = 1,
                             text = recipe.name,
