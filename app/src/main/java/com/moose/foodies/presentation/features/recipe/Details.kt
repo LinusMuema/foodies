@@ -63,7 +63,7 @@ fun Details(fraction: Float, recipe: Recipe, ingredients: List<Item>, equipment:
             Spacer(modifier = Modifier.weight(1f))
             IconButton(onClick = {
                 val message = "Do you know how to make ${recipe.name}? \nCheck out the recipe on foodies! \uD83D\uDE0B \uD83C\uDF73 \n\n"
-                val url = "http://foodies.moose.ac/recipes/${recipe._id}"
+                val url = "http://foodies.moose.ac/recipes?id=${recipe._id}"
                 val sendIntent: Intent = Intent().apply {
                     action = Intent.ACTION_SEND
                     putExtra(Intent.EXTRA_TEXT, "$message$url")

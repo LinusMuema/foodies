@@ -26,12 +26,13 @@ class ChefViewmodel @Inject constructor(val repository: ChefRepository): ViewMod
                 _chef.value = repository.getPrefsChef()
                 getRecipes(_chef.value!!._id)
             } else {
-                // deep link was used, make the network request
+                getRecipes(id!!)
+                _chef.value = repository.fetchNetChef(id)
             }
         }
     }
 
-    private fun getRecipes(id: String){
-
+    private suspend fun getRecipes(id: String){
+        _recipes.value = repository.getChefRecipes(id)
     }
 }

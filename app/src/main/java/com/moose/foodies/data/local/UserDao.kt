@@ -11,6 +11,9 @@ interface UserDao {
     @Query("select * from profile where current = 1 limit 1")
     fun getProfile(): Flow<Profile>
 
+    @Query("select * from profile where _id = :id limit 1")
+    fun getChef(id: String): Flow<Profile?>
+
     @Query("select * from profile where current = 0")
     fun getChefs(): Flow<List<Profile>>
 

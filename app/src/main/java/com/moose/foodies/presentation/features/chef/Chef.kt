@@ -25,10 +25,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.systemBarsPadding
 import com.moose.foodies.R
 import com.moose.foodies.domain.models.Profile
+import com.moose.foodies.presentation.components.CenterColumn
 import com.moose.foodies.presentation.components.SmallSpacing
 import com.moose.foodies.presentation.components.TinySpacing
 import com.moose.foodies.presentation.theme.FoodiesTheme
@@ -45,10 +49,14 @@ fun Chef(id: String?, controller: NavHostController) {
     val recipes by viewmodel.recipes.observeAsState()
     val count = if (recipes.isNullOrEmpty()) 0 else recipes!!.size
 
-    chef?.let { profile ->
-        FoodiesTheme {
-            ProvideWindowInsets {
-                Scaffold(modifier = Modifier.systemBarsPadding(), floatingActionButton = { Fab(profile) }) {
+    // loading animation
+    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.chef))
+
+
+    FoodiesTheme {
+        ProvideWindowInsets {
+            if (chef != null){
+                Scaffold(modifier = Modifier.systemBarsPadding(), floatingActionButton = { Fab(chef!!) }) {
                     Column(modifier = Modifier.fillMaxSize()) {
                         TinySpacing()
                         IconButton(onClick = { controller.popBackStack() }) {
@@ -69,7 +77,7 @@ fun Chef(id: String?, controller: NavHostController) {
                             TinySpacing()
                             Image(
                                 painter = rememberImagePainter(
-                                    data = profile.avatar,
+                                    data = chef!!.avatar,
                                     builder = { transformations(CircleCropTransformation()) }
                                 ),
                                 contentDescription = "user avatar",
@@ -96,13 +104,26 @@ fun Chef(id: String?, controller: NavHostController) {
                                     }
                                 }
                                 SmallSpacing()
-                                Text(profile.username, style = typography.h5.copy(color = colors.primary))
+                                Text(chef!!.username, style = typography.h5.copy(color = colors.primary))
                                 TinySpacing()
-                                Text(profile.description, textAlign = TextAlign.Center)
+                                Text(chef!!.description, textAlign = TextAlign.Center)
                             }
                             TinySpacing()
                         }
                     }
+                }
+            } else {
+                CenterColumn {
+                    Text(
+                        text = "Getting the chef...",
+                        style = typography.body1.copy(color = colors.onSurface)
+                    )
+                    TinySpacing()
+                    LottieAnimation(
+                        composition = composition,
+                        iterations = Int.MAX_VALUE,
+                        modifier = Modifier.size(250.dp)
+                    )
                 }
             }
         }
@@ -115,7 +136,7 @@ fun Fab(profile: Profile) {
 
     FloatingActionButton(onClick = {
         val message = "Have you seen ${profile.username}'s recipes on Foodies? \uD83D\uDE0B \nGo ahead and check out their amazing recipes! \uD83D\uDC4C \n\n"
-        val url = "http://foodies.moose.ac/chefs/${profile._id}"
+        val url = "http://foodies.moose.ac/chefs?id=${profile._id}"
         val sendIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_TEXT, "$message$url")

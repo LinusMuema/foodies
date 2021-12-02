@@ -21,16 +21,23 @@ interface ApiEndpoints {
     @GET("/api/recipes")
     suspend fun getFeed(): List<Recipe>
 
+    @GET("/api/recipes/{id}")
+    suspend fun getRecipeById(@Path("id") id: String): Recipe
+
     @POST("/api/recipes")
     suspend fun uploadRecipe(@Body recipe: RawRecipe): Recipe
 
     @GET("/api/recipes/user/{id}")
     suspend fun getUserRecipes(@Path("id") id: String): List<Recipe>
 
-    @GET("/api/recipes/items")
+    @GET("/api/items")
     suspend fun getItems(@Query("update") update: String?): List<Item>
 
     // User's endpoints
+
+    @GET("/api/users/profile/{id}")
+    suspend fun getChef(@Path("id") id: String): Profile
+
     @GET("/api/users/discover")
     suspend fun getChefs(): List<Profile>
 

@@ -41,12 +41,12 @@ class NavigationActivity : ComponentActivity() {
             composable("/main") { Main(navController) }
             composable(
                 route = "/chef/{id}",
-                deepLinks = listOf(navDeepLink { uriPattern = "http://foodies.moose.ac/chefs/{id}" })
+                deepLinks = listOf(navDeepLink { uriPattern = "http://foodies.moose.ac/chefs?id={id}" })
             ) { Chef(it.arguments?.getString("id"), navController)}
 
             composable(
                 route = "/recipe/{id}",
-                deepLinks = listOf(navDeepLink { uriPattern = "http://foodies.moose.ac/recipes/{id}" })
+                deepLinks = listOf(navDeepLink { uriPattern = "http://foodies.moose.ac/recipes?id={id}" })
             ) { Recipe(it.arguments?.getString("id"), navController)}
         }
     }
