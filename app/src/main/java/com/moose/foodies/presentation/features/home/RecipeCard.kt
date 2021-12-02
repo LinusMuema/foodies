@@ -23,6 +23,7 @@ import androidx.compose.ui.layout.ContentScale.Companion.Crop
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
@@ -36,6 +37,7 @@ import com.moose.foodies.presentation.components.TinySpacing
 fun RecipeCard(controller: NavController, recipe: Recipe) {
     val arrangement = SpaceBetween
     val timeGray = Gray.copy(.8f)
+    val viewmodel: HomeViewmodel = hiltViewModel()
 
     // create the gradient
     val variant = colors.primaryVariant
@@ -43,7 +45,9 @@ fun RecipeCard(controller: NavController, recipe: Recipe) {
     val gradient = Brush.verticalGradient(colors = colors)
 
     Box(modifier = Modifier.padding(start = 10.dp, end = 10.dp)){
-        Card(modifier = Modifier.width(300.dp).height(175.dp), elevation = 5.dp) {
+        Card(modifier = Modifier
+            .width(300.dp)
+            .height(175.dp), elevation = 5.dp) {
             Image(
                 modifier = Modifier.fillMaxWidth(),
                 contentScale = Crop,
@@ -53,11 +57,14 @@ fun RecipeCard(controller: NavController, recipe: Recipe) {
             Box(modifier = Modifier
                 .fillMaxSize()
                 .background(brush = gradient)
-                .clickable { controller.navigate("/recipe/${recipe._id}")  }
+                .clickable { controller.navigate("/recipe/${recipe._id}") }
                 .padding(10.dp)){
                 Column(modifier = Modifier.fillMaxSize(), verticalArrangement = arrangement) {
                     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = arrangement) {
-                        Box(modifier = Modifier.clip(shapes.medium).background(timeGray).padding(5.dp)) {
+                        Box(modifier = Modifier
+                            .clip(shapes.medium)
+                            .background(timeGray)
+                            .padding(5.dp)) {
                             Row (verticalAlignment = Alignment.CenterVertically){
                                 TinySpacing()
                                 Icon(
@@ -71,11 +78,11 @@ fun RecipeCard(controller: NavController, recipe: Recipe) {
                                 TinySpacing()
                             }
                         }
-                        Box(modifier = Modifier
-                            .clickable { }
-                            .clip(shapes.large)
-                            .background(White)
-                            .padding(2.5.dp)){
+                        Box(modifier = Modifier.clip(shapes.large).background(White).padding(2.5.dp)
+                            .clickable {
+                                viewmodel.setChef(recipe.user)
+                                controller.navigate("/chef/local")
+                            }){
                             Image(
                                 painter = rememberImagePainter(
                                     data = recipe.user.avatar,

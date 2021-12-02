@@ -89,7 +89,10 @@ fun Recipe(id: String?, controller: NavHostController) {
                     sheetPeekHeight = sheetHeight,
                     sheetBackgroundColor = colors.background,
                     sheetShape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
-                    sheetContent = { Details(fraction, recipe!!, ingredients!!, equipment!!) },
+                    sheetContent = { Details(fraction, recipe!!, ingredients!!, equipment!!){
+                        viewmodel.setChef(recipe!!.user)
+                        controller.navigate("/chef/local")
+                    } },
                 ) {
                     Surface(color = colors.background) {
                         Box(modifier = Modifier.fillMaxHeight()) {

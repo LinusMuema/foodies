@@ -3,14 +3,14 @@ package com.moose.foodies.domain.repositories
 import com.moose.foodies.data.local.ItemsDao
 import com.moose.foodies.data.remote.ApiEndpoints
 import com.moose.foodies.domain.models.Item
+import com.moose.foodies.domain.models.Profile
 import com.moose.foodies.domain.models.Recipe
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
+import com.moose.foodies.util.Preferences
 import javax.inject.Inject
 
 interface RecipeRepository {
+    fun setChef(chef: Profile)
+
     suspend fun getItem(id: String): Item
 
     suspend fun getRecipe(id: String): Recipe
@@ -20,7 +20,10 @@ interface RecipeRepository {
     suspend fun updateRecipe(recipe: Recipe)
 }
 
-class RecipeRepositoryImpl @Inject constructor(val api: ApiEndpoints, val itemsDao: ItemsDao): RecipeRepository {
+class RecipeRepositoryImpl @Inject constructor(val api: ApiEndpoints, val itemsDao: ItemsDao, val preferences: Preferences): RecipeRepository {
+
+    override fun setChef(chef: Profile) = preferences.setChef(chef)
+
     override suspend fun getItem(id: String): Item {
         return itemsDao.getItemById(id)
     }

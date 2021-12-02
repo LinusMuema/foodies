@@ -3,6 +3,7 @@ package com.moose.foodies.presentation.features.recipe
 import android.util.Log
 import androidx.lifecycle.*
 import com.moose.foodies.domain.models.Item
+import com.moose.foodies.domain.models.Profile
 import com.moose.foodies.domain.models.Recipe
 import com.moose.foodies.domain.repositories.RecipeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,6 +24,9 @@ class RecipeViewmodel @Inject constructor(val repository: RecipeRepository): Vie
 
     private val _equipment: MutableLiveData<List<Item>> = MutableLiveData()
     val equipment: LiveData<List<Item>> = _equipment
+
+
+    fun setChef(user: Profile) = repository.setChef(user)
 
     fun checkFavorite(id: String){
         viewModelScope.launch {
