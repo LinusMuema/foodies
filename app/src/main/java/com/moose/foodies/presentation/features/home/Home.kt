@@ -23,12 +23,17 @@ import androidx.navigation.NavController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.moose.foodies.R
+import com.moose.foodies.presentation.components.CenterColumn
 import com.moose.foodies.presentation.components.SmallSpacing
 import com.moose.foodies.presentation.components.TinySpacing
 import com.moose.foodies.util.customTabIndicatorOffset
@@ -48,8 +53,10 @@ fun Home(controller: NavController){
     val coroutineScope = rememberCoroutineScope()
 
     val height = LocalConfiguration.current.screenHeightDp
-    val third = (height * .25).dp
-    val quarter = (height * .15).dp
+    val container = (height * .7).dp
+
+    // loading animation
+    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.cooking))
 
     SwipeRefresh(
         state =  rememberSwipeRefreshState(refreshing!!),
@@ -69,116 +76,95 @@ fun Home(controller: NavController){
             profile?.let { Header(profile = it) }
             SmallSpacing()
 
-            when {
-                recipes.isNullOrEmpty() -> {
-                    Box(modifier = Modifier.fillMaxWidth().height(third)) {
-                        CircularProgressIndicator(
-                            color = colors.primary,
-                            modifier = Modifier.align(Alignment.Center)
-                        )
-                    }
+            if (recipes.isNullOrEmpty()){
+                CenterColumn(modifier = Modifier.height(container)){
+                    Text(
+                        text = "Getting you some recipes...",
+                        style = com.moose.foodies.presentation.theme.typography.body1.copy(color = colors.onSurface)
+                    )
+                    TinySpacing()
+                    LottieAnimation(
+                        composition = composition,
+                        iterations = Int.MAX_VALUE,
+                        modifier = Modifier.size(250.dp)
+                    )
                 }
-                else -> {
-                    val items = recipes!!.filter { recipe -> recipe.type == viewmodel.type }
-                    val highlightState = rememberPagerState(pageCount = items.size,  initialOffscreenLimit = 2)
-                    HorizontalPager(
-                        state = highlightState,
-                        horizontalAlignment = Start,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        RecipeCard(controller, items[it])
-                    }
+            } else {
+                val highlights = recipes!!.filter { recipe -> recipe.type == viewmodel.type }
+                val highlightState = rememberPagerState(pageCount = highlights.size,  initialOffscreenLimit = 2)
+                HorizontalPager(
+                    state = highlightState,
+                    horizontalAlignment = Start,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    RecipeCard(controller, highlights[it])
                 }
-            }
+                SmallSpacing()
+                Text(
+                    text = "Discover Chefs",
+                    modifier = Modifier.padding(10.dp),
+                    style = typography.h5.copy(color = colors.primary)
+                )
 
-            SmallSpacing()
-            Text(
-                text = "Discover Chefs",
-                modifier = Modifier.padding(10.dp),
-                style = typography.h5.copy(color = colors.primary)
-            )
-
-            when {
-                chefs.isNullOrEmpty() -> {
-                    Box(modifier = Modifier.fillMaxWidth().height(quarter)) {
-                        CircularProgressIndicator(
-                            color = colors.primary,
-                            modifier = Modifier.align(Alignment.Center)
-                        )
-                    }
-                }
-                else -> {
-                    LazyRow(
-                        horizontalArrangement = Arrangement.spacedBy(20.dp),
-                        contentPadding = PaddingValues(horizontal = 10.dp),
-                    ) {
-                        items(chefs!!){
-                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                Image(
-                                    painter = rememberImagePainter(
-                                        data = it.avatar,
-                                        builder = { transformations(CircleCropTransformation()) }
-                                    ),
-                                    contentDescription = "${it.username} avatar",
-                                    modifier = Modifier.size(75.dp).clip(shapes.large).clickable {
-                                        viewmodel.setChef(it)
-                                        controller.navigate("/chef/local")
-                                    }
-                                )
-                                TinySpacing()
-                                Text(it.username, style = typography.body1)
-                            }
-                        }
-                    }
-                }
-            }
-
-            SmallSpacing()
-            Text(
-                text = "Recipes",
-                modifier = Modifier.padding(10.dp),
-                style = typography.h5.copy(color = colors.primary)
-            )
-
-            when {
-                recipes.isNullOrEmpty() -> {
-                    Box(modifier = Modifier.fillMaxWidth().height(quarter)) {
-                        CircularProgressIndicator(
-                            color = colors.primary,
-                            modifier = Modifier.align(Alignment.Center)
-                        )
-                    }
-                }
-                else -> {
-                    val pagerState = rememberPagerState(pageCount = 4)
-                    val titles = mutableListOf("Breakfast", "Snacks", "Main", "Others")
-                    titles.remove(viewmodel.type)
-
-                    val items = recipes!!.filter { recipe -> recipe.type == titles[pagerState.currentPage]}
-
-                    TabRow(
-                        backgroundColor = Color.Transparent,
-                        selectedTabIndex = pagerState.currentPage,
-                        divider = {},
-                        indicator = { positions ->
-                            TabRowDefaults.Indicator(
-                                height = 7.5.dp,
-                                color = colors.secondary,
-                                modifier = Modifier.customTabIndicatorOffset(positions[pagerState.currentPage])
+                LazyRow(
+                    horizontalArrangement = Arrangement.spacedBy(20.dp),
+                    contentPadding = PaddingValues(horizontal = 10.dp),
+                ) {
+                    items(chefs!!){
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Image(
+                                painter = rememberImagePainter(
+                                    data = it.avatar,
+                                    builder = { transformations(CircleCropTransformation()) }
+                                ),
+                                contentDescription = "${it.username} avatar",
+                                modifier = Modifier.size(75.dp).clip(shapes.large).clickable {
+                                    viewmodel.setChef(it)
+                                    controller.navigate("/chef/local")
+                                }
                             )
-                        }
-                    ) {
-                        titles.forEachIndexed { index, title ->
-                            val color = if (pagerState.currentPage == index) colors.secondary else colors.onSurface
-                            Tab(
-                                selected = false,
-                                onClick = { coroutineScope.launch { pagerState.animateScrollToPage(index) } }) {
-                                Text(title, color = color, modifier = Modifier.padding(15.dp))
-                            }
+                            TinySpacing()
+                            Text(it.username, style = typography.body1)
                         }
                     }
-                    RecipeItems(controller, items)
                 }
+
+
+                SmallSpacing()
+                Text(
+                    text = "Recipes",
+                    modifier = Modifier.padding(10.dp),
+                    style = typography.h5.copy(color = colors.primary)
+                )
+
+                val pagerState = rememberPagerState(pageCount = 4)
+                val titles = mutableListOf("Breakfast", "Snacks", "Main", "Others")
+                titles.remove(viewmodel.type)
+
+                val items = recipes!!.filter { recipe -> recipe.type == titles[pagerState.currentPage]}
+
+                TabRow(
+                    backgroundColor = Color.Transparent,
+                    selectedTabIndex = pagerState.currentPage,
+                    divider = {},
+                    indicator = { positions ->
+                        TabRowDefaults.Indicator(
+                            height = 7.5.dp,
+                            color = colors.secondary,
+                            modifier = Modifier.customTabIndicatorOffset(positions[pagerState.currentPage])
+                        )
+                    }
+                ) {
+                    titles.forEachIndexed { index, title ->
+                        val color = if (pagerState.currentPage == index) colors.secondary else colors.onSurface
+                        Tab(
+                            selected = false,
+                            onClick = { coroutineScope.launch { pagerState.animateScrollToPage(index) } }) {
+                            Text(title, color = color, modifier = Modifier.padding(15.dp))
+                        }
+                    }
+                }
+                RecipeItems(controller, items)
             }
         }
     }
