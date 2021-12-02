@@ -63,11 +63,3 @@ class ProfileRepositoryImpl @Inject constructor(val userDao: UserDao, val itemsD
         cloudinary.uploadImage(dir, path)
     }
 }
-
-@Module
-@InstallIn(ViewModelComponent::class)
-abstract class ProfileRepositoryBinding{
-
-    @Binds
-    abstract fun provideRepository(impl: ProfileRepositoryImpl): ProfileRepository
-}

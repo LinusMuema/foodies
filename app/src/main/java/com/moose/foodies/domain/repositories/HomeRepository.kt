@@ -40,11 +40,3 @@ class HomeRepositoryImpl @Inject constructor(val api: ApiEndpoints, val userDao:
         itemsDao.updateFeedRecipes(feed)
     }
 }
-
-@Module
-@InstallIn(ViewModelComponent::class)
-abstract class HomeRepositoryBinding {
-
-    @Binds
-    abstract fun provideRepository(impl: HomeRepositoryImpl): HomeRepository
-}

@@ -37,11 +37,3 @@ class RecipeRepositoryImpl @Inject constructor(val api: ApiEndpoints, val itemsD
         return itemsDao.updateRecipe(recipe)
     }
 }
-
-@Module
-@InstallIn(ViewModelComponent::class)
-abstract class RecipeRepositoryBinding {
-
-    @Binds
-    abstract fun provideRecipeRepository(impl: RecipeRepositoryImpl): RecipeRepository
-}

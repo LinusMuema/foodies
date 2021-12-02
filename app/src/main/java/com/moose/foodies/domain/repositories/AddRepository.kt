@@ -52,11 +52,3 @@ class AddRepositoryImpl @Inject constructor(val dao: ItemsDao, val userDao: User
         return result
     }
 }
-
-@Module
-@InstallIn(ViewModelComponent::class)
-abstract class AddRepositoryBinding {
-
-    @Binds
-    abstract fun provideAddRepository(impl: AddRepositoryImpl): AddRepository
-}

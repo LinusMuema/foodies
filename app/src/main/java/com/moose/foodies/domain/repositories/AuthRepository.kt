@@ -46,12 +46,3 @@ class AuthRepositoryImpl @Inject constructor(val userDao: UserDao, val preferenc
         return result
     }
 }
-
-@Module
-@InstallIn(ViewModelComponent::class)
-abstract class AuthRepositoryBinding {
-
-    @Binds
-    abstract fun provideRepository(impl: AuthRepositoryImpl): AuthRepository
-}
-
