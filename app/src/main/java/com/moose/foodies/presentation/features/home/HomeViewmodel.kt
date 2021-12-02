@@ -22,6 +22,7 @@ class HomeViewmodel @Inject constructor(val repository: HomeRepository): ViewMod
     val refreshing: LiveData<Boolean> = _refreshing
 
     init {
+        fetchData()
         type =  when {
             time >= 22 -> "Snacks"
             time >= 18 -> "Main"
@@ -33,9 +34,13 @@ class HomeViewmodel @Inject constructor(val repository: HomeRepository): ViewMod
         }
     }
 
-    fun fetchData() {
+    fun refresh(){
+        _refreshing.value = true
+        fetchData()
+    }
+
+    private fun fetchData() {
         viewModelScope.launch {
-            _refreshing.value = true
             repository.fetchData()
             _refreshing.value = false
         }

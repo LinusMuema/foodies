@@ -54,8 +54,7 @@ fun RecipeItems(controller: NavController, recipes: List<Recipe>){
                     .clickable {  controller.navigate("/recipe/${recipe._id}")}
                     .padding(10.dp)){
                     Column(Modifier.fillMaxSize(), arrangement) {
-                        Box(
-                            Modifier.align(Alignment.End).clip(shapes.large).background(timeGray).padding(7.5.dp)) {
+                        Box(Modifier.align(Alignment.End).clip(shapes.large).background(timeGray).padding(7.5.dp)) {
                             Icon(
                                 tint = White,
                                 contentDescription = "favorite",

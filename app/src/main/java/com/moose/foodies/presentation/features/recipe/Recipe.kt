@@ -33,7 +33,6 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.moose.foodies.R
 import com.moose.foodies.presentation.components.TinySpacing
-import com.moose.foodies.presentation.features.recipe.Details
 import com.moose.foodies.presentation.theme.FoodiesTheme
 import com.moose.foodies.presentation.theme.shapes
 import com.moose.foodies.presentation.theme.typography
