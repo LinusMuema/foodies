@@ -27,11 +27,15 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.moose.foodies.R
+import com.moose.foodies.presentation.components.CenterColumn
 import com.moose.foodies.presentation.components.TinySpacing
 import com.moose.foodies.presentation.theme.FoodiesTheme
 import com.moose.foodies.presentation.theme.shapes
@@ -42,102 +46,121 @@ import com.moose.foodies.presentation.theme.typography
 @Composable
 fun Recipe(id: String?, controller: NavHostController) {
     val viewmodel: RecipeViewmodel = hiltViewModel()
-
-    val isDark = colors.isLight
-    val systemUiController = rememberSystemUiController()
-    SideEffect {
-        systemUiController.setSystemBarsColor(color = Transparent, darkIcons = isDark)
-    }
+    viewmodel.getRecipe(id!!)
+    viewmodel.checkFavorite(id)
 
     FoodiesTheme {
+
+        val isDark = colors.isLight
+        val color = colors.background
+        val systemUiController = rememberSystemUiController()
+        SideEffect {
+            systemUiController.setSystemBarsColor(color = color, darkIcons = isDark)
+        }
+
         val recipe by viewmodel.recipe.observeAsState()
         val favorite by viewmodel.favorite.observeAsState()
         val equipment by viewmodel.equipment.observeAsState()
         val ingredients by viewmodel.ingredients.observeAsState()
         val height = LocalConfiguration.current.screenHeightDp
 
-        id?.let {
-            viewmodel.getRecipe(it)
-            viewmodel.checkFavorite(it)
-        }
+        // loading animation
+        val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.ingredients))
 
-        ingredients?.let{
-            val painter = rememberImagePainter(data = recipe!!.image, builder = { crossfade(true) })
-            val bottomSheet = rememberBottomSheetScaffoldState(bottomSheetState = rememberBottomSheetState(Collapsed))
+        Surface(color = colors.background){
+            if (recipe == null){
+                CenterColumn {
+                    Text(
+                        text = "Getting the recipe...",
+                        style = typography.body1.copy(color = colors.onSurface)
+                    )
+                    TinySpacing()
+                    LottieAnimation(
+                        composition = composition,
+                        iterations = Int.MAX_VALUE,
+                        modifier = Modifier.size(250.dp)
+                    )
+                }
+            } else {
+                ingredients?.let{
+                    val painter = rememberImagePainter(data = recipe!!.image, builder = { crossfade(true) })
+                    val bottomSheet = rememberBottomSheetScaffoldState(bottomSheetState = rememberBottomSheetState(Collapsed))
 
-            val progress = bottomSheet.bottomSheetState.progress.fraction
-            val targetValue = bottomSheet.bottomSheetState.targetValue
-            val currentValue = bottomSheet.bottomSheetState.currentValue
+                    val progress = bottomSheet.bottomSheetState.progress.fraction
+                    val targetValue = bottomSheet.bottomSheetState.targetValue
+                    val currentValue = bottomSheet.bottomSheetState.currentValue
 
-            val fraction =  when {
-                currentValue == Collapsed && targetValue == Collapsed -> 0f
-                currentValue == Expanded && targetValue == Expanded -> 1f
-                currentValue == Collapsed && targetValue == Expanded -> progress
-                else -> 1f - progress
-            }
+                    val fraction =  when {
+                        currentValue == Collapsed && targetValue == Collapsed -> 0f
+                        currentValue == Expanded && targetValue == Expanded -> 1f
+                        currentValue == Collapsed && targetValue == Expanded -> progress
+                        else -> 1f - progress
+                    }
 
-            val topPadding = (height * .3).dp
-            val sheetHeight = (height * .7).dp
-            val imageHeight = (height * ((1f - fraction) * .4)).dp
+                    val topPadding = (height * .3).dp
+                    val sheetHeight = (height * .7).dp
+                    val imageHeight = (height * ((1f - fraction) * .4)).dp
 
-            val buttonColor = Color.Gray.copy(alpha = .8f)
-            val icon = if (favorite!!) R.drawable.ic_favorites_filled else R.drawable.ic_favorites
+                    val buttonColor = Color.Gray.copy(alpha = .8f)
+                    val icon = if (favorite!!) R.drawable.ic_favorites_filled else R.drawable.ic_favorites
 
-            ProvideWindowInsets {
-                BottomSheetScaffold(
-                    scaffoldState = bottomSheet,
-                    sheetPeekHeight = sheetHeight,
-                    sheetBackgroundColor = colors.background,
-                    sheetShape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
-                    sheetContent = { Details(fraction, recipe!!, ingredients!!, equipment!!){
-                        viewmodel.setChef(recipe!!.user)
-                        controller.navigate("/chef/local")
-                    } },
-                ) {
-                    Surface(color = colors.background) {
-                        Box(modifier = Modifier.fillMaxHeight()) {
-                            Image(
-                                painter = painter,
-                                contentScale = ContentScale.Crop,
-                                contentDescription = "${recipe!!.name} image",
-                                modifier = Modifier.animateContentSize().fillMaxWidth().height(height = imageHeight),
-                            )
-                            Row(
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                modifier = Modifier.align(Alignment.TopCenter).fillMaxWidth().systemBarsPadding()
-                            ) {
-                                Box(modifier = Modifier.padding(10.dp).clip(shapes.large).background(buttonColor).clickable { controller.popBackStack() }) {
-                                    Icon(
-                                        modifier = Modifier.size(30.dp).padding(5.dp),
-                                        painter = painterResource(id = R.drawable.ic_back),
-                                        contentDescription = "back icon",
-                                        tint = Color.White,
+                    ProvideWindowInsets {
+                        BottomSheetScaffold(
+                            scaffoldState = bottomSheet,
+                            sheetPeekHeight = sheetHeight,
+                            sheetBackgroundColor = colors.background,
+                            sheetShape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
+                            sheetContent = { Details(fraction, recipe!!, ingredients!!, equipment!!){
+                                viewmodel.setChef(recipe!!.user)
+                                controller.navigate("/chef/local")
+                            } },
+                        ) {
+                            Surface(color = colors.background) {
+                                Box(modifier = Modifier.fillMaxHeight()) {
+                                    Image(
+                                        painter = painter,
+                                        contentScale = ContentScale.Crop,
+                                        contentDescription = "${recipe!!.name} image",
+                                        modifier = Modifier.animateContentSize().fillMaxWidth().height(height = imageHeight),
                                     )
-                                }
+                                    Row(
+                                        horizontalArrangement = Arrangement.SpaceBetween,
+                                        modifier = Modifier.align(Alignment.TopCenter).fillMaxWidth().systemBarsPadding()
+                                    ) {
+                                        Box(modifier = Modifier.padding(10.dp).clip(shapes.large).background(buttonColor).clickable { controller.popBackStack() }) {
+                                            Icon(
+                                                modifier = Modifier.size(30.dp).padding(5.dp),
+                                                painter = painterResource(id = R.drawable.ic_back),
+                                                contentDescription = "back icon",
+                                                tint = Color.White,
+                                            )
+                                        }
 
-                                if (recipe!!.type != "PERSONAL")
-                                    Box(modifier = Modifier.padding(10.dp).clip(shapes.large).background(buttonColor).clickable { viewmodel.toggleFavorite() }) {
-                                        Icon(
-                                            modifier = Modifier.size(30.dp).padding(7.dp),
-                                            painter = painterResource(id = icon),
-                                            contentDescription = "favorites icon",
-                                            tint = Color.White,
-                                        )
-                                }
-                            }
+                                        if (recipe!!.type != "PERSONAL")
+                                            Box(modifier = Modifier.padding(10.dp).clip(shapes.large).background(buttonColor).clickable { viewmodel.toggleFavorite() }) {
+                                                Icon(
+                                                    modifier = Modifier.size(30.dp).padding(7.dp),
+                                                    painter = painterResource(id = icon),
+                                                    contentDescription = "favorites icon",
+                                                    tint = Color.White,
+                                                )
+                                            }
+                                    }
 
-                            Box(modifier = Modifier.align(Alignment.TopEnd).padding(top = topPadding, end = 10.dp).clip(shapes.large).background(buttonColor)){
-                                Row(modifier = Modifier.padding(5.dp), verticalAlignment = CenterVertically) {
-                                    TinySpacing()
-                                    Icon(
-                                        tint = Color.White,
-                                        contentDescription = "time",
-                                        modifier = Modifier.size(20.dp),
-                                        painter = painterResource(id = R.drawable.ic_clock),
-                                    )
-                                    TinySpacing()
-                                    Text(recipe!!.time, style = typography.body1.copy(color = Color.White))
-                                    TinySpacing()
+                                    Box(modifier = Modifier.align(Alignment.TopEnd).padding(top = topPadding, end = 10.dp).clip(shapes.large).background(buttonColor)){
+                                        Row(modifier = Modifier.padding(5.dp), verticalAlignment = CenterVertically) {
+                                            TinySpacing()
+                                            Icon(
+                                                tint = Color.White,
+                                                contentDescription = "time",
+                                                modifier = Modifier.size(20.dp),
+                                                painter = painterResource(id = R.drawable.ic_clock),
+                                            )
+                                            TinySpacing()
+                                            Text(recipe!!.time, style = typography.body1.copy(color = Color.White))
+                                            TinySpacing()
+                                        }
+                                    }
                                 }
                             }
                         }

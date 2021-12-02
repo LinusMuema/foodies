@@ -12,7 +12,7 @@ interface UserDao {
     fun getProfile(): Flow<Profile>
 
     @Query("select * from profile where _id = :id limit 1")
-    fun getChef(id: String): Flow<Profile?>
+    fun getChef(id: String): Profile?
 
     @Query("select * from profile where current = 0")
     fun getChefs(): Flow<List<Profile>>

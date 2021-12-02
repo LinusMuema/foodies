@@ -27,7 +27,7 @@ interface ItemsDao {
     fun getFeedRecipes(): Flow<List<Recipe>>
 
     @Query("select * from recipe where _id = :id limit 1")
-    suspend fun getRecipeById(id: String): Recipe
+    suspend fun getRecipeById(id: String): Recipe?
 
     @Query("select * from recipe where _id = :id and type = 'FAVORITE' limit 1")
     suspend fun getFavoriteById(id: String): Recipe?

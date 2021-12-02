@@ -29,7 +29,7 @@ class RecipeRepositoryImpl @Inject constructor(val api: ApiEndpoints, val itemsD
     }
 
     override suspend fun getRecipe(id: String): Recipe {
-        return itemsDao.getRecipeById(id)
+        return itemsDao.getRecipeById(id) ?: api.getRecipeById(id)
     }
 
     override suspend fun getFavorite(id: String): Recipe? {

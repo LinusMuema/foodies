@@ -23,7 +23,7 @@ class ChefRepositoryImpl @Inject constructor(val userDao: UserDao, val api: ApiE
     }
 
     override suspend fun fetchNetChef(id: String): Profile {
-        return userDao.getChef(id).first() ?: api.getChef(id)
+        return userDao.getChef(id) ?: api.getChef(id)
     }
 
     override suspend fun getChefRecipes(id: String): List<Recipe> {

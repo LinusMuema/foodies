@@ -9,6 +9,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
@@ -32,6 +33,7 @@ import java.util.*
 import javax.inject.Inject
 import kotlin.concurrent.timerTask
 
+@ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @AndroidEntryPoint
 @ExperimentalPagerApi

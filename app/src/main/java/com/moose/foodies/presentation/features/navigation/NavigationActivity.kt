@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.core.view.WindowCompat
@@ -20,6 +21,7 @@ import com.moose.foodies.presentation.features.chef.Chef
 import com.moose.foodies.presentation.features.recipe.Recipe
 import dagger.hilt.android.AndroidEntryPoint
 
+@ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @AndroidEntryPoint
 @ExperimentalCoilApi
