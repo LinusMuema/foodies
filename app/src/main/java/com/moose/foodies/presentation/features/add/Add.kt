@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -30,10 +31,8 @@ import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.accompanist.flowlayout.FlowRow
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.systemBarsPadding
+import com.moose.foodies.R
 import com.moose.foodies.presentation.components.*
-import com.moose.foodies.presentation.features.add.Categories
-import com.moose.foodies.presentation.features.add.ImageUpload
-import com.moose.foodies.presentation.features.add.Items
 import com.moose.foodies.domain.models.Item
 import com.moose.foodies.domain.models.RawRecipe
 import com.moose.foodies.presentation.theme.FoodiesTheme
@@ -42,7 +41,7 @@ import com.moose.foodies.util.*
 
 
 @Composable
-fun Add(navController: NavController) {
+fun Add(controller: NavController) {
     val viewmodel: AddViewmodel = hiltViewModel()
     val path by viewmodel.path.observeAsState()
     val context = LocalContext.current
@@ -63,7 +62,7 @@ fun Add(navController: NavController) {
 
     val result by viewmodel.result.observeAsState()
     result?.let {
-        it.onSuccess { navController.navigateUp() }
+        it.onSuccess { controller.navigateUp() }
         it.onError { error -> context.toast(error) }
     }
 
@@ -106,6 +105,14 @@ fun Add(navController: NavController) {
             ProvideWindowInsets {
                 Scaffold(modifier = Modifier.systemBarsPadding()) {
                     Column(modifier = Modifier.padding(10.dp).verticalScroll(rememberScrollState())) {
+                        TinySpacing()
+                        IconButton(onClick = { controller.popBackStack() }) {
+                            Icon(
+                                modifier = Modifier.size(30.dp).padding(5.dp),
+                                painter = painterResource(id = R.drawable.ic_back),
+                                contentDescription = "back icon",
+                            )
+                        }
                         SmallSpacing()
                         Text(
                             text = "Upload a new recipe",

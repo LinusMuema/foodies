@@ -38,7 +38,16 @@
 
         <activity
             android:name="com.moose.foodies.presentation.features.navigation.NavigationActivity"
-            android:exported="true" />
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="http" android:host="foodies.moose.ac" />
+            </intent-filter>
+
+        </activity>
         <activity
             android:name="com.moose.foodies.presentation.features.auth.AuthActivity"
             android:exported="true" />

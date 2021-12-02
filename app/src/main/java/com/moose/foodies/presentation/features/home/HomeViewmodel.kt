@@ -45,4 +45,6 @@ class HomeViewmodel @Inject constructor(val repository: HomeRepository): ViewMod
             _refreshing.value = false
         }
     }
+
+    fun setChef(chef: Profile) = repository.setChef(chef)
 }

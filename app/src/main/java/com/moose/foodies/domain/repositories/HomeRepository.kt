@@ -5,6 +5,7 @@ import com.moose.foodies.data.local.UserDao
 import com.moose.foodies.data.remote.ApiEndpoints
 import com.moose.foodies.domain.models.Profile
 import com.moose.foodies.domain.models.Recipe
+import com.moose.foodies.util.Preferences
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -19,9 +20,11 @@ interface HomeRepository {
     val chefs: Flow<List<Profile>>
 
     suspend fun fetchData()
+
+    fun setChef(chef: Profile)
 }
 
-class HomeRepositoryImpl @Inject constructor(val api: ApiEndpoints, val userDao: UserDao, val itemsDao: ItemsDao): HomeRepository {
+class HomeRepositoryImpl @Inject constructor(val api: ApiEndpoints, val userDao: UserDao, val itemsDao: ItemsDao, val preferences: Preferences): HomeRepository {
     override val chefs: Flow<List<Profile>>
         get() = userDao.getChefs()
 
@@ -38,5 +41,9 @@ class HomeRepositoryImpl @Inject constructor(val api: ApiEndpoints, val userDao:
 
         userDao.updateChefs(id, chefs)
         itemsDao.updateFeedRecipes(feed)
+    }
+
+    override fun setChef(chef: Profile) {
+        preferences.setChef(chef)
     }
 }

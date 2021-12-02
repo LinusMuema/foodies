@@ -26,9 +26,12 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.moose.foodies.presentation.features.explore.Explore
 import com.moose.foodies.presentation.features.fridge.Fridge
 import com.moose.foodies.presentation.features.home.Home
-import com.moose.foodies.presentation.features.navigation.Screen.*
 import com.moose.foodies.presentation.features.profile.Profile
 import com.moose.foodies.presentation.theme.FoodiesTheme
+import com.moose.foodies.presentation.features.navigation.Screen.Home
+import com.moose.foodies.presentation.features.navigation.Screen.Fridge
+import com.moose.foodies.presentation.features.navigation.Screen.Explore
+import com.moose.foodies.presentation.features.navigation.Screen.Profile
 
 @Composable
 @ExperimentalCoilApi

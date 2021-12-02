@@ -3,10 +3,14 @@ package com.moose.foodies.util
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import com.moose.foodies.domain.models.Profile
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 @EntryPoint
@@ -17,6 +21,7 @@ interface PreferencesHelper {
 
 class Preferences @Inject constructor(@ApplicationContext context: Context) {
 
+    private val chefKey = "CHEF_KEY"
     private val updateKey = "UPDATE_KEY"
     private val tokenKey = "ACCESS_TOKEN"
     private val preferences = context.getSharedPreferences("FOODIES_PREFS", Context.MODE_PRIVATE)
@@ -28,6 +33,10 @@ class Preferences @Inject constructor(@ApplicationContext context: Context) {
     fun getUpdate() = preferences.getString(updateKey, null)
 
     fun setUpdate(update: String?) = preferences.set(updateKey, update)
+
+    fun getChef(): Profile = Json.decodeFromString(preferences.getString(chefKey, "")!!)
+
+    fun setChef(chef: Profile) = preferences.set(chefKey, Json.encodeToString(chef))
 
     operator fun SharedPreferences.set(key: String, value: Any?){
         when (value) {

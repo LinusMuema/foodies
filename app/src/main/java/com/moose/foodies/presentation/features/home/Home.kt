@@ -120,7 +120,10 @@ fun Home(controller: NavController){
                                         builder = { transformations(CircleCropTransformation()) }
                                     ),
                                     contentDescription = "${it.username} avatar",
-                                    modifier = Modifier.size(75.dp).clip(shapes.large).clickable { }
+                                    modifier = Modifier.size(75.dp).clip(shapes.large).clickable {
+                                        viewmodel.setChef(it)
+                                        controller.navigate("/chef/local")
+                                    }
                                 )
                                 TinySpacing()
                                 Text(it.username, style = typography.body1)
