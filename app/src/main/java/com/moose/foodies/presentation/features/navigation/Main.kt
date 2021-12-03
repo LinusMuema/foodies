@@ -88,7 +88,7 @@ fun Main(mainController: NavHostController) {
                     NavHost(navController, startDestination = Home.route, Modifier.padding(it)) {
                         composable(Home.route) { Home(mainController) }
                         composable(Fridge.route) { Fridge() }
-                        composable(Explore.route) { Explore() }
+                        composable(Explore.route) { Explore(mainController) }
                         composable(Profile.route) { Profile(mainController) }
                     }
                 }

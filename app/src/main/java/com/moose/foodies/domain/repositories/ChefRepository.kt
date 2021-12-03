@@ -9,25 +9,19 @@ import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 interface ChefRepository {
-    suspend fun getPrefsChef(): Profile
 
-    suspend fun fetchNetChef(id: String): Profile
+    suspend fun getChef(id: String): Profile
 
     suspend fun getChefRecipes(id: String): List<Recipe>
 }
 
 class ChefRepositoryImpl @Inject constructor(val userDao: UserDao, val api: ApiEndpoints, val preferences: Preferences): ChefRepository {
 
-    override suspend fun getPrefsChef(): Profile {
-        return preferences.getChef()
-    }
-
-    override suspend fun fetchNetChef(id: String): Profile {
+    override suspend fun getChef(id: String): Profile {
         return userDao.getChef(id) ?: api.getChef(id)
     }
 
     override suspend fun getChefRecipes(id: String): List<Recipe> {
         return api.getUserRecipes(id)
     }
-
 }

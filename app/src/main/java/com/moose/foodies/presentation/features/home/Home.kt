@@ -119,8 +119,7 @@ fun Home(controller: NavController){
                                 ),
                                 contentDescription = "${it.username} avatar",
                                 modifier = Modifier.size(75.dp).clip(shapes.large).clickable {
-                                    viewmodel.setChef(it)
-                                    controller.navigate("/chef/local")
+                                    controller.navigate("/chef/${it._id}")
                                 }
                             )
                             TinySpacing()
@@ -128,8 +127,7 @@ fun Home(controller: NavController){
                         }
                     }
                 }
-
-
+                
                 SmallSpacing()
                 Text(
                     text = "Recipes",

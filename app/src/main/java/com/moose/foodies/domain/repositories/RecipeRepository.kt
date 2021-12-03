@@ -9,8 +9,6 @@ import com.moose.foodies.util.Preferences
 import javax.inject.Inject
 
 interface RecipeRepository {
-    fun setChef(chef: Profile)
-
     suspend fun getItem(id: String): Item
 
     suspend fun getRecipe(id: String): Recipe
@@ -21,8 +19,6 @@ interface RecipeRepository {
 }
 
 class RecipeRepositoryImpl @Inject constructor(val api: ApiEndpoints, val itemsDao: ItemsDao, val preferences: Preferences): RecipeRepository {
-
-    override fun setChef(chef: Profile) = preferences.setChef(chef)
 
     override suspend fun getItem(id: String): Item {
         return itemsDao.getItemById(id)

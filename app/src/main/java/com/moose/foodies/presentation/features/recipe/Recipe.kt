@@ -52,10 +52,9 @@ fun Recipe(id: String?, controller: NavHostController) {
     FoodiesTheme {
 
         val isDark = colors.isLight
-        val color = colors.background
         val systemUiController = rememberSystemUiController()
         SideEffect {
-            systemUiController.setSystemBarsColor(color = color, darkIcons = isDark)
+            systemUiController.setSystemBarsColor(color = Transparent, darkIcons = isDark)
         }
 
         val recipe by viewmodel.recipe.observeAsState()
@@ -111,9 +110,8 @@ fun Recipe(id: String?, controller: NavHostController) {
                             sheetBackgroundColor = colors.background,
                             sheetShape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
                             sheetContent = { Details(fraction, recipe!!, ingredients!!, equipment!!){
-                                viewmodel.setChef(recipe!!.user)
-                                controller.navigate("/chef/local")
-                            } },
+                                controller.navigate("/chef/${recipe!!.user._id}")
+                            }},
                         ) {
                             Surface(color = colors.background) {
                                 Box(modifier = Modifier.fillMaxHeight()) {

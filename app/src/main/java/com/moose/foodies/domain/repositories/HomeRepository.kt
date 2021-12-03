@@ -20,8 +20,6 @@ interface HomeRepository {
     val chefs: Flow<List<Profile>>
 
     suspend fun fetchData()
-
-    fun setChef(chef: Profile)
 }
 
 class HomeRepositoryImpl @Inject constructor(val api: ApiEndpoints, val userDao: UserDao, val itemsDao: ItemsDao, val preferences: Preferences): HomeRepository {
@@ -41,9 +39,5 @@ class HomeRepositoryImpl @Inject constructor(val api: ApiEndpoints, val userDao:
 
         userDao.updateChefs(id, chefs)
         itemsDao.updateFeedRecipes(feed)
-    }
-
-    override fun setChef(chef: Profile) {
-        preferences.setChef(chef)
     }
 }

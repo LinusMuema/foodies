@@ -25,9 +25,6 @@ class RecipeViewmodel @Inject constructor(val repository: RecipeRepository): Vie
     private val _equipment: MutableLiveData<List<Item>> = MutableLiveData()
     val equipment: LiveData<List<Item>> = _equipment
 
-
-    fun setChef(user: Profile) = repository.setChef(user)
-
     fun checkFavorite(id: String){
         viewModelScope.launch {
             val favorite = repository.getFavorite(id)

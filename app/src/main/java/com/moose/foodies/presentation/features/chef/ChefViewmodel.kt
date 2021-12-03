@@ -22,13 +22,8 @@ class ChefViewmodel @Inject constructor(val repository: ChefRepository): ViewMod
 
     fun getChef(id: String?) {
         viewModelScope.launch {
-            if (id == "local"){
-                _chef.value = repository.getPrefsChef()
-                getRecipes(_chef.value!!._id)
-            } else {
-                getRecipes(id!!)
-                _chef.value = repository.fetchNetChef(id)
-            }
+            getRecipes(id!!)
+            _chef.value = repository.getChef(id)
         }
     }
 

@@ -45,9 +45,7 @@ fun RecipeCard(controller: NavController, recipe: Recipe) {
     val gradient = Brush.verticalGradient(colors = colors)
 
     Box(modifier = Modifier.padding(start = 10.dp, end = 10.dp)){
-        Card(modifier = Modifier
-            .width(300.dp)
-            .height(175.dp), elevation = 5.dp) {
+        Card(modifier = Modifier.width(300.dp).height(175.dp), elevation = 5.dp) {
             Image(
                 modifier = Modifier.fillMaxWidth(),
                 contentScale = Crop,
@@ -80,8 +78,7 @@ fun RecipeCard(controller: NavController, recipe: Recipe) {
                         }
                         Box(modifier = Modifier.clip(shapes.large).background(White).padding(2.5.dp)
                             .clickable {
-                                viewmodel.setChef(recipe.user)
-                                controller.navigate("/chef/local")
+                                controller.navigate("/chef/${recipe.user._id}")
                             }){
                             Image(
                                 painter = rememberImagePainter(
