@@ -6,7 +6,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.moose.foodies.data.local.ItemsDao
-import com.moose.foodies.data.remote.ApiEndpoints
+import com.moose.foodies.data.remote.RecipesService
 import com.moose.foodies.util.Preferences
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -16,7 +16,6 @@ import java.util.*
 @HiltWorker
 class ItemWorker @AssistedInject constructor(
     private val dao: ItemsDao,
-    private val api: ApiEndpoints,
     @Assisted appContext: Context,
     @Assisted params: WorkerParameters,
     private val preferences: Preferences,
@@ -28,7 +27,7 @@ class ItemWorker @AssistedInject constructor(
             val time = SimpleDateFormat("hh:mm:ss", Locale.UK).format(Date())
             val date = SimpleDateFormat("yyyy-MM-dd", Locale.UK).format(Date())
 
-            dao.addItems(api.getItems(update))
+            dao.addItems(RecipesService.getItems(update))
             preferences.setUpdate("${date}T$time")
 
             Result.success(workDataOf("status" to "success"))

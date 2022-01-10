@@ -2,14 +2,11 @@ package com.moose.foodies.domain.repositories
 
 import com.moose.foodies.data.local.ItemsDao
 import com.moose.foodies.data.local.UserDao
-import com.moose.foodies.data.remote.ApiEndpoints
+import com.moose.foodies.data.remote.RecipesService
+import com.moose.foodies.data.remote.UsersService
 import com.moose.foodies.domain.models.Profile
 import com.moose.foodies.domain.models.Recipe
 import com.moose.foodies.util.Preferences
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
@@ -22,7 +19,7 @@ interface HomeRepository {
     suspend fun fetchData()
 }
 
-class HomeRepositoryImpl @Inject constructor(val api: ApiEndpoints, val userDao: UserDao, val itemsDao: ItemsDao, val preferences: Preferences): HomeRepository {
+class HomeRepositoryImpl @Inject constructor(val userDao: UserDao, val itemsDao: ItemsDao, val preferences: Preferences): HomeRepository {
     override val chefs: Flow<List<Profile>>
         get() = userDao.getChefs()
 
@@ -33,9 +30,9 @@ class HomeRepositoryImpl @Inject constructor(val api: ApiEndpoints, val userDao:
         get() = itemsDao.getFeedRecipes()
 
     override suspend fun fetchData() {
-        val feed = api.getFeed()
-        val chefs = api.getChefs()
         val id = profile.first()._id
+        val feed = RecipesService.getFeed()
+        val chefs = UsersService.discoverUsers()
 
         userDao.updateChefs(id, chefs)
         itemsDao.updateFeedRecipes(feed)

@@ -4,16 +4,12 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import com.moose.foodies.data.local.ItemsDao
 import com.moose.foodies.data.local.UserDao
-import com.moose.foodies.data.remote.ApiEndpoints
+import com.moose.foodies.data.remote.UsersService
 import com.moose.foodies.domain.models.Profile
 import com.moose.foodies.domain.models.Recipe
 import com.moose.foodies.util.Cloudinary
 import com.moose.foodies.util.Preferences
 import com.moose.foodies.util.UploadState
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -33,7 +29,7 @@ interface ProfileRepository {
     suspend fun uploadImage(dir: String, path: Uri)
 }
 
-class ProfileRepositoryImpl @Inject constructor(val userDao: UserDao, val itemsDao: ItemsDao, val api: ApiEndpoints, val cloudinary: Cloudinary, val preferences: Preferences): ProfileRepository {
+class ProfileRepositoryImpl @Inject constructor(val userDao: UserDao, val itemsDao: ItemsDao, val cloudinary: Cloudinary, val preferences: Preferences): ProfileRepository {
 
     override val profile: Flow<Profile>
         get() = userDao.getProfile()
@@ -55,7 +51,7 @@ class ProfileRepositoryImpl @Inject constructor(val userDao: UserDao, val itemsD
     }
 
     override suspend fun updateProfile(profile: Profile) {
-        val update = api.updateProfile(profile)
+        val update = UsersService.updateProfile(profile)
         userDao.addProfile(update.copy(current = true))
     }
 

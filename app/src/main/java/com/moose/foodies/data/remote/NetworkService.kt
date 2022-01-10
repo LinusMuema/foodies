@@ -42,41 +42,17 @@ interface ClientHelper {
 @InstallIn(SingletonComponent::class)
 object NetworkService {
 
-    private const val baseUrl = "http://foodies.moose.ac/"
-
-    private val level = HttpLoggingInterceptor.Level.BODY
-    private val interceptor = HttpLoggingInterceptor().setLevel(level)
-
-    private val serializer = json { ignoreUnknownKeys = true }
-    private val converter = serializer.asConverterFactory("application/json".toMediaType())
-
-
-    private val client = OkHttpClient.Builder()
-        .addInterceptor(Authenticator)
-        .addInterceptor(interceptor)
-        .build()
-
-    private val retrofit = Retrofit.Builder()
-        .addConverterFactory(converter)
-        .baseUrl(baseUrl)
-        .client(client)
-        .build()
-
     @Provides
-    @Singleton
-    fun provideApi(): ApiEndpoints {
-        return retrofit.create(ApiEndpoints::class.java)
-    }
-
-    @Provides
-    @Singleton
     fun provideClient(preferences: Preferences): HttpClient {
-        val token = preferences.getToken()
         return HttpClient(Android) {
+
+            // logging settings
             install(Logging) {
                 level = LogLevel.ALL
                 logger = Logger.DEFAULT
             }
+
+            // serialization using kotlinx.serialization
             install(JsonFeature) {
                 serializer = KotlinxSerializer(json {
                     isLenient = true
@@ -84,22 +60,39 @@ object NetworkService {
                     ignoreUnknownKeys = true
                 })
             }
+
+            // Bearer tokens settings
             install(Auth){
                 bearer {
                     loadTokens {
-                        BearerTokens(accessToken = token?: "", refreshToken = "")
+                        BearerTokens(
+                            refreshToken = "",
+                            accessToken = preferences.getToken() ?: ""
+                        )
                     }
                 }
             }
+
+            // set basic json headers
             defaultRequest {
                 if (method != HttpMethod.Get) contentType(ContentType.Application.Json)
                 accept(ContentType.Application.Json)
             }
+
+            // parse the errors from server
             HttpResponseValidator {
                 handleResponseException {
-                    if (it !is ClientRequestException) return@handleResponseException
-                    val error: ApiError = json.decodeFromString(it.response.readText())
-                    throw Exception(error.message)
+                    when(it){
+                        is ClientRequestException -> {
+                            val error: ApiError = json.decodeFromString(it.response.readText())
+                            throw Exception(error.message)
+                        }
+                        is ServerResponseException -> {
+                            val error: ApiError = json.decodeFromString(it.response.readText())
+                            throw Exception(error.message)
+                        }
+                        else -> return@handleResponseException
+                    }
                 }
             }
         }
