@@ -1,5 +1,6 @@
 package com.moose.foodies.presentation.features.auth
 
+import android.util.Log
 import com.moose.foodies.util.Result
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.work.*
 import com.moose.foodies.FoodiesApplication
+import com.moose.foodies.data.remote.AuthService
 import com.moose.foodies.domain.models.Auth
 import com.moose.foodies.domain.models.Credentials
 import com.moose.foodies.domain.repositories.AuthRepository
@@ -34,6 +36,7 @@ class AuthViewmodel @Inject constructor(private val repository: AuthRepository) 
     val result: LiveData<Result<Auth>> = _result
 
     private val handler = CoroutineExceptionHandler { _, exception ->
+        Log.e("Auth", "Error : $exception")
         _loading.value = false
         _result.value = Result.Error(exception.parse())
     }

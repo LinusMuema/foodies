@@ -2,6 +2,7 @@ package com.moose.foodies.domain.repositories
 
 import com.moose.foodies.data.local.UserDao
 import com.moose.foodies.data.remote.ApiEndpoints
+import com.moose.foodies.data.remote.AuthService
 import com.moose.foodies.domain.models.Auth
 import com.moose.foodies.domain.models.Credentials
 import com.moose.foodies.util.Preferences
@@ -20,16 +21,16 @@ interface AuthRepository {
 
     suspend fun signup(credentials: Credentials): Auth
 
-    suspend fun forgot(email: String): ResponseBody
+    suspend fun forgot(email: String): Any
 }
 
 class AuthRepositoryImpl @Inject constructor(val userDao: UserDao, val preferences: Preferences, val apiEndpoints: ApiEndpoints): AuthRepository {
     override fun setToken(token: String) = preferences.setToken(token)
 
-    override suspend fun forgot(email: String) = apiEndpoints.forgot(email)
+    override suspend fun forgot(email: String) = AuthService.forgot(email)
 
     override suspend fun login(credentials: Credentials): Auth {
-        val result = apiEndpoints.login(credentials)
+        val result = AuthService.login(credentials)
 
         preferences.setToken(result.token)
         userDao.addProfile(result.user.copy(current = true))
@@ -38,7 +39,7 @@ class AuthRepositoryImpl @Inject constructor(val userDao: UserDao, val preferenc
     }
 
     override suspend fun signup(credentials: Credentials): Auth {
-        val result = apiEndpoints.signup(credentials)
+        val result = AuthService.signup(credentials)
 
         userDao.addProfile(result.user)
         preferences.setToken(result.token)

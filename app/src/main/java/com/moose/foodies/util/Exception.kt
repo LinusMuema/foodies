@@ -1,5 +1,11 @@
 package com.moose.foodies.util
 
+import android.util.Log
+import io.ktor.client.call.*
+import io.ktor.client.features.*
+import io.ktor.client.statement.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
@@ -13,11 +19,6 @@ data class ApiError(val message: String)
 
 fun Throwable.parse(): String {
     return when (this){
-        is HttpException -> {
-            val body = this.response()!!.errorBody()!!.string()
-            val error: ApiError = Json.decodeFromString(body)
-            return error.message
-        }
         is SocketTimeoutException -> "Connection timed out"
         is IOException -> "No connection available"
         else -> this.message!!
