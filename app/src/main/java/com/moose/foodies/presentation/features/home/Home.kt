@@ -1,22 +1,25 @@
 package com.moose.foodies.presentation.features.home
 
-import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.*
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.MaterialTheme.shapes
 import androidx.compose.material.MaterialTheme.typography
+import androidx.compose.material.Tab
+import androidx.compose.material.TabRow
+import androidx.compose.material.TabRowDefaults
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.Start
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -31,13 +34,17 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
+import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.moose.foodies.R
 import com.moose.foodies.presentation.components.CenterColumn
+import com.moose.foodies.presentation.components.ScrollableColumn
 import com.moose.foodies.presentation.components.SmallSpacing
 import com.moose.foodies.presentation.components.TinySpacing
 import com.moose.foodies.util.customTabIndicatorOffset
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+
 
 @Composable
 @ExperimentalCoilApi
@@ -50,6 +57,14 @@ fun Home(controller: NavController){
     val profile by viewmodel.profile.observeAsState()
     val refreshing by viewmodel.refreshing.observeAsState()
 
+    var counter by remember { mutableStateOf(0) }
+    LaunchedEffect(Unit) {
+        (0..5).map {
+            counter = it
+            delay(1000)
+        }
+    }
+
     val coroutineScope = rememberCoroutineScope()
 
     val height = LocalConfiguration.current.screenHeightDp
@@ -61,41 +76,21 @@ fun Home(controller: NavController){
     SwipeRefresh(
         state =  rememberSwipeRefreshState(refreshing!!),
         onRefresh = { viewmodel.refresh() },
-        indicator = { state, trigger ->
-            SwipeRefreshIndicator(
-                scale = true,
-                state = state,
-                contentColor = colors.primary,
-                refreshTriggerDistance = trigger,
-                backgroundColor = colors.background,
-            )
-        }
+        indicator = { state, trigger -> Indicator(state, trigger)}
     ) {
-        Column(modifier = Modifier.animateContentSize().verticalScroll(rememberScrollState())) {
+        ScrollableColumn {
             SmallSpacing()
             profile?.let { Header(profile = it) }
             SmallSpacing()
 
-            if (recipes.isNullOrEmpty()){
-                CenterColumn(modifier = Modifier.height(container)){
-                    Text(
-                        text = "Getting you some recipes...",
-                        style = com.moose.foodies.presentation.theme.typography.body1.copy(color = colors.onSurface)
-                    )
-                    TinySpacing()
-                    LottieAnimation(
-                        composition = composition,
-                        iterations = Int.MAX_VALUE,
-                        modifier = Modifier.size(250.dp)
-                    )
-                }
-            } else {
+
+            if (counter >= 5 && !recipes.isNullOrEmpty()) {
                 val highlights = recipes!!.filter { recipe -> recipe.type == viewmodel.type }
-                val highlightState = rememberPagerState(pageCount = highlights.size,  initialOffscreenLimit = 2)
+                val highlightState = rememberPagerState(initialPage = 0)
                 HorizontalPager(
+                    count = highlights.size,
                     state = highlightState,
-                    horizontalAlignment = Start,
-                    modifier = Modifier.fillMaxWidth()
+                    contentPadding = PaddingValues(end = 125.dp),
                 ) {
                     RecipeCard(controller, highlights[it])
                 }
@@ -118,16 +113,19 @@ fun Home(controller: NavController){
                                     builder = { transformations(CircleCropTransformation()) }
                                 ),
                                 contentDescription = "${it.username} avatar",
-                                modifier = Modifier.size(75.dp).clip(shapes.large).clickable {
-                                    controller.navigate("/chef/${it._id}")
-                                }
+                                modifier = Modifier
+                                    .size(75.dp)
+                                    .clip(shapes.large)
+                                    .clickable {
+                                        controller.navigate("/chef/${it._id}")
+                                    }
                             )
                             TinySpacing()
                             Text(it.username, style = typography.body1)
                         }
                     }
                 }
-                
+
                 SmallSpacing()
                 Text(
                     text = "Recipes",
@@ -135,7 +133,7 @@ fun Home(controller: NavController){
                     style = typography.h5.copy(color = colors.primary)
                 )
 
-                val pagerState = rememberPagerState(pageCount = 4)
+                val pagerState = rememberPagerState(initialPage = 0)
                 val titles = mutableListOf("Breakfast", "Snacks", "Main", "Others")
                 titles.remove(viewmodel.type)
 
@@ -162,8 +160,34 @@ fun Home(controller: NavController){
                         }
                     }
                 }
+                TinySpacing()
                 RecipeItems(controller, items)
+                HorizontalPager(count = titles.size, state = pagerState){}
+            } else {
+                CenterColumn(modifier = Modifier.height(container)){
+                    Text(
+                        text = "Getting you some recipes...",
+                        style = typography.body1.copy(color = colors.onSurface)
+                    )
+                    TinySpacing()
+                    LottieAnimation(
+                        composition = composition,
+                        iterations = Int.MAX_VALUE,
+                        modifier = Modifier.size(250.dp)
+                    )
+                }
             }
         }
     }
+}
+
+@Composable
+fun Indicator(state: SwipeRefreshState, trigger: Dp) {
+    SwipeRefreshIndicator(
+        scale = true,
+        state = state,
+        contentColor = colors.primary,
+        refreshTriggerDistance = trigger,
+        backgroundColor = colors.background,
+    )
 }

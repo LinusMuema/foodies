@@ -42,7 +42,7 @@ fun Details(fraction: Float, recipe: Recipe, ingredients: List<Item>, equipment:
     val context = LocalContext.current
     val scroll = rememberScrollState()
     val coroutineScope = rememberCoroutineScope()
-    val pagerState = rememberPagerState(pageCount = 4)
+    val pagerState = rememberPagerState()
     val titles = listOf("Description", "Ingredients", "Equipment", "Steps")
 
     Column(modifier = Modifier.fillMaxSize().verticalScroll(state = scroll)) {
@@ -101,7 +101,7 @@ fun Details(fraction: Float, recipe: Recipe, ingredients: List<Item>, equipment:
                 }
             }
         }
-        HorizontalPager(state = pagerState, verticalAlignment = Alignment.Top) {
+        HorizontalPager(state = pagerState, verticalAlignment = Alignment.Top, count = 4) {
             Box(modifier = Modifier
                 .fillMaxWidth()
                 .padding(10.dp)) {

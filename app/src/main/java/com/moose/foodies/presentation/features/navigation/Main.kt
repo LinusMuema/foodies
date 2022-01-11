@@ -32,6 +32,7 @@ import com.moose.foodies.presentation.features.navigation.Screen.Home
 import com.moose.foodies.presentation.features.navigation.Screen.Fridge
 import com.moose.foodies.presentation.features.navigation.Screen.Explore
 import com.moose.foodies.presentation.features.navigation.Screen.Profile
+import dev.chrisbanes.snapper.ExperimentalSnapperApi
 
 @Composable
 @ExperimentalCoilApi

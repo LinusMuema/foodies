@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
 import com.github.dhaval2404.imagepicker.ImagePicker
@@ -46,6 +47,7 @@ import com.moose.foodies.util.UploadState.*
 import com.moose.foodies.util.getActivity
 import com.moose.foodies.util.toast
 
+@ExperimentalCoilApi
 @ExperimentalMaterialApi
 @Composable
 @ExperimentalPagerApi

@@ -44,58 +44,56 @@ fun RecipeCard(controller: NavController, recipe: Recipe) {
     val colors = listOf(Transparent, Transparent, Transparent, variant)
     val gradient = Brush.verticalGradient(colors = colors)
 
-    Box(modifier = Modifier.padding(start = 10.dp, end = 10.dp)){
-        Card(modifier = Modifier.width(300.dp).height(175.dp), elevation = 5.dp) {
-            Image(
-                modifier = Modifier.fillMaxWidth(),
-                contentScale = Crop,
-                painter = rememberImagePainter(data = recipe.image),
-                contentDescription = "${recipe.name} image"
-            )
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .background(brush = gradient)
-                .clickable { controller.navigate("/recipe/${recipe._id}") }
-                .padding(10.dp)){
-                Column(modifier = Modifier.fillMaxSize(), verticalArrangement = arrangement) {
-                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = arrangement) {
-                        Box(modifier = Modifier
-                            .clip(shapes.medium)
-                            .background(timeGray)
-                            .padding(5.dp)) {
-                            Row (verticalAlignment = Alignment.CenterVertically){
-                                TinySpacing()
-                                Icon(
-                                    tint = White,
-                                    contentDescription = "time",
-                                    modifier = Modifier.size(14.dp),
-                                    painter = painterResource(id = ic_clock)
-                                )
-                                TinySpacing()
-                                Text(recipe.time, style = typography.body2.copy(color = White))
-                                TinySpacing()
-                            }
-                        }
-                        Box(modifier = Modifier.clip(shapes.large).background(White).padding(2.5.dp)
-                            .clickable {
-                                controller.navigate("/chef/${recipe.user._id}")
-                            }){
-                            Image(
-                                painter = rememberImagePainter(
-                                    data = recipe.user.avatar,
-                                    builder = { transformations(CircleCropTransformation()) }
-                                ),
-                                contentDescription = "chef avatar",
-                                modifier = Modifier.size(35.dp)
+    Card(modifier = Modifier.width(300.dp).height(175.dp), elevation = 5.dp) {
+        Image(
+            modifier = Modifier.fillMaxWidth(),
+            contentScale = Crop,
+            painter = rememberImagePainter(data = recipe.image),
+            contentDescription = "${recipe.name} image"
+        )
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .background(brush = gradient)
+            .clickable { controller.navigate("/recipe/${recipe._id}") }
+            .padding(10.dp)){
+            Column(modifier = Modifier.fillMaxSize(), verticalArrangement = arrangement) {
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = arrangement) {
+                    Box(modifier = Modifier
+                        .clip(shapes.medium)
+                        .background(timeGray)
+                        .padding(5.dp)) {
+                        Row (verticalAlignment = Alignment.CenterVertically){
+                            TinySpacing()
+                            Icon(
+                                tint = White,
+                                contentDescription = "time",
+                                modifier = Modifier.size(14.dp),
+                                painter = painterResource(id = ic_clock)
                             )
+                            TinySpacing()
+                            Text(recipe.time, style = typography.body2.copy(color = White))
+                            TinySpacing()
                         }
                     }
-                    Text(
-                        text = recipe.name,
-                        style = typography.h6.copy(color = White),
-                        fontWeight = FontWeight.Medium
-                    )
+                    Box(modifier = Modifier.clip(shapes.large).background(White).padding(2.5.dp)
+                        .clickable {
+                            controller.navigate("/chef/${recipe.user._id}")
+                        }){
+                        Image(
+                            painter = rememberImagePainter(
+                                data = recipe.user.avatar,
+                                builder = { transformations(CircleCropTransformation()) }
+                            ),
+                            contentDescription = "chef avatar",
+                            modifier = Modifier.size(35.dp)
+                        )
+                    }
                 }
+                Text(
+                    text = recipe.name,
+                    style = typography.h6.copy(color = White),
+                    fontWeight = FontWeight.Medium
+                )
             }
         }
     }
