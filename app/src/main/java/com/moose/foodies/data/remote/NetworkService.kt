@@ -1,5 +1,6 @@
 package com.moose.foodies.data.remote
 
+import android.util.Log
 import com.moose.foodies.util.ApiError
 import com.moose.foodies.util.Preferences
 import dagger.Module
@@ -30,6 +31,13 @@ interface ClientHelper {
     fun client(): HttpClient
 }
 
+private object CustomLogger: Logger {
+    private const val tag = "FoodiesLog"
+    override fun log(message: String) {
+        Log.i(tag, message)
+    }
+}
+
 @Module
 @ExperimentalSerializationApi
 @InstallIn(SingletonComponent::class)
@@ -42,7 +50,7 @@ object NetworkService {
             // logging settings
             install(Logging) {
                 level = LogLevel.ALL
-                logger = Logger.DEFAULT
+                logger = CustomLogger
             }
 
             // serialization using kotlinx.serialization
