@@ -1,7 +1,5 @@
 package com.moose.foodies.data.remote
 
-import android.util.Log
-import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.moose.foodies.util.ApiError
 import com.moose.foodies.util.Preferences
 import dagger.Module
@@ -22,12 +20,7 @@ import io.ktor.client.statement.*
 import io.ktor.http.*
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
 import java.lang.Exception
-import javax.inject.Singleton
 import kotlinx.serialization.json.Json as json
 
 
