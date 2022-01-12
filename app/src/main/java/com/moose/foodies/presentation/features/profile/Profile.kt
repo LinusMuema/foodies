@@ -47,6 +47,7 @@ import com.moose.foodies.util.UploadState.*
 import com.moose.foodies.util.getActivity
 import com.moose.foodies.util.toast
 
+@ExperimentalFoundationApi
 @ExperimentalCoilApi
 @ExperimentalMaterialApi
 @Composable
@@ -71,7 +72,7 @@ fun Profile(controller: NavHostController) {
                 )
 
             Scaffold(floatingActionButton = { Fab(controller) }) {
-                Column(modifier = Modifier.padding(10.dp)) {
+                ScrollableColumn(modifier = Modifier.padding(10.dp)) {
                     SmallSpacing()
                     Row(
                         modifier = Modifier.fillMaxWidth(),
