@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.moose.foodies.presentation.theme.grey200
 import com.moose.foodies.presentation.theme.smallVPadding
+import com.moose.foodies.presentation.theme.tinyVPadding
 import com.moose.foodies.util.getTextFieldColors
 import java.util.regex.Pattern
 import androidx.compose.material.TextFieldDefaults.outlinedTextFieldColors as Colors
@@ -169,7 +170,7 @@ fun TextInput(state: TextFieldState, modifier: Modifier = Modifier, maxLines: In
             keyboardOptions = Default.copy(keyboardType = Ascii),
         )
         if (state.hasError) {
-            Text(state.message, color = colors.error, modifier = Modifier.smallVPadding())
+            Text(state.message, color = colors.error, modifier = modifier.tinyVPadding())
         }
     }
 }
@@ -201,7 +202,7 @@ fun PasswordInput(state: TextFieldState, modifier: Modifier = Modifier){
             },
         )
         if (state.hasError) {
-            Text(state.message, color = colors.error, modifier = Modifier.smallVPadding())
+            Text(state.message, color = colors.error, modifier = modifier.tinyVPadding())
         }
     }
 }
@@ -220,7 +221,7 @@ fun NumberInput(state: TextFieldState, modifier: Modifier = Modifier){
             keyboardOptions = Default.copy(keyboardType = Number),
         )
         if (state.hasError) {
-            Text(state.message, color = colors.error, modifier = Modifier.smallVPadding())
+            Text(state.message, color = colors.error, modifier = modifier.tinyVPadding())
         }
     }
 }

@@ -33,7 +33,7 @@ fun Forgot(){
                 type = KeyboardType.Email,
             )
         }
-        FilledButton(text = "Submit", size = .9f, loading = loading) {
+        FilledButton(text = "Submit", loading = loading) {
             emailState.validate()
             if (!emailState.hasError && !loading) {
                 viewmodel.forgot(emailState.text)

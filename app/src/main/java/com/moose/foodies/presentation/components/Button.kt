@@ -11,16 +11,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import com.moose.foodies.presentation.theme.smallPadding
+import com.moose.foodies.presentation.theme.tinyPadding
 
 @Composable
-fun FilledButton(text: String, size: Float, loading: Boolean = false, onClick: () -> Unit){
-    val style = MaterialTheme.typography.body1
-    val label = if (loading) "Loading..." else text
-    val modifier = Modifier.fillMaxWidth(fraction = size).padding(vertical = 5.dp).height(45.dp)
+fun FilledButton(text: String, modifier: Modifier = Modifier, loading: Boolean = false, onClick: () -> Unit){
     val colors = textButtonColors(backgroundColor = colors.secondary, contentColor = colors.onSecondary)
-
     Button(onClick = onClick, modifier = modifier, colors = colors, enabled = !loading) {
-        Text(label, style = style)
+        Text(
+            modifier = Modifier.tinyPadding(),
+            style = MaterialTheme.typography.body1,
+            text = if (loading) "Loading..." else text,
+        )
     }
 }
 

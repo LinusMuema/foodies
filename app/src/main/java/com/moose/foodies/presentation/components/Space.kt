@@ -16,4 +16,4 @@ fun TinySpace() = Spacer(modifier = Modifier.size(5.dp))
 fun SmallSpace() = Spacer(modifier = Modifier.size(20.dp))
 
 @Composable
-fun MediumSpace() = Spacer(modifier = Modifier.size(15.dp))
+fun MediumSpace() = Spacer(modifier = Modifier.size(30.dp))

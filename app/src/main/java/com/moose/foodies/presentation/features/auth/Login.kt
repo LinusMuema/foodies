@@ -31,8 +31,13 @@ fun Login(){
     val passwordState = remember { TextFieldState(validators = listOf(Required())) }
     val emailState = remember { TextFieldState(validators = listOf(Email(), Required())) }
 
-    val inputModifier = Modifier.fillMaxWidth().largeHPadding()
-    val labelModifier = Modifier.fillMaxWidth().largeHPadding().smallVPadding()
+    val inputModifier = Modifier
+        .fillMaxWidth()
+        .largeHPadding()
+    val labelModifier = Modifier
+        .fillMaxWidth()
+        .largeHPadding()
+        .smallVPadding()
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Text(text = "Before we get cookin`")
@@ -48,9 +53,9 @@ fun Login(){
         Text(text = "Password", modifier = labelModifier, textAlign = Start)
         PasswordInput(state = passwordState, modifier = inputModifier)
 
-        SmallSpace()
+        MediumSpace()
 
-        FilledButton(text = "Login", loading = loading, size = .9f) {
+        FilledButton(text = "Login", modifier = inputModifier, loading = loading) {
             emailState.validate()
             passwordState.validate()
 

@@ -47,7 +47,7 @@ fun Signup(){
                 type = KeyboardType.Password,
             )
         }
-        FilledButton(text = "Sign up", size = .9f, loading = loading) {
+        FilledButton(text = "Sign up", loading = loading) {
             emailState.validate()
             confirmState.validate()
             passwordState.validate()
