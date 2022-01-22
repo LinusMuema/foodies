@@ -15,10 +15,12 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.annotation.ExperimentalCoilApi
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.moose.foodies.R
 import com.moose.foodies.presentation.components.*
@@ -29,10 +31,11 @@ import com.moose.foodies.util.onSuccess
 import com.moose.foodies.util.toast
 import dagger.hilt.android.AndroidEntryPoint
 
-@ExperimentalFoundationApi
-@ExperimentalMaterialApi
 @AndroidEntryPoint
+@ExperimentalCoilApi
 @ExperimentalPagerApi
+@ExperimentalMaterialApi
+@ExperimentalFoundationApi
 class AuthActivity : ComponentActivity() {
     private val viewmodel: AuthViewmodel by viewModels()
 
@@ -41,13 +44,12 @@ class AuthActivity : ComponentActivity() {
         setContent { Content() }
     }
 
-    @Preview(name = "Light Theme")
-    @Preview(name = "Dark Theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
     @Composable
     private fun Content(){
-        val screen by viewmodel.screen.observeAsState(0)
+        val screen by remember { viewmodel.screen }
+        val result by remember { viewmodel.result }
 
-        viewmodel.result.observe(this, {
+        result?.let {
             viewmodel.changeLoading(false)
 
             it.onError { error -> toast(error) }
@@ -55,7 +57,7 @@ class AuthActivity : ComponentActivity() {
                 startActivity(Intent(this, NavigationActivity::class.java))
                 finish()
             }
-        })
+        }
 
         FoodiesTheme {
             Surface(color = colors.background) {

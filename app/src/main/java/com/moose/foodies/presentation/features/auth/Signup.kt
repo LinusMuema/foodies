@@ -21,7 +21,7 @@ import com.moose.foodies.presentation.theme.smallVPadding
 @Composable
 fun Signup(){
     val viewmodel: AuthViewmodel = hiltViewModel()
-    val loading by viewmodel.loading.observeAsState(false)
+    val loading by remember { viewmodel.loading }
 
     val confirmState = remember { TextFieldState(validators = listOf(Required())) }
     val passwordState = remember { TextFieldState(validators = listOf(Required())) }

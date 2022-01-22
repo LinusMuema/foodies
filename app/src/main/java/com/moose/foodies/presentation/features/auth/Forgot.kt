@@ -19,7 +19,7 @@ import com.moose.foodies.presentation.theme.smallVPadding
 @Composable
 fun Forgot(){
     val viewmodel: AuthViewmodel = hiltViewModel()
-    val loading by viewmodel.loading.observeAsState(false)
+    val loading by remember { viewmodel.loading }
 
     val emailState = remember { TextFieldState(validators = listOf(Email(), Required())) }
 

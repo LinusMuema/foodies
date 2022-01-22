@@ -1,6 +1,8 @@
 package com.moose.foodies.presentation.features.auth
 
 import android.util.Log
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import com.moose.foodies.util.Result
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -24,19 +26,18 @@ import javax.inject.Inject
 @HiltViewModel
 class AuthViewmodel @Inject constructor(private val repository: AuthRepository) : ViewModel() {
 
-    private val _screen = MutableLiveData(0)
-    val screen: LiveData<Int> = _screen
+    private val _screen = mutableStateOf(0)
+    val screen: State<Int> = _screen
     fun changeScreen(value: Int) = value.also { _screen.value = it }
 
-    private val _loading = MutableLiveData(false)
-    val loading: LiveData<Boolean> = _loading
+    private val _loading = mutableStateOf(false)
+    val loading: State<Boolean> = _loading
     fun changeLoading(value: Boolean) = value.also { _loading.value = it }
 
-    private val _result = MutableLiveData<Result<Auth>>()
-    val result: LiveData<Result<Auth>> = _result
+    private val _result = mutableStateOf<Result<Auth>?>(null)
+    val result: State<Result<Auth>?> = _result
 
     private val handler = CoroutineExceptionHandler { _, exception ->
-        Log.e("Auth", "Error : $exception")
         _loading.value = false
         _result.value = Result.Error(exception.parse())
     }
