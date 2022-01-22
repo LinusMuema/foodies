@@ -73,13 +73,13 @@ fun Profile(controller: NavHostController) {
 
             Scaffold(floatingActionButton = { Fab(controller) }) {
                 ScrollableColumn(modifier = Modifier.padding(10.dp)) {
-                    SmallSpacing()
+                    SmallSpace()
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = CenterVertically,
                         horizontalArrangement = SpaceAround
                     ) {
-                        TinySpacing()
+                        TinySpace()
                         Image(
                             painter = rememberImagePainter(
                                 data = profile.avatar,
@@ -88,7 +88,7 @@ fun Profile(controller: NavHostController) {
                             contentDescription = "user avatar",
                             modifier = Modifier.size(100.dp).clip(CircleShape).clickable { open = true }
                         )
-                        TinySpacing()
+                        TinySpace()
                         Column(horizontalAlignment = CenterHorizontally) {
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
@@ -108,12 +108,12 @@ fun Profile(controller: NavHostController) {
                                     Text("Likes", style = typography.h6.copy(fontSize = 16.sp))
                                 }
                             }
-                            SmallSpacing()
+                            SmallSpace()
                             Text(profile.description, textAlign = TextAlign.Center)
                         }
-                        TinySpacing()
+                        TinySpace()
                     }
-                    SmallSpacing()
+                    SmallSpace()
                     recipes?.let { if (it.isEmpty()) Empty() else Recipes(controller) }
                 }
             }
@@ -132,7 +132,7 @@ fun Empty(){
             modifier = Modifier.size(100.dp),
             painter = painterResource(id = R.drawable.desert),
         )
-        SmallSpacing()
+        SmallSpace()
         Text("No recipes around here...")
     }
 }
@@ -168,8 +168,8 @@ fun ProfileDialog(viewmodel: ProfileViewmodel) {
     fun pick() = ImagePicker.with(activity).galleryOnly().createIntent { launcher.launch(it) }
 
     user?.let { profile ->
-        val nameState = remember { TextFieldState(profile.username, listOf(Required())) }
-        val descriptionState = remember { TextFieldState(profile.description, listOf(Required())) }
+        val nameState = remember { TextFieldState(profile.username, validators = listOf(Required())) }
+        val descriptionState = remember { TextFieldState(profile.description, validators = listOf(Required())) }
 
         when (val state = progress) {
             is Error -> context.toast(state.message)
@@ -181,7 +181,7 @@ fun ProfileDialog(viewmodel: ProfileViewmodel) {
         }
 
         Column(horizontalAlignment = CenterHorizontally, modifier = Modifier.padding(10.dp)) {
-            SmallSpacing()
+            SmallSpace()
             Box(modifier = Modifier
                 .size(100.dp)
                 .clip(CircleShape)
@@ -200,17 +200,17 @@ fun ProfileDialog(viewmodel: ProfileViewmodel) {
                     modifier = Modifier.align(Alignment.Center)
                 )
             }
-            SmallSpacing()
+            SmallSpace()
             OutlinedInput(label = "username", type = KeyboardType.Text, state = nameState)
             OutlinedInput(label = "tagline", type = KeyboardType.Text, state = descriptionState)
-            TinySpacing()
+            TinySpace()
             FilledButton(text = button, size = .97f) {
                 if (descriptionState.validate() && nameState.validate() && !loading!!) {
                     val update = profile.copy(username = nameState.text, description = descriptionState.text)
                     viewmodel.updateProfile(update)
                 }
             }
-            SmallSpacing()
+            SmallSpace()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = End){
                 TextButton(text = "Logout") {
                     viewmodel.logout()

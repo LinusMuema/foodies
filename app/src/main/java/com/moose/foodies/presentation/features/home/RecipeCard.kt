@@ -30,7 +30,7 @@ import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
 import com.moose.foodies.R.drawable.ic_clock
 import com.moose.foodies.domain.models.Recipe
-import com.moose.foodies.presentation.components.TinySpacing
+import com.moose.foodies.presentation.components.TinySpace
 
 @Composable
 @ExperimentalCoilApi
@@ -63,16 +63,16 @@ fun RecipeCard(controller: NavController, recipe: Recipe) {
                         .background(timeGray)
                         .padding(5.dp)) {
                         Row (verticalAlignment = Alignment.CenterVertically){
-                            TinySpacing()
+                            TinySpace()
                             Icon(
                                 tint = White,
                                 contentDescription = "time",
                                 modifier = Modifier.size(14.dp),
                                 painter = painterResource(id = ic_clock)
                             )
-                            TinySpacing()
+                            TinySpace()
                             Text(recipe.time, style = typography.body2.copy(color = White))
-                            TinySpacing()
+                            TinySpace()
                         }
                     }
                     Box(modifier = Modifier.clip(shapes.large).background(White).padding(2.5.dp)

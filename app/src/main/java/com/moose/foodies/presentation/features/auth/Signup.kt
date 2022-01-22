@@ -14,7 +14,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.moose.foodies.presentation.components.*
-import com.moose.foodies.presentation.features.auth.AuthViewmodel
 
 @Preview(name = "Light Theme")
 @Preview(name = "Dark Theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
@@ -59,9 +58,9 @@ fun Signup(){
                 viewmodel.signup(emailState.text, passwordState.text)
             }
         }
-        SmallSpacing()
+        SmallSpace()
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
-            SmallSpacing()
+            SmallSpace()
             TextButton(text = "Back to login", onClick = { viewmodel.changeScreen(0) })
         }
     }

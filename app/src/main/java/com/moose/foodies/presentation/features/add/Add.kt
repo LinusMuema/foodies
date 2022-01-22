@@ -105,7 +105,7 @@ fun Add(controller: NavController) {
             ProvideWindowInsets {
                 Scaffold(modifier = Modifier.systemBarsPadding()) {
                     Column(modifier = Modifier.padding(10.dp).verticalScroll(rememberScrollState())) {
-                        TinySpacing()
+                        TinySpace()
                         IconButton(onClick = { controller.popBackStack() }) {
                             Icon(
                                 modifier = Modifier.size(30.dp).padding(5.dp),
@@ -113,14 +113,14 @@ fun Add(controller: NavController) {
                                 contentDescription = "back icon",
                             )
                         }
-                        SmallSpacing()
+                        SmallSpace()
                         Text(
                             text = "Upload a new recipe",
                             style = typography.h6.copy(color = colors.onSurface)
                         )
-                        SmallSpacing()
+                        SmallSpace()
                         ImageUpload(path = path, onClick = { getImage() })
-                        SmallSpacing()
+                        SmallSpace()
                         OutlinedInput(
                             label = "Name",
                             state = nameState,
@@ -172,7 +172,7 @@ fun Add(controller: NavController) {
                                 }
                             }
                         }
-                        TinySpacing()
+                        TinySpace()
                         Text(
                             text = "Select the recipe categories",
                             modifier = Modifier.padding(10.dp, 5.dp)
@@ -218,7 +218,7 @@ fun Add(controller: NavController) {
                                 type = KeyboardType.Number,
                             )
                         }
-                        SmallSpacing()
+                        SmallSpace()
                         Row(
                             horizontalArrangement = SpaceBetween,
                             modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp)
@@ -257,13 +257,13 @@ fun Add(controller: NavController) {
                                 }
                                 IconButton(onClick = { steps = steps - listOf(state) }) {
                                     Column {
-                                        SmallSpacing()
+                                        SmallSpace()
                                         Icon(Filled.Delete, contentDescription = "delete step icon")
                                     }
                                 }
                             }
                         }
-                        SmallSpacing()
+                        SmallSpace()
                         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Center) {
                             FilledButton(text = button, size = .95f) {
                                 val validSteps = steps.map { it.validate() }.all { it }

@@ -1,16 +1,19 @@
 package com.moose.foodies.presentation.components
 
+import android.widget.Space
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun TinySpacing() = Box(modifier = Modifier.padding(2.5.dp))
+fun TinySpace() = Spacer(modifier = Modifier.size(5.dp))
 
 @Composable
-fun SmallSpacing() = Box(modifier = Modifier.padding(10.dp))
+fun SmallSpace() = Spacer(modifier = Modifier.size(20.dp))
 
 @Composable
-fun MediumSpacing() = Box(modifier = Modifier.padding(15.dp))
+fun MediumSpace() = Spacer(modifier = Modifier.size(15.dp))

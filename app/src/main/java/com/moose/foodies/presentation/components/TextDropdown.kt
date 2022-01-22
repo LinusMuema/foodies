@@ -52,7 +52,7 @@ fun TextDropdown(label: String, items: List<Item>, onClick: (Item) -> Unit, onCh
                             contentDescription = "${it.name} option",
                             modifier = Modifier.size(35.dp),
                         )
-                        SmallSpacing()
+                        SmallSpace()
                         Text(text = it.name, style = typography.body1)
                     }
                 }

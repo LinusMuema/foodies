@@ -28,7 +28,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.moose.foodies.R
-import com.moose.foodies.presentation.components.TinySpacing
+import com.moose.foodies.presentation.components.TinySpace
 import com.moose.foodies.domain.models.Item
 import com.moose.foodies.domain.models.Recipe
 import com.moose.foodies.util.customTabIndicatorOffset
@@ -55,7 +55,7 @@ fun Details(fraction: Float, recipe: Recipe, ingredients: List<Item>, equipment:
                 contentDescription = "chef avatar",
                 modifier = Modifier.size(50.dp).clip(shapes.large).clickable { profileClick() }
             )
-            TinySpacing()
+            TinySpace()
             Column {
                 Text(recipe.name, style = typography.h5.copy(color = colors.primary))
                 Text("@${recipe.user.username}")
@@ -133,7 +133,7 @@ fun Items(items: List<Item>){
                         .size(50.dp)
                         .clip(shapes.large)
                 )
-                TinySpacing()
+                TinySpace()
                 Text(it.name)
             }
         }
@@ -146,7 +146,7 @@ fun Steps(steps: List<String>){
         steps.mapIndexed { i, s ->
             Row(modifier = Modifier.padding(5.dp)) {
                 Text("${i+1}.")
-                TinySpacing()
+                TinySpace()
                 Text(s)
             }
         }

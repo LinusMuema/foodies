@@ -42,10 +42,9 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.moose.foodies.R
 import com.moose.foodies.domain.models.Profile
 import com.moose.foodies.presentation.components.CenterColumn
-import com.moose.foodies.presentation.components.SmallSpacing
-import com.moose.foodies.presentation.components.TinySpacing
+import com.moose.foodies.presentation.components.SmallSpace
+import com.moose.foodies.presentation.components.TinySpace
 import com.moose.foodies.presentation.theme.FoodiesTheme
-import com.moose.foodies.presentation.theme.shapes
 import com.moose.foodies.presentation.theme.typography
 
 @ExperimentalFoundationApi
@@ -76,7 +75,7 @@ fun Chef(id: String?, controller: NavHostController) {
             if (chef != null){
                 Scaffold(modifier = Modifier.systemBarsPadding(), floatingActionButton = { Fab(chef!!) }) {
                     Column(modifier = Modifier.fillMaxSize()) {
-                        TinySpacing()
+                        TinySpace()
                         IconButton(onClick = { controller.popBackStack() }) {
                             Icon(
                                 modifier = Modifier.size(30.dp).padding(5.dp),
@@ -84,13 +83,13 @@ fun Chef(id: String?, controller: NavHostController) {
                                 contentDescription = "back icon",
                             )
                         }
-                        SmallSpacing()
+                        SmallSpace()
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceAround
                         ) {
-                            TinySpacing()
+                            TinySpace()
                             Image(
                                 painter = rememberImagePainter(
                                     data = chef!!.avatar,
@@ -101,7 +100,7 @@ fun Chef(id: String?, controller: NavHostController) {
                                     .size(100.dp)
                                     .clip(CircleShape)
                             )
-                            TinySpacing()
+                            TinySpace()
                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                 Row(
                                     modifier = Modifier.fillMaxWidth(),
@@ -119,14 +118,14 @@ fun Chef(id: String?, controller: NavHostController) {
                                         Text("Likes", style = MaterialTheme.typography.h6.copy(fontSize = 16.sp))
                                     }
                                 }
-                                SmallSpacing()
+                                SmallSpace()
                                 Text(chef!!.username, style = typography.h5.copy(color = colors.primary))
-                                TinySpacing()
+                                TinySpace()
                                 Text(chef!!.description, textAlign = TextAlign.Center)
                             }
-                            TinySpacing()
+                            TinySpace()
                         }
-                        SmallSpacing()
+                        SmallSpace()
                         recipes?.let { items ->
                             val arrangement = Arrangement.SpaceBetween
                             val timeGray = Color.Gray.copy(.8f)
@@ -150,7 +149,7 @@ fun Chef(id: String?, controller: NavHostController) {
                                             .clickable {  controller.navigate("/recipe/${it._id}")}
                                             .padding(10.dp)){
                                             Column(Modifier.fillMaxSize(), arrangement) {
-                                                TinySpacing()
+                                                TinySpace()
                                                 Text(
                                                     maxLines = 1,
                                                     text = it.name,
@@ -172,7 +171,7 @@ fun Chef(id: String?, controller: NavHostController) {
                         text = "Getting the chef...",
                         style = typography.body1.copy(color = colors.onSurface)
                     )
-                    TinySpacing()
+                    TinySpace()
                     LottieAnimation(
                         composition = composition,
                         iterations = Int.MAX_VALUE,

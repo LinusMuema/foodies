@@ -36,7 +36,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.moose.foodies.R
 import com.moose.foodies.presentation.components.CenterColumn
-import com.moose.foodies.presentation.components.TinySpacing
+import com.moose.foodies.presentation.components.TinySpace
 import com.moose.foodies.presentation.theme.FoodiesTheme
 import com.moose.foodies.presentation.theme.shapes
 import com.moose.foodies.presentation.theme.typography
@@ -73,7 +73,7 @@ fun Recipe(id: String?, controller: NavHostController) {
                         text = "Getting the recipe...",
                         style = typography.body1.copy(color = colors.onSurface)
                     )
-                    TinySpacing()
+                    TinySpace()
                     LottieAnimation(
                         composition = composition,
                         iterations = Int.MAX_VALUE,
@@ -147,16 +147,16 @@ fun Recipe(id: String?, controller: NavHostController) {
 
                                     Box(modifier = Modifier.align(Alignment.TopEnd).padding(top = topPadding, end = 10.dp).clip(shapes.large).background(buttonColor)){
                                         Row(modifier = Modifier.padding(5.dp), verticalAlignment = CenterVertically) {
-                                            TinySpacing()
+                                            TinySpace()
                                             Icon(
                                                 tint = Color.White,
                                                 contentDescription = "time",
                                                 modifier = Modifier.size(20.dp),
                                                 painter = painterResource(id = R.drawable.ic_clock),
                                             )
-                                            TinySpacing()
+                                            TinySpace()
                                             Text(recipe!!.time, style = typography.body1.copy(color = Color.White))
-                                            TinySpacing()
+                                            TinySpace()
                                         }
                                     }
                                 }

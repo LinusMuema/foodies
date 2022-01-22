@@ -39,8 +39,8 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.moose.foodies.R
 import com.moose.foodies.presentation.components.CenterColumn
 import com.moose.foodies.presentation.components.ScrollableColumn
-import com.moose.foodies.presentation.components.SmallSpacing
-import com.moose.foodies.presentation.components.TinySpacing
+import com.moose.foodies.presentation.components.SmallSpace
+import com.moose.foodies.presentation.components.TinySpace
 import com.moose.foodies.util.customTabIndicatorOffset
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -79,9 +79,9 @@ fun Home(controller: NavController){
         indicator = { state, trigger -> Indicator(state, trigger)}
     ) {
         ScrollableColumn {
-            SmallSpacing()
+            SmallSpace()
             profile?.let { Header(profile = it) }
-            SmallSpacing()
+            SmallSpace()
 
 
             if (counter >= 5 && !recipes.isNullOrEmpty()) {
@@ -94,7 +94,7 @@ fun Home(controller: NavController){
                 ) {
                     RecipeCard(controller, highlights[it])
                 }
-                SmallSpacing()
+                SmallSpace()
                 Text(
                     text = "Discover Chefs",
                     modifier = Modifier.padding(10.dp),
@@ -120,13 +120,13 @@ fun Home(controller: NavController){
                                         controller.navigate("/chef/${it._id}")
                                     }
                             )
-                            TinySpacing()
+                            TinySpace()
                             Text(it.username, style = typography.body1)
                         }
                     }
                 }
 
-                SmallSpacing()
+                SmallSpace()
                 Text(
                     text = "Recipes",
                     modifier = Modifier.padding(10.dp),
@@ -160,7 +160,7 @@ fun Home(controller: NavController){
                         }
                     }
                 }
-                TinySpacing()
+                TinySpace()
                 RecipeItems(controller, items)
                 HorizontalPager(count = titles.size, state = pagerState){}
             } else {
@@ -169,7 +169,7 @@ fun Home(controller: NavController){
                         text = "Getting you some recipes...",
                         style = typography.body1.copy(color = colors.onSurface)
                     )
-                    TinySpacing()
+                    TinySpace()
                     LottieAnimation(
                         composition = composition,
                         iterations = Int.MAX_VALUE,
