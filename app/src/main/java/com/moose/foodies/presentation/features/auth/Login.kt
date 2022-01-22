@@ -58,7 +58,9 @@ fun Login(){
                 viewmodel.login(emailState.text, passwordState.text)
             }
         }
+
         SmallSpace()
+
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = SpaceEvenly) {
             TextButton(text = "Sign up", onClick = { viewmodel.changeScreen(1) })
             TextButton(text = "Forgot password", onClick = { viewmodel.changeScreen(2) })
