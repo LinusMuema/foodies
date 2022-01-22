@@ -8,6 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -18,8 +19,6 @@ import com.moose.foodies.presentation.components.*
 import com.moose.foodies.presentation.theme.largeHPadding
 import com.moose.foodies.presentation.theme.smallVPadding
 
-@Preview(name = "Light Theme")
-@Preview(name = "Dark Theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun Signup(){
     val viewmodel: AuthViewmodel = hiltViewModel()
@@ -32,14 +31,14 @@ fun Signup(){
     val inputModifier = Modifier.fillMaxWidth().largeHPadding()
     val labelModifier = Modifier.fillMaxWidth().largeHPadding().smallVPadding()
 
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(horizontalAlignment = CenterHorizontally) {
         Text(text = "Don't have an account?")
         Text(text = "Enter your details below to get started")
 
         SmallSpace()
 
         Text(text = "Email address", modifier = labelModifier, textAlign = TextAlign.Start)
-        TextInput(state = emailState, modifier = inputModifier)
+        TextInput(state = emailState, modifier = inputModifier, type = KeyboardType.Email)
 
         SmallSpace()
 

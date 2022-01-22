@@ -71,6 +71,8 @@ open class TextFieldState(initial: String = "", val onChanged: (String) -> Unit 
     }
 }
 
+
+// TODO: All instances to be replaced
 @Composable
 fun OutlinedInput(
     label: String?,
@@ -132,7 +134,7 @@ fun OutlinedInput(
 }
 
 @Composable
-fun TextInput(state: TextFieldState, modifier: Modifier = Modifier, maxLines: Int = 1){
+fun TextInput(state: TextFieldState, modifier: Modifier = Modifier, maxLines: Int = 1, type: KeyboardType = Ascii){
     Column {
         TextField(
             value = state.text,
@@ -142,7 +144,7 @@ fun TextInput(state: TextFieldState, modifier: Modifier = Modifier, maxLines: In
             isError = state.hasError,
             onValueChange = { state.change(it) },
             colors = MaterialTheme.getTextFieldColors(),
-            keyboardOptions = Default.copy(keyboardType = Ascii),
+            keyboardOptions = Default.copy(keyboardType = type),
         )
         if (state.hasError) {
             Text(state.message, color = colors.error, modifier = modifier.tinyVPadding())
@@ -175,25 +177,6 @@ fun PasswordInput(state: TextFieldState, modifier: Modifier = Modifier){
                     }
                 }
             },
-        )
-        if (state.hasError) {
-            Text(state.message, color = colors.error, modifier = modifier.tinyVPadding())
-        }
-    }
-}
-
-@Composable
-fun NumberInput(state: TextFieldState, modifier: Modifier = Modifier){
-    Column {
-        TextField(
-            maxLines = 1,
-            value = state.text,
-            modifier = modifier,
-            shape = shapes.small,
-            isError = state.hasError,
-            onValueChange = { state.change(it) },
-            colors = MaterialTheme.getTextFieldColors(),
-            keyboardOptions = Default.copy(keyboardType = Number),
         )
         if (state.hasError) {
             Text(state.message, color = colors.error, modifier = modifier.tinyVPadding())
