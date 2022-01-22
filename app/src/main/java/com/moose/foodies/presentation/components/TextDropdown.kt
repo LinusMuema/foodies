@@ -27,7 +27,7 @@ fun TextDropdown(label: String, items: List<Item>, onClick: (Item) -> Unit, onCh
     val state = remember { TextFieldState(validators = listOf(Required())) }
 
     fun select(value: Item){
-        state.clear()
+        state.text = ""
         onClick(value)
         expanded = false
     }

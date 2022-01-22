@@ -2,7 +2,6 @@ package com.moose.foodies.presentation.components
 
 import android.util.Patterns
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.KeyboardOptions.Companion.Default
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.colors
@@ -13,7 +12,6 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.KeyboardType.Companion.Ascii
@@ -24,25 +22,20 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.moose.foodies.presentation.theme.grey200
-import com.moose.foodies.presentation.theme.smallVPadding
 import com.moose.foodies.presentation.theme.tinyVPadding
 import com.moose.foodies.util.getTextFieldColors
-import java.util.regex.Pattern
 import androidx.compose.material.TextFieldDefaults.outlinedTextFieldColors as Colors
 
-open class TextFieldState(
-    initial: String = "",
-    onChanged: (String) -> Unit = {},
-    val validators: List<Validators>,
-){
+open class TextFieldState(initial: String = "", val onChanged: (String) -> Unit = {}, val validators: List<Validators>){
 
     var text: String by mutableStateOf(initial)
     var message: String by mutableStateOf("")
     var hasError: Boolean by mutableStateOf(false)
 
-    fun onChanged(value: String){
-        text = value
+    fun change(value: String){
         hideError()
+        text = value
+        onChanged(value)
     }
 
     fun showError(error: String){
@@ -55,45 +48,27 @@ open class TextFieldState(
         hasError = false
     }
 
-    fun clear() = "".also { text = it }
-
     fun validate(): Boolean {
-        return validators.map {
+        val validations =  validators.map {
             when (it){
-                is Email -> {
-                    if (!email()) showError(it.message)
-                    email()
-                }
-                is Required -> {
-                    if (!required()) showError(it.message)
-                    required()
-                }
-                is Regex -> {
-                    if (!regex(it.regex)) showError("value does not match required regex")
-                    regex(it.regex)
-                }
-                is Max -> {
-                    if (!max(it.limit)) showError("value cannot be more than ${it.limit}")
-                    max(it.limit)
-                }
-                is Min -> {
-                    if (!min(it.limit)) showError("value cannot be less than ${it.limit}")
-                    min(it.limit)
-                }
+                is Email -> validateEmail()
+                is Required -> validateRequired()
             }
-        }.all { it }
+        }
+        return validations.all { it }
     }
 
+    private fun validateEmail(): Boolean {
+        val valid = Patterns.EMAIL_ADDRESS.matcher(text).matches()
+        if (!valid) showError("invalid email address")
+        return valid
+    }
 
-    private fun required(): Boolean = text.isNotEmpty()
-
-    private fun max(limit: Double): Boolean = text.toDouble() > limit
-
-    private fun min(limit: Double): Boolean = text.toDouble() < limit
-
-    private fun email(): Boolean = Patterns.EMAIL_ADDRESS.matcher(text).matches()
-
-    private fun regex(regex: String): Boolean = Pattern.compile(regex).matcher(text).matches()
+    private fun validateRequired(): Boolean {
+        val valid = text.isNotEmpty()
+        if (!valid) showError("this field is required")
+        return valid
+    }
 }
 
 @Composable
@@ -165,7 +140,7 @@ fun TextInput(state: TextFieldState, modifier: Modifier = Modifier, maxLines: In
             maxLines = maxLines,
             shape = shapes.small,
             isError = state.hasError,
-            onValueChange = { state.onChanged(it) },
+            onValueChange = { state.change(it) },
             colors = MaterialTheme.getTextFieldColors(),
             keyboardOptions = Default.copy(keyboardType = Ascii),
         )
@@ -189,7 +164,7 @@ fun PasswordInput(state: TextFieldState, modifier: Modifier = Modifier){
             shape = shapes.small,
             isError = state.hasError,
             visualTransformation = transformation,
-            onValueChange = { state.onChanged(it) },
+            onValueChange = { state.change(it) },
             colors = MaterialTheme.getTextFieldColors(),
             keyboardOptions = Default.copy(keyboardType = Password),
             trailingIcon = {
@@ -216,7 +191,7 @@ fun NumberInput(state: TextFieldState, modifier: Modifier = Modifier){
             modifier = modifier,
             shape = shapes.small,
             isError = state.hasError,
-            onValueChange = { state.onChanged(it) },
+            onValueChange = { state.change(it) },
             colors = MaterialTheme.getTextFieldColors(),
             keyboardOptions = Default.copy(keyboardType = Number),
         )

@@ -31,13 +31,8 @@ fun Login(){
     val passwordState = remember { TextFieldState(validators = listOf(Required())) }
     val emailState = remember { TextFieldState(validators = listOf(Email(), Required())) }
 
-    val inputModifier = Modifier
-        .fillMaxWidth()
-        .largeHPadding()
-    val labelModifier = Modifier
-        .fillMaxWidth()
-        .largeHPadding()
-        .smallVPadding()
+    val inputModifier = Modifier.fillMaxWidth().largeHPadding()
+    val labelModifier = Modifier.fillMaxWidth().largeHPadding().smallVPadding()
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Text(text = "Before we get cookin`")
