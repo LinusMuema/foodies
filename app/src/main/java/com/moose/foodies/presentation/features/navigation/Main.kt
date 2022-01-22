@@ -1,5 +1,6 @@
 package com.moose.foodies.presentation.features.navigation
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
@@ -38,6 +39,7 @@ import dev.chrisbanes.snapper.ExperimentalSnapperApi
 @ExperimentalCoilApi
 @ExperimentalPagerApi
 @ExperimentalMaterialApi
+@ExperimentalFoundationApi
 fun Main(mainController: NavHostController) {
     val navController = rememberNavController()
     val screens = listOf(Home, Explore, Fridge, Profile)

@@ -21,11 +21,11 @@ import com.moose.foodies.presentation.features.chef.Chef
 import com.moose.foodies.presentation.features.recipe.Recipe
 import dagger.hilt.android.AndroidEntryPoint
 
-@ExperimentalFoundationApi
-@ExperimentalMaterialApi
 @AndroidEntryPoint
 @ExperimentalCoilApi
 @ExperimentalPagerApi
+@ExperimentalMaterialApi
+@ExperimentalFoundationApi
 class NavigationActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
