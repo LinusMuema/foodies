@@ -22,6 +22,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
@@ -52,18 +53,11 @@ import kotlinx.coroutines.launch
 fun Feed(controller: NavController){
     val viewmodel: HomeViewmodel = hiltViewModel()
 
-    val chefs by viewmodel.chefs.observeAsState()
-    val recipes by viewmodel.recipes.observeAsState()
-    val profile by viewmodel.profile.observeAsState()
-    val refreshing by viewmodel.refreshing.observeAsState()
-
-    var counter by remember { mutableStateOf(0) }
-    LaunchedEffect(Unit) {
-        (0..5).map {
-            counter = it
-            delay(1000)
-        }
-    }
+    val chefs by remember { viewmodel.chefs }
+    val recipes by remember { viewmodel.recipes }
+    val profile by remember { viewmodel.profile }
+    val counter by remember { viewmodel.seconds }
+    val refreshing by remember { viewmodel.refreshing }
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -74,7 +68,7 @@ fun Feed(controller: NavController){
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.cooking))
 
     SwipeRefresh(
-        state =  rememberSwipeRefreshState(refreshing!!),
+        state =  rememberSwipeRefreshState(refreshing),
         onRefresh = { viewmodel.refresh() },
         indicator = { state, trigger -> Indicator(state, trigger)}
     ) {

@@ -13,8 +13,8 @@ import javax.inject.Inject
 
 interface HomeRepository {
     val profile: Flow<Profile>
-    val feed: Flow<List<Recipe>>
     val chefs: Flow<List<Profile>>
+    val recipes : Flow<List<Recipe>>
 
     suspend fun fetchData()
 }
@@ -26,7 +26,7 @@ class HomeRepositoryImpl @Inject constructor(val userDao: UserDao, val itemsDao:
     override val profile: Flow<Profile>
         get() = userDao.getProfile()
 
-    override val feed: Flow<List<Recipe>>
+    override val recipes: Flow<List<Recipe>>
         get() = itemsDao.getFeedRecipes()
 
     override suspend fun fetchData() {
