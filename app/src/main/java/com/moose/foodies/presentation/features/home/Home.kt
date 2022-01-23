@@ -24,13 +24,14 @@ import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.moose.foodies.presentation.features.home.Screen.Feed
-import com.moose.foodies.presentation.features.home.Screen.Explore
-import com.moose.foodies.presentation.features.home.Screen.Fridge
-import com.moose.foodies.presentation.features.home.Screen.Profile
-import com.moose.foodies.presentation.features.explore.Explore
-import com.moose.foodies.presentation.features.fridge.Fridge
-import com.moose.foodies.presentation.features.profile.Profile
+import com.moose.foodies.presentation.features.home.feed.Screen.Feed
+import com.moose.foodies.presentation.features.home.feed.Screen.Explore
+import com.moose.foodies.presentation.features.home.feed.Screen.Fridge
+import com.moose.foodies.presentation.features.home.feed.Screen.Profile
+import com.moose.foodies.presentation.features.home.explore.Explore
+import com.moose.foodies.presentation.features.home.fridge.Fridge
+import com.moose.foodies.presentation.features.home.feed.Feed
+import com.moose.foodies.presentation.features.home.profile.Profile
 import com.moose.foodies.presentation.theme.FoodiesTheme
 
 @Composable

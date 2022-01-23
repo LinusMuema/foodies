@@ -1,4 +1,4 @@
-package com.moose.foodies.presentation.features.profile
+package com.moose.foodies.presentation.features.home.profile
 
 import android.app.Activity
 import android.content.Intent

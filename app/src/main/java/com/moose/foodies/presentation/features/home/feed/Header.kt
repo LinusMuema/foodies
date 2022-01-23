@@ -1,4 +1,4 @@
-package com.moose.foodies.presentation.features.home
+package com.moose.foodies.presentation.features.home.feed
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*

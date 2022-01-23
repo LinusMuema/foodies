@@ -1,4 +1,4 @@
-package com.moose.foodies.presentation.features.fridge
+package com.moose.foodies.presentation.features.home.fridge
 
 import androidx.compose.runtime.Composable
 

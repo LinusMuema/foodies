@@ -1,4 +1,4 @@
-package com.moose.foodies.presentation.features.home
+package com.moose.foodies.presentation.features.home.feed
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.moose.foodies.domain.models.Profile
 import com.moose.foodies.domain.models.Recipe
-import com.moose.foodies.domain.repositories.HomeRepository
+import com.moose.foodies.domain.repositories.FeedRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
@@ -16,7 +16,7 @@ import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewmodel @Inject constructor(val repository: HomeRepository) : ViewModel() {
+class FeedViewmodel @Inject constructor(val repository: FeedRepository) : ViewModel() {
 
     var type = "Snack"
     val time = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)

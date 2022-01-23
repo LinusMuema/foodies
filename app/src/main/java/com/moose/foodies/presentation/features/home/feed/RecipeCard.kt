@@ -1,4 +1,4 @@
-package com.moose.foodies.presentation.features.home
+package com.moose.foodies.presentation.features.home.feed
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -37,7 +37,7 @@ import com.moose.foodies.presentation.components.TinySpace
 fun RecipeCard(controller: NavController, recipe: Recipe) {
     val arrangement = SpaceBetween
     val timeGray = Gray.copy(.8f)
-    val viewmodel: HomeViewmodel = hiltViewModel()
+    val viewmodel: FeedViewmodel = hiltViewModel()
 
     // create the gradient
     val variant = colors.primaryVariant

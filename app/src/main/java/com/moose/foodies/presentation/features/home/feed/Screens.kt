@@ -1,4 +1,4 @@
-package com.moose.foodies.presentation.features.home
+package com.moose.foodies.presentation.features.home.feed
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes

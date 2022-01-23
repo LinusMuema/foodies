@@ -1,4 +1,4 @@
-package com.moose.foodies.presentation.features.home
+package com.moose.foodies.presentation.features.home.feed
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -13,7 +13,6 @@ import androidx.compose.material.TabRow
 import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -22,7 +21,6 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
@@ -43,7 +41,6 @@ import com.moose.foodies.presentation.components.ScrollableColumn
 import com.moose.foodies.presentation.components.SmallSpace
 import com.moose.foodies.presentation.components.TinySpace
 import com.moose.foodies.util.customTabIndicatorOffset
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
@@ -51,7 +48,7 @@ import kotlinx.coroutines.launch
 @ExperimentalCoilApi
 @ExperimentalPagerApi
 fun Feed(controller: NavController){
-    val viewmodel: HomeViewmodel = hiltViewModel()
+    val viewmodel: FeedViewmodel = hiltViewModel()
 
     val chefs by remember { viewmodel.chefs }
     val recipes by remember { viewmodel.recipes }
@@ -70,7 +67,7 @@ fun Feed(controller: NavController){
     SwipeRefresh(
         state =  rememberSwipeRefreshState(refreshing),
         onRefresh = { viewmodel.refresh() },
-        indicator = { state, trigger -> Indicator(state, trigger)}
+        indicator = { state, trigger -> Indicator(state, trigger) }
     ) {
         ScrollableColumn {
             SmallSpace()

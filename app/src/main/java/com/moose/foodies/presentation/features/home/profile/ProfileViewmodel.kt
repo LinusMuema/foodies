@@ -1,7 +1,6 @@
-package com.moose.foodies.presentation.features.profile
+package com.moose.foodies.presentation.features.home.profile
 
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.*
 import androidx.work.WorkManager
 import com.moose.foodies.FoodiesApplication

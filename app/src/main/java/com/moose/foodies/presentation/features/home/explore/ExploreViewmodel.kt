@@ -1,4 +1,4 @@
-package com.moose.foodies.presentation.features.explore
+package com.moose.foodies.presentation.features.home.explore
 
 import androidx.lifecycle.ViewModel
 

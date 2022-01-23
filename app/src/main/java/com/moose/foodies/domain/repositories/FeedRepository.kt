@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
-interface HomeRepository {
+interface FeedRepository {
     val profile: Flow<Profile>
     val chefs: Flow<List<Profile>>
     val recipes : Flow<List<Recipe>>
@@ -19,7 +19,7 @@ interface HomeRepository {
     suspend fun fetchData()
 }
 
-class HomeRepositoryImpl @Inject constructor(val userDao: UserDao, val itemsDao: ItemsDao, val preferences: Preferences): HomeRepository {
+class FeedRepositoryImpl @Inject constructor(val userDao: UserDao, val itemsDao: ItemsDao, val preferences: Preferences): FeedRepository {
     override val chefs: Flow<List<Profile>>
         get() = userDao.getChefs()
 

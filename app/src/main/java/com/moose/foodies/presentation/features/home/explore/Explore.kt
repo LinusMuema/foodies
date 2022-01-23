@@ -1,7 +1,6 @@
-package com.moose.foodies.presentation.features.explore
+package com.moose.foodies.presentation.features.home.explore
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.Text

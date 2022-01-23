@@ -19,7 +19,7 @@ abstract class RepositoryBindings {
     abstract fun provideChefRepository(impl: ChefRepositoryImpl): ChefRepository
 
     @Binds
-    abstract fun provideHomeRepository(impl: HomeRepositoryImpl): HomeRepository
+    abstract fun provideHomeRepository(impl: FeedRepositoryImpl): FeedRepository
 
     @Binds
     abstract fun provideProfileRepository(impl: ProfileRepositoryImpl): ProfileRepository

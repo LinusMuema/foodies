@@ -1,4 +1,4 @@
-package com.moose.foodies.presentation.features.profile
+package com.moose.foodies.presentation.features.home.profile
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
