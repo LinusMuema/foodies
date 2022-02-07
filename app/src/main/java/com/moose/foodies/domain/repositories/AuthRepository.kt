@@ -18,13 +18,14 @@ interface AuthRepository {
     suspend fun forgot(email: String): Any
 }
 
-class AuthRepositoryImpl @Inject constructor(val userDao: UserDao, val preferences: Preferences): AuthRepository {
+class AuthRepositoryImpl @Inject constructor(private val api: AuthService, val userDao: UserDao, val preferences: Preferences): AuthRepository {
+
     override fun setToken(token: String) = preferences.setToken(token)
 
-    override suspend fun forgot(email: String) = AuthService.forgot(email)
+    override suspend fun forgot(email: String) = api.forgot(email)
 
     override suspend fun login(credentials: Credentials): Auth {
-        val result = AuthService.login(credentials)
+        val result = api.login(credentials)
 
         preferences.setToken(result.token)
         userDao.addProfile(result.user.copy(current = true))
@@ -33,7 +34,7 @@ class AuthRepositoryImpl @Inject constructor(val userDao: UserDao, val preferenc
     }
 
     override suspend fun signup(credentials: Credentials): Auth {
-        val result = AuthService.signup(credentials)
+        val result = api.signup(credentials)
 
         userDao.addProfile(result.user)
         preferences.setToken(result.token)

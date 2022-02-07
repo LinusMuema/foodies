@@ -7,15 +7,9 @@ import com.moose.foodies.util.BASE_URL
 import dagger.hilt.android.EntryPointAccessors
 import io.ktor.client.*
 import io.ktor.client.request.*
+import javax.inject.Inject
 
-object AuthService {
-    private var client: HttpClient
-
-    init {
-        val context = FoodiesApplication.appContext
-        val entryPoint = EntryPointAccessors.fromApplication(context, ClientHelper::class.java)
-        client = entryPoint.client()
-    }
+class AuthService @Inject constructor(private val client: HttpClient) {
 
     suspend fun login(credentials: Credentials): Auth{
         val url = "$BASE_URL/api/auth/login"
