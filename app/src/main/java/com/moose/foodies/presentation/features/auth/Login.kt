@@ -24,8 +24,7 @@ fun Login(){
     val viewmodel: AuthViewmodel = hiltViewModel()
     val loading by remember { viewmodel.loading }
 
-    val passwordState = remember { TextFieldState(validators = listOf(Required())) }
-    val emailState = remember { TextFieldState(validators = listOf(Email(), Required())) }
+    val formState = remember { viewmodel.loginFormState }
 
     val inputModifier = Modifier.fillMaxWidth().largeHPadding()
     val labelModifier = Modifier.fillMaxWidth().largeHPadding().smallVPadding()
@@ -37,21 +36,19 @@ fun Login(){
         SmallSpace()
 
         Text(text = "Email address", modifier = labelModifier, textAlign = Start)
-        TextInput(state = emailState, modifier = inputModifier, type = KeyboardType.Email)
+        TextInput(state = formState.getState("email"), modifier = inputModifier, type = KeyboardType.Email)
 
         SmallSpace()
 
         Text(text = "Password", modifier = labelModifier, textAlign = Start)
-        PasswordInput(state = passwordState, modifier = inputModifier)
+        PasswordInput(state = formState.getState("password"), modifier = inputModifier)
 
         MediumSpace()
 
         FilledButton(text = "Login", modifier = inputModifier, loading = loading) {
-            emailState.validate()
-            passwordState.validate()
 
-            if (!emailState.hasError && !passwordState.hasError && !loading){
-                viewmodel.login(emailState.text, passwordState.text)
+            if (formState.validate() && !loading){
+                viewmodel.login()
             }
         }
 

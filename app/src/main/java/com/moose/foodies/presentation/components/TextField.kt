@@ -26,52 +26,6 @@ import com.moose.foodies.presentation.theme.tinyVPadding
 import com.moose.foodies.util.getTextFieldColors
 import androidx.compose.material.TextFieldDefaults.outlinedTextFieldColors as Colors
 
-open class TextFieldState(initial: String = "", val onChanged: (String) -> Unit = {}, val validators: List<Validators>){
-
-    var text: String by mutableStateOf(initial)
-    var message: String by mutableStateOf("")
-    var hasError: Boolean by mutableStateOf(false)
-
-    fun change(value: String){
-        hideError()
-        text = value
-        onChanged(value)
-    }
-
-    fun showError(error: String){
-        hasError = true
-        message = error
-    }
-
-    fun hideError(){
-        message = ""
-        hasError = false
-    }
-
-    fun validate(): Boolean {
-        val validations =  validators.map {
-            when (it){
-                is Email -> validateEmail()
-                is Required -> validateRequired()
-            }
-        }
-        return validations.all { it }
-    }
-
-    private fun validateEmail(): Boolean {
-        val valid = Patterns.EMAIL_ADDRESS.matcher(text).matches()
-        if (!valid) showError("invalid email address")
-        return valid
-    }
-
-    private fun validateRequired(): Boolean {
-        val valid = text.isNotEmpty()
-        if (!valid) showError("this field is required")
-        return valid
-    }
-}
-
-
 // TODO: All instances to be replaced
 @Composable
 fun OutlinedInput(

@@ -3,6 +3,7 @@ package com.moose.foodies.presentation.features.auth
 import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import com.moose.foodies.util.Result
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,6 +15,10 @@ import com.moose.foodies.data.remote.AuthService
 import com.moose.foodies.domain.models.Auth
 import com.moose.foodies.domain.models.Credentials
 import com.moose.foodies.domain.repositories.AuthRepository
+import com.moose.foodies.presentation.components.Email
+import com.moose.foodies.presentation.components.FormState
+import com.moose.foodies.presentation.components.Required
+import com.moose.foodies.presentation.components.TextFieldState
 import com.moose.foodies.util.parse
 import com.moose.foodies.work.ItemWorker
 import com.moose.foodies.work.RecipesWorker
@@ -42,10 +47,19 @@ class AuthViewmodel @Inject constructor(private val repository: AuthRepository) 
         _result.value = Result.Error(exception.parse())
     }
 
-    fun login(email: String, password: String) {
+    val loginFormState = FormState(
+        fields = listOf(
+            TextFieldState(name = "password", validators = listOf(Required())),
+            TextFieldState(name = "email", validators = listOf(Email(), Required()))
+        )
+    )
+
+    fun login() {
         _loading.value = true
+        val credentials = loginFormState.getData<Credentials>()
+
         viewModelScope.launch(handler) {
-            val result = repository.login(Credentials(email, password))
+            val result = repository.login(credentials)
             _result.value = Result.Success(result)
 
             startWork()
