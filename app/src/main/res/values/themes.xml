@@ -7,6 +7,6 @@
 
     <style name="Theme.Foodies.Splash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/primaryLight</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_chef_dark</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_chef_red</item>
     </style>
 </resources>

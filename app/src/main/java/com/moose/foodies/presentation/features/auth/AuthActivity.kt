@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
@@ -60,10 +61,10 @@ class AuthActivity : ComponentActivity() {
             Surface(color = colors.background) {
                 CenterColumn {
                     Icon(
+                        tint = colors.primary,
                         modifier = Modifier.size(150.dp),
                         contentDescription = "splash icon",
-                        tint = colors.secondary,
-                        painter = painterResource(id = R.drawable.ic_chef_light),
+                        painter = painterResource(id = R.drawable.ic_chef),
                     )
                     when (screen){
                         0 -> Login()
