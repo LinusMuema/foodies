@@ -13,13 +13,16 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowCompat
 import coil.annotation.ExperimentalCoilApi
 import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.moose.foodies.R
 import com.moose.foodies.presentation.components.*
 import com.moose.foodies.presentation.features.navigation.NavigationActivity
@@ -39,6 +42,8 @@ class AuthActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
         setContent { Content() }
     }
 
@@ -58,6 +63,13 @@ class AuthActivity : ComponentActivity() {
         }
 
         FoodiesTheme {
+            val isDark = colors.isLight
+            val color = colors.background
+            val systemUiController = rememberSystemUiController()
+            SideEffect {
+                systemUiController.setSystemBarsColor(color = color, darkIcons = isDark)
+            }
+
             Surface(color = colors.background) {
                 CenterColumn {
                     Icon(
