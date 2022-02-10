@@ -54,10 +54,10 @@ fun Add(controller: NavController) {
     var equipment by remember { mutableStateOf(setOf<Item>()) }
     var ingredients by remember { mutableStateOf(setOf<Item>()) }
     var categories by remember { mutableStateOf(listOf<String>()) }
-    var steps by remember { mutableStateOf(listOf<TextFieldState>()) }
-    val nameState = remember { TextFieldState(validators = listOf(Required())) }
-    val timeState = remember { TextFieldState(validators = listOf(Required())) }
-    val descriptionState = remember { TextFieldState(validators = listOf(Required())) }
+    var steps by remember { mutableStateOf(listOf<TextFieldState<*>>()) }
+    val nameState = remember { TextFieldState<String>(validators = listOf(Required())) }
+    val timeState = remember { TextFieldState<String>(validators = listOf(Required())) }
+    val descriptionState = remember { TextFieldState<String>(validators = listOf(Required())) }
     val times = listOf("10 mins", "15 mins", "30 mins", "45 mins", "60 mins", "Custom (mins)")
 
     val result by viewmodel.result.observeAsState()
@@ -230,7 +230,7 @@ fun Add(controller: NavController) {
                                     .clip(shapes.small)
                                     .clickable {
                                         steps = steps + listOf(
-                                            TextFieldState(validators = listOf(Required()))
+                                            TextFieldState<String>(validators = listOf(Required()))
                                         )
                                     }
                                     .padding(10.dp)

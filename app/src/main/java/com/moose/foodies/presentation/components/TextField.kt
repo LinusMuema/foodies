@@ -32,7 +32,7 @@ fun OutlinedInput(
     label: String?,
     type: KeyboardType,
     hide: Boolean = false,
-    state: TextFieldState,
+    state: TextFieldState<*>,
     modifier: Modifier = Modifier,
     onChanged: (String) -> Unit = {}
 ){
@@ -88,7 +88,7 @@ fun OutlinedInput(
 }
 
 @Composable
-fun TextInput(state: TextFieldState, modifier: Modifier = Modifier, maxLines: Int = 1, type: KeyboardType = Ascii){
+fun TextInput(state: TextFieldState<*>, modifier: Modifier = Modifier, maxLines: Int = 1, type: KeyboardType = Ascii){
     Column {
         TextField(
             value = state.text,
@@ -107,7 +107,7 @@ fun TextInput(state: TextFieldState, modifier: Modifier = Modifier, maxLines: In
 }
 
 @Composable
-fun PasswordInput(state: TextFieldState, modifier: Modifier = Modifier){
+fun PasswordInput(state: TextFieldState<*>, modifier: Modifier = Modifier){
     var hidden by remember { mutableStateOf(true) }
     val icon = if (hidden) Icons.Filled.VisibilityOff else Icons.Filled.Visibility
     val transformation = if (hidden)  PasswordVisualTransformation() else VisualTransformation.None

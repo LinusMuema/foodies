@@ -50,7 +50,7 @@ class AuthViewmodel @Inject constructor(private val repository: AuthRepository) 
     val loginFormState = FormState(
         fields = listOf(
             TextFieldState(name = "password", validators = listOf(Required())),
-            TextFieldState(name = "email", validators = listOf(Email(), Required()))
+            TextFieldState<String>(name = "email", validators = listOf(Email(), Required()))
         )
     )
 

@@ -23,9 +23,9 @@ fun Signup(){
     val viewmodel: AuthViewmodel = hiltViewModel()
     val loading by remember { viewmodel.loading }
 
-    val confirmState = remember { TextFieldState(validators = listOf(Required())) }
-    val passwordState = remember { TextFieldState(validators = listOf(Required())) }
-    val emailState = remember { TextFieldState(validators = listOf(Email(), Required())) }
+    val confirmState = remember { TextFieldState<String>(validators = listOf(Required())) }
+    val passwordState = remember { TextFieldState<String>(validators = listOf(Required())) }
+    val emailState = remember { TextFieldState<String>(validators = listOf(Email(), Required())) }
 
     val inputModifier = Modifier.fillMaxWidth().largeHPadding()
     val labelModifier = Modifier.fillMaxWidth().largeHPadding().smallVPadding()

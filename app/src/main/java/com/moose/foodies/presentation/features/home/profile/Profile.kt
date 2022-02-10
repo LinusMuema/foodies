@@ -168,8 +168,8 @@ fun ProfileDialog(viewmodel: ProfileViewmodel) {
     fun pick() = ImagePicker.with(activity).galleryOnly().createIntent { launcher.launch(it) }
 
     user?.let { profile ->
-        val nameState = remember { TextFieldState(profile.username, validators = listOf(Required())) }
-        val descriptionState = remember { TextFieldState(profile.description, validators = listOf(Required())) }
+        val nameState = remember { TextFieldState<String>(profile.username, validators = listOf(Required())) }
+        val descriptionState = remember { TextFieldState<String>(profile.description, validators = listOf(Required())) }
 
         when (val state = progress) {
             is Error -> context.toast(state.message)

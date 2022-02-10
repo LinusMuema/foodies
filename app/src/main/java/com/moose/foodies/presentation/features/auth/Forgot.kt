@@ -21,7 +21,7 @@ fun Forgot(){
     val viewmodel: AuthViewmodel = hiltViewModel()
     val loading by remember { viewmodel.loading }
 
-    val emailState = remember { TextFieldState(validators = listOf(Email(), Required())) }
+    val emailState = remember { TextFieldState<String>(validators = listOf(Email(), Required())) }
 
     val inputModifier = Modifier.fillMaxWidth().largeHPadding()
     val labelModifier = Modifier.fillMaxWidth().largeHPadding().smallVPadding()

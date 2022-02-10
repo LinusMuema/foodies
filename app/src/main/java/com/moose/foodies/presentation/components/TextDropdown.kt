@@ -24,7 +24,7 @@ import com.moose.foodies.domain.models.Item
 @Composable
 fun TextDropdown(label: String, items: List<Item>, onClick: (Item) -> Unit, onChange: (String) -> Unit) {
     var expanded by remember { mutableStateOf(false) }
-    val state = remember { TextFieldState(validators = listOf(Required())) }
+    val state = remember { TextFieldState<String>(validators = listOf(Required())) }
 
     fun select(value: Item){
         state.text = ""
