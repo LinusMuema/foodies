@@ -24,10 +24,10 @@ import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.moose.foodies.presentation.features.home.feed.Screen.Feed
-import com.moose.foodies.presentation.features.home.feed.Screen.Explore
-import com.moose.foodies.presentation.features.home.feed.Screen.Fridge
-import com.moose.foodies.presentation.features.home.feed.Screen.Profile
+import com.moose.foodies.presentation.features.home.Screen.Feed
+import com.moose.foodies.presentation.features.home.Screen.Explore
+import com.moose.foodies.presentation.features.home.Screen.Fridge
+import com.moose.foodies.presentation.features.home.Screen.Profile
 import com.moose.foodies.presentation.features.home.explore.Explore
 import com.moose.foodies.presentation.features.home.fridge.Fridge
 import com.moose.foodies.presentation.features.home.feed.Feed
@@ -80,14 +80,16 @@ fun Home(mainController: NavHostController) {
                                 )
                             }
                         }
-                    }) {
-                    NavHost(navController, startDestination = Feed.route, Modifier.padding(it)) {
-                        composable(Feed.route) { Feed(mainController) }
-                        composable(Fridge.route) { Fridge() }
-                        composable(Explore.route) { Explore(mainController) }
-                        composable(Profile.route) { Profile(mainController) }
+                    },
+                    content = {
+                        NavHost(navController, startDestination = Feed.route, Modifier.padding(it)) {
+                            composable(Feed.route) { Feed(mainController) }
+                            composable(Fridge.route) { Fridge() }
+                            composable(Explore.route) { Explore(mainController) }
+                            composable(Profile.route) { Profile(mainController) }
+                        }
                     }
-                }
+                )
             }
         }
     }

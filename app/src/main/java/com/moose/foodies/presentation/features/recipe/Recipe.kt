@@ -42,9 +42,9 @@ import com.moose.foodies.presentation.theme.Status
 import com.moose.foodies.presentation.theme.shapes
 import com.moose.foodies.presentation.theme.typography
 
+@Composable
 @ExperimentalPagerApi
 @ExperimentalMaterialApi
-@Composable
 fun Recipe(id: String?, controller: NavHostController) {
     val viewmodel: RecipeViewmodel = hiltViewModel()
     viewmodel.getRecipe(id!!)

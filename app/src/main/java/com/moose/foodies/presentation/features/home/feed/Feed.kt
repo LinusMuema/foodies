@@ -58,16 +58,10 @@ fun Feed(controller: NavController){
 
     val coroutineScope = rememberCoroutineScope()
 
-    val height = LocalConfiguration.current.screenHeightDp
-    val container = (height * .7).dp
-
-    // loading animation
-    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.cooking))
-
     SwipeRefresh(
         state =  rememberSwipeRefreshState(refreshing),
         onRefresh = { viewmodel.refresh() },
-        indicator = { state, trigger -> Indicator(state, trigger) }
+        indicator = { state, trigger -> SwipeIndicator(state, trigger) }
     ) {
         ScrollableColumn {
             SmallSpace()
@@ -116,64 +110,40 @@ fun Feed(controller: NavController){
                         }
                     }
                 }
-
                 SmallSpace()
-                Text(
-                    text = "Recipes",
-                    modifier = Modifier.padding(10.dp),
-                    style = typography.h5.copy(color = colors.primary)
+                Recipes(
+                    recipes = recipes!!,
+                    viewmodel = viewmodel,
+                    controller = controller,
                 )
-
-                val pagerState = rememberPagerState(initialPage = 0)
-                val titles = mutableListOf("Breakfast", "Snacks", "Main", "Others")
-                titles.remove(viewmodel.type)
-
-                val items = recipes!!.filter { recipe -> recipe.type == titles[pagerState.currentPage]}
-
-                TabRow(
-                    backgroundColor = Color.Transparent,
-                    selectedTabIndex = pagerState.currentPage,
-                    divider = {},
-                    indicator = { positions ->
-                        TabRowDefaults.Indicator(
-                            height = 7.5.dp,
-                            color = colors.secondary,
-                            modifier = Modifier.customTabIndicatorOffset(positions[pagerState.currentPage])
-                        )
-                    }
-                ) {
-                    titles.forEachIndexed { index, title ->
-                        val color = if (pagerState.currentPage == index) colors.secondary else colors.onSurface
-                        Tab(
-                            selected = false,
-                            onClick = { coroutineScope.launch { pagerState.animateScrollToPage(index) } }) {
-                            Text(title, color = color, modifier = Modifier.padding(15.dp))
-                        }
-                    }
-                }
-                TinySpace()
-                RecipeItems(controller, items)
-                HorizontalPager(count = titles.size, state = pagerState){}
             } else {
-                CenterColumn(modifier = Modifier.height(container)){
-                    Text(
-                        text = "Getting you some recipes...",
-                        style = typography.body1.copy(color = colors.onSurface)
-                    )
-                    TinySpace()
-                    LottieAnimation(
-                        composition = composition,
-                        iterations = Int.MAX_VALUE,
-                        modifier = Modifier.size(250.dp)
-                    )
-                }
+                Loading()
             }
         }
     }
 }
 
 @Composable
-fun Indicator(state: SwipeRefreshState, trigger: Dp) {
+fun Loading(){
+    val height = LocalConfiguration.current.screenHeightDp
+    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.cooking))
+
+    CenterColumn(modifier = Modifier.height((height * .7).dp)){
+        Text(
+            text = "Getting you some recipes...",
+            style = typography.body1.copy(color = colors.onSurface)
+        )
+        TinySpace()
+        LottieAnimation(
+            composition = composition,
+            iterations = Int.MAX_VALUE,
+            modifier = Modifier.size(250.dp)
+        )
+    }
+}
+
+@Composable
+fun SwipeIndicator(state: SwipeRefreshState, trigger: Dp) {
     SwipeRefreshIndicator(
         scale = true,
         state = state,
