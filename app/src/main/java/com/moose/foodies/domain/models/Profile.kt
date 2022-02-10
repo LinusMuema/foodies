@@ -8,11 +8,11 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Profile(
     @PrimaryKey
-    val _id: String,
-    val email: String,
-    val avatar: String,
-    val username: String,
-    val description: String,
-    val favorites: List<Recipe>,
+    val _id: String = "",
+    val email: String = "",
+    val avatar: String = "",
+    val username: String = "",
+    val description: String = "",
     val current: Boolean = false,
+    val favorites: List<Recipe> = listOf(),
 )

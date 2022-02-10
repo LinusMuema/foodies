@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class AuthService @Inject constructor(private val client: HttpClient) {
 
-    suspend fun login(credentials: Credentials): Auth{
+    suspend fun login(credentials: Credentials): Auth {
         val url = "$BASE_URL/api/auth/login"
         return client.post { url(url); body = credentials }
     }
