@@ -7,9 +7,9 @@ import androidx.compose.runtime.setValue
 import kotlin.reflect.KFunction
 
 open class TextFieldState<T>(
+    initial: String = "",
     val name: String = "",
     val type: Any = String,
-    val initial: String = "",
     val validators: List<Validators>,
     val onChanged: (String) -> Unit = {},
     val transform: ((String) -> T)? = null,

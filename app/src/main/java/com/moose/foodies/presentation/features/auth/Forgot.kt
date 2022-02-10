@@ -9,6 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.KeyboardType.Companion.Email
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -21,8 +22,7 @@ fun Forgot(){
     val viewmodel: AuthViewmodel = hiltViewModel()
     val loading by remember { viewmodel.loading }
 
-    val emailState = remember { TextFieldState<String>(validators = listOf(Email(), Required())) }
-
+    val formState = remember { viewmodel.forgotFormState }
     val inputModifier = Modifier.fillMaxWidth().largeHPadding()
     val labelModifier = Modifier.fillMaxWidth().largeHPadding().smallVPadding()
 
@@ -33,14 +33,13 @@ fun Forgot(){
         SmallSpace()
 
         Text(text = "Email address", modifier = labelModifier, textAlign = TextAlign.Start)
-        TextInput(state = emailState, modifier = inputModifier, type = KeyboardType.Email)
+        TextInput(state = formState.getState("email"), modifier = inputModifier, type = Email)
 
         MediumSpace()
 
         FilledButton(text = "Submit", modifier = inputModifier, loading = loading) {
-            emailState.validate()
-            if (!emailState.hasError && !loading) {
-                viewmodel.forgot(emailState.text)
+            if (formState.validate() && !loading) {
+                viewmodel.forgot()
             }
         }
 

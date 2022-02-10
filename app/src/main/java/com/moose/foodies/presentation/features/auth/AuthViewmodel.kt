@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.text.toLowerCase
 import com.moose.foodies.util.Result
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -25,6 +26,7 @@ import com.moose.foodies.work.RecipesWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
+import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -47,10 +49,45 @@ class AuthViewmodel @Inject constructor(private val repository: AuthRepository) 
         _result.value = Result.Error(exception.parse())
     }
 
+    val forgotFormState = FormState(
+        fields = listOf(
+            TextFieldState(
+                name = "email",
+                validators = listOf(Email(), Required()),
+                transform = { it.trim().lowercase(Locale.getDefault()) }
+            )
+        )
+    )
+
     val loginFormState = FormState(
         fields = listOf(
-            TextFieldState(name = "password", validators = listOf(Required())),
-            TextFieldState<String>(name = "email", validators = listOf(Email(), Required()))
+            TextFieldState(
+                name = "password",
+                validators = listOf(Required())
+            ),
+            TextFieldState(
+                name = "email",
+                validators = listOf(Email(), Required()),
+                transform = { it.trim().lowercase(Locale.getDefault()) }
+            )
+        )
+    )
+
+    val signupFormState = FormState(
+        fields = listOf(
+            TextFieldState(
+                name = "password",
+                validators = listOf(Required())
+            ),
+            TextFieldState(
+                name = "confirm",
+                validators = listOf(Required())
+            ),
+            TextFieldState(
+                name = "email",
+                validators = listOf(Email(), Required()),
+                transform = { it.trim().lowercase(Locale.getDefault()) }
+            )
         )
     )
 
@@ -66,18 +103,21 @@ class AuthViewmodel @Inject constructor(private val repository: AuthRepository) 
         }
     }
 
-    fun signup(email: String, password: String) {
+    fun signup() {
         _loading.value = true
+        val credentials = signupFormState.getData<Credentials>()
         viewModelScope.launch(handler) {
-            val result = repository.signup(Credentials(email, password))
+            val result = repository.signup(credentials)
             _result.value = Result.Success(result)
 
             startWork()
         }
     }
 
-    fun forgot(email: String) {
+    fun forgot() {
         _loading.value = true
+        val email = forgotFormState.getState("email").text
+
         viewModelScope.launch(handler) {
             repository.forgot(email)
 
@@ -105,6 +145,8 @@ class AuthViewmodel @Inject constructor(private val repository: AuthRepository) 
             .Builder(ItemWorker::class.java, 6, TimeUnit.HOURS)
             .setConstraints(constraints)
             .build()
+
+        // queue the work
         manager.enqueue(itemsWork)
     }
 }
