@@ -4,4 +4,9 @@
         <item name="android:navigationBarColor">@color/primaryDark</item>
         <item name="android:statusBarColor" tools:targetApi="l">@color/primaryDark</item>
     </style>
+
+    <style name="Theme.Foodies.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/primaryDark</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_chef_light</item>
+    </style>
 </resources>

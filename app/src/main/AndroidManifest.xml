@@ -53,11 +53,11 @@
             android:exported="true" />
 
         <activity
-            android:name="com.moose.foodies.presentation.features.splash.SplashActivity"
+            android:theme="@style/Theme.Foodies.Splash"
+            android:name="com.moose.foodies.presentation.features.intro.IntroActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
