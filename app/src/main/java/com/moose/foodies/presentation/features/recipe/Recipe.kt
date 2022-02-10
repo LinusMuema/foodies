@@ -38,6 +38,7 @@ import com.moose.foodies.R
 import com.moose.foodies.presentation.components.CenterColumn
 import com.moose.foodies.presentation.components.TinySpace
 import com.moose.foodies.presentation.theme.FoodiesTheme
+import com.moose.foodies.presentation.theme.Status
 import com.moose.foodies.presentation.theme.shapes
 import com.moose.foodies.presentation.theme.typography
 
@@ -50,13 +51,6 @@ fun Recipe(id: String?, controller: NavHostController) {
     viewmodel.checkFavorite(id)
 
     FoodiesTheme {
-
-        val isDark = colors.isLight
-        val systemUiController = rememberSystemUiController()
-        SideEffect {
-            systemUiController.setSystemBarsColor(color = Transparent, darkIcons = isDark)
-        }
-
         val recipe by viewmodel.recipe.observeAsState()
         val favorite by viewmodel.favorite.observeAsState()
         val equipment by viewmodel.equipment.observeAsState()
@@ -66,6 +60,7 @@ fun Recipe(id: String?, controller: NavHostController) {
         // loading animation
         val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.ingredients))
 
+        Status(color = Transparent)
         Surface(color = colors.background){
             if (recipe == null){
                 CenterColumn {
@@ -119,15 +114,27 @@ fun Recipe(id: String?, controller: NavHostController) {
                                         painter = painter,
                                         contentScale = ContentScale.Crop,
                                         contentDescription = "${recipe!!.name} image",
-                                        modifier = Modifier.animateContentSize().fillMaxWidth().height(height = imageHeight),
+                                        modifier = Modifier
+                                            .animateContentSize()
+                                            .fillMaxWidth()
+                                            .height(height = imageHeight),
                                     )
                                     Row(
                                         horizontalArrangement = Arrangement.SpaceBetween,
-                                        modifier = Modifier.align(Alignment.TopCenter).fillMaxWidth().systemBarsPadding()
+                                        modifier = Modifier
+                                            .align(Alignment.TopCenter)
+                                            .fillMaxWidth()
+                                            .systemBarsPadding()
                                     ) {
-                                        Box(modifier = Modifier.padding(10.dp).clip(shapes.large).background(buttonColor).clickable { controller.popBackStack() }) {
+                                        Box(modifier = Modifier
+                                            .padding(10.dp)
+                                            .clip(shapes.large)
+                                            .background(buttonColor)
+                                            .clickable { controller.popBackStack() }) {
                                             Icon(
-                                                modifier = Modifier.size(30.dp).padding(5.dp),
+                                                modifier = Modifier
+                                                    .size(30.dp)
+                                                    .padding(5.dp),
                                                 painter = painterResource(id = R.drawable.ic_back),
                                                 contentDescription = "back icon",
                                                 tint = Color.White,
@@ -135,9 +142,15 @@ fun Recipe(id: String?, controller: NavHostController) {
                                         }
 
                                         if (recipe!!.type != "PERSONAL")
-                                            Box(modifier = Modifier.padding(10.dp).clip(shapes.large).background(buttonColor).clickable { viewmodel.toggleFavorite() }) {
+                                            Box(modifier = Modifier
+                                                .padding(10.dp)
+                                                .clip(shapes.large)
+                                                .background(buttonColor)
+                                                .clickable { viewmodel.toggleFavorite() }) {
                                                 Icon(
-                                                    modifier = Modifier.size(30.dp).padding(7.dp),
+                                                    modifier = Modifier
+                                                        .size(30.dp)
+                                                        .padding(7.dp),
                                                     painter = painterResource(id = icon),
                                                     contentDescription = "favorites icon",
                                                     tint = Color.White,
@@ -145,7 +158,11 @@ fun Recipe(id: String?, controller: NavHostController) {
                                             }
                                     }
 
-                                    Box(modifier = Modifier.align(Alignment.TopEnd).padding(top = topPadding, end = 10.dp).clip(shapes.large).background(buttonColor)){
+                                    Box(modifier = Modifier
+                                        .align(Alignment.TopEnd)
+                                        .padding(top = topPadding, end = 10.dp)
+                                        .clip(shapes.large)
+                                        .background(buttonColor)){
                                         Row(modifier = Modifier.padding(5.dp), verticalAlignment = CenterVertically) {
                                             TinySpace()
                                             Icon(

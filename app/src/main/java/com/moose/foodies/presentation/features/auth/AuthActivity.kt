@@ -27,6 +27,7 @@ import com.moose.foodies.R
 import com.moose.foodies.presentation.components.*
 import com.moose.foodies.presentation.features.navigation.NavigationActivity
 import com.moose.foodies.presentation.theme.FoodiesTheme
+import com.moose.foodies.presentation.theme.Status
 import com.moose.foodies.util.onError
 import com.moose.foodies.util.onSuccess
 import com.moose.foodies.util.toast
@@ -63,13 +64,7 @@ class AuthActivity : ComponentActivity() {
         }
 
         FoodiesTheme {
-            val isDark = colors.isLight
-            val color = colors.background
-            val systemUiController = rememberSystemUiController()
-            SideEffect {
-                systemUiController.setSystemBarsColor(color = color, darkIcons = isDark)
-            }
-
+            Status()
             Surface(color = colors.background) {
                 CenterColumn {
                     Icon(

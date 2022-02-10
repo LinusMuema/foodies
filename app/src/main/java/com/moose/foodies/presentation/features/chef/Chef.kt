@@ -45,6 +45,7 @@ import com.moose.foodies.presentation.components.CenterColumn
 import com.moose.foodies.presentation.components.SmallSpace
 import com.moose.foodies.presentation.components.TinySpace
 import com.moose.foodies.presentation.theme.FoodiesTheme
+import com.moose.foodies.presentation.theme.Status
 import com.moose.foodies.presentation.theme.typography
 
 @ExperimentalFoundationApi
@@ -63,14 +64,7 @@ fun Chef(id: String?, controller: NavHostController) {
 
 
     FoodiesTheme {
-
-        val isDark = colors.isLight
-        val color = colors.background
-        val systemUiController = rememberSystemUiController()
-        SideEffect {
-            systemUiController.setSystemBarsColor(color = color, darkIcons = isDark)
-        }
-
+        Status()
         ProvideWindowInsets {
             if (chef != null){
                 Scaffold(modifier = Modifier.systemBarsPadding(), floatingActionButton = { Fab(chef!!) }) {

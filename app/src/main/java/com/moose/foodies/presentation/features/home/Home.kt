@@ -33,6 +33,7 @@ import com.moose.foodies.presentation.features.home.fridge.Fridge
 import com.moose.foodies.presentation.features.home.feed.Feed
 import com.moose.foodies.presentation.features.home.profile.Profile
 import com.moose.foodies.presentation.theme.FoodiesTheme
+import com.moose.foodies.presentation.theme.Status
 
 @Composable
 @ExperimentalCoilApi
@@ -44,14 +45,7 @@ fun Home(mainController: NavHostController) {
     val screens = listOf(Feed, Explore, Fridge, Profile)
 
     FoodiesTheme {
-
-        val isDark = colors.isLight
-        val color = colors.background
-        val systemUiController = rememberSystemUiController()
-        SideEffect {
-            systemUiController.setSystemBarsColor(color = color, darkIcons = isDark)
-        }
-
+        Status()
         Surface {
             ProvideWindowInsets {
                 Scaffold(
