@@ -48,6 +48,7 @@ import com.moose.foodies.presentation.components.TinySpace
 import com.moose.foodies.presentation.theme.FoodiesTheme
 import com.moose.foodies.presentation.theme.Status
 import com.moose.foodies.presentation.theme.typography
+import com.moose.foodies.util.CHEF_TIMEOUT
 
 @Composable
 @ExperimentalMaterialApi
@@ -64,7 +65,7 @@ fun Chef(id: String?, controller: NavHostController) {
     FoodiesTheme {
         Status()
         ProvideWindowInsets {
-            if (counter >= 5 && chef != null) {
+            if (counter >= CHEF_TIMEOUT && chef != null) {
                 Scaffold(
                     modifier = Modifier.systemBarsPadding(),
                     floatingActionButton = { Fab(chef!!) },

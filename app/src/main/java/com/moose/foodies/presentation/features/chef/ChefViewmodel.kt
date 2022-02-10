@@ -34,8 +34,8 @@ class ChefViewmodel @Inject constructor(val repository: ChefRepository): ViewMod
 
     private fun startCounter() {
         viewModelScope.launch {
-            delay(5000)
-            _seconds.value = 5
+            delay(3000)
+            _seconds.value = 3
         }
     }
 
