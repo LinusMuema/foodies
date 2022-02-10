@@ -56,8 +56,6 @@ fun Feed(controller: NavController){
     val counter by remember { viewmodel.seconds }
     val refreshing by remember { viewmodel.refreshing }
 
-    val coroutineScope = rememberCoroutineScope()
-
     SwipeRefresh(
         state =  rememberSwipeRefreshState(refreshing),
         onRefresh = { viewmodel.refresh() },

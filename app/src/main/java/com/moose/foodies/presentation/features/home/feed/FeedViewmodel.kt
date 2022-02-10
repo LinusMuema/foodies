@@ -45,10 +45,8 @@ class FeedViewmodel @Inject constructor(val repository: FeedRepository) : ViewMo
 
     private fun startCounter() {
         viewModelScope.launch {
-            (0..5).map {
-                _seconds.value = it
-                delay(1000)
-            }
+            delay(5000)
+            _seconds.value = 5
         }
     }
 
