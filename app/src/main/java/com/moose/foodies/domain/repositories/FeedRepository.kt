@@ -19,7 +19,13 @@ interface FeedRepository {
     suspend fun fetchData()
 }
 
-class FeedRepositoryImpl @Inject constructor(val userDao: UserDao, val itemsDao: ItemsDao, val preferences: Preferences): FeedRepository {
+class FeedRepositoryImpl @Inject constructor(
+    val userDao: UserDao,
+    val itemsDao: ItemsDao,
+    val preferences: Preferences,
+    val usersService: UsersService,
+    val recipesService: RecipesService,
+): FeedRepository {
     override val chefs: Flow<List<Profile>>
         get() = userDao.getChefs()
 
@@ -31,8 +37,8 @@ class FeedRepositoryImpl @Inject constructor(val userDao: UserDao, val itemsDao:
 
     override suspend fun fetchData() {
         val id = profile.first()._id
-        val feed = RecipesService.getFeed()
-        val chefs = UsersService.discoverUsers()
+        val feed = recipesService.getFeed()
+        val chefs = usersService.discoverUsers()
 
         userDao.updateChefs(id, chefs)
         itemsDao.updateFeedRecipes(feed)

@@ -17,14 +17,18 @@ interface RecipeRepository {
     suspend fun updateRecipe(recipe: Recipe)
 }
 
-class RecipeRepositoryImpl @Inject constructor(val itemsDao: ItemsDao, val preferences: Preferences): RecipeRepository {
+class RecipeRepositoryImpl @Inject constructor(
+    val itemsDao: ItemsDao,
+    val preferences: Preferences,
+    val recipesService: RecipesService,
+): RecipeRepository {
 
     override suspend fun getItem(id: String): Item {
         return itemsDao.getItemById(id)
     }
 
     override suspend fun getRecipe(id: String): Recipe {
-        return itemsDao.getRecipeById(id) ?: RecipesService.getRecipe(id)
+        return itemsDao.getRecipeById(id) ?: recipesService.getRecipe(id)
     }
 
     override suspend fun getFavorite(id: String): Recipe? {

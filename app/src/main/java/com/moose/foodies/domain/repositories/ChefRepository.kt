@@ -5,7 +5,6 @@ import com.moose.foodies.data.remote.RecipesService
 import com.moose.foodies.data.remote.UsersService
 import com.moose.foodies.domain.models.Profile
 import com.moose.foodies.domain.models.Recipe
-import com.moose.foodies.util.Preferences
 import javax.inject.Inject
 
 interface ChefRepository {
@@ -15,13 +14,17 @@ interface ChefRepository {
     suspend fun getChefRecipes(id: String): List<Recipe>
 }
 
-class ChefRepositoryImpl @Inject constructor(val userDao: UserDao, val preferences: Preferences): ChefRepository {
+class ChefRepositoryImpl @Inject constructor(
+    val userDao: UserDao,
+    val usersService: UsersService,
+    val recipesService: RecipesService,
+): ChefRepository {
 
     override suspend fun getChef(id: String): Profile {
-        return userDao.getChef(id) ?: UsersService.getProfile(id)
+        return userDao.getChef(id) ?: usersService.getProfile(id)
     }
 
     override suspend fun getChefRecipes(id: String): List<Recipe> {
-        return RecipesService.getUserRecipes(id)
+        return recipesService.getUserRecipes(id)
     }
 }

@@ -11,7 +11,6 @@ import com.moose.foodies.domain.models.RawRecipe
 import com.moose.foodies.domain.models.Recipe
 import com.moose.foodies.util.Cloudinary
 import com.moose.foodies.util.UploadState
-import dagger.hilt.android.components.ViewModelComponent
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -28,7 +27,12 @@ interface AddRepository {
     suspend fun uploadRecipe(recipe: RawRecipe): Recipe
 }
 
-class AddRepositoryImpl @Inject constructor(val dao: ItemsDao, val userDao: UserDao, val cloudinary: Cloudinary): AddRepository {
+class AddRepositoryImpl @Inject constructor(
+    val userDao: UserDao,
+    val itemsDao: ItemsDao,
+    val cloudinary: Cloudinary,
+    val recipesService: RecipesService,
+): AddRepository {
 
     override val profile: Flow<Profile>
         get() = userDao.getProfile()
@@ -39,13 +43,13 @@ class AddRepositoryImpl @Inject constructor(val dao: ItemsDao, val userDao: User
     override suspend fun uploadImage(dir: String, path: Uri) = cloudinary.uploadImage(dir, path)
 
     override suspend fun getItems(name: String, type: String): List<Item> {
-        return dao.searchItem("%$name%", type)
+        return itemsDao.searchItem("%$name%", type)
     }
 
     override suspend fun uploadRecipe(recipe: RawRecipe): Recipe {
         cloudinary.clearProgress()
-        val result = RecipesService.uploadRecipe(recipe)
-        dao.addRecipe(result.copy(type = "PERSONAL"))
+        val result = recipesService.uploadRecipe(recipe)
+        itemsDao.addRecipe(result.copy(type = "PERSONAL"))
         return result
     }
 }

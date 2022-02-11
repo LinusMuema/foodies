@@ -10,7 +10,7 @@ open class FormState(val fields: List<TextFieldState<*>>) {
 
     fun getState(name: String): TextFieldState<*> = fields.first { it.name == name }
 
-    inline fun <reified T>getData(): T{
+    inline fun <reified T>getData(): T {
         val map = fields.associate {
             val value = if (it.transform == null) it.text else it.transform!!(it.text)
             it.name to value

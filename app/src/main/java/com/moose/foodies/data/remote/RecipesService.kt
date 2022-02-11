@@ -1,24 +1,14 @@
 package com.moose.foodies.data.remote
 
-import com.moose.foodies.FoodiesApplication
 import com.moose.foodies.domain.models.Item
 import com.moose.foodies.domain.models.RawRecipe
 import com.moose.foodies.domain.models.Recipe
 import com.moose.foodies.util.BASE_URL
-import dagger.hilt.android.EntryPointAccessors
 import io.ktor.client.*
-import io.ktor.client.features.*
-import io.ktor.client.features.get
 import io.ktor.client.request.*
+import javax.inject.Inject
 
-object RecipesService {
-    private var client: HttpClient
-
-    init {
-        val context = FoodiesApplication.appContext
-        val entryPoint = EntryPointAccessors.fromApplication(context, ClientHelper::class.java)
-        client = entryPoint.client()
-    }
+class RecipesService @Inject constructor(val client: HttpClient) {
 
     suspend fun getItems(update: String?): List<Item>{
         val url = "$BASE_URL/api/items"

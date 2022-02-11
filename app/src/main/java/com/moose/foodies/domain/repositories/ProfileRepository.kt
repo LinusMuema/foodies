@@ -29,7 +29,13 @@ interface ProfileRepository {
     suspend fun uploadImage(dir: String, path: Uri)
 }
 
-class ProfileRepositoryImpl @Inject constructor(val userDao: UserDao, val itemsDao: ItemsDao, val cloudinary: Cloudinary, val preferences: Preferences): ProfileRepository {
+class ProfileRepositoryImpl @Inject constructor(
+    val userDao: UserDao,
+    val itemsDao: ItemsDao,
+    val cloudinary: Cloudinary,
+    val preferences: Preferences,
+    val usersService: UsersService,
+): ProfileRepository {
 
     override val profile: Flow<Profile>
         get() = userDao.getProfile()
@@ -51,7 +57,7 @@ class ProfileRepositoryImpl @Inject constructor(val userDao: UserDao, val itemsD
     }
 
     override suspend fun updateProfile(profile: Profile) {
-        val update = UsersService.updateProfile(profile)
+        val update = usersService.updateProfile(profile)
         userDao.addProfile(update.copy(current = true))
     }
 

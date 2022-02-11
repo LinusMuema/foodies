@@ -19,6 +19,7 @@ class ItemWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted params: WorkerParameters,
     private val preferences: Preferences,
+    private val recipesService: RecipesService,
 ): CoroutineWorker(appContext, params) {
 
     override suspend fun doWork(): Result {
@@ -27,7 +28,7 @@ class ItemWorker @AssistedInject constructor(
             val time = SimpleDateFormat("hh:mm:ss", Locale.UK).format(Date())
             val date = SimpleDateFormat("yyyy-MM-dd", Locale.UK).format(Date())
 
-            dao.addItems(RecipesService.getItems(update))
+            dao.addItems(recipesService.getItems(update))
             preferences.setUpdate("${date}T$time")
 
             Result.success(workDataOf("status" to "success"))

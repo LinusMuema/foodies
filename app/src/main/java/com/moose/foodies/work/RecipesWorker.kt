@@ -18,12 +18,13 @@ class RecipesWorker @AssistedInject constructor(
     private val itemsDao: ItemsDao,
     @Assisted appContext: Context,
     @Assisted params: WorkerParameters,
+    private val recipesService: RecipesService,
 ) : CoroutineWorker(appContext, params) {
 
     override suspend fun doWork(): Result {
         return try {
             val id = userDao.getProfile().first()._id
-            val recipes = RecipesService.getUserRecipes(id)
+            val recipes = recipesService.getUserRecipes(id)
             itemsDao.addRecipe(*recipes.map { it.type = "PERSONAL"; it }.toTypedArray())
             Result.success(workDataOf("status" to "success"))
         } catch (e: Throwable) { Result.failure(workDataOf("error" to e.message)) }

@@ -204,7 +204,7 @@ fun ProfileDialog(viewmodel: ProfileViewmodel) {
             OutlinedInput(label = "username", type = KeyboardType.Text, state = nameState)
             OutlinedInput(label = "tagline", type = KeyboardType.Text, state = descriptionState)
             TinySpace()
-            FilledButton(text = button) {
+            FilledButton(text = button, modifier = Modifier.fillMaxWidth()) {
                 if (descriptionState.validate() && nameState.validate() && !loading!!) {
                     val update = profile.copy(username = nameState.text, description = descriptionState.text)
                     viewmodel.updateProfile(update)

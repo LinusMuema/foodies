@@ -1,18 +1,11 @@
 package com.moose.foodies.presentation.features.auth
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.text.toLowerCase
-import com.moose.foodies.util.Result
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.work.*
 import com.moose.foodies.FoodiesApplication
-import com.moose.foodies.data.remote.AuthService
 import com.moose.foodies.domain.models.Auth
 import com.moose.foodies.domain.models.Credentials
 import com.moose.foodies.domain.repositories.AuthRepository
@@ -20,6 +13,7 @@ import com.moose.foodies.presentation.components.Email
 import com.moose.foodies.presentation.components.FormState
 import com.moose.foodies.presentation.components.Required
 import com.moose.foodies.presentation.components.TextFieldState
+import com.moose.foodies.util.Result
 import com.moose.foodies.util.parse
 import com.moose.foodies.work.ItemWorker
 import com.moose.foodies.work.RecipesWorker
@@ -77,7 +71,7 @@ class AuthViewmodel @Inject constructor(private val repository: AuthRepository) 
         fields = listOf(
             TextFieldState(
                 name = "password",
-                validators = listOf(Required())
+                validators = listOf(Required()),
             ),
             TextFieldState(
                 name = "confirm",
