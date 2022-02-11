@@ -2,7 +2,7 @@ package com.moose.foodies.domain.repositories
 
 import android.net.Uri
 import androidx.lifecycle.LiveData
-import com.moose.foodies.data.local.ItemsDao
+import com.moose.foodies.data.local.RecipesDao
 import com.moose.foodies.data.local.UserDao
 import com.moose.foodies.data.remote.UsersService
 import com.moose.foodies.domain.models.Profile
@@ -31,7 +31,7 @@ interface ProfileRepository {
 
 class ProfileRepositoryImpl @Inject constructor(
     val userDao: UserDao,
-    val itemsDao: ItemsDao,
+    val recipesDao: RecipesDao,
     val cloudinary: Cloudinary,
     val preferences: Preferences,
     val usersService: UsersService,
@@ -41,7 +41,7 @@ class ProfileRepositoryImpl @Inject constructor(
         get() = userDao.getProfile()
 
     override val recipes: Flow<List<Recipe>>
-        get() = itemsDao.getUserRecipes()
+        get() = recipesDao.getUserRecipes()
 
     override val progress: LiveData<UploadState>
         get() = cloudinary.progress
@@ -53,7 +53,7 @@ class ProfileRepositoryImpl @Inject constructor(
         preferences.setUpdate(null)
 
         userDao.nukeProfile()
-        itemsDao.nukeRecipes()
+        recipesDao.nukeRecipes()
     }
 
     override suspend fun updateProfile(profile: Profile) {

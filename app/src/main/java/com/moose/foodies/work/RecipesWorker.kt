@@ -5,7 +5,7 @@ import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
-import com.moose.foodies.data.local.ItemsDao
+import com.moose.foodies.data.local.RecipesDao
 import com.moose.foodies.data.local.UserDao
 import com.moose.foodies.data.remote.RecipesService
 import dagger.assisted.Assisted
@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.first
 @HiltWorker
 class RecipesWorker @AssistedInject constructor(
     private val userDao: UserDao,
-    private val itemsDao: ItemsDao,
+    private val recipesDao: RecipesDao,
     @Assisted appContext: Context,
     @Assisted params: WorkerParameters,
     private val recipesService: RecipesService,
@@ -25,7 +25,7 @@ class RecipesWorker @AssistedInject constructor(
         return try {
             val id = userDao.getProfile().first()._id
             val recipes = recipesService.getUserRecipes(id)
-            itemsDao.addRecipe(*recipes.map { it.type = "PERSONAL"; it }.toTypedArray())
+            recipesDao.addRecipe(*recipes.map { it.type = "PERSONAL"; it }.toTypedArray())
             Result.success(workDataOf("status" to "success"))
         } catch (e: Throwable) { Result.failure(workDataOf("error" to e.message)) }
     }

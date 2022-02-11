@@ -2,7 +2,7 @@ package com.moose.foodies.domain.repositories
 
 import android.net.Uri
 import androidx.lifecycle.LiveData
-import com.moose.foodies.data.local.ItemsDao
+import com.moose.foodies.data.local.RecipesDao
 import com.moose.foodies.data.local.UserDao
 import com.moose.foodies.data.remote.RecipesService
 import com.moose.foodies.domain.models.Item
@@ -29,7 +29,7 @@ interface AddRepository {
 
 class AddRepositoryImpl @Inject constructor(
     val userDao: UserDao,
-    val itemsDao: ItemsDao,
+    val recipesDao: RecipesDao,
     val cloudinary: Cloudinary,
     val recipesService: RecipesService,
 ): AddRepository {
@@ -43,13 +43,13 @@ class AddRepositoryImpl @Inject constructor(
     override suspend fun uploadImage(dir: String, path: Uri) = cloudinary.uploadImage(dir, path)
 
     override suspend fun getItems(name: String, type: String): List<Item> {
-        return itemsDao.searchItem("%$name%", type)
+        return recipesDao.searchItem("%$name%", type)
     }
 
     override suspend fun uploadRecipe(recipe: RawRecipe): Recipe {
         cloudinary.clearProgress()
         val result = recipesService.uploadRecipe(recipe)
-        itemsDao.addRecipe(result.copy(type = "PERSONAL"))
+        recipesDao.addRecipe(result.copy(type = "PERSONAL"))
         return result
     }
 }

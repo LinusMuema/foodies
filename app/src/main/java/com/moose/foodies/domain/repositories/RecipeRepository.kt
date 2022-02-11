@@ -1,9 +1,11 @@
 package com.moose.foodies.domain.repositories
 
-import com.moose.foodies.data.local.ItemsDao
+import com.moose.foodies.data.local.RecipesDao
 import com.moose.foodies.data.remote.RecipesService
 import com.moose.foodies.domain.models.Item
+import com.moose.foodies.domain.models.PagedRecipes
 import com.moose.foodies.domain.models.Recipe
+import com.moose.foodies.domain.models.SearchData
 import com.moose.foodies.util.Preferences
 import javax.inject.Inject
 
@@ -15,27 +17,33 @@ interface RecipeRepository {
     suspend fun getFavorite(id: String):Recipe?
 
     suspend fun updateRecipe(recipe: Recipe)
+
+    suspend fun searchRecipe(page: Int, data: SearchData): PagedRecipes
 }
 
 class RecipeRepositoryImpl @Inject constructor(
-    val itemsDao: ItemsDao,
+    val recipesDao: RecipesDao,
     val preferences: Preferences,
     val recipesService: RecipesService,
 ): RecipeRepository {
 
     override suspend fun getItem(id: String): Item {
-        return itemsDao.getItemById(id)
+        return recipesDao.getItemById(id)
     }
 
     override suspend fun getRecipe(id: String): Recipe {
-        return itemsDao.getRecipeById(id) ?: recipesService.getRecipe(id)
+        return recipesDao.getRecipeById(id) ?: recipesService.getRecipe(id)
     }
 
     override suspend fun getFavorite(id: String): Recipe? {
-        return itemsDao.getFavoriteById(id)
+        return recipesDao.getFavoriteById(id)
     }
 
     override suspend fun updateRecipe(recipe: Recipe) {
-        return itemsDao.updateRecipe(recipe)
+        return recipesDao.updateRecipe(recipe)
+    }
+
+    override suspend fun searchRecipe(page: Int, data: SearchData): PagedRecipes {
+        return recipesService.searchRecipe(data, page)
     }
 }

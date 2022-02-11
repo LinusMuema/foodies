@@ -1,6 +1,6 @@
 package com.moose.foodies.domain.repositories
 
-import com.moose.foodies.data.local.ItemsDao
+import com.moose.foodies.data.local.RecipesDao
 import com.moose.foodies.data.local.UserDao
 import com.moose.foodies.data.remote.RecipesService
 import com.moose.foodies.data.remote.UsersService
@@ -21,7 +21,7 @@ interface FeedRepository {
 
 class FeedRepositoryImpl @Inject constructor(
     val userDao: UserDao,
-    val itemsDao: ItemsDao,
+    val recipesDao: RecipesDao,
     val preferences: Preferences,
     val usersService: UsersService,
     val recipesService: RecipesService,
@@ -33,7 +33,7 @@ class FeedRepositoryImpl @Inject constructor(
         get() = userDao.getProfile()
 
     override val recipes: Flow<List<Recipe>>
-        get() = itemsDao.getFeedRecipes()
+        get() = recipesDao.getFeedRecipes()
 
     override suspend fun fetchData() {
         val id = profile.first()._id
@@ -41,6 +41,6 @@ class FeedRepositoryImpl @Inject constructor(
         val chefs = usersService.discoverUsers()
 
         userDao.updateChefs(id, chefs)
-        itemsDao.updateFeedRecipes(feed)
+        recipesDao.updateFeedRecipes(feed)
     }
 }

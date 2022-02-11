@@ -15,7 +15,7 @@ abstract class FoodiesDatabase: RoomDatabase() {
 
     abstract fun getUserDao(): UserDao
 
-    abstract fun getItemDao(): ItemsDao
+    abstract fun getItemDao(): RecipesDao
 
     companion object{
         const val DB_NAME="foodies"

@@ -1,8 +1,6 @@
 package com.moose.foodies.data.remote
 
-import com.moose.foodies.domain.models.Item
-import com.moose.foodies.domain.models.RawRecipe
-import com.moose.foodies.domain.models.Recipe
+import com.moose.foodies.domain.models.*
 import com.moose.foodies.util.BASE_URL
 import io.ktor.client.*
 import io.ktor.client.request.*
@@ -33,5 +31,10 @@ class RecipesService @Inject constructor(val client: HttpClient) {
     suspend fun uploadRecipe(recipe: RawRecipe): Recipe{
         val url = "$BASE_URL/api/recipes"
         return client.post{url(url); body = recipe}
+    }
+
+    suspend fun searchRecipe(search: SearchData, page: Int): PagedRecipes{
+        val url = "$BASE_URL/api/recipes/search/$page"
+        return client.post { url(url); body = search }
     }
 }

@@ -6,7 +6,7 @@ import com.moose.foodies.domain.models.Recipe
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface ItemsDao {
+interface RecipesDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addItems(items: List<Item>)

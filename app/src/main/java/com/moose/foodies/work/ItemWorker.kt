@@ -5,7 +5,7 @@ import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
-import com.moose.foodies.data.local.ItemsDao
+import com.moose.foodies.data.local.RecipesDao
 import com.moose.foodies.data.remote.RecipesService
 import com.moose.foodies.util.Preferences
 import dagger.assisted.Assisted
@@ -15,7 +15,7 @@ import java.util.*
 
 @HiltWorker
 class ItemWorker @AssistedInject constructor(
-    private val dao: ItemsDao,
+    private val dao: RecipesDao,
     @Assisted appContext: Context,
     @Assisted params: WorkerParameters,
     private val preferences: Preferences,
