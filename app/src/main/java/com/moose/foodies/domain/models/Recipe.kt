@@ -9,10 +9,10 @@ import kotlinx.serialization.Serializable
 data class Recipe(
     @PrimaryKey
     val _id: String,
+    val user: Profile,
     val name: String,
     val time: String,
     val image: String,
-    val user: Profile,
     var type: String = "",
     val description: String,
     val steps: List<String>,

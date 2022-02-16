@@ -11,6 +11,7 @@ import io.ktor.client.engine.android.*
 import io.ktor.client.features.*
 import io.ktor.client.features.auth.*
 import io.ktor.client.features.auth.providers.*
+import io.ktor.client.features.cache.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.features.logging.*
@@ -19,6 +20,7 @@ import io.ktor.client.statement.*
 import io.ktor.http.*
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
+import java.net.UnknownHostException
 import kotlinx.serialization.json.Json as json
 
 @Module
@@ -35,6 +37,9 @@ object NetworkService {
                 level = LogLevel.ALL
                 logger = FoodiesLogger
             }
+
+            // cache mechanism
+            install(HttpCache)
 
             // serialization using kotlinx.serialization
             install(JsonFeature) {
@@ -67,6 +72,9 @@ object NetworkService {
             HttpResponseValidator {
                 handleResponseException {
                     when(it){
+                        is UnknownHostException -> {
+                            throw Exception("check your internet connection")
+                        }
                         is ClientRequestException -> {
                             val error: ApiError = json.decodeFromString(it.response.readText())
                             throw Exception(error.message)

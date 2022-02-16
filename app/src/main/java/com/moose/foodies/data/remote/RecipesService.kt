@@ -33,8 +33,8 @@ class RecipesService @Inject constructor(val client: HttpClient) {
         return client.post{url(url); body = recipe}
     }
 
-    suspend fun searchRecipe(search: SearchData, page: Int): PagedRecipes{
-        val url = "$BASE_URL/api/recipes/search/$page"
+    suspend fun searchRecipe(search: SearchData): List<Recipe> {
+        val url = "$BASE_URL/api/recipes/search"
         return client.post { url(url); body = search }
     }
 }

@@ -24,7 +24,7 @@ class FeedViewmodel @Inject constructor(val repository: FeedRepository) : ViewMo
     private val _profile: MutableState<Profile?> = mutableStateOf(null)
     val profile: State<Profile?> = _profile
 
-    private val _chefs: MutableState<List<Profile>?> = mutableStateOf(null)
+    private val _chefs: MutableState<List<Profile>?> = mutableStateOf(listOf())
     val chefs: State<List<Profile>?> = _chefs
 
     private val _recipes: MutableState<List<Recipe>?> = mutableStateOf(null)

@@ -3,7 +3,6 @@ package com.moose.foodies.domain.repositories
 import com.moose.foodies.data.local.RecipesDao
 import com.moose.foodies.data.remote.RecipesService
 import com.moose.foodies.domain.models.Item
-import com.moose.foodies.domain.models.PagedRecipes
 import com.moose.foodies.domain.models.Recipe
 import com.moose.foodies.domain.models.SearchData
 import com.moose.foodies.util.Preferences
@@ -18,7 +17,7 @@ interface RecipeRepository {
 
     suspend fun updateRecipe(recipe: Recipe)
 
-    suspend fun searchRecipe(page: Int, data: SearchData): PagedRecipes
+    suspend fun searchRecipe(data: SearchData): List<Recipe>
 }
 
 class RecipeRepositoryImpl @Inject constructor(
@@ -43,7 +42,7 @@ class RecipeRepositoryImpl @Inject constructor(
         return recipesDao.updateRecipe(recipe)
     }
 
-    override suspend fun searchRecipe(page: Int, data: SearchData): PagedRecipes {
-        return recipesService.searchRecipe(data, page)
+    override suspend fun searchRecipe(data: SearchData): List<Recipe> {
+        return recipesService.searchRecipe(data)
     }
 }
