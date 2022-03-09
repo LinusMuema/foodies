@@ -11,8 +11,8 @@ interface RecipesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addItems(items: List<Item>)
 
-    @Query("select * from item")
-    fun getItems(): Flow<List<Item>>
+    @Query("select * from item where type = 'Ingredients'")
+    fun getIngredients(): Flow<List<Item>>
 
     @Query("select * from item where name like :name and type = :type limit 5")
     suspend fun searchItem(name: String, type: String): List<Item>

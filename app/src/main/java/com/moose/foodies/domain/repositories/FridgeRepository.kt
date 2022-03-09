@@ -12,6 +12,6 @@ interface FridgeRepository {
 
 class FridgeRepositoryImpl @Inject constructor(val recipesDao: RecipesDao, val api: RecipesService): FridgeRepository {
     override val ingredients: Flow<List<Item>>
-        get() = recipesDao.getItems()
+        get() = recipesDao.getIngredients()
 
 }

@@ -1,5 +1,6 @@
 package com.moose.foodies.presentation.features.home.fridge
 
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -32,5 +33,11 @@ class FridgeViewmodel @Inject constructor(private val repository: FridgeReposito
                 _ingredients.value = it
             }
         }
+    }
+
+    fun setIngredient(item: Item) {
+        Log.d("Selected", "setIngredient: item being set is $item")
+        if (_selected.value.contains(item)) _selected.value = _selected.value - item
+        else _selected.value = _selected.value + item
     }
 }
