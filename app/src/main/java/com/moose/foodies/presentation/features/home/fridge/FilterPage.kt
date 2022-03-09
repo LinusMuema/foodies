@@ -86,7 +86,7 @@ fun ItemCard(item: Item){
     val selected by remember { viewmodel.selected }
 
     val color = if (selected.contains(item)) colors.onPrimary else colors.onSurface
-    val background = if (selected.contains(item)) colors.primary else colors.surface
+    val background = if (selected.contains(item)) colors.primary else colors.background
 
     Card(
         elevation = 5.dp,

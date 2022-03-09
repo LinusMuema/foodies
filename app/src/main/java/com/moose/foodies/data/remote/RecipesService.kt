@@ -48,4 +48,9 @@ class RecipesService @Inject constructor(val client: HttpClient) {
         val url = "$BASE_URL/api/recipes/search"
         return client.post { url(url); body = search }
     }
+
+    suspend fun getSuggestions(search: IngredientsSearch): List<Recipe>{
+        val url = "$BASE_URL/api/recipes/suggestions"
+        return client.post { url(url); body = search }
+    }
 }

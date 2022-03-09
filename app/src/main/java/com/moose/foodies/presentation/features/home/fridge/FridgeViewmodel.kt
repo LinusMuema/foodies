@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.moose.foodies.domain.models.Item
+import com.moose.foodies.domain.models.Recipe
 import com.moose.foodies.domain.repositories.FridgeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
@@ -26,6 +27,15 @@ class FridgeViewmodel @Inject constructor(private val repository: FridgeReposito
     private val _selected: MutableState<List<Item>> = mutableStateOf(listOf())
     val selected: State<List<Item>> = _selected
 
+    private val _recipes: MutableState<List<Recipe>> = mutableStateOf(listOf())
+    val recipes: State<List<Recipe>> =_recipes
+
+    fun setIngredient(item: Item) {
+        if (_selected.value.contains(item)) _selected.value = _selected.value - item
+        else _selected.value = _selected.value + item
+
+        getRecipes()
+    }
 
     private fun getIngredients() {
         viewModelScope.launch {
@@ -35,9 +45,9 @@ class FridgeViewmodel @Inject constructor(private val repository: FridgeReposito
         }
     }
 
-    fun setIngredient(item: Item) {
-        Log.d("Selected", "setIngredient: item being set is $item")
-        if (_selected.value.contains(item)) _selected.value = _selected.value - item
-        else _selected.value = _selected.value + item
+    private fun getRecipes(){
+        viewModelScope.launch {
+            _recipes.value = repository.getSuggestions(items = _selected.value)
+        }
     }
 }
