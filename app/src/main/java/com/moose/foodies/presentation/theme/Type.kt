@@ -17,49 +17,38 @@ private val Poppins = FontFamily(
 
 val typography = Typography(
     h4 = TextStyle(
-        fontSize = 24.sp,
-        lineHeight = 37.sp,
+        fontSize = 20.sp,
         fontFamily = Poppins,
         fontWeight = FontWeight.Bold,
     ),
     h5 = TextStyle(
-        fontSize = 20.sp,
-        lineHeight = 29.sp,
+        fontSize = 18.sp,
         fontFamily = Poppins,
         fontWeight = FontWeight.Medium,
     ),
     h6 = TextStyle(
-        fontSize = 18.sp,
-        lineHeight = 24.sp,
+        fontSize = 16.sp,
         fontFamily = Poppins,
         fontWeight = FontWeight.Normal,
     ),
     body1 = TextStyle(
-        fontSize = 14.sp,
-        lineHeight = 28.sp,
+        fontSize = 12.sp,
         fontFamily = Poppins,
-        letterSpacing = 0.15.sp,
         fontWeight = FontWeight.Normal,
     ),
     body2 = TextStyle(
-        fontSize = 14.sp,
-        lineHeight = 20.sp,
+        fontSize = 12.sp,
         fontFamily = Poppins,
-        letterSpacing = 0.25.sp,
         fontWeight = FontWeight.Normal,
     ),
     button = TextStyle(
-        fontSize = 14.sp,
-        lineHeight = 16.sp,
+        fontSize = 12.sp,
         fontFamily = Poppins,
-        letterSpacing = 1.25.sp,
         fontWeight = FontWeight.Normal,
     ),
     caption = TextStyle(
-        fontSize = 12.sp,
-        lineHeight = 16.sp,
+        fontSize = 10.sp,
         fontFamily = Poppins,
-        letterSpacing = 0.4.sp,
         fontWeight = FontWeight.Light,
     ),
 )
