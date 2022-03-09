@@ -40,9 +40,9 @@ fun Explore(controller: NavController) {
     val viewmodel: ExploreViewmodel = hiltViewModel()
 
     val recipes by remember { viewmodel.recipes }
-    val categories by remember { viewmodel.categories }
 
     Column {
+        SmallSpace()
         Text(
             text = "Discover more recipes",
             style = typography.h5.copy(color = colors.primary)
@@ -63,34 +63,54 @@ fun Explore(controller: NavController) {
 @Composable
 @ExperimentalCoilApi
 fun Recipe(recipe: Recipe, reverse: Boolean) {
-    val ingredients = recipe.ingredients.size
     val alignment = if (reverse) Alignment.End else Alignment.Start
     val direction = if (reverse) LayoutDirection.Rtl else LayoutDirection.Ltr
 
-    Box(modifier = Modifier.fillMaxWidth().smallPadding()) {
-        CompositionLocalProvider(LocalLayoutDirection provides direction) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = SpaceBetween,
-                verticalAlignment = CenterVertically,
-                content = {
-                    NetImage(url = recipe.image, modifier = Modifier.size(175.dp, 200.dp).clip(shapes.medium))
-                    SmallSpace()
-
-                    Column(horizontalAlignment = alignment) {
-                        MediumSpace()
-                        Text(
-                            text = recipe.name,
-                            fontWeight = FontWeight.Medium,
-                            style = typography.h6.copy(color = Color.White),
-                        )
-                        SmallSpace()
-                        Text(text = "${ingredients} ingredients")
-                        Text(text = "Ready in ${recipe.time}")
-                    }
-                    SmallSpace()
-                }
+    Box(modifier = Modifier
+        .fillMaxWidth()
+        .smallPadding()) {
+        val time = "Ready in ${recipe.time}"
+        val ingredients = "${recipe.ingredients.size} ingredients "
+        val image: @Composable () -> Unit = {
+            NetImage(
+                url = recipe.image,
+                modifier = Modifier
+                    .size(175.dp, 200.dp)
+                    .clip(shapes.medium)
             )
         }
+
+        val text: @Composable () -> Unit = {
+            Column(horizontalAlignment = alignment) {
+                MediumSpace()
+                Text(
+                    text = recipe.name,
+                    fontWeight = FontWeight.Medium,
+                    style = typography.h6.copy(color = Color.White),
+                )
+                SmallSpace()
+                Text(text = ingredients)
+                Text(text = time)
+            }
+        }
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = SpaceBetween,
+            verticalAlignment = CenterVertically,
+            content = {
+                if (reverse) {
+                    image()
+                    SmallSpace()
+                    text()
+                    SmallSpace()
+                } else {
+                    text()
+                    SmallSpace()
+                    image()
+                    SmallSpace()
+                }
+            }
+        )
     }
 }
