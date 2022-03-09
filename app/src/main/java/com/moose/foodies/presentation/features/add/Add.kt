@@ -265,7 +265,7 @@ fun Add(controller: NavController) {
                         }
                         SmallSpace()
                         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Center) {
-                            FilledButton(text = button) {
+                            FilledButton(text = button, modifier = Modifier.fillMaxWidth()) {
                                 val validSteps = steps.map { it.validate() }.all { it }
                                 val validTime = if (selected == 5) timeState.validate() else true
 
