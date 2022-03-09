@@ -26,4 +26,7 @@ abstract class RepositoryBindings {
 
     @Binds
     abstract fun provideRecipeRepository(impl: RecipeRepositoryImpl): RecipeRepository
+
+    @Binds
+    abstract fun provideFridgeRepository(impl: FridgeRepositoryImpl): FridgeRepository
 }
