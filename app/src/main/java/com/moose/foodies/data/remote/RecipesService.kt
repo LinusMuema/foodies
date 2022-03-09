@@ -3,7 +3,11 @@ package com.moose.foodies.data.remote
 import com.moose.foodies.domain.models.*
 import com.moose.foodies.util.BASE_URL
 import io.ktor.client.*
+import io.ktor.client.call.*
+import io.ktor.client.features.*
 import io.ktor.client.request.*
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 class RecipesService @Inject constructor(val client: HttpClient) {
@@ -23,9 +27,16 @@ class RecipesService @Inject constructor(val client: HttpClient) {
         return client.get(url)
     }
 
+
     suspend fun getUserRecipes(id: String): List<Recipe>{
         val url = "$BASE_URL/api/recipes/user/$id"
-        return client.get(url)
+        return try {
+            client.get(url)
+        }  catch (e: NoTransformationFoundException){
+            val recipes: String = client.get(url)
+            val json = Json { ignoreUnknownKeys = true }
+            json.decodeFromString(recipes)
+        }
     }
 
     suspend fun uploadRecipe(recipe: RawRecipe): Recipe{

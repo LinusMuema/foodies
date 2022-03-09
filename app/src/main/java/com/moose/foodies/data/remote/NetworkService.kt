@@ -1,5 +1,6 @@
 package com.moose.foodies.data.remote
 
+import android.util.Log
 import com.moose.foodies.util.ApiError
 import com.moose.foodies.util.Preferences
 import dagger.Module
@@ -31,6 +32,8 @@ object NetworkService {
     @Provides
     fun provideClient(preferences: Preferences): HttpClient {
         return HttpClient(Android) {
+            expectSuccess = false
+            followRedirects = false
 
             // logging settings
             install(Logging) {
@@ -64,7 +67,7 @@ object NetworkService {
 
             // set basic json headers
             defaultRequest {
-                if (method != HttpMethod.Get) contentType(ContentType.Application.Json)
+                contentType(ContentType.Application.Json)
                 accept(ContentType.Application.Json)
             }
 
@@ -76,14 +79,18 @@ object NetworkService {
                             throw Exception("check your internet connection")
                         }
                         is ClientRequestException -> {
+                            Log.d("Ktor client", "provideClient: it is a client exception");
                             val error: ApiError = json.decodeFromString(it.response.readText())
                             throw Exception(error.message)
                         }
                         is ServerResponseException -> {
+                            Log.d("Ktor client", "provideClient: it is a server exception");
                             val error: ApiError = json.decodeFromString(it.response.readText())
                             throw Exception(error.message)
                         }
-                        else -> return@handleResponseException
+                        else -> {
+                            Log.d("Ktor client", "provideClient: we don't know... ${it.message}")
+                        }
                     }
                 }
             }
