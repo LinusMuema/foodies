@@ -41,7 +41,7 @@ fun Explore(controller: NavController) {
 
     val recipes by remember { viewmodel.recipes }
 
-    Column {
+    Column(modifier = Modifier.padding(10.dp)) {
         SmallSpace()
         Text(
             text = "Discover more recipes",

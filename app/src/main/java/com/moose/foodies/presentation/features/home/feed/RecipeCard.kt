@@ -44,7 +44,7 @@ fun RecipeCard(controller: NavController, recipe: Recipe) {
     val colors = listOf(Transparent, Transparent, Transparent, variant)
     val gradient = Brush.verticalGradient(colors = colors)
 
-    Card(modifier = Modifier.width(300.dp).height(175.dp), elevation = 5.dp) {
+    Card(modifier = Modifier.width(300.dp).height(175.dp).padding(10.dp, 0.dp), elevation = 5.dp) {
         Image(
             modifier = Modifier.fillMaxWidth(),
             contentScale = Crop,
