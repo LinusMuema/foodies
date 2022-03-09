@@ -59,11 +59,6 @@ fun Header(chef: Profile, count: Int){
                 }
             }
             SmallSpace()
-            Text(
-                chef.username,
-                style = typography.h5.copy(color = MaterialTheme.colors.primary)
-            )
-            TinySpace()
             Text(chef.description, textAlign = TextAlign.Center)
         }
         TinySpace()

@@ -40,8 +40,7 @@ fun Recipes(controller: NavController, recipes: List<Recipe>) {
 
     LazyVerticalGrid(cells = GridCells.Fixed(2)) {
         items(recipes) {
-            val boxModifier = Modifier.fillMaxSize().background(brush = gradient).padding(10.dp)
-            boxModifier.clickable { controller.navigate("/recipe/${it._id}") }
+            val boxModifier = Modifier.fillMaxSize().background(brush = gradient).padding(10.dp).clickable { controller.navigate("/recipe/${it._id}") }
 
             Card(
                 elevation = 5.dp,
