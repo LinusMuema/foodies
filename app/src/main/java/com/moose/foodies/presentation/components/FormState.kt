@@ -15,7 +15,8 @@ open class FormState(val fields: List<TextFieldState<*>>) {
             val value = if (it.transform == null) it.text else it.transform!!(it.text)
             it.name to value
         }
-        val json = JSONObject(map)
-        return Json.decodeFromString(json.toString())
+        val json = Json { ignoreUnknownKeys = true }
+        val data = JSONObject(map).toString()
+        return json.decodeFromString(data)
     }
 }

@@ -36,7 +36,7 @@ class FeedRepositoryImpl @Inject constructor(
         get() = recipesDao.getFeedRecipes()
 
     override suspend fun fetchData() {
-        val id = profile.first()._id
+        val id =  userDao.getProfile().first()._id
         val feed = recipesService.getFeed()
         val chefs = usersService.discoverUsers()
 

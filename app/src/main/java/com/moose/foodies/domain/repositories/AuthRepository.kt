@@ -35,6 +35,7 @@ class AuthRepositoryImpl @Inject constructor(private val api: AuthService, val u
 
     override suspend fun signup(credentials: Credentials): Auth {
         val result = api.signup(credentials)
+        result.user.current = true
 
         userDao.addProfile(result.user)
         preferences.setToken(result.token)
