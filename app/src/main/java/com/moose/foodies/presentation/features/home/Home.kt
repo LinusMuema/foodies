@@ -1,5 +1,6 @@
 package com.moose.foodies.presentation.features.home
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -39,6 +40,7 @@ import com.moose.foodies.presentation.theme.Status
 @ExperimentalCoilApi
 @ExperimentalPagerApi
 @ExperimentalMaterialApi
+@ExperimentalAnimationApi
 @ExperimentalFoundationApi
 fun Home(mainController: NavHostController) {
     val navController = rememberNavController()
@@ -84,7 +86,7 @@ fun Home(mainController: NavHostController) {
                     content = {
                         NavHost(navController, startDestination = Feed.route, Modifier.padding(it)) {
                             composable(Feed.route) { Feed(mainController) }
-                            composable(Fridge.route) { Fridge() }
+                            composable(Fridge.route) { Fridge(mainController) }
                             composable(Explore.route) { Explore(mainController) }
                             composable(Profile.route) { Profile(mainController) }
                         }

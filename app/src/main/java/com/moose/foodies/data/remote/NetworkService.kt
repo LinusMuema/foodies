@@ -32,9 +32,6 @@ object NetworkService {
     @Provides
     fun provideClient(preferences: Preferences): HttpClient {
         return HttpClient(Android) {
-            expectSuccess = false
-            followRedirects = false
-
             // logging settings
             install(Logging) {
                 level = LogLevel.ALL

@@ -138,10 +138,10 @@ fun Empty(){
 }
 
 
-@OptIn(ExperimentalFoundationApi::class)
-@ExperimentalMaterialApi
 @Composable
 @ExperimentalPagerApi
+@ExperimentalMaterialApi
+@ExperimentalFoundationApi
 fun ProfileDialog(viewmodel: ProfileViewmodel) {
     val context = LocalContext.current
     val activity = context.getActivity()!!

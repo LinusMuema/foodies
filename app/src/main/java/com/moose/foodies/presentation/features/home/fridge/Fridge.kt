@@ -9,13 +9,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import coil.annotation.ExperimentalCoilApi
 
 @Composable
 @ExperimentalCoilApi
 @ExperimentalAnimationApi
 @ExperimentalFoundationApi
-fun Fridge(){
+fun Fridge(controller: NavController){
     val viewmodel: FridgeViewmodel = hiltViewModel()
     val ingredients by remember { viewmodel.ingredients }
 
@@ -25,7 +26,7 @@ fun Fridge(){
     Box(modifier = Modifier.fillMaxSize().padding(10.dp)){
         AnimatedContent(targetState = open, transitionSpec = { spec }) {
             if (it) FilterPage(onClose = { open = false }, ingredients = ingredients)
-            else ResultsPage(onOpen = { open = true })
+            else ResultsPage(controller = controller, onOpen = { open = true })
         }
     }
 }

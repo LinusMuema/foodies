@@ -8,15 +8,16 @@ import com.moose.foodies.domain.models.Profile
 import com.moose.foodies.domain.repositories.AuthRepository
 import com.moose.foodies.domain.repositories.AuthRepositoryImpl
 import com.moose.foodies.util.Preferences
-import io.mockk.verify
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.mockito.kotlin.*
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.times
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 
 class AuthRepositoryTest {
 
