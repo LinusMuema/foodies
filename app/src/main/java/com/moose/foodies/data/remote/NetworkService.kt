@@ -38,9 +38,6 @@ object NetworkService {
                 logger = FoodiesLogger
             }
 
-            // cache mechanism
-            install(HttpCache)
-
             // serialization using kotlinx.serialization
             install(JsonFeature) {
                 serializer = KotlinxSerializer(json {

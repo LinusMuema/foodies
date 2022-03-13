@@ -30,13 +30,7 @@ class RecipesService @Inject constructor(val client: HttpClient) {
 
     suspend fun getUserRecipes(id: String): List<Recipe>{
         val url = "$BASE_URL/api/recipes/user/$id"
-        return try {
-            client.get(url)
-        }  catch (e: NoTransformationFoundException){
-            val recipes: String = client.get(url)
-            val json = Json { ignoreUnknownKeys = true }
-            json.decodeFromString(recipes)
-        }
+        return client.get(url)
     }
 
     suspend fun uploadRecipe(recipe: RawRecipe): Recipe{

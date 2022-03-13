@@ -23,6 +23,7 @@ fun Fridge(controller: NavController){
     var open by remember { mutableStateOf(true) }
 
     val spec = slideInVertically() + fadeIn() with slideOutVertically() + fadeOut()
+
     Box(modifier = Modifier.fillMaxSize().padding(10.dp)){
         AnimatedContent(targetState = open, transitionSpec = { spec }) {
             if (it) FilterPage(onClose = { open = false }, ingredients = ingredients)
