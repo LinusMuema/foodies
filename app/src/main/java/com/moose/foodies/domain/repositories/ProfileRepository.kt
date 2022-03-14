@@ -1,6 +1,7 @@
 package com.moose.foodies.domain.repositories
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.moose.foodies.data.local.RecipesDao
 import com.moose.foodies.data.local.UserDao
@@ -58,6 +59,7 @@ class ProfileRepositoryImpl @Inject constructor(
 
     override suspend fun updateProfile(profile: Profile) {
         val update = usersService.updateProfile(profile)
+        Log.d("Update", "updateProfile: update is $update")
         userDao.addProfile(update.copy(current = true))
     }
 
