@@ -51,7 +51,7 @@ fun ResultsPage(onOpen: () -> Unit, controller: NavController){
                         .map { id -> ingredients.first { it._id == id } }
 
                     Card(modifier = Modifier.smallVPadding().clickable { controller.navigate("/recipe/${recipe._id}") }) {
-                        Box(modifier = Modifier.fillMaxWidth().background(colors.surface)){
+                        Box(modifier = Modifier.fillMaxWidth().background(colors.background)){
                             Column {
                                 NetImage(
                                     url = recipe.image,
