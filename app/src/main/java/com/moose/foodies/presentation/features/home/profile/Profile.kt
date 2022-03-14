@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -47,11 +48,13 @@ import com.moose.foodies.util.UploadState.*
 import com.moose.foodies.util.getActivity
 import com.moose.foodies.util.toast
 
-@ExperimentalFoundationApi
-@ExperimentalCoilApi
-@ExperimentalMaterialApi
+
 @Composable
+@ExperimentalCoilApi
 @ExperimentalPagerApi
+@ExperimentalMaterialApi
+@ExperimentalAnimationApi
+@ExperimentalFoundationApi
 fun Profile(controller: NavHostController) {
     val viewmodel: ProfileViewmodel = hiltViewModel()
 
@@ -141,6 +144,7 @@ fun Empty(){
 @Composable
 @ExperimentalPagerApi
 @ExperimentalMaterialApi
+@ExperimentalAnimationApi
 @ExperimentalFoundationApi
 fun ProfileDialog(viewmodel: ProfileViewmodel) {
     val context = LocalContext.current

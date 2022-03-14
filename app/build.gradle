@@ -14,8 +14,8 @@ android {
         applicationId "com.moose.foodies"
         minSdkVersion 24
         targetSdkVersion 32
-        versionCode 13
-        versionName "2.03"
+        versionCode 14
+        versionName '3.0.0'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

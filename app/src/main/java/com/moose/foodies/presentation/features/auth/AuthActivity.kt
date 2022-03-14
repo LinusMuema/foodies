@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
@@ -37,6 +38,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @ExperimentalCoilApi
 @ExperimentalPagerApi
 @ExperimentalMaterialApi
+@ExperimentalAnimationApi
 @ExperimentalFoundationApi
 class AuthActivity : ComponentActivity() {
     private val viewmodel: AuthViewmodel by viewModels()

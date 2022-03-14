@@ -9,3 +9,8 @@
 .externalNativeBuild
 .cxx
 /api.properties
+
+# release files
+/release/
+*.jks
+*.pem
