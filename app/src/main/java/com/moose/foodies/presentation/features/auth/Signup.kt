@@ -7,14 +7,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.KeyboardType.Companion.Email
 import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.dsc.form_builder.TextFieldState
 import com.moose.foodies.presentation.components.*
 import com.moose.foodies.presentation.theme.largeHPadding
 import com.moose.foodies.presentation.theme.smallVPadding
@@ -26,9 +25,9 @@ fun Signup(){
 
     val formState = remember { viewmodel.signupFormState }
 
-    val emailState = formState.getState("email")
-    val confirmState = formState.getState("confirm")
-    val passwordState = formState.getState("password")
+    val emailState: TextFieldState = formState.getState("email")
+    val confirmState: TextFieldState = formState.getState("confirm")
+    val passwordState: TextFieldState = formState.getState("password")
 
     val inputModifier = Modifier.fillMaxWidth().largeHPadding()
     val labelModifier = Modifier.fillMaxWidth().largeHPadding().smallVPadding()
@@ -55,7 +54,7 @@ fun Signup(){
         MediumSpace()
 
         FilledButton(text = "Sign up", modifier = inputModifier, loading = loading) {
-            val matches = confirmState.text != passwordState.text
+            val matches = confirmState.value != passwordState.value
             when {
                 matches -> confirmState.showError("passwords do not match")
                 formState.validate() && !loading -> viewmodel.signup()

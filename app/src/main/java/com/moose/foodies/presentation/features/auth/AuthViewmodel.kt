@@ -5,14 +5,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.work.*
+import com.dsc.form_builder.FormState
+import com.dsc.form_builder.TextFieldState
+import com.dsc.form_builder.Validators
+import com.dsc.form_builder.Validators.*
 import com.moose.foodies.FoodiesApplication
 import com.moose.foodies.domain.models.Auth
 import com.moose.foodies.domain.models.Credentials
 import com.moose.foodies.domain.repositories.AuthRepository
-import com.moose.foodies.presentation.components.Email
-import com.moose.foodies.presentation.components.FormState
-import com.moose.foodies.presentation.components.Required
-import com.moose.foodies.presentation.components.TextFieldState
 import com.moose.foodies.util.Result
 import com.moose.foodies.util.parse
 import com.moose.foodies.work.ItemWorker
@@ -87,7 +87,7 @@ class AuthViewmodel @Inject constructor(private val repository: AuthRepository) 
 
     fun login() {
         _loading.value = true
-        val credentials = loginFormState.getData<Credentials>()
+        val credentials = loginFormState.getData(Credentials::class)
 
         viewModelScope.launch(handler) {
             val result = repository.login(credentials)
@@ -99,7 +99,7 @@ class AuthViewmodel @Inject constructor(private val repository: AuthRepository) 
 
     fun signup() {
         _loading.value = true
-        val credentials = signupFormState.getData<Credentials>()
+        val credentials = signupFormState.getData(Credentials::class)
         viewModelScope.launch(handler) {
             val result = repository.signup(credentials)
             _result.value = Result.Success(result)
@@ -110,7 +110,7 @@ class AuthViewmodel @Inject constructor(private val repository: AuthRepository) 
 
     fun forgot() {
         _loading.value = true
-        val email = forgotFormState.getState("email").text
+        val email = forgotFormState.getState<TextFieldState>("email").value
 
         viewModelScope.launch(handler) {
             repository.forgot(email)
