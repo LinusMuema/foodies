@@ -12,6 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import com.dsc.form_builder.SelectState
 import com.google.accompanist.flowlayout.FlowRow
 import com.moose.foodies.presentation.theme.shapes
 
@@ -28,14 +29,11 @@ val categories = listOf(
 )
 
 @Composable
-fun Categories(onChange: (List<String>) -> Unit) {
-    var items by remember { mutableStateOf(listOf<String>()) }
+fun Categories(state: SelectState) {
 
-    fun addItem(item: String) = (items + listOf(item)).also { items = it }
-    fun removeItem(item: String) = (items - listOf(item)).also { items = it }
     fun select(item: String) {
-        if (items.contains(item)) removeItem(item) else addItem(item)
-        onChange(items)
+        if (state.value.contains(item)) state.unselect(item)
+        else state.select(item)
     }
 
     FlowRow {
@@ -43,7 +41,7 @@ fun Categories(onChange: (List<String>) -> Unit) {
             var text = colors.primary
             var background = colors.background
 
-            if (items.contains(it)) {
+            if (state.value.contains(it)) {
                 text = colors.onPrimary
                 background = colors.primary
             }
@@ -56,7 +54,11 @@ fun Categories(onChange: (List<String>) -> Unit) {
                     .background(background)
                     .clickable { select(it) }) {
 
-                Text(text = it, style = typography.body1.copy(color = text), modifier = Modifier.padding(15.dp, 5.dp))
+                Text(
+                    text = it,
+                    style = typography.body1.copy(color = text),
+                    modifier = Modifier.padding(15.dp, 5.dp)
+                )
             }
         }
     }
