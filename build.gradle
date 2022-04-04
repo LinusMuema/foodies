@@ -1,16 +1,17 @@
 buildscript {
-    ext.ktor_version = '1.6.7'
-    ext.room_version = '2.4.0'
+    ext.ktor_version = '1.6.8'
+    ext.room_version = '2.4.2'
     ext.work_version = '2.7.1'
     ext.hilt_version = '2.38.1'
     ext.lottie_version = '4.2.0'
     ext.kotlin_version = '1.6.10'
     ext.accompanist = '0.22.0-rc'
-    ext.compose_version = '1.2.0-alpha03'
+    ext.compose_version = '1.2.0-alpha06'
 
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://jitpack.io' }
     }
 
 

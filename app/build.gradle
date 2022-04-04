@@ -14,8 +14,8 @@ android {
         applicationId "com.moose.foodies"
         minSdkVersion 24
         targetSdkVersion 32
-        versionCode 14
-        versionName '3.0.0'
+        versionCode 15
+        versionName '3.0.1'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -55,8 +55,8 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.0"
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.1"
 
     // testing
     testImplementation 'junit:junit:4.13.2'
@@ -73,8 +73,8 @@ dependencies {
     implementation 'androidx.activity:activity-compose:1.4.0'
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.material:material:$compose_version"
-    implementation 'androidx.navigation:navigation-compose:2.4.0-rc01'
-    implementation 'androidx.hilt:hilt-navigation-compose:1.0.0-rc01'
+    implementation 'androidx.navigation:navigation-compose:2.5.0-alpha03'
+    implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
 
@@ -94,7 +94,7 @@ dependencies {
     implementation "io.coil-kt:coil-compose:1.4.0"
 
     // Splash screen
-    implementation 'androidx.core:core-splashscreen:1.0.0-beta01'
+    implementation 'androidx.core:core-splashscreen:1.0.0-beta02'
 
     // Jetpack compose tooling
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
@@ -135,4 +135,7 @@ dependencies {
     kapt 'androidx.hilt:hilt-compiler:1.0.0'
     implementation 'androidx.hilt:hilt-work:1.0.0'
     implementation "androidx.work:work-runtime-ktx:$work_version"
+
+    // form builder
+    implementation 'com.github.jkuatdsc:form-builder:1.0.1'
 }
