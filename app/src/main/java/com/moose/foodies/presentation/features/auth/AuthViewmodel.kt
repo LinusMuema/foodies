@@ -8,14 +8,10 @@ import androidx.lifecycle.viewModelScope
 import androidx.work.*
 import com.dsc.form_builder.FormState
 import com.dsc.form_builder.TextFieldState
-import com.dsc.form_builder.Validators
 import com.dsc.form_builder.Validators.*
 import com.moose.foodies.FoodiesApplication
-import com.moose.foodies.domain.models.Auth
-import com.moose.foodies.domain.models.Credentials
-import com.moose.foodies.domain.repositories.AuthRepository
+import com.moose.foodies.data.models.Credentials
 import com.moose.foodies.domain.usecases.AuthUseCases
-import com.moose.foodies.presentation.features.home.Screen
 import com.moose.foodies.util.Result
 import com.moose.foodies.util.parse
 import com.moose.foodies.work.ItemWorker

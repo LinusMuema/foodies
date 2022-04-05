@@ -2,8 +2,8 @@ package com.moose.foodies
 
 import com.moose.foodies.data.local.UserDao
 import com.moose.foodies.data.remote.AuthService
-import com.moose.foodies.domain.models.Auth
-import com.moose.foodies.domain.models.Credentials
+import com.moose.foodies.data.models.Auth
+import com.moose.foodies.data.models.Credentials
 import com.moose.foodies.domain.models.Profile
 import com.moose.foodies.domain.repositories.AuthRepository
 import com.moose.foodies.domain.repositories.AuthRepositoryImpl

@@ -1,9 +1,9 @@
-package com.moose.foodies.domain.models
+package com.moose.foodies.data.models
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class RawRecipe(
+data class RecipeDTO(
     val name: String,
     val time: String,
     val image: String,

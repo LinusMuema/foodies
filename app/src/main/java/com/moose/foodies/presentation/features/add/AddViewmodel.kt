@@ -5,11 +5,10 @@ import androidx.lifecycle.*
 import com.dsc.form_builder.FormState
 import com.dsc.form_builder.SelectState
 import com.dsc.form_builder.TextFieldState
-import com.dsc.form_builder.Validators
 import com.dsc.form_builder.Validators.Custom
 import com.dsc.form_builder.Validators.Required
 import com.moose.foodies.domain.models.Item
-import com.moose.foodies.domain.models.RawRecipe
+import com.moose.foodies.data.models.RecipeDTO
 import com.moose.foodies.domain.models.Recipe
 import com.moose.foodies.domain.repositories.AddRepository
 import com.moose.foodies.util.*
@@ -97,8 +96,8 @@ class AddViewmodel @Inject constructor(private val repository: AddRepository) : 
         }
     }
 
-    fun uploadRecipe(rawRecipe: RawRecipe) {
-        val recipe = formState.getData(RawRecipe::class)
+    fun uploadRecipe(recipeDTO: RecipeDTO) {
+        val recipe = formState.getData(RecipeDTO::class)
         viewModelScope.launch(handler) {
             val result = repository.uploadRecipe(recipe)
             _loading.value = false

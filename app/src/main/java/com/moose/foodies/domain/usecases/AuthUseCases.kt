@@ -1,6 +1,6 @@
 package com.moose.foodies.domain.usecases
 
-import com.moose.foodies.domain.models.Credentials
+import com.moose.foodies.data.models.Credentials
 import com.moose.foodies.domain.repositories.AuthRepository
 import javax.inject.Inject
 

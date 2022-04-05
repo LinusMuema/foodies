@@ -2,7 +2,7 @@ package com.moose.foodies.domain.repositories
 
 import com.moose.foodies.data.local.RecipesDao
 import com.moose.foodies.data.remote.RecipesService
-import com.moose.foodies.domain.models.IngredientsSearch
+import com.moose.foodies.data.models.IngredientsSearch
 import com.moose.foodies.domain.models.Item
 import com.moose.foodies.domain.models.Recipe
 import kotlinx.coroutines.flow.Flow

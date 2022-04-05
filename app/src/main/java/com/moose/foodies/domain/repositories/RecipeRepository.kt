@@ -4,7 +4,7 @@ import com.moose.foodies.data.local.RecipesDao
 import com.moose.foodies.data.remote.RecipesService
 import com.moose.foodies.domain.models.Item
 import com.moose.foodies.domain.models.Recipe
-import com.moose.foodies.domain.models.SearchData
+import com.moose.foodies.data.models.SearchData
 import com.moose.foodies.util.Preferences
 import javax.inject.Inject
 

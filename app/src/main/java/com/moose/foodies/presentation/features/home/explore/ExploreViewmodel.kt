@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.moose.foodies.domain.models.Recipe
-import com.moose.foodies.domain.models.SearchData
+import com.moose.foodies.data.models.SearchData
 import com.moose.foodies.domain.repositories.RecipeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

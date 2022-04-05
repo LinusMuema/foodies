@@ -7,7 +7,7 @@ import com.moose.foodies.data.local.UserDao
 import com.moose.foodies.data.remote.RecipesService
 import com.moose.foodies.domain.models.Item
 import com.moose.foodies.domain.models.Profile
-import com.moose.foodies.domain.models.RawRecipe
+import com.moose.foodies.data.models.RecipeDTO
 import com.moose.foodies.domain.models.Recipe
 import com.moose.foodies.util.Cloudinary
 import com.moose.foodies.util.UploadState
@@ -24,7 +24,7 @@ interface AddRepository {
 
     suspend fun getItems(name: String,  type: String): List<Item>
 
-    suspend fun uploadRecipe(recipe: RawRecipe): Recipe
+    suspend fun uploadRecipe(recipeDTO: RecipeDTO): Recipe
 }
 
 class AddRepositoryImpl @Inject constructor(
@@ -46,9 +46,9 @@ class AddRepositoryImpl @Inject constructor(
         return recipesDao.searchItem("%$name%", type)
     }
 
-    override suspend fun uploadRecipe(recipe: RawRecipe): Recipe {
+    override suspend fun uploadRecipe(recipeDTO: RecipeDTO): Recipe {
         cloudinary.clearProgress()
-        val result = recipesService.uploadRecipe(recipe)
+        val result = recipesService.uploadRecipe(recipeDTO)
         recipesDao.addRecipe(result.copy(type = "PERSONAL"))
         return result
     }

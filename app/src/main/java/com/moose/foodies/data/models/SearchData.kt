@@ -1,4 +1,4 @@
-package com.moose.foodies.domain.models
+package com.moose.foodies.data.models
 
 import kotlinx.serialization.Serializable
 

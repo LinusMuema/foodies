@@ -2,11 +2,9 @@ package com.moose.foodies.data.repositories
 
 import com.moose.foodies.data.local.UserDao
 import com.moose.foodies.data.remote.AuthService
-import com.moose.foodies.domain.models.Auth
-import com.moose.foodies.domain.models.Credentials
+import com.moose.foodies.data.models.Credentials
 import com.moose.foodies.domain.repositories.AuthRepository
 import com.moose.foodies.util.Preferences
-import com.moose.foodies.util.Result
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(

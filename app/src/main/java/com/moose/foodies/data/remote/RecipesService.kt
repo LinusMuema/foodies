@@ -1,13 +1,12 @@
 package com.moose.foodies.data.remote
 
+import com.moose.foodies.data.models.IngredientsSearch
+import com.moose.foodies.data.models.RecipeDTO
+import com.moose.foodies.data.models.SearchData
 import com.moose.foodies.domain.models.*
 import com.moose.foodies.util.BASE_URL
 import io.ktor.client.*
-import io.ktor.client.call.*
-import io.ktor.client.features.*
 import io.ktor.client.request.*
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 class RecipesService @Inject constructor(val client: HttpClient) {
@@ -33,9 +32,9 @@ class RecipesService @Inject constructor(val client: HttpClient) {
         return client.get(url)
     }
 
-    suspend fun uploadRecipe(recipe: RawRecipe): Recipe{
+    suspend fun uploadRecipe(recipeDTO: RecipeDTO): Recipe{
         val url = "$BASE_URL/api/recipes"
-        return client.post{url(url); body = recipe}
+        return client.post{url(url); body = recipeDTO}
     }
 
     suspend fun searchRecipe(search: SearchData): List<Recipe> {
