@@ -31,11 +31,11 @@ class FeedViewmodel @Inject constructor(val repository: FeedRepository, private 
     private val _chefs: MutableState<List<Profile>> = mutableStateOf(listOf())
     val chefs: State<List<Profile>> = _chefs
 
-    private val _featured: MutableState<List<CompleteRecipe>> = mutableStateOf(listOf())
-    val featured: State<List<CompleteRecipe>> = _featured
+    private val _featured: MutableState<List<Recipe>> = mutableStateOf(listOf())
+    val featured: State<List<Recipe>> = _featured
 
-    private val _recipes: MutableState<List<CompleteRecipe>> = mutableStateOf(listOf())
-    val recipes: State<List<CompleteRecipe>> = _recipes
+    private val _recipes: MutableState<List<Recipe>> = mutableStateOf(listOf())
+    val recipes: State<List<Recipe>> = _recipes
 
     private val _seconds = mutableStateOf(0)
     val seconds: State<Int> = _seconds

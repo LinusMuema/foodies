@@ -94,7 +94,7 @@ fun Indicator(state: PagerState, positions: List<TabPosition>) {
 }
 
 @Composable
-fun RecipeItems(controller: NavController, recipes: List<CompleteRecipe>) {
+fun RecipeItems(controller: NavController, recipes: List<Recipe>) {
     LazyRow {
         items(recipes) { recipe ->
             val arrangement = Arrangement.SpaceBetween
@@ -112,7 +112,7 @@ fun RecipeItems(controller: NavController, recipes: List<CompleteRecipe>) {
                 .fillMaxSize()
                 .background(brush = gradient)
                 .padding(10.dp)
-                .clickable { controller.navigate("/recipe/${recipe.id}") }
+                .clickable { controller.navigate("/recipe/${recipe._id}") }
 
             Card(
                 elevation = 5.dp,

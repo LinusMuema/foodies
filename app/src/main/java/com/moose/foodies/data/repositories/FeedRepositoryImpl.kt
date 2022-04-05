@@ -44,44 +44,26 @@ class FeedRepositoryImpl @Inject constructor(
         return userDao.getProfile()
     }
 
-    override suspend fun getFeaturedRecipes(): List<CompleteRecipe> {
+    override suspend fun getFeaturedRecipes(): List<Recipe> {
         val recipes = recipesDao.getRandomRecipes()
-        return recipes.map { populateRecipe(it) }.ifEmpty {
+        return recipes.ifEmpty {
             val netRecipes = recipesService.getRandomRecipes()
             recipesDao.addRecipe(*netRecipes.toTypedArray())
-            netRecipes.map { populateRecipe(it) }
+            netRecipes
         }
     }
 
-    override suspend fun getRecipesByCategory(categories: List<String>): List<CompleteRecipe> {
+    override suspend fun getRecipesByCategory(categories: List<String>): List<Recipe> {
         val recipes = recipesDao.getRandomRecipes().filter {  hasCategories(it, categories) }
-        return recipes.map { populateRecipe(it) }.ifEmpty {
+        return recipes.ifEmpty {
             val netRecipes = recipesService.getRandomRecipes()
             recipesDao.addRecipe(*netRecipes.toTypedArray())
-            netRecipes.filter {  hasCategories(it, categories) }.map { populateRecipe(it) }
+            netRecipes.filter {  hasCategories(it, categories) }
         }
     }
 
     private fun hasCategories(recipe: Recipe, categories: List<String>): Boolean {
         return recipe.categories.any { categories.contains(it) }
-    }
-
-    private suspend fun populateRecipe(recipe: Recipe): CompleteRecipe {
-        val equipment = recipe.equipment.map { recipesDao.getItemById(it) }
-        val ingredients = recipe.ingredients.map { recipesDao.getItemById(it) }
-
-        return CompleteRecipe(
-            id = recipe._id,
-            user = recipe.user,
-            name = recipe.name,
-            time = recipe.time,
-            image = recipe.image,
-            steps = recipe.steps,
-            equipment = equipment,
-            ingredients = ingredients,
-            categories = recipe.categories,
-            description = recipe.description,
-        )
     }
 
 }

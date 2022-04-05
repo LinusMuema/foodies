@@ -17,7 +17,7 @@ interface RecipesDao {
     @Query("select * from item where name like :name and type = :type limit 5")
     suspend fun searchItem(name: String, type: String): List<Item>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addRecipe(vararg recipe: Recipe)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)

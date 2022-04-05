@@ -35,7 +35,7 @@ import com.moose.foodies.presentation.components.TinySpace
 
 @Composable
 @ExperimentalCoilApi
-fun RecipeCard(controller: NavController, recipe: CompleteRecipe) {
+fun RecipeCard(controller: NavController, recipe: Recipe) {
     val arrangement = SpaceBetween
     val timeGray = Gray.copy(.8f)
     val viewmodel: FeedViewmodel = hiltViewModel()
@@ -55,7 +55,7 @@ fun RecipeCard(controller: NavController, recipe: CompleteRecipe) {
         Box(modifier = Modifier
             .fillMaxSize()
             .background(brush = gradient)
-            .clickable { controller.navigate("/recipe/${recipe.id}") }
+            .clickable { controller.navigate("/recipe/${recipe._id}") }
             .padding(10.dp)){
             Column(modifier = Modifier.fillMaxSize(), verticalArrangement = arrangement) {
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = arrangement) {

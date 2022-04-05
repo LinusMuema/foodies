@@ -14,5 +14,5 @@ data class Profile(
     val username: String = "",
     val description: String = "",
     var current: Boolean = false,
-    val favorites: List<Recipe> = listOf(),
+    var favorites: List<String> = listOf(),
 )

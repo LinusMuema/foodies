@@ -11,9 +11,9 @@ import androidx.compose.material.BottomSheetValue.Collapsed
 import androidx.compose.material.BottomSheetValue.Expanded
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
@@ -33,7 +33,6 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.moose.foodies.R
 import com.moose.foodies.presentation.components.CenterColumn
 import com.moose.foodies.presentation.components.TinySpace
@@ -41,20 +40,22 @@ import com.moose.foodies.presentation.theme.FoodiesTheme
 import com.moose.foodies.presentation.theme.Status
 import com.moose.foodies.presentation.theme.shapes
 import com.moose.foodies.presentation.theme.typography
+import io.ktor.utils.io.*
 
 @Composable
 @ExperimentalPagerApi
 @ExperimentalMaterialApi
 fun Recipe(id: String?, controller: NavHostController) {
     val viewmodel: RecipeViewmodel = hiltViewModel()
+
     viewmodel.getRecipe(id!!)
     viewmodel.checkFavorite(id)
 
     FoodiesTheme {
-        val recipe by viewmodel.recipe.observeAsState()
-        val favorite by viewmodel.favorite.observeAsState()
-        val equipment by viewmodel.equipment.observeAsState()
-        val ingredients by viewmodel.ingredients.observeAsState()
+        val data by remember { viewmodel.recipe }
+        val favorite by remember { viewmodel.favorite }
+        val profile by viewmodel.profile.collectAsState(initial = null)
+
         val height = LocalConfiguration.current.screenHeightDp
 
         // loading animation
@@ -62,7 +63,7 @@ fun Recipe(id: String?, controller: NavHostController) {
 
         Status(color = Transparent)
         Surface(color = colors.background){
-            if (recipe == null){
+            if (data == null){
                 CenterColumn {
                     Text(
                         text = "Getting the recipe...",
@@ -76,8 +77,8 @@ fun Recipe(id: String?, controller: NavHostController) {
                     )
                 }
             } else {
-                ingredients?.let{
-                    val painter = rememberImagePainter(data = recipe!!.image, builder = { crossfade(true) })
+                data?.let { recipe ->
+                    val painter = rememberImagePainter(data = recipe.image, builder = { crossfade(true) })
                     val bottomSheet = rememberBottomSheetScaffoldState(bottomSheetState = rememberBottomSheetState(Collapsed))
 
                     val progress = bottomSheet.bottomSheetState.progress.fraction
@@ -96,7 +97,7 @@ fun Recipe(id: String?, controller: NavHostController) {
                     val imageHeight = (height * ((1f - fraction) * .4)).dp
 
                     val buttonColor = Color.Gray.copy(alpha = .8f)
-                    val icon = if (favorite!!) R.drawable.ic_favorites_filled else R.drawable.ic_favorites
+                    val icon = if (favorite) R.drawable.ic_favorites_filled else R.drawable.ic_favorites
 
                     ProvideWindowInsets {
                         BottomSheetScaffold(
@@ -104,8 +105,8 @@ fun Recipe(id: String?, controller: NavHostController) {
                             sheetPeekHeight = sheetHeight,
                             sheetBackgroundColor = colors.background,
                             sheetShape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
-                            sheetContent = { Details(fraction, recipe!!, ingredients!!, equipment!!){
-                                controller.navigate("/chef/${recipe!!.user._id}")
+                            sheetContent = { Details(fraction, recipe){
+                                controller.navigate("/chef/${recipe.user._id}")
                             }},
                         ) {
                             Surface(color = colors.background) {
@@ -113,7 +114,7 @@ fun Recipe(id: String?, controller: NavHostController) {
                                     Image(
                                         painter = painter,
                                         contentScale = ContentScale.Crop,
-                                        contentDescription = "${recipe!!.name} image",
+                                        contentDescription = "${recipe.name} image",
                                         modifier = Modifier
                                             .animateContentSize()
                                             .fillMaxWidth()
@@ -141,7 +142,7 @@ fun Recipe(id: String?, controller: NavHostController) {
                                             )
                                         }
 
-                                        if (recipe!!.type != "PERSONAL")
+                                        if (recipe.user._id != profile!!._id)
                                             Box(modifier = Modifier
                                                 .padding(10.dp)
                                                 .clip(shapes.large)
@@ -172,7 +173,7 @@ fun Recipe(id: String?, controller: NavHostController) {
                                                 painter = painterResource(id = R.drawable.ic_clock),
                                             )
                                             TinySpace()
-                                            Text(recipe!!.time, style = typography.body1.copy(color = Color.White))
+                                            Text(data!!.time, style = typography.body1.copy(color = Color.White))
                                             TinySpace()
                                         }
                                     }

@@ -1,54 +1,55 @@
 package com.moose.foodies.presentation.features.recipe
 
-import android.util.Log
-import androidx.lifecycle.*
-import com.moose.foodies.domain.models.Item
-import com.moose.foodies.domain.models.Profile
-import com.moose.foodies.domain.models.Recipe
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.moose.foodies.domain.models.CompleteRecipe
 import com.moose.foodies.domain.repositories.RecipeRepository
+import com.moose.foodies.domain.usecases.RecipeUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RecipeViewmodel @Inject constructor(val repository: RecipeRepository): ViewModel() {
+class RecipeViewmodel @Inject constructor(val repository: RecipeRepository,private val recipeUseCases: RecipeUseCases): ViewModel() {
 
-    private val _favorite: MutableLiveData<Boolean> = MutableLiveData(false)
-    val favorite: LiveData<Boolean> = _favorite
+    val profile = recipeUseCases.getProfile()
 
-    private val _recipe: MutableLiveData<Recipe> = MutableLiveData()
-    val recipe: LiveData<Recipe> = _recipe
+    private val _favorite: MutableState<Boolean> = mutableStateOf(false)
+    val favorite: State<Boolean> = _favorite
 
-    private val _ingredients: MutableLiveData<List<Item>> = MutableLiveData()
-    val ingredients: LiveData<List<Item>> = _ingredients
-
-    private val _equipment: MutableLiveData<List<Item>> = MutableLiveData()
-    val equipment: LiveData<List<Item>> = _equipment
+    private val _recipe: MutableState<CompleteRecipe?> = mutableStateOf(null)
+    val recipe: State<CompleteRecipe?> = _recipe
 
     fun checkFavorite(id: String){
         viewModelScope.launch {
-            val favorite = repository.getFavorite(id)
-            _favorite.value = favorite != null
+            _favorite.value = profile.first().favorites.contains(id)
         }
     }
 
     fun getRecipe(id: String){
         viewModelScope.launch {
-            val item = repository.getRecipe(id)
-
-            _recipe.value = item
-            _equipment.value = item.equipment.map { repository.getItem(it) }
-            _ingredients.value = item.ingredients.map { repository.getItem(it) }
+            _recipe.value = recipeUseCases.getRecipe(id)
         }
     }
 
     fun toggleFavorite() {
         viewModelScope.launch {
-            val recipe = _recipe.value!!
-            if (_favorite.value!!) recipe.type = "FAVORITE"
+            val profile = profile.first()
+            val recipe = _recipe.value!!.id
 
-            repository.updateRecipe(recipe)
-            _favorite.value = !_favorite.value!!
+            if (_favorite.value) {
+                profile.favorites = profile.favorites - recipe
+                _favorite.value = false
+            } else {
+                profile.favorites = profile.favorites + recipe
+                _favorite.value = true
+            }
+
+            repository.updateProfile(profile)
         }
     }
 }

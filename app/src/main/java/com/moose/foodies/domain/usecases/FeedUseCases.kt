@@ -21,11 +21,11 @@ class FeedUseCases @Inject constructor(private val feedRepository: FeedRepositor
         return feedRepository.getProfile()
     }
 
-    suspend fun getFeaturedRecipes(): List<CompleteRecipe> {
+    suspend fun getFeaturedRecipes(): List<Recipe> {
         return feedRepository.getFeaturedRecipes()
     }
 
-    suspend fun getRecipesByCategory(category: List<String>): List<CompleteRecipe> {
+    suspend fun getRecipesByCategory(category: List<String>): List<Recipe> {
         return feedRepository.getRecipesByCategory(category)
     }
 

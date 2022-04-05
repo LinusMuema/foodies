@@ -39,9 +39,9 @@ class ExploreViewmodel @Inject constructor(val repository: RecipeRepository): Vi
     fun getRecipes(query: String, categories: List<String> = listOf()){
         val data = SearchData(name = query, categories = categories)
         viewModelScope.launch {
-            val recipes = repository.searchRecipe(data)
-            _recipes.value = recipes
-            _count.value = listOf(0)
+//            val recipes = repository.searchRecipe(data)
+//            _recipes.value = recipes
+//            _count.value = listOf(0)
         }
     }
 }

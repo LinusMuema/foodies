@@ -28,6 +28,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.moose.foodies.R
+import com.moose.foodies.domain.models.CompleteRecipe
 import com.moose.foodies.presentation.components.TinySpace
 import com.moose.foodies.domain.models.Item
 import com.moose.foodies.domain.models.Recipe
@@ -36,7 +37,7 @@ import kotlinx.coroutines.launch
 
 @ExperimentalPagerApi
 @Composable
-fun Details(fraction: Float, recipe: Recipe, ingredients: List<Item>, equipment: List<Item>, profileClick: () -> Unit) {
+fun Details(fraction: Float, recipe: CompleteRecipe, profileClick: () -> Unit) {
 
     val top = ((fraction + 1f) * 20)
     val context = LocalContext.current
@@ -63,7 +64,7 @@ fun Details(fraction: Float, recipe: Recipe, ingredients: List<Item>, equipment:
             Spacer(modifier = Modifier.weight(1f))
             IconButton(onClick = {
                 val message = "Do you know how to make ${recipe.name}? \nCheck out the recipe on foodies! \uD83D\uDE0B \uD83C\uDF73 \n\n"
-                val url = "http://foodies.moose.ac/recipes?id=${recipe._id}"
+                val url = "http://foodies.moose.ac/recipes?id=${recipe.id}"
                 val sendIntent: Intent = Intent().apply {
                     action = Intent.ACTION_SEND
                     putExtra(Intent.EXTRA_TEXT, "$message$url")
@@ -107,8 +108,8 @@ fun Details(fraction: Float, recipe: Recipe, ingredients: List<Item>, equipment:
                 .padding(10.dp)) {
                 when (it) {
                     0 -> Description(description = recipe.description)
-                    1 -> Items(items = ingredients)
-                    2 -> Items(items = equipment)
+                    1 -> Items(items = recipe.ingredients)
+                    2 -> Items(items = recipe.equipment)
                     3 -> Steps(steps = recipe.steps)
                 }
             }
