@@ -29,12 +29,13 @@ import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
 import com.moose.foodies.R.drawable.ic_clock
+import com.moose.foodies.domain.models.CompleteRecipe
 import com.moose.foodies.domain.models.Recipe
 import com.moose.foodies.presentation.components.TinySpace
 
 @Composable
 @ExperimentalCoilApi
-fun RecipeCard(controller: NavController, recipe: Recipe) {
+fun RecipeCard(controller: NavController, recipe: CompleteRecipe) {
     val arrangement = SpaceBetween
     val timeGray = Gray.copy(.8f)
     val viewmodel: FeedViewmodel = hiltViewModel()
@@ -54,7 +55,7 @@ fun RecipeCard(controller: NavController, recipe: Recipe) {
         Box(modifier = Modifier
             .fillMaxSize()
             .background(brush = gradient)
-            .clickable { controller.navigate("/recipe/${recipe._id}") }
+            .clickable { controller.navigate("/recipe/${recipe.id}") }
             .padding(10.dp)){
             Column(modifier = Modifier.fillMaxSize(), verticalArrangement = arrangement) {
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = arrangement) {

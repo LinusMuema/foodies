@@ -20,3 +20,16 @@ data class Recipe(
     val categories: List<String>,
     val ingredients: List<String>,
 )
+
+data class CompleteRecipe(
+    val id: String,
+    val user: Profile,
+    val name: String,
+    val time: String,
+    val image: String,
+    val description: String,
+    val steps: List<String>,
+    val equipment: List<Item>,
+    val categories: List<String>,
+    val ingredients: List<Item>,
+)

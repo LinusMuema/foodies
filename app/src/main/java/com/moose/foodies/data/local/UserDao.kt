@@ -14,8 +14,8 @@ interface UserDao {
     @Query("select * from profile where _id = :id limit 1")
     fun getChef(id: String): Profile?
 
-    @Query("select * from profile where current = 0")
-    fun getChefs(): Flow<List<Profile>>
+    @Query("select * from profile where current = 0 order by random() limit 10")
+    suspend fun getChefs(): List<Profile>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addProfile(vararg profile: Profile)

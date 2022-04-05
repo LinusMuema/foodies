@@ -5,18 +5,15 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.MaterialTheme.shapes
 import androidx.compose.material.MaterialTheme.typography
-import androidx.compose.material.Tab
-import androidx.compose.material.TabRow
-import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -36,97 +33,94 @@ import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.moose.foodies.R
-import com.moose.foodies.presentation.components.CenterColumn
-import com.moose.foodies.presentation.components.ScrollableColumn
-import com.moose.foodies.presentation.components.SmallSpace
-import com.moose.foodies.presentation.components.TinySpace
-import com.moose.foodies.util.customTabIndicatorOffset
-import kotlinx.coroutines.launch
+import com.moose.foodies.domain.models.CompleteRecipe
+import com.moose.foodies.domain.models.Profile
+import com.moose.foodies.presentation.components.*
 
 
 @Composable
 @ExperimentalCoilApi
 @ExperimentalPagerApi
-fun Feed(controller: NavController){
+fun Feed(controller: NavController) {
     val viewmodel: FeedViewmodel = hiltViewModel()
 
     val chefs by remember { viewmodel.chefs }
-    val recipes by remember { viewmodel.recipes }
-    val profile by remember { viewmodel.profile }
     val counter by remember { viewmodel.seconds }
+    val featured by remember { viewmodel.featured }
     val refreshing by remember { viewmodel.refreshing }
 
+    val profile by viewmodel.profile.collectAsState(initial = null)
+
     SwipeRefresh(
-        state =  rememberSwipeRefreshState(refreshing),
+        state = rememberSwipeRefreshState(refreshing),
         onRefresh = { viewmodel.refresh() },
-        indicator = { state, trigger -> SwipeIndicator(state, trigger) }
-    ) {
-        ScrollableColumn {
-            SmallSpace()
-            profile?.let { Header(profile = it) }
-            SmallSpace()
-
-
-            if (counter >= 5 && !recipes.isNullOrEmpty()) {
-                val highlights = recipes!!.filter { recipe -> recipe.type == viewmodel.type }
-                val highlightState = rememberPagerState(initialPage = 0)
-                HorizontalPager(
-                    count = highlights.size,
-                    state = highlightState,
-                    contentPadding = PaddingValues(end = 125.dp),
-                ) {
-                    RecipeCard(controller, highlights[it])
-                }
+        indicator = { state, trigger -> SwipeIndicator(state, trigger) },
+        content = {
+            ScrollableColumn {
                 SmallSpace()
-                Text(
-                    text = "Discover Chefs",
-                    modifier = Modifier.padding(10.dp),
-                    style = typography.h5.copy(color = colors.primary)
-                )
-
-                LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(20.dp),
-                    contentPadding = PaddingValues(horizontal = 10.dp),
-                ) {
-                    items(chefs!!){
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Image(
-                                painter = rememberImagePainter(
-                                    data = it.avatar,
-                                    builder = { transformations(CircleCropTransformation()) }
-                                ),
-                                contentDescription = "${it.username} avatar",
-                                modifier = Modifier
-                                    .size(75.dp)
-                                    .clip(shapes.large)
-                                    .clickable {
-                                        controller.navigate("/chef/${it._id}")
-                                    }
-                            )
-                            TinySpace()
-                            Text(it.username, style = typography.body1)
-                        }
-                    }
-                }
+                profile?.let { Header(profile = it) }
                 SmallSpace()
-                Recipes(
-                    recipes = recipes!!,
-                    viewmodel = viewmodel,
-                    controller = controller,
-                )
-            } else {
-                Loading()
+
+
+                if (counter >= 5 && !featured.isNullOrEmpty()) {
+
+                    val highlightState = rememberPagerState(initialPage = 0)
+                    HorizontalPager(
+                        count = featured.size,
+                        state = highlightState,
+                        contentPadding = PaddingValues(end = 125.dp),
+                        content = { RecipeCard(controller, featured[it]) }
+                    )
+
+                    SmallSpace()
+                    Text(
+                        text = "Discover Chefs",
+                        modifier = Modifier.padding(horizontal = 10.dp),
+                        style = typography.h5.copy(color = colors.primary)
+                    )
+                    SmallSpace()
+                    LazyRow(
+                        horizontalArrangement = Arrangement.spacedBy(20.dp),
+                        contentPadding = PaddingValues(horizontal = 10.dp),
+                        content = {
+                            items(chefs) {
+                                Chef(chef = it) {
+                                    controller.navigate("/chef/${it._id}")
+                                }
+                            }
+                        },
+                    )
+
+                    SmallSpace()
+                    Recipes(controller = controller)
+
+                } else {
+                    Loading()
+                }
             }
         }
+    )
+}
+
+@Composable
+@ExperimentalCoilApi
+fun Chef(chef: Profile, onClick : () -> Unit) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        NetImage(
+            url = chef.avatar,
+            modifier = Modifier.size(75.dp).clip(CircleShape).clickable { onClick() }
+        )
+        TinySpace()
+        Text(chef.username, style = typography.body1)
     }
 }
 
 @Composable
-fun Loading(){
+fun Loading() {
     val height = LocalConfiguration.current.screenHeightDp
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.cooking))
 
-    CenterColumn(modifier = Modifier.height((height * .7).dp)){
+    CenterColumn(modifier = Modifier.height((height * .7).dp)) {
         Text(
             text = "Getting you some recipes...",
             style = typography.body1.copy(color = colors.onSurface)

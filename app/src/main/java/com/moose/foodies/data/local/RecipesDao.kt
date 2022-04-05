@@ -26,8 +26,8 @@ interface RecipesDao {
     @Query("select * from recipe where type = 'PERSONAL'")
     fun getUserRecipes(): Flow<List<Recipe>>
 
-    @Query("select * from recipe where type != 'PERSONAL'")
-    fun getFeedRecipes(): Flow<List<Recipe>>
+    @Query("select * from recipe order by random() limit 10")
+    suspend fun getRandomRecipes(): List<Recipe>
 
     @Query("select * from recipe where _id = :id limit 1")
     suspend fun getRecipeById(id: String): Recipe?

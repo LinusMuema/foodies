@@ -16,7 +16,7 @@ class RecipesService @Inject constructor(val client: HttpClient) {
         return client.get(url){ parameter("update", update)}
     }
 
-    suspend fun getFeed(): List<Recipe> {
+    suspend fun getRandomRecipes(): List<Recipe> {
         val url = "$BASE_URL/api/recipes"
         return client.get(url)
     }

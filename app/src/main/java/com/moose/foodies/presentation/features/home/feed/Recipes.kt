@@ -9,7 +9,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.MaterialTheme.typography
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -19,12 +19,15 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
+import com.moose.foodies.domain.models.CompleteRecipe
 import com.moose.foodies.domain.models.Recipe
 import com.moose.foodies.presentation.components.TinySpace
 import com.moose.foodies.util.customTabIndicatorOffset
@@ -33,12 +36,12 @@ import kotlinx.coroutines.launch
 
 @Composable
 @ExperimentalPagerApi
-fun Recipes(controller: NavController, viewmodel: FeedViewmodel, recipes: List<Recipe>) {
-    val state = rememberPagerState(initialPage = 0)
-    val titles = mutableListOf("Breakfast", "Snacks", "Main", "Others")
-    titles.remove(viewmodel.type)
+fun Recipes(controller: NavController) {
+    val viewmodel: FeedViewmodel = hiltViewModel()
 
-    val items = recipes.filter { recipe -> recipe.type == titles[state.currentPage] }
+    val titles = viewmodel.titles
+    val recipes by remember { viewmodel.recipes }
+    val state = rememberPagerState(initialPage = 0)
 
     Text(
         text = "Recipes",
@@ -55,7 +58,7 @@ fun Recipes(controller: NavController, viewmodel: FeedViewmodel, recipes: List<R
     )
 
     TinySpace()
-    RecipeItems(controller, items)
+    RecipeItems(controller, recipes)
     HorizontalPager(count = titles.size, state = state) {}
 }
 
@@ -64,7 +67,10 @@ fun Recipes(controller: NavController, viewmodel: FeedViewmodel, recipes: List<R
 fun PagerTab(title: String, state: PagerState, index: Int) {
     val current = state.currentPage
     val coroutineScope = rememberCoroutineScope()
+    val viewmodel: FeedViewmodel = hiltViewModel()
+
     fun scroll() {
+        viewmodel.getRecipes(index)
         coroutineScope.launch { state.animateScrollToPage(index) }
     }
 
@@ -88,7 +94,7 @@ fun Indicator(state: PagerState, positions: List<TabPosition>) {
 }
 
 @Composable
-fun RecipeItems(controller: NavController, recipes: List<Recipe>) {
+fun RecipeItems(controller: NavController, recipes: List<CompleteRecipe>) {
     LazyRow {
         items(recipes) { recipe ->
             val arrangement = Arrangement.SpaceBetween
@@ -98,8 +104,15 @@ fun RecipeItems(controller: NavController, recipes: List<Recipe>) {
             val colors = listOf(Transparent, Transparent, Transparent, variant)
             val gradient = Brush.verticalGradient(colors = colors)
 
-            val cardModifier =  Modifier.width(200.dp).height(250.dp).padding(10.dp)
-            val boxModifier = Modifier.fillMaxSize().background(brush = gradient).padding(10.dp).clickable { controller.navigate("/recipe/${recipe._id}") }
+            val cardModifier = Modifier
+                .width(200.dp)
+                .height(250.dp)
+                .padding(10.dp)
+            val boxModifier = Modifier
+                .fillMaxSize()
+                .background(brush = gradient)
+                .padding(10.dp)
+                .clickable { controller.navigate("/recipe/${recipe.id}") }
 
             Card(
                 elevation = 5.dp,
@@ -114,7 +127,10 @@ fun RecipeItems(controller: NavController, recipes: List<Recipe>) {
                     Box(
                         modifier = boxModifier,
                         content = {
-                            Column(modifier = Modifier.fillMaxSize(), verticalArrangement = arrangement) {
+                            Column(
+                                modifier = Modifier.fillMaxSize(),
+                                verticalArrangement = arrangement
+                            ) {
                                 TinySpace()
                                 Text(
                                     maxLines = 1,
