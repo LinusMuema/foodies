@@ -1,5 +1,6 @@
 package com.moose.foodies.presentation.features.auth
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -13,6 +14,8 @@ import com.moose.foodies.FoodiesApplication
 import com.moose.foodies.domain.models.Auth
 import com.moose.foodies.domain.models.Credentials
 import com.moose.foodies.domain.repositories.AuthRepository
+import com.moose.foodies.domain.usecases.AuthUseCases
+import com.moose.foodies.presentation.features.home.Screen
 import com.moose.foodies.util.Result
 import com.moose.foodies.util.parse
 import com.moose.foodies.work.ItemWorker
@@ -25,18 +28,16 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltViewModel
-class AuthViewmodel @Inject constructor(private val repository: AuthRepository) : ViewModel() {
+class AuthViewmodel @Inject constructor(private val authUseCases: AuthUseCases) : ViewModel() {
 
     private val _screen = mutableStateOf(0)
     val screen: State<Int> = _screen
-    fun changeScreen(value: Int) = value.also { _screen.value = it }
 
     private val _loading = mutableStateOf(false)
     val loading: State<Boolean> = _loading
-    fun changeLoading(value: Boolean) = value.also { _loading.value = it }
 
-    private val _result = mutableStateOf<Result<Auth>?>(null)
-    val result: State<Result<Auth>?> = _result
+    private val _result: MutableState<Result<String>> = mutableStateOf(Result.Idle(""))
+    val result: State<Result<String>> = _result
 
     private val handler = CoroutineExceptionHandler { _, exception ->
         _loading.value = false
@@ -85,42 +86,49 @@ class AuthViewmodel @Inject constructor(private val repository: AuthRepository) 
         )
     )
 
-    fun login() {
-        _loading.value = true
-        val credentials = loginFormState.getData(Credentials::class)
+    fun changeScreen(screen: Int) {
+        _screen.value = screen
+    }
 
+    fun login() {
         viewModelScope.launch(handler) {
-            val result = repository.login(credentials)
+            _loading.value = true
+
+            val credentials = loginFormState.getData(Credentials::class)
+            val result = authUseCases.login(credentials)
             _result.value = Result.Success(result)
 
-            startWork()
+            _loading.value = false
         }
     }
 
     fun signup() {
-        _loading.value = true
-        val credentials = signupFormState.getData(Credentials::class)
         viewModelScope.launch(handler) {
-            val result = repository.signup(credentials)
+            _loading.value = true
+
+            val credentials = signupFormState.getData(Credentials::class)
+            val result = authUseCases.signup(credentials)
             _result.value = Result.Success(result)
 
-            startWork()
+            _loading.value = false
         }
     }
 
     fun forgot() {
-        _loading.value = true
-        val email = forgotFormState.getState<TextFieldState>("email").value
-
         viewModelScope.launch(handler) {
-            repository.forgot(email)
+            _loading.value = true
+
+            val email = forgotFormState.getState<TextFieldState>("email").value
+            authUseCases.forgot(email)
 
             changeScreen(0)
             _result.value = Result.Error("check your email for code")
+
+            _loading.value = false
         }
     }
 
-    private fun startWork() {
+    fun startWork() {
         val manager = WorkManager.getInstance(FoodiesApplication.appContext)
 
         val constraints = Constraints.Builder()

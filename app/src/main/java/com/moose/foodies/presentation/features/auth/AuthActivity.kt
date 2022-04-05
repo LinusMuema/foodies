@@ -55,11 +55,10 @@ class AuthActivity : ComponentActivity() {
         val screen by remember { viewmodel.screen }
         val result by remember { viewmodel.result }
 
-        result?.let {
-            viewmodel.changeLoading(false)
-
+        result.let {
             it.onError { error -> toast(error) }
             it.onSuccess {
+                viewmodel.startWork()
                 startActivity(Intent(this, NavigationActivity::class.java))
                 finish()
             }

@@ -1,5 +1,6 @@
-package com.moose.foodies.domain.repositories
+package com.moose.foodies.data.repositories
 
+import com.moose.foodies.domain.repositories.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

@@ -39,7 +39,6 @@ class RecipeViewmodel @Inject constructor(val repository: RecipeRepository): Vie
             _recipe.value = item
             _equipment.value = item.equipment.map { repository.getItem(it) }
             _ingredients.value = item.ingredients.map { repository.getItem(it) }
-
         }
     }
 

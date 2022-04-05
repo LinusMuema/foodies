@@ -186,10 +186,7 @@ fun ProfileDialog(viewmodel: ProfileViewmodel) {
 
         Column(horizontalAlignment = CenterHorizontally, modifier = Modifier.padding(10.dp)) {
             SmallSpace()
-            Box(modifier = Modifier
-                .size(100.dp)
-                .clip(CircleShape)
-                .clickable { pick() }) {
+            Box(modifier = Modifier.size(100.dp).clip(CircleShape).clickable { pick() }) {
                 Image(
                     painter = rememberImagePainter(
                         data = url ?: profile.avatar,

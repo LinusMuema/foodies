@@ -73,17 +73,12 @@ object NetworkService {
                             throw Exception("check your internet connection")
                         }
                         is ClientRequestException -> {
-                            Log.d("Ktor client", "provideClient: it is a client exception");
                             val error: ApiError = json.decodeFromString(it.response.readText())
                             throw Exception(error.message)
                         }
                         is ServerResponseException -> {
-                            Log.d("Ktor client", "provideClient: it is a server exception");
                             val error: ApiError = json.decodeFromString(it.response.readText())
                             throw Exception(error.message)
-                        }
-                        else -> {
-                            Log.d("Ktor client", "provideClient: we don't know... ${it.message}")
                         }
                     }
                 }
