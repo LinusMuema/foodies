@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -34,6 +35,7 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.moose.foodies.R
 import com.moose.foodies.domain.models.Profile
 import com.moose.foodies.presentation.components.*
+import com.moose.foodies.util.toast
 
 
 @Composable
@@ -41,6 +43,9 @@ import com.moose.foodies.presentation.components.*
 @ExperimentalPagerApi
 fun Feed(controller: NavController) {
     val viewmodel: FeedViewmodel = hiltViewModel()
+
+    val error by remember { viewmodel.error }
+    error?.let { LocalContext.current.toast(it) }
 
     val chefs by remember { viewmodel.chefs }
     val counter by remember { viewmodel.seconds }
@@ -106,7 +111,10 @@ fun Chef(chef: Profile, onClick : () -> Unit) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         NetImage(
             url = chef.avatar,
-            modifier = Modifier.size(75.dp).clip(CircleShape).clickable { onClick() }
+            modifier = Modifier
+                .size(75.dp)
+                .clip(CircleShape)
+                .clickable { onClick() }
         )
         TinySpace()
         Text(chef.username, style = typography.body1)

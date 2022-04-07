@@ -43,6 +43,14 @@ class FeedViewmodel @Inject constructor(val repository: FeedRepository, private 
     private val _refreshing = mutableStateOf(false)
     val refreshing: State<Boolean> = _refreshing
 
+    private val _error: MutableState<String?> = mutableStateOf(null)
+    val error: State<String?> = _error
+
+    private val handler = CoroutineExceptionHandler { _, exception ->
+        _refreshing.value = false
+        _error.value = exception.parse()
+    }
+
     init {
         getType()
         fetchData()
@@ -58,7 +66,7 @@ class FeedViewmodel @Inject constructor(val repository: FeedRepository, private 
     }
 
     fun refresh() {
-        viewModelScope.launch {
+        viewModelScope.launch(handler) {
             _refreshing.value = true
             feedUseCases.refreshData()
             fetchData()
@@ -66,7 +74,7 @@ class FeedViewmodel @Inject constructor(val repository: FeedRepository, private 
     }
 
     fun getRecipes(index: Int){
-        viewModelScope.launch {
+        viewModelScope.launch(handler) {
             val categories = when {
                 titles[index] == "Main" -> listOf("Lunch", "Dinner")
                 titles[index] == "Other" -> listOf("Appetizer", "Drink")
@@ -78,7 +86,7 @@ class FeedViewmodel @Inject constructor(val repository: FeedRepository, private 
     }
 
     private fun fetchData() {
-        viewModelScope.launch {
+        viewModelScope.launch(handler) {
             _chefs.value = feedUseCases.getChefs()
             _featured.value = feedUseCases.getFeaturedRecipes()
 

@@ -8,7 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.moose.foodies.domain.models.CompleteRecipe
 import com.moose.foodies.domain.repositories.RecipeRepository
 import com.moose.foodies.domain.usecases.RecipeUseCases
+import com.moose.foodies.util.parse
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,20 +26,27 @@ class RecipeViewmodel @Inject constructor(val repository: RecipeRepository,priva
     private val _recipe: MutableState<CompleteRecipe?> = mutableStateOf(null)
     val recipe: State<CompleteRecipe?> = _recipe
 
+    private val _error: MutableState<String?> = mutableStateOf(null)
+    val error: State<String?> = _error
+
+    private val handler = CoroutineExceptionHandler { _, exception ->
+        _error.value = exception.parse()
+    }
+
     fun checkFavorite(id: String){
-        viewModelScope.launch {
+        viewModelScope.launch(handler) {
             _favorite.value = profile.first().favorites.contains(id)
         }
     }
 
     fun getRecipe(id: String){
-        viewModelScope.launch {
+        viewModelScope.launch(handler) {
             _recipe.value = recipeUseCases.getRecipe(id)
         }
     }
 
     fun toggleFavorite() {
-        viewModelScope.launch {
+        viewModelScope.launch(handler) {
             val profile = profile.first()
             val recipe = _recipe.value!!.id
 

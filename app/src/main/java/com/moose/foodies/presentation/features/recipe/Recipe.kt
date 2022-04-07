@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -40,6 +41,7 @@ import com.moose.foodies.presentation.theme.FoodiesTheme
 import com.moose.foodies.presentation.theme.Status
 import com.moose.foodies.presentation.theme.shapes
 import com.moose.foodies.presentation.theme.typography
+import com.moose.foodies.util.toast
 import io.ktor.utils.io.*
 
 @Composable
@@ -47,6 +49,9 @@ import io.ktor.utils.io.*
 @ExperimentalMaterialApi
 fun Recipe(id: String?, controller: NavHostController) {
     val viewmodel: RecipeViewmodel = hiltViewModel()
+
+    val error by remember { viewmodel.error }
+    error?.let { LocalContext.current.toast(it) }
 
     viewmodel.getRecipe(id!!)
     viewmodel.checkFavorite(id)
