@@ -31,13 +31,17 @@ import com.moose.foodies.presentation.theme.FoodiesTheme
 import com.moose.foodies.presentation.theme.Status
 import com.moose.foodies.presentation.theme.typography
 import com.moose.foodies.util.CHEF_TIMEOUT
+import com.moose.foodies.util.toast
 
 @Composable
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
 fun Chef(id: String?, controller: NavHostController) {
     val viewmodel: ChefViewmodel = hiltViewModel()
-    viewmodel.getChef(id)
+    viewmodel.getChef(id!!)
+
+    val error by remember { viewmodel.error }
+    error?.let { LocalContext.current.toast(it) }
 
     val chef by remember { viewmodel.chef }
     val recipes by remember { viewmodel.recipes }
@@ -57,9 +61,7 @@ fun Chef(id: String?, controller: NavHostController) {
                             IconButton(onClick = { controller.popBackStack() }) {
                                 Icon(
                                     contentDescription = "back icon",
-                                    modifier = Modifier
-                                        .size(30.dp)
-                                        .padding(5.dp),
+                                    modifier = Modifier.size(30.dp).padding(5.dp),
                                     painter = painterResource(id = R.drawable.ic_back),
                                 )
                             }

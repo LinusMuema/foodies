@@ -8,8 +8,12 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface RecipesDao {
 
+    // Items table
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addItems(items: List<Item>)
+
+    @Query("select * from item where _id = :id limit 1")
+    suspend fun getItemById(id: String): Item
 
     @Query("select * from item where type = 'Ingredients'")
     fun getIngredients(): Flow<List<Item>>
@@ -17,6 +21,8 @@ interface RecipesDao {
     @Query("select * from item where name like :name and type = :type limit 5")
     suspend fun searchItem(name: String, type: String): List<Item>
 
+
+    // Recipes table
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addRecipe(vararg recipe: Recipe)
 
@@ -32,21 +38,7 @@ interface RecipesDao {
     @Query("select * from recipe where _id = :id limit 1")
     suspend fun getRecipeById(id: String): Recipe?
 
-    @Query("select * from recipe where _id = :id and type = 'FAVORITE' limit 1")
-    suspend fun getFavoriteById(id: String): Recipe?
-
-    @Query("select * from item where _id = :id limit 1")
-    suspend fun getItemById(id: String): Item
-
-    @Query("delete from recipe where type != 'PERSONAL' and type != 'FAVORITE'")
-    suspend fun nukeFeedRecipes()
-
     @Query("delete from recipe")
     suspend fun nukeRecipes()
 
-    @Transaction
-    suspend fun updateFeedRecipes(recipes: List<Recipe>){
-        nukeFeedRecipes()
-        addRecipe(*recipes.toTypedArray())
-    }
 }

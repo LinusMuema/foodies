@@ -1,5 +1,6 @@
 package com.moose.foodies.data.repositories
 
+import com.moose.foodies.data.local.RecipesDao
 import com.moose.foodies.data.local.UserDao
 import com.moose.foodies.data.remote.RecipesService
 import com.moose.foodies.data.remote.UsersService
@@ -10,6 +11,7 @@ import javax.inject.Inject
 
 class ChefRepositoryImpl @Inject constructor(
     val userDao: UserDao,
+    val recipesDao: RecipesDao,
     val usersService: UsersService,
     val recipesService: RecipesService,
 ): ChefRepository {
@@ -18,7 +20,7 @@ class ChefRepositoryImpl @Inject constructor(
         return userDao.getChef(id) ?: usersService.getProfile(id)
     }
 
-    override suspend fun getChefRecipes(id: String): List<Recipe> {
+    override suspend fun getRemoteRecipes(id: String): List<Recipe> {
         return recipesService.getUserRecipes(id)
     }
 }

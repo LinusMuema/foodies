@@ -7,5 +7,5 @@ interface ChefRepository {
 
     suspend fun getChef(id: String): Profile
 
-    suspend fun getChefRecipes(id: String): List<Recipe>
+    suspend fun getRemoteRecipes(id: String): List<Recipe>
 }
