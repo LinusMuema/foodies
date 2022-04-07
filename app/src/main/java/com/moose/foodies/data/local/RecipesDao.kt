@@ -2,6 +2,7 @@ package com.moose.foodies.data.local
 
 import androidx.room.*
 import com.moose.foodies.domain.models.Item
+import com.moose.foodies.domain.models.Profile
 import com.moose.foodies.domain.models.Recipe
 import kotlinx.coroutines.flow.Flow
 
@@ -29,8 +30,8 @@ interface RecipesDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateRecipe(vararg recipe: Recipe)
 
-    @Query("select * from recipe where type = 'PERSONAL'")
-    fun getUserRecipes(): Flow<List<Recipe>>
+    @Query("select * from recipe where user_id = :id")
+    suspend fun getUserRecipes(id: String): List<Recipe>
 
     @Query("select * from recipe order by random() limit 10")
     suspend fun getRandomRecipes(): List<Recipe>

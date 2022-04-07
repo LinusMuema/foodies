@@ -102,7 +102,7 @@ fun Fab(profile: Profile) {
     FloatingActionButton(
         onClick = {
             val message = "Have you seen ${profile.username}'s recipes on Foodies? \uD83D\uDE0B \nGo ahead and check out their amazing recipes! \uD83D\uDC4C \n\n"
-            val url = "http://foodies.moose.ac/chefs?id=${profile._id}"
+            val url = "http://foodies.moose.ac/chefs?id=${profile.id}"
             val sendIntent: Intent = Intent().apply {
                 action = Intent.ACTION_SEND
                 putExtra(Intent.EXTRA_TEXT, "$message$url")

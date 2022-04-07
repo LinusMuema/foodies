@@ -1,5 +1,6 @@
 package com.moose.foodies.domain.models
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.serialization.Serializable
@@ -9,6 +10,8 @@ import kotlinx.serialization.Serializable
 data class Recipe(
     @PrimaryKey
     val _id: String,
+
+    @Embedded(prefix = "user_")
     val user: Profile,
     val name: String,
     val time: String,

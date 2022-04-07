@@ -11,7 +11,7 @@ interface UserDao {
     @Query("select * from profile where current = 1 limit 1")
     fun getProfile(): Flow<Profile>
 
-    @Query("select * from profile where _id = :id limit 1")
+    @Query("select * from profile where id = :id limit 1")
     fun getChef(id: String): Profile?
 
     @Query("select * from profile where current = 0 order by random() limit 10")
@@ -20,7 +20,7 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addProfile(vararg profile: Profile)
 
-    @Query("delete from profile where _id != :id")
+    @Query("delete from profile where id != :id")
     suspend fun nukeChefs(id: String)
 
     @Query("delete from profile")

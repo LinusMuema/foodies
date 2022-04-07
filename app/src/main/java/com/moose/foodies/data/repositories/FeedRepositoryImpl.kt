@@ -16,7 +16,6 @@ import javax.inject.Inject
 class FeedRepositoryImpl @Inject constructor(
     val userDao: UserDao,
     val recipesDao: RecipesDao,
-    val preferences: Preferences,
     val usersService: UsersService,
     val recipesService: RecipesService,
 ): FeedRepository {

@@ -88,7 +88,7 @@ fun Feed(controller: NavController) {
                         content = {
                             items(chefs) {
                                 Chef(chef = it) {
-                                    controller.navigate("/chef/${it._id}")
+                                    controller.navigate("/chef/${it.id}")
                                 }
                             }
                         },

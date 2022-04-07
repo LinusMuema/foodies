@@ -42,9 +42,9 @@ import coil.transform.CircleCropTransformation
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.moose.foodies.R
+import com.moose.foodies.data.remote.UploadState
 import com.moose.foodies.presentation.components.*
 import com.moose.foodies.presentation.features.auth.AuthActivity
-import com.moose.foodies.util.UploadState.*
 import com.moose.foodies.util.getActivity
 import com.moose.foodies.util.toast
 
@@ -57,9 +57,15 @@ import com.moose.foodies.util.toast
 @ExperimentalFoundationApi
 fun Profile(controller: NavHostController) {
     val viewmodel: ProfileViewmodel = hiltViewModel()
+    viewmodel.getData()
 
-    val user by viewmodel.profile.observeAsState()
-    val recipes by viewmodel.recipes.observeAsState()
+    val error by remember { viewmodel.error }
+    error?.let { LocalContext.current.toast(it) }
+
+    val recipes by remember { viewmodel.recipes }
+    val favorites by remember { viewmodel.favorites }
+    val user by viewmodel.profile.collectAsState(initial = null)
+
     var open by remember { mutableStateOf(false) }
 
     user?.let { profile ->
@@ -89,7 +95,10 @@ fun Profile(controller: NavHostController) {
                                 builder = { transformations(CircleCropTransformation()) }
                             ),
                             contentDescription = "user avatar",
-                            modifier = Modifier.size(100.dp).clip(CircleShape).clickable { open = true }
+                            modifier = Modifier
+                                .size(100.dp)
+                                .clip(CircleShape)
+                                .clickable { open = true }
                         )
                         TinySpace()
                         Column(horizontalAlignment = CenterHorizontally) {
@@ -98,12 +107,10 @@ fun Profile(controller: NavHostController) {
                                 horizontalArrangement = SpaceAround
                             ) {
                                 Column(horizontalAlignment = CenterHorizontally) {
-                                    recipes?.let {
-                                        Text(
-                                            text = it.size.toString(),
-                                            style = typography.body1.copy(fontWeight = SemiBold)
-                                        )
-                                    }
+                                    Text(
+                                        text = recipes.size.toString(),
+                                        style = typography.body1.copy(fontWeight = SemiBold)
+                                    )
                                     Text("Recipes", style = typography.h6.copy(fontSize = 16.sp))
                                 }
                                 Column(horizontalAlignment = CenterHorizontally) {
@@ -117,7 +124,7 @@ fun Profile(controller: NavHostController) {
                         TinySpace()
                     }
                     SmallSpace()
-                    recipes?.let { if (it.isEmpty()) Empty() else Recipes(controller) }
+                    if (recipes.isEmpty()) Empty() else Recipes(recipes, controller)
                 }
             }
         }
@@ -128,7 +135,9 @@ fun Empty(){
     Column(
         verticalArrangement = Center,
         horizontalAlignment = CenterHorizontally,
-        modifier = Modifier.fillMaxSize().padding(10.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(10.dp),
     ) {
         Image(
             contentDescription = "empty",
@@ -149,16 +158,15 @@ fun Empty(){
 fun ProfileDialog(viewmodel: ProfileViewmodel) {
     val context = LocalContext.current
     val activity = context.getActivity()!!
-    val url by viewmodel.url.observeAsState()
-    val user by viewmodel.profile.observeAsState()
+
+    val url by remember { viewmodel.url }
+    val loading by remember { viewmodel.loading }
+
     val progress by viewmodel.progress.observeAsState()
+    val user by viewmodel.profile.collectAsState(initial = null)
 
-    val error by viewmodel.error.observeAsState()
-    if (error != null) context.toast(error)
-
-    val loading by viewmodel.loading.observeAsState()
     var button by remember { mutableStateOf("") }
-    button = if (loading == true) "Updating profile..." else "Update profile"
+    button = if (loading) "Updating profile..." else "Update profile"
 
     val launcher = rememberLauncherForActivityResult(StartActivityForResult()) {
         val data = it.data
@@ -176,9 +184,9 @@ fun ProfileDialog(viewmodel: ProfileViewmodel) {
         val descriptionState = remember { TextFieldState<String>(profile.description, validators = listOf(Required())) }
 
         when (val state = progress) {
-            is Error -> context.toast(state.message)
-            is Success -> viewmodel.updateProfile(profile.copy(avatar = state.url))
-            is Loading -> {
+            is UploadState.Error -> context.toast(state.message)
+            is UploadState.Success -> viewmodel.updateProfile(profile.copy(avatar = state.url))
+            is UploadState.Loading -> {
                 val percentage = (state.current.toDouble() / state.total.toDouble()) * 100
                 button = "Uploading image...${percentage.toInt()}%"
             }
@@ -186,7 +194,10 @@ fun ProfileDialog(viewmodel: ProfileViewmodel) {
 
         Column(horizontalAlignment = CenterHorizontally, modifier = Modifier.padding(10.dp)) {
             SmallSpace()
-            Box(modifier = Modifier.size(100.dp).clip(CircleShape).clickable { pick() }) {
+            Box(modifier = Modifier
+                .size(100.dp)
+                .clip(CircleShape)
+                .clickable { pick() }) {
                 Image(
                     painter = rememberImagePainter(
                         data = url ?: profile.avatar,

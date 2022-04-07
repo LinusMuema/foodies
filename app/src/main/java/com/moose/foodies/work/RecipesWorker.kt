@@ -23,7 +23,7 @@ class RecipesWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result {
         return try {
-            val id = userDao.getProfile().first()._id
+            val id = userDao.getProfile().first().id
             val recipes = recipesService.getUserRecipes(id)
             recipesDao.addRecipe(*recipes.map { it.type = "PERSONAL"; it }.toTypedArray())
             Result.success(workDataOf("status" to "success"))

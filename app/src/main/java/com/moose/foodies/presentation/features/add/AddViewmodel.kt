@@ -9,6 +9,7 @@ import com.dsc.form_builder.Validators.Custom
 import com.dsc.form_builder.Validators.Required
 import com.moose.foodies.domain.models.Item
 import com.moose.foodies.data.models.RecipeDTO
+import com.moose.foodies.data.remote.UploadState
 import com.moose.foodies.domain.models.Recipe
 import com.moose.foodies.domain.repositories.AddRepository
 import com.moose.foodies.util.*
@@ -89,7 +90,7 @@ class AddViewmodel @Inject constructor(private val repository: AddRepository) : 
             viewModelScope.launch {
                 _loading.value = true
                 val name = RandomIdGenerator.getRandom()
-                val user = repository.profile.first()._id
+                val user = repository.profile.first().id
                 val dir = "Foodies/recipes/$user/$name"
                 repository.uploadImage(dir, _path.value!!)
             }

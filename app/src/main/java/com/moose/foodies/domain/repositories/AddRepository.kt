@@ -8,9 +8,9 @@ import com.moose.foodies.data.remote.RecipesService
 import com.moose.foodies.domain.models.Item
 import com.moose.foodies.domain.models.Profile
 import com.moose.foodies.data.models.RecipeDTO
+import com.moose.foodies.data.remote.Cloudinary
+import com.moose.foodies.data.remote.UploadState
 import com.moose.foodies.domain.models.Recipe
-import com.moose.foodies.util.Cloudinary
-import com.moose.foodies.util.UploadState
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

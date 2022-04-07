@@ -1,4 +1,4 @@
-package com.moose.foodies.util
+package com.moose.foodies.data.remote
 
 import android.net.Uri
 import androidx.lifecycle.LiveData
@@ -13,7 +13,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Inject
 import javax.inject.Singleton
-
 
 sealed class UploadState {
     object Idle: UploadState()
@@ -45,7 +44,9 @@ class Cloudinary @Inject constructor(private val manager: MediaManager) {
     private val _progress: MutableLiveData<UploadState> = MutableLiveData()
     val progress: LiveData<UploadState> = _progress
 
-    fun clearProgress()  = UploadState.Idle.also { _progress.value = it }
+    fun clearProgress() {
+        _progress.value = UploadState.Idle
+    }
 
     fun uploadImage(dir: String, path: Uri) {
         val callback = object : UploadCallback {

@@ -42,7 +42,6 @@ import com.moose.foodies.presentation.theme.Status
 import com.moose.foodies.presentation.theme.shapes
 import com.moose.foodies.presentation.theme.typography
 import com.moose.foodies.util.toast
-import io.ktor.utils.io.*
 
 @Composable
 @ExperimentalPagerApi
@@ -111,7 +110,7 @@ fun Recipe(id: String?, controller: NavHostController) {
                             sheetBackgroundColor = colors.background,
                             sheetShape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
                             sheetContent = { Details(fraction, recipe){
-                                controller.navigate("/chef/${recipe.user._id}")
+                                controller.navigate("/chef/${recipe.user.id}")
                             }},
                         ) {
                             Surface(color = colors.background) {
@@ -147,7 +146,7 @@ fun Recipe(id: String?, controller: NavHostController) {
                                             )
                                         }
 
-                                        if (recipe.user._id != profile!!._id)
+                                        if (recipe.user.id != profile!!.id)
                                             Box(modifier = Modifier
                                                 .padding(10.dp)
                                                 .clip(shapes.large)

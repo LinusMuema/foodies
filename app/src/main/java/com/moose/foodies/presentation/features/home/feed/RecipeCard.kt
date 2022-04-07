@@ -29,7 +29,6 @@ import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
 import com.moose.foodies.R.drawable.ic_clock
-import com.moose.foodies.domain.models.CompleteRecipe
 import com.moose.foodies.domain.models.Recipe
 import com.moose.foodies.presentation.components.TinySpace
 
@@ -78,7 +77,7 @@ fun RecipeCard(controller: NavController, recipe: Recipe) {
                     }
                     Box(modifier = Modifier.clip(shapes.large).background(White).padding(2.5.dp)
                         .clickable {
-                            controller.navigate("/chef/${recipe.user._id}")
+                            controller.navigate("/chef/${recipe.user.id}")
                         }){
                         Image(
                             painter = rememberImagePainter(
